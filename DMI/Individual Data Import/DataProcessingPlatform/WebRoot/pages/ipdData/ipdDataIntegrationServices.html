@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>ipd数据整合服务</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+    
+
+    <style>
+		/* Additional style to fix warning dialog position */
+		#alertmod_table_list_2 {
+			top: 900px !important;
+		}
+		.ui-jqgrid .loading {
+			background:rgba(0,0,0,0);
+			border:none;
+		}
+		.form-item input{ height:45px; width:627px; color:#333; padding-left:24px;border:ipx solid #e5e6e7;}
+		.form-item button{ height:45px; width:127px; background-color:#12A8BC;font-size: 18px;color: #eee;border-radius: 0!important;margin-left: -4px;margin-top: -5px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    <div class="block">
+		<h1>
+			<span class="tap">IPD检索<span class="tap2">// IPD SEARCH</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content">
+			<div class="form-item" align="center">
+				<input type="text" placeholder="可以对参保人进行姓名、身份证号、医保卡号、疾病、药品、医院、科室等的检索" id="shousuo">
+				<button type="button" class="btn" onclick="reloadTable();"> 检&nbsp;&nbsp;索</button>
+				<a href="ipdSearch.html" style="line-height:32px;font-family: '宋体';margin-left: 25px;">高级检索>></a>
+			</div>
+		</div>
+	</div>
+	<div class="block">
+		<h1>
+			<span class="tap">人员列表<span class="tap2">// MEMBER LIST</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content">
+			<div class="jqGrid_wrapper"  style="border:none;margin-bottom: 20px;">
+                <table id="table_list_1"></table>
+                <div id="pager_list_1"></div>
+            </div>
+		</div>
+	</div>
+    
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script>
+        $(document).ready(function(){
+        	var h = $(window).height()-$(".extable").height()-250;
+        	$.jgrid.defaults.styleUI="Bootstrap";
+        	var query= $("#shousuo").val();
+        	$(".blackBox2").fadeIn(50);
+        	$("#table_list_1").jqGrid({
+        		url:"queryHzlbListModel.action",
+				postData:{query:query},
+        		mtype:"POST",
+				datatype: "json",
+				loadtext:"",
+        		height:h,
+        		autowidth:true,
+        		shrinkToFit:true,
+        		rownumbers:true,
+        		rowNum:30,
+        		rownumWidth:70,
+        		onPaging:function(){$(".blackBox2").fadeIn(50);},
+        		
+        		rowList:[10,20,30,50,100],
+        		colNames:["","序号",'就诊时间',"参保人姓名","身份证号","医保卡号","参保类型","参保状态"],
+        		colModel:[
+				{name:"id",index:"id",width:80,sorttype:"int",align:"center",hidden:true},
+				{name:"nametrue",index:"nametrue",width:80,align:"center",hidden:true},
+				{name:"shijian",index:"shijian",width:90,align:"left",hidden:true},
+				{name:"name",index:"name",width:80,align:"left",sortable:false, 
+					formatter:fmatterName},
+				{name:"card_no",index:"card_no",width:150,align:"left",sortable:false, 
+					formatter:fmatterCard_no
+				},
+				{name:"sb_card_no",index:"sb_card_no",width:130,align:"left",sortable:false, 
+					formatter:fmatterSb_card_no
+				},
+				{name:"cblx",index:"cblx",width:100,align:"left",sortable:false, 
+					formatter:fmatterCblx
+				},
+				{name:"cbzt",index:"cbzt",width:100,align:"left",sortable:false, 
+					formatter:fmatterCbzt
+				}
+        		],
+        		jsonReader: {
+					root: "list", //数据对象
+					total: "totalPage", //总页数
+					page: "currentPage", //第几页
+					records: "totalRecord", //总条数
+					repeatitems: false
+				},
+				viewrecords : true,
+        		multiselect:false,
+        		onSelectRow:function(rowid,stauts){ 
+        			var str = jQuery("#table_list_1").jqGrid('getRowData', rowid);
+        			console.info(str);
+        			var card_no = str.id+"-"+str.nametrue;
+        			window.location.href="authorization.html?card_no="+card_no;
+        		},
+        		pager:"#pager_list_1",
+        		rows: 30,//初始化每页多少条
+				page: 1,//初始化第几页
+        		viewrecords:true,
+        		hidegrid:false,
+        		gridComplete:function(){
+        			var uiInfo = $(".ui-paging-info").text().replace(/条/,"位参保人");
+                	$(".ui-paging-info").text(uiInfo);
+                	
+                	$(".blackBox2").fadeOut(100);
+                }
+        	});
+        	$(window).bind("resize",function(){var width=$(".jqGrid_wrapper").width();
+        	$("#table_list_1").setGridWidth(width);})
+        	/* $("#pager_list_1").jqGrid('navGrid',"#pager_list_1",
+						{ 	//navbar options
+						edit: false,//修改
+						add: false,//添加
+						del: false,//删除
+						search: false,//搜索
+						refresh: false,//刷新
+						view: false,//查看
+						}
+					); */
+        });
+        
+        function fmatterCard_no(cellvalue, options, rowObject){  
+			return cellvalue.substring(0,3)+"************"+cellvalue.substring(15,19);  
+        }
+        function fmatterSb_card_no(cellvalue, options, rowObject){
+			return "*****"+cellvalue.substring(cellvalue.length-3,cellvalue.length);  
+        }
+        function fmatterName(cellvalue, options, rowObject){
+        	return cellvalue.substring(0,1)+"***";  
+        }
+        function fmatterCblx(cellvalue, options, rowObject){
+        	return "城镇职工";
+        }
+        
+        function fmatterCbzt(cellvalue, options, rowObject){
+        	var str = "";
+        	if(1==cellvalue) str = "正常参保";
+        	if(2==cellvalue) str = "暂停参保";
+       		if(3==cellvalue) str = "终止参保";
+        	return str;
+        }
+
+		function queryList(){
+			var mydata= "";
+        	//var type = $("#selectType").val();
+        	var query= $("#shousuo").val();
+        	$.ajax({
+				url:"queryHzlbListModel.action",
+				data:"query="+query, 
+				async:false,
+				dataType:"json", 
+				type:"post",
+				success:function (mm) {
+					mydata = mm;
+				}, 
+				error:function (error) {
+					top.my_alert("添加所属区域信息失败！" + error.status);
+				}
+			});
+        	return mydata;
+		}
+		function setdata(){
+			$(".blackBox2").fadeIn(50);
+			setTimeout(function(){
+				var data = queryList();
+				$("#table_list_1").clearGridData();
+	        	$("#table_list_1").setGridParam({
+	        		//datatype:"local",
+	        		data:data,
+	        		gridComplete:function(){
+	        			var uiInfo = $(".ui-paging-info").text().replace(/条/,"位参保人");
+	                	$(".ui-paging-info").text(uiInfo);
+	                	$(".blackBox2").fadeOut(100);
+	                }
+	        	}).trigger("reloadGrid");
+	        	//$(".blackBox2").fadeOut(100);
+			},100)
+			
+		}
+		function reloadTable(){
+			$(".blackBox2").fadeIn(50);
+			setTimeout(function(){
+			var query= $("#shousuo").val();
+			$("#table_list_1").jqGrid('setGridParam',{ 	    			 		
+				url:"queryHzlbListModel.action",
+				postData:{query:query},
+        		mtype:"POST",
+				datatype: "json",
+                page:1,
+                gridComplete:function(){
+                	var uiInfo = $(".ui-paging-info").text().replace(/条/,"位参保人");
+                	$(".ui-paging-info").text(uiInfo);
+                	$(".blackBox2").fadeOut(100);
+                }
+            }).trigger("reloadGrid"); //重新载入 
+			//$(".blackBox2").fadeOut(100);
+			},100)
+		}	
+    </script>
+</body>
+</html>

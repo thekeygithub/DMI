@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人五险信息</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	
+	<style>
+	table {
+		width: 100%;
+		border-bottom: 1px solid #F5F5F5;
+		background: #eee;
+		margin-bottom: 30px;
+	}
+	caption{
+		background: #81BCF8;
+		font-weight: bold;
+		font-family: "微软雅黑";
+		color: #fff;
+	}
+	table tr {
+		border-top:1px solid #F5F5F5;
+		line-height: 24px;
+		font-size: 12px;
+	}
+	/*table tr:hover {
+		background: #c5daf5;
+	}*/
+	table.grwx tbody tr th,table.grwx tbody tr td {
+		width: 110px;
+		padding:8px;
+		overflow:hidden;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+		display: inline-block;
+		text-align: center;
+	}
+	table.grwx tbody tr th {
+		background:#E0EEFB;
+		color: #330;
+	}
+	table.grwx tbody tr td {
+		background:#eee;
+	}
+	.table thead tr th,.table tbody tr td {
+		width:16.6666667%!important
+	}
+	.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+	    background-color: #81BCF8!important;
+	}
+	</style>
+</head>
+<body>
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="false"> 个人五险信息</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="true">五险缴费记录信息</a></li>
+               <!-- <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="true">养老金余额及发放领取信息</a></li>-->
+  			</ul>
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+                    <div class="panel-body">
+                        <table class="grwx">
+							<caption><strong>&nbsp;&nbsp;个人信息</strong></caption>
+							<tr>
+								<th>姓名:</th>
+								<td class="AAC003"></td>
+								<th>年龄:</th>
+								<td class="NIANLING"></td>
+								<th>性别:</th>
+								<td class="AAC004"></td>
+								<th>民族:</th>
+								<td class="AAC005"></td>
+							</tr>
+							<tr>
+								<th>身份证号码:</th>
+								<td  style="width: 330px;" class="card_no" style="overflow: visible;"></td>
+								<th>社保卡号:</th>
+								<td class="AKC020"></td>
+								<th>人员状态:</th>
+								<td class="RYZT"></td>
+								
+							</tr>
+							<tr>
+								<th>参保人手机:</th>
+								<td class="AAE005"></td>
+								<th>出生日期:</th>
+								<td class="AAC006"></td>
+								<th>离退休日期:</th>
+								<td class="AIC162"></td>
+								<th>居住(常住)地邮编:</th>
+								<td class="AAE007"></td>
+							</tr>
+							<tr>
+								<th>户口所在地地址:</th>
+								<td style="width: 330px;" class="AAE006"></td>
+								<th>居住(常住)地地址:</th>
+								<td style="width: 330px;" class="AAC026"></td>
+							</tr>
+						</table>
+						<table class="grwx">
+							<caption><strong>&nbsp;&nbsp;五险参保状态信息</strong></caption>
+							<tr>
+								<!-- <th>所属统筹区:</th>
+								<td class="SSTCQ"></td> -->
+								<th>人员参保类型:</th>
+								<td class="RYLB"></td>
+								<th>参保单位:</th>
+								<td style="width: 330px;" class="CBDW"></td>
+								<th>参保状态:</th>
+								<td class="CBZT"></td>
+							</tr>			
+						</table>
+						<table class="grwx">
+							<caption><strong>&nbsp;&nbsp;养老信息</strong></caption>
+							<tr>
+								<th>离退休标志:</th>
+								<td class="LTXBZ"></td>
+								<th>累计参保年限:</th>
+								<td></td>
+								<th>连续参保年限:</th>
+								<td></td>
+								
+							</tr>			
+						</table>
+						<table class="grwx">
+							<caption><strong>&nbsp;&nbsp;医保信息</strong></caption>
+							<tr>
+								<th>累计参保年限:</th>
+								<td></td>
+								<th>特殊医疗补充:</th>
+								<td class="TCYLBC"></td>
+								<th>待遇状态:</th>
+								<td class="DYZT"></td>
+								<th>连续参保年限:</th>
+								<td></td>
+							</tr>	
+							<tr>
+								<!-- <th>待遇类型:</th>
+								<td class="DYLX"></td> -->
+								<th>资源医疗保险:</th>
+								<td class="ZYYLBX"></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>			
+						</table>
+                    </div>
+                </div>
+                <div id="tab-2" class="tab-pane">
+                    <div class="panel-body">
+                       	<table class="table table-bordered">
+                       		<thead>
+                       			<tr>
+                   					<th>缴费属期</th>
+                   					<th>基本养老</th>
+                   					<th>基本医疗</th>
+                   					<th>失业保险</th>
+                   					<th>工伤保险</th>
+                   					<th>生育保险</th>
+                       			</tr>
+                       		</thead>
+                       		<tbody id="bxjf">
+                       			
+                       		</tbody>
+                       	</table>
+                    </div>
+                </div>
+                <!--<div id="tab-3" class="tab-pane">
+                    <div class="panel-body">
+                       
+                    </div>
+                </div>-->
+            </div>
+       </div>
+		
+	</div>
+	<script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+	<script>
+		$(function(){
+			var card_no=getvalue("card_no");
+			var userName =getvalue("name");
+			$.ajax({
+				type:"post",
+				url:"/MDEPlatform/yyxg/getInsureList.action",
+				data:{card_no:card_no},
+				dataType:"json",
+				success:function(res){
+					if(res.code==1){
+						for(var i=0;i<res.list.length;i++){
+							var str = "<tr><td>"+res.list[i].AAE002+"</td><td>"+res.list[i].YANGLAO+"</td><td>"+res.list[i].YILIAO+"</td><td>"+res.list[i].SHIYE+"</td><td>"+res.list[i].GONGSHANG+"</td><td>"+res.list[i].SHENGYU+"</td></tr>"
+							$("#bxjf").append(str);
+						}
+					}
+				}
+			});
+			$.ajax({
+				url:"/MDEPlatform/yyxg/getPersonInfo.action",
+				data:{
+					card_no:card_no,
+					name:userName
+				},
+				type:"post",
+				dataType:"json",
+				success:function(res){
+					if(res.code == 1){
+						//个人信息
+						$(".AAC003").attr("title",decodeURIComponent(res.list[0].geren.AAC003)).text(decodeURIComponent(res.list[0].geren.AAC003));
+						$(".NIANLING").attr("title",res.list[0].geren.NIANLING).text(res.list[0].geren.NIANLING);
+						$(".card_no").attr("title",res.list[0].geren.SHBZHM).text(res.list[0].geren.SHBZHM);
+						$(".AAC004").attr("title",res.list[0].geren.AAC004).text(res.list[0].geren.AAC004);
+						$(".AAC005").attr("title",res.list[0].geren.AAC005).text(res.list[0].geren.AAC005);
+						$(".AAC026").attr("title",res.list[0].geren.AAC026).text(res.list[0].geren.AAC026);
+						$(".AKC020").attr("title",res.list[0].geren.AKC020).text(res.list[0].geren.AKC020);
+						$(".AAC006").attr("title",res.list[0].geren.AAC006).text(res.list[0].geren.AAC006);
+						$(".RYZT").attr("title",res.list[0].geren.RYZT).text(res.list[0].geren.RYZT);
+						$(".AIC162").attr("title",res.list[0].geren.AIC162).text(res.list[0].geren.AIC162);
+						$(".AAE006").attr("title",res.list[0].geren.AAE006).text(res.list[0].geren.AAE006);
+						$(".AAE005").attr("title",res.list[0].geren.AAE005).text(res.list[0].geren.AAE005);
+						$(".AAE007").attr("title",res.list[0].geren.AAE007).text(res.list[0].geren.AAE007);
+						//参保
+						$(".RYLB").attr("title",res.list[0].canbao.RYLB).text(res.list[0].canbao.RYLB);
+						$(".CBZT").attr("title",res.list[0].canbao.CBZT).text(res.list[0].canbao.CBZT);
+						$(".CBDW").attr("title",res.list[0].canbao.CBDW).text(res.list[0].canbao.CBDW);
+						$(".SSTCQ").attr("title",res.list[0].canbao.SSTCQ).text(res.list[0].canbao.SSTCQ);
+						//养老
+						$(".YLLXCBNX").attr("title",res.list[0].yanglao.LXCBNX).text(res.list[0].yanglao.LXCBNX);
+						$(".YLLJCBNX").attr("title",res.list[0].yanglao.LJCBNX).text(res.list[0].yanglao.LJCBNX);
+						$(".LTXBZ").attr("title",res.list[0].yanglao.LTXBZ).text(res.list[0].yanglao.LTXBZ);
+						//医保
+						$(".YBLJCBNX").attr("title",res.list[0].yibao.LJCBNX).text(res.list[0].yibao.LJCBNX);
+						$(".YBLXCBNX").attr("title",res.list[0].yibao.LXCBNX).text(res.list[0].yibao.LXCBNX);
+						$(".DYZT").attr("title",res.list[0].yibao.DYZT).text(res.list[0].yibao.DYZT);
+						$(".DYLX").attr("title",res.list[0].yibao.DYLB).text(res.list[0].yibao.DYLB);
+						$(".TCYLBC").attr("title",res.list[0].yibao.TCYLBC).text(res.list[0].yibao.TCYLBC);
+						$(".ZYYLBX").attr("title",res.list[0].yibao.ZYYLBX).text(res.list[0].yibao.ZYYLBX);
+					}else {
+						alert("res.message");
+					}
+				}	
+			})
+		})
+	</script>
+</body>
+</html>

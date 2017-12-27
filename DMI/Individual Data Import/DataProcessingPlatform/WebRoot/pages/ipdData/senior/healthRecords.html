@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级检索-健康档案</title>
+   <link href="../../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet" >
+    <link href="../../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/animate.min.css" rel="stylesheet">
+    <link href="../../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../../css/style.css">
+    <style type="text/css">
+		.font_size_color{font:13px/120% "微软雅黑";color:#12A5B9;padding-right: 15px;padding-left: 10px;}
+		.ui-jqgrid .loading {
+        	background:rgba(0,0,0,0);
+        	border:none;
+        } 
+	</style>
+
+</head>
+
+<body class="gray-bg">
+<jsp:include flush="true" page="../../topAndFooter.html"></jsp:include>
+    <div class="block">
+		<h1>
+			<span class="tap">健康档案<span class="tap2">// HEALTH FILE</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content">
+			<div class="jqGrid_wrapper">
+				<table id="table_list_1"></table>
+				<div id="pager_list_1"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 健康档案 -->
+
+    <script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script>
+        $(document).ready(function(){
+        	var h = $(window).height()-280;
+        	var cs=decodeURIComponent(document.URL.split("cs=")[1]);
+        	$.jgrid.defaults.styleUI="Bootstrap";
+        	$(".blackBox2").fadeIn(50);
+        	//初始化表格
+        	$("#table_list_1").jqGrid({
+        		url:"searchIPDData.action",
+				postData:{queryParam:cs},
+        		mtype:"POST",
+				datatype: "json",
+				loadtext:"",
+        		height:h,
+        		autowidth:true,
+        		shrinkToFit:true,
+        		rownumbers:true,
+        		rowNum:30,
+        		rownumWidth:70,
+        		onPaging:function(){$(".blackBox2").fadeIn(50);},
+        		rowList:[10,20,30,50,100],
+        		colNames:["id","姓名","日期","医生","机构名称","分类"],
+        		colModel:[
+                    {name:"ID",index:"ID",hidden:true, editable:false},
+                    {name:"CXM",index:"CXM",width:110},
+        		    {name:"RDATE",index:"RDATE",width:110},
+        		    {name:"DCNAME",index:"DCNAME",width:80},
+        		    {name:"CORP",index:"CORP",width:220},
+        		    {name:"DETAIL",index:"DETAIL",formatter:function(cell,option,rowObject){
+        		    	var type=15;
+        		    	if(cell=="健康档案建档"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../../sheets/healthcover.html?id="+rowObject.ID+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../../sheets/healthcover.html?id="+rowObject.ID+"\">查看详情</a>";
+        		    	
+        		    	}else if(cell=="健康体检"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../../sheets/jktijian.html?cardno="+rowObject.ID+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../../sheets/jktijian.html?cardno="+rowObject.ID+"\">查看详情</a>";
+        		    	
+        		    	}else{
+        		    		var htmlpage="../../sheets/tnbsfjl.html?id="+rowObject.ID;
+        		    		if(cell=="高血压随访"){
+        		    			htmlpage="../../sheets/gxysfjl.html?id="+rowObject.ID;
+        		    		}
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\""+htmlpage+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\""+htmlpage+"\">查看详情</a>";
+        		    	}
+        		    }}
+        		],
+        		pager:"#pager_list_1",
+        		viewrecords:true,
+        		hidegrid:false,
+        		rows: 30,//初始化每页多少条
+				page: 1,//初始化第几页
+				jsonReader: {
+					root: "list", //数据对象
+					total: "totalPage", //总页数
+					page: "currentPage", //第几页
+					records: "totalRecord", //总条数
+					repeatitems: false
+				},
+        		gridComplete:function(){
+        			
+                	$(".blackBox2").fadeOut(100);
+                }
+        	});
+        	$(window).bind("resize",function(){var width=$(".jqGrid_wrapper").width();$("#table_list_1").setGridWidth(width);})  
+          
+
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+body {
+	background: #E8E8E8;
+	background-size: 100% 100%;
+}
+.content-part {
+	width: 1300px;
+	margin:0 auto;
+	position: relative;
+}
+.left {
+	margin-top: 0%;
+}
+.right {
+	width: 426px;
+	height: 440px;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	margin-top: -205px;
+	background: rgba(255,255,255,.7);
+	border-radius: 15px;
+	box-shadow: 0px 5px 5px rgba(95,153,170,.3);
+}
+.login-tit {
+	width: 164px;
+	height: 51px;
+	margin:0 auto auto 18px ;
+	line-height: 46px;
+	font-family: "微软雅黑";
+	font-size: 22px;
+	color: #fff;
+	background-color:#4899eb;
+	text-align: center; 
+	margin-top: -22px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	position: relative;
+	z-index: 2;
+	box-shadow: 0px 3px 3px rgba(39,77,94,.3);
+}
+.arrow-left,.arrow-right {
+	position: absolute;
+	top: 0;
+	height: 12px;
+}
+.arrow-left {
+	left: -6px;
+}
+.arrow-right {
+	right: -7px;
+}
+.form-item {
+	margin:0 auto;
+	margin-top: 52px;
+	font-size: 16px;
+	font-family: "微软雅黑";
+	color:#4899eb;
+	padding:0 24px;
+}
+
+
+.form-item input,.btn input {
+	
+	width: 310px;
+	height: 42px;
+	border-radius: 5px;
+	border:1px solid #b9b9b9;
+	text-indent: 10px;
+	vertical-align: middle;
+}
+.checkIt {
+	margin:32px 0;
+	text-align: right;
+	padding:0 24px;
+	font-size: 12px;
+	color: #4899eb;
+}
+
+.checkIt input {
+	width: 15px;
+	height: 15px;
+	background: #fff;
+	border:none;
+	vertical-align: middle;
+
+}
+.btn {
+	padding: 0 24px;
+	text-align:center;
+}
+.btn input {
+	cursor:pointer;
+	background: #4899eb;
+	color: #fff;
+	font-size: 14px;
+}
+
+.btn input:hover {
+	background: #FF6801;
+	color: #fff;
+	font-size: 14px;
+}

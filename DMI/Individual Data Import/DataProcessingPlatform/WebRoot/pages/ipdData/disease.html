@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>疾病简介</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		h4 {
+			font-weight: bold;
+			font-family: "微软雅黑";
+			margin-top: 30px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.row {
+			line-height: 30px;
+			margin-top: 10px;
+		}
+		p {
+			line-height: 24px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<div class="content" style="padding: 30px 0;">
+			<p><strong>疾病名称：</strong><samp id="DRUG_NAME"></samp></p>
+			<p><strong>英文名称：</strong><samp id="MEDICAL_INSU"></samp></p>
+			<p><strong>英文缩写：</strong><samp id="INDICATION"></samp></p>
+			<p><strong>同义词：</strong><samp id="CONTRA"></samp></p>
+			<p><strong>所属学科：</strong><samp id="ADVERSE"></samp></p>
+			<p><strong>概述：</strong><samp id="USE_DOSAGE"></samp></p>
+			<p><strong>流行学病：</strong><samp id="NOTES"></samp></p>
+			<p><strong>病因：</strong><samp id="INTERACTION"></samp></p>
+			<p><strong>发病机制：</strong><samp id="PHARMACO"></samp></p>
+			<p><strong>并发症：</strong><samp id="DYNAMICS"></samp></p>
+			
+			<p><strong>其他辅助检查：</strong><samp id="YP1"></samp></p>
+			<p><strong>诊断：</strong><samp id="YP2"></samp></p>
+			<p><strong>鉴别诊断：</strong><samp id="YP3"></samp></p>
+			<p><strong>治疗：</strong><samp id="YP4"></samp></p>
+			<p><strong>预后：</strong><samp id="YP5"></samp></p>
+			<p><strong>预防：</strong><samp id="YP6"></samp></p>
+		</div>
+	</div>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        var zhenduanid=getvalue("zhenduanid");
+		    $.ajax({
+				url:"queryDiseaseDetails.action?diseaseid="+zhenduanid,
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	console.info(data);
+			    	$("#DRUG_NAME").html(data.DRUG_NAME);
+			    	$("#MEDICAL_INSU").html(data.MEDICAL_INSU);
+			    	$("#INDICATION").html(data.INDICATION);
+			    	$("#CONTRA").html(data.CONTRA);
+			    	$("#ADVERSE").html(data.ADVERSE);
+			    	$("#USE_DOSAGE").html(data.USE_DOSAGE);
+			    	$("#NOTES").html(data.NOTES);
+			    	$("#INTERACTION").html(data.INTERACTION);
+			    	$("#PHARMACO").html(data.PHARMACO);
+			    	$("#DYNAMICS").html(data.DYNAMICS);
+			    	
+			    	
+			    	$("#YP1").html(data.YP1);
+			    	$("#YP2").html(data.YP2);
+			    	$("#YP3").html(data.YP3);
+			    	$("#YP4").html(data.YP4);
+			    	$("#YP5").html(data.YP5);
+			    	$("#YP6").html(data.YP6);
+			    }
+		    });
+		    $("a").each(function(index,obj){ 
+		    	if(index>10){
+		   			$(obj).attr("href","####").attr("target","").unbind("click");
+		    	}
+	    	});
+		    //$("img").attr("src","");
+		    $("img").attr("width","");
+		    $("img").attr("height","");
+	    });
+	    
+	</script>
+</body>
+</html>

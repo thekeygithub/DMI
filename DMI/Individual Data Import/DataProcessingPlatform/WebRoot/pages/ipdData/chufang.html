@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>门诊处方详情</title>
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/base.css">
+    <!-- jqgrid-->
+  <!--  <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">-->
+
+    <style>
+        /* Additional style to fix warning dialog position */
+		.modal-dialog {
+			margin-top:56px!important;
+		}
+        table {
+        	margin-bottom: 0!important;
+        	border-radius: 0!important;
+        	border-bottom: none;
+        }
+        body {
+        	background: #fff!important;
+        }
+        .panel-body h4 {
+        	line-height: 40px;
+        	background: #81BCF8;
+        	color: #fff;
+        	margin: 0;
+        	border: 1px solid #fff;
+        	border-top-left-radius: 4px;
+        	border-top-right-radius: 4px;
+        }
+        .panel-body h4 a {
+        	float: right;
+        	font-size: 12px;
+        	color: #fff;
+        	margin-right: 15px;
+        	font-family: "宋体";
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include> 
+    <div class="wrapper wrapper-content  animated fadeInRight page-part">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                    <div class="panel-body" style="background: #fff;">
+                    
+                        <h4 class="text-center">处方<a href="javascript:void(0)" onclick="showdialog()">查看标准化处理后处方>></a></h4>
+                        <table  class="table table-bordered">
+                        	<tr>
+                        		<th width="10%">机构名称：</th><td width="25%"><span id="YYMC"></span></td>
+                        		<th width="15%">定点机构编码：</th><td width="20%"><span id="DDJGBM"></span></td>
+                        		<th width="10%">科室：</th><td width="20%"><span id="CKSMC"></span></td>
+                        	</tr>
+                        	<tr>
+                        		<th>门诊号：</th><td><span id="CMZH"></span></td>
+                        		
+                        		<th>处方号：</th><td><span id="CCFH"></span></td>
+                        		<th>费用类别：</th><td><span id="CSFZL"></span></td>
+                        	</tr>
+                        	<tr>
+                        		<th>姓名：</th><td><span id="CXM"></span></td>
+                        		<th>性别：</th><td><span id="CXB"></span></td>
+                        		<th>年龄：</th><td><span id="CNL"></span></td>
+                        	</tr>
+                        	<tr>
+                        		<th>临床诊断：</th><td colspan="2"><span id="CCFZD"></span></td>
+                        		<th>开具时间：</th><td colspan="2"><span id="DXCSJ"></span></td>
+                        	</tr>
+                        </table>
+                       	
+                       	<table class="table table-bordered">
+                            <tbody id="cfmxmodel"></tbody>
+                        </table>
+                        <table class="table table-bordered">
+                            <tr>
+                        		<th width="25%">医生：</th><td width="25%"><span id="CYSMC"></span></td>
+                        		<th width="20%">金额：</th><td><span id="MSFJE"></span></td>
+                        	</tr>
+                        	<tr>
+                        		<th>审核/调配药师：</th><td><span id="SHDPYS">张志新</span></td>
+                        		<th>核对/发药药师：</th><td><span id="HDFYYS">张志祥</span></td>
+                        	</tr>
+                        </table>
+                
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+<div id="mtscf" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="false" data-backdrop=”static” style="display: none;">
+<div class="modal-dialog modal-lg">
+	        <div class="modal-content animated bounceInRight">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	                <h4 class="modal-title" >标准化处方</h4>
+	                <small class="font-bold"></small>
+	            </div>
+	            <div class="modal-body" >
+					<div class="wrapper wrapper-content  animated fadeInRight">
+				<div class="ibox ">
+	            	<div class="ibox-content" style="overflow-y:auto;">
+	            	<h4 class="text-center" style="line-height: 40px;background: #81BCF8;color: #fff;margin: 0;border: 1px solid #fff;border-top-left-radius: 4px;border-top-right-radius: 4px;">门诊诊断</h4>
+	            	
+	            	<table  class="table table-bordered">
+	            	
+	            	<thead>
+	            	<tr class="text-center"><td style="background:#E0EEFB!important;color:#333!important;">诊断</td><td class="text-left" style="background:#E0EEFB!important;color:#333!important;" colspan="3" id="mtscfzd"></td></tr>
+	            	<tr>
+	            	<th>序号</th>
+	
+	            	<th>NLP切分诊断</th>
+	            	<th>标准化诊断</th>
+	            	<th>标准化编码</th>
+	            	</tr>
+	            	</thead>
+	            	<tbody id="mzzd">
+	            	
+	            	</tbody>
+	            	</table>
+	            	<h4 class="text-center" style="line-height: 40px;background: #81BCF8;color: #fff;margin: 0;border: 1px solid #fff;border-top-left-radius: 4px;border-top-right-radius: 4px;">药品</h4>
+	            	<table  class="table table-bordered">
+	            	
+	            	<thead>
+	            	<tr class="text-center"><td style="background:#E0EEFB!important;color:#333!important;">药品</td><td class="text-left" style="background:#E0EEFB!important;color:#333!important;" colspan="3" id="drug"></td></tr>
+	            	<tr>
+	            	<th>序号</th>
+	            	
+	            	<th>NLP切分原始名称</th>
+	            	<th>标准化名称</th>
+	            	<!-- <th>标准化编码</th> -->
+	            	</tr>
+	            	</thead>
+	            	<tbody id="yp">
+	            	
+	            	</tbody>
+	            	</table>
+					</div>
+				</div>
+             </div>
+	            </div>
+	            
+	            <div class="modal-footer-center">
+	            
+	            </div>
+	            
+	        </div>
+	    </div>
+</div>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    
+    <script type="text/javascript">
+	    $(function(){
+	    	queryMzcfModel();
+	    	var h = $(window).height()-240;
+	    	$("#mtscf .ibox-content").height(h);
+	    });
+	    function showdialog(){
+	    	var cfh=getvalue("cfh");
+	    	$.ajax({
+				url:"getDiagsSTD.action", 
+				data:{cfh:cfh},
+				async:false,
+				dataType:"json", 
+				type:"post",
+				success:function (data) {
+                    console.info(data);
+					var h1="";
+					var h2="";
+					var dd=data["list"];
+					if(dd!=""){
+						var d=dd[0];
+						if(d!=""){
+							var cfzds=d.CCFZD.split("@#&");
+				            $("#mtscfzd").text(cfzds[0]);
+				            $("#drug").text(cfzds[1]);
+							var zdss=d.CCFZD_STD.split(",");
+							if(zdss!=""){
+
+								for(var i in zdss){
+									var zds=zdss[i].split(":");
+									
+									var nplzd=zds[0];
+									var mtszds=zds[1].split("@#&");
+									var mtszd=mtszds[0]=="none"?"":mtszds[0];
+									var zdcode=mtszds[1];
+									var type = parseInt(i)+1;
+									h1+="<tr><td>"+type+"</td><td>"+nplzd+"</td><td>"+mtszd+"</td><td>"+zdcode+"</td></tr>";
+								}
+							}
+							var ypss=d.CYPMC_STD.split(",");
+							if(ypss!=""){
+								for(var j in ypss){
+									var yps=ypss[j].split(":");
+									var nplyp=yps[0];
+									var mtsyps=yps[1].split("@#&");
+									var mtsyp=mtsyps[0]=="none"?"":mtsyps[0];
+									var ypcode=mtsyps[1];
+									//<td>"+ypcode+"</td>
+									var type = parseInt(j)+1;
+									h2+="<tr><td>"+type+"</td><td>"+nplyp+"</td><td>"+mtsyp+"</td></tr>";
+								}
+							}
+						}
+					}
+
+					$("#mzzd").html(h1);
+					$("#yp").html(h2);
+				}
+	    	});
+	    	$("#mtscf").modal("show");
+	    }
+    	function queryMzcfModel(){
+    		var bname=getvalue("cfh");
+    		$.ajax({
+				url:"queryMzcfModel.action", 
+				//data:"mzh=1609029209", 
+				data:"cfh="+bname,
+				async:false,
+				dataType:"json", 
+				type:"post",
+				success:function (mm) {
+					$("#CMZH").html(mm.CMZH);
+					$("#CCFH").html(mm.CCFH);
+					$("#CCFZD").html(mm.CCFZD);
+					$("#CSFZL").html(mm.CSFZL);
+					$("#CXB").html(mm.CXB);
+					$("#CNL").html(mm.CNL);
+					$("#CKSMC").html(mm.CKSMC);
+					$("#CYSMC").html(mm.CYSMC);
+					$("#DXCSJ").html(mm.DXCSJ);
+					$("#MSFJE").html(mm.MSFJE);
+					$("#DDJGBM").html(mm.DDJGBM);
+					$("#YYMC").html(mm.YYMC);
+					$("#YBKH").html(mm.YBKH);
+					$("#SHDPYS").html(mm.SHDPYS);
+					$("#HDFYYS").html(mm.HDFYYS);
+					$("#CXM").html(mm.CXM);
+					var arrayModel = mm.cfmxmodel;
+					var str = "";
+					for (var i=0;i<arrayModel.length;i++){
+						str+="<tr><td width=\"25%\" align=\"center\">"+arrayModel[i].CYPMC
+						+"</td><td align=\"center\">"+arrayModel[i].CYPGG
+						+"</td><td align=\"center\">"+arrayModel[i].CYPJX
+						//+"</td><td>"+Math.floor(Math.random()*10)+"盒"
+						//+"</td><td>"+arrayModel[i].CYPYF
+						+"</td><td align=\"center\">"+arrayModel[i].CYWBZ
+						+"</td><td>"+arrayModel[i].CCFNR
+						+"</td></tr>";
+					}
+					
+					$("#cfmxmodel").html(str);
+					
+				}, 
+				error:function (error) {
+					top.my_alert("添加所属区域信息失败！" + error.status);
+				}
+			});
+    	}
+    </script>
+</body>
+</html>

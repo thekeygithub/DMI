@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>患者信息</title>
+	<link rel="stylesheet" href="../../css/base.css">
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="../../css/commond.css" rel="stylesheet" type="text/css">
+	<link href="../../css/but.css" rel="stylesheet" type="text/css">
+	<script src="../../js/jquery-1.12.4.js"></script>
+	<!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+::-webkit-scrollbar-track {
+	background-color: #F5F5F5
+}
+
+::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #999
+}
+    </style>
+    
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//色块表格的样子
+			$(".truecolor tr:odd ").addClass("color1");
+			$(".truecolor tr:odd >td:odd").addClass("color1-1");
+			$(".truecolor tr:even").addClass("color2");
+			$(".truecolor tr:even >td:even").addClass("color2-2");
+			$(".truecolor tr").hover(function(){
+				$(this).children("td").addClass("color3")
+			},function(){
+				$(this).children("td").removeClass("color3")
+			});
+		});
+		
+		$(function(){ 
+			$(".mumbercont").height($(window).height()-120);   //改变div的高度 
+			$(".mumbercont>div.content").height($(".mumbercont").height()-132);
+		
+		}); 
+	</script>
+	<style type="text/css">
+		.font_size_color{font:13px/120% "微软雅黑";color:#12A5B9;padding-right: 15px;padding-left: 10px;}
+	</style>
+</head>
+
+<body>
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<!--个人-->
+	<div class="block">
+		<h1>
+			<span class="tap">个人信息<span class="tap2">// PERSONAL INFORMATION</span></span><span class="tap3">收起</span>
+			<span style="float: right; padding-right: 120px; color: #12A5B9; padding-right: 15px;">
+				<a href="#" class="pull-right grsbxx">
+					<span class="font_size_color">更多个人社会保险信息&gt;</span>
+				</a>
+			</span>
+		</h1>
+		<div class="content">
+			<table class="truecolor" width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tbody>
+			 
+			    <tr>
+			      <td>姓名</td>
+			      <td><span id="XM"></span></td>
+			      <td>性别</td>
+			      <td><span id="XB"></span></td>
+			      <td>民族</td>
+			      <td><span id="MZ"></span></td>
+			      <td>出生日期</td>
+			      <td><span id="SR"></span></td>
+			    </tr>
+			    <tr id="tsDZ">
+			      <td>家庭住址</td>
+			      <td colspan="7"><span id="DZ"></span></td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div>
+	<!--个人OVER-->
+	<!--查询-->
+	<div class="block">
+		<h1>
+			<span class="tap">查询<span class="tap2">// SEARCH</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content" style="height:80px;">
+			<ul class="searchlist">
+			    <li><input id="bdate" style="background:url(../../img/ipdDataBrowsing/daticon.png) 140px center no-repeat"  type="text"  placeholder="开始日期"></li>
+			    <li><input id="edate" style="background:url(../../img/ipdDataBrowsing/daticon.png) 140px center no-repeat"  type="text"  placeholder="结束日期"></li>
+			    <li><input id="bname" type="text" style="width:400px;"  placeholder="请输入疾病、药品、医院科室等信息"></li>
+			    <li><div onclick="sel2()" class="button button-primary" style=" width:90px; height:40px; top:0px; left:0px; padding:0;">
+				查询
+				</div></li>
+				    <li><div onclick="resetinpt()" class="button button-highlight" style=" width:90px; height:40px; top:0px; left:0px; padding:0;">
+				清空
+				</div></li>
+				
+		    </ul>
+		</div>
+	</div>
+	<!--查询OVER-->
+                  
+	<!--360度视图-->
+	<div class="block mumbercont">
+		<h1>
+			<span class="tap">患者信息<span class="tap2">// PATIENT INFORMATION</span></span><span class="tap3">收起</span>
+			<span id="isAuth" style="float:right;padding-right: 120px;display:none;"><span style="color:#000;font:14px '微软雅黑'" >是否脱敏脱密：</span><input type="checkbox" id="ckauth" ></span>
+		</h1>
+		<div class="content" >
+				<div class="btn-part" id="typelist" style="margin-top: 10px; ">
+                    	<div style="margin-bottom: 15px;display:none;" id="typelist1">
+	                        <button class="btn btn-success" type="button" data-type="00">360度就诊视图</button>
+	                        <button class="btn btn-white" type="button" data-type="01" >医院数据</button>
+	                        <button class="btn btn-white" type="button" data-type="02" >药店数据</button>
+	                        <button class="btn btn-white" type="button" data-type="03" >医保结算单</button>
+	                        <button class="btn btn-white" type="button" data-type="04" >医疗可穿戴设备</button>
+	                        <button class="btn btn-white" type="button" data-type="05" >APP使用行为</button>
+	                        <button class="btn btn-white" type="button" data-type="06" >个人健康档案</button>
+	                    </div>
+	                    <div style="margin-bottom: 15px" id="typelist2">
+	                        <button class="btn btn-success" type="button" data-type="00">360度医疗视图</button>
+	                        <button class="btn btn-white" type="button" data-type="11" >门诊</button>
+	                        <button class="btn btn-white" type="button" data-type="12" >住院</button>
+	                        <button class="btn btn-white" type="button" data-type="03" >医保结算单</button>
+	                        <button class="btn btn-white" type="button" data-type="13" >购药</button>
+	                        <button class="btn btn-white" type="button" data-type="05" >APP使用行为</button>
+	                        <button class="btn btn-white" type="button" data-type="15" >血压(可穿戴)</button>
+	                        <button class="btn btn-white" type="button" data-type="16" >血糖(可穿戴)</button>
+	                        <button class="btn btn-white" type="button" data-type="17" >健康档案建档</button>
+	                        <button class="btn btn-white" type="button" data-type="18" >健康体检</button>
+	                        <button class="btn btn-white" type="button" data-type="19" >慢病随访</button>
+	                    </div>
+	                    <div class="clear"></div>
+                    </div>
+			<div class="mblock" style=" width:97.5%; height:97.5%;margin-top: 10px;">
+				<table id="table_list_360"></table>
+				<div id="pager_list_360"></div>
+			</div>
+		</div>
+	</div>
+	<div style="height:60px"></div>
+	<!-- 360度视图 -->
+	
+	
+	
+	
+	<!--控制板块平滑运动-->
+	<script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+	<script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+	<script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+	<script src="../../js/plugins/layer/laydate/laydate.js"></script>
+	<script src="ipdDataBrowsing2.js"></script>
+
+</body>
+</html>

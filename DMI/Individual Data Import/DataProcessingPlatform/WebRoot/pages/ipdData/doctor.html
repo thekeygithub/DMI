@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>医生简介</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		h4 {
+			font-weight: bold;
+			font-family: "微软雅黑";
+			margin-top: 30px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.row {
+			line-height: 30px;
+			margin-top: 10px;
+		}
+	</style>
+    
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h4>医生个人信息</h4>
+		<div class="row">
+			<div class="col-sm-4"><strong>姓名：</strong><span id="doctor_name"></span></div>
+			<div class="col-sm-8"><strong>职称：</strong><span id="zhiwu"></span></div>
+			<div class="col-sm-4"><strong>医院名称：</strong><span id="yiyuan_name"></span></div>
+			<div class="col-sm-4"><strong>科室类别：</strong><span id="keshi_type"></span></div>
+			<div class="col-sm-4"><strong>科室名称：</strong><span id="keshi_name"></span></div>
+			<div class="col-sm-12"><strong>医院地址：</strong><span id="address"></span></div>
+			<div class="col-sm-12">
+				<strong>擅长：</strong>
+				<p><span id="sc"></span></p>
+				<strong>出诊时间：</strong>
+				<p><span id="czsj"></span></p>
+				<strong>职业经历：</strong>
+				<p><span id="zyjl"></span></p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	    $(function(){
+	    	queryDoctor();
+	    });
+	    function queryDoctor(){
+	    	var url = location.search; //获取url中"?"符后的字串 
+	    	var str = url.split("=");
+	    	var doctor_id = str[1];
+	    	//alert(corpid);
+	    	
+	    	$.ajax({
+				url:"queryDoctor.action?doctor_id="+doctor_id,
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			        //console.info(data);
+			    	$("#doctor_name").html(data.doctor_name);
+			    	$("#yiyuan_name").html(data.yiyuan_name);
+			    	$("#address").html(data.address);
+			    	$("#zhiwu").html(data.zhiwu);
+			    	$("#keshi_type").html(data.keshi_type);
+			    	$("#keshi_name").html(data.keshi_name);
+			    	$("#sc").html(data.sc);
+			    	$("#czsj").html(data.czsj);
+			    	$("#zyjl").html(data.zyjl);
+			    }
+	  		});
+	    	$("a").each(function(index,obj){  
+		   		$(obj).attr("href","#").attr("target","").unbind("click");
+	    	});
+		    //$("img").attr("src","");
+		    $("img").attr("width","");
+		    $("img").attr("height","");
+	    }
+	</script>
+</body>
+</html>

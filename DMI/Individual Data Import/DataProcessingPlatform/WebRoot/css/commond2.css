@@ -1,0 +1,341 @@
+@charset "utf-8";
+/* CSS Document */
+
+html {
+	font-size: 16px;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	-moz-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
+}
+body {
+	position: relative;
+	height:8vh;
+	/* min-height: 600px; */
+	background: url(../img/zngh.jpg) center no-repeat fixed;
+	background-size: cover;
+    font: 400 16px/1.618 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', Sathu, EucrosiaUPC, sans-serif;
+}
+body.reg {
+	min-height: 850px
+}
+.sc.body {
+	width: 100%;
+	min-width: 1200px
+}
+.sc.sc-bgc {
+	background: #f5f5f5
+}
+.sc .sc-container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto
+}
+.sc.sc-text {
+	text-align: justify;
+	text-justify: inter-ideograph;
+	word-break: initial;
+	word-break: break-all
+}
+.sc .wrap {
+	white-space: normal;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-all;
+	-ms-word-break: break-all
+}
+.sc.text-ellipsis {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis
+}
+.sc .sc-tool-backtop {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	overflow: hidden;
+	width: 41px;
+	height: 41px;
+	cursor: pointer;
+	-webkit-transition: all .2s;
+	transition: all .2s;
+	border: 1px solid #ddd;
+	background: #f5f5f5
+}
+.sc .sc-tool-backtop:hover .icon {
+	margin: -40px 0 0;
+	-webkit-transition: all .15s;
+	transition: all .15s
+}
+.sc .sc-tool-backtop .sc-tool-name {
+	font-size: 14px;
+	line-height: 40px;
+	display: block;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	color: #fff;
+	background: #3aab4e
+}
+.sc .hide {
+	display: none;
+	opacity: 0
+}
+.sc .show {
+	display: block;
+	opacity: 1
+}
+.sc .text-gradient {
+	position: relative;
+	overflow: hidden
+}
+.sc .center {
+	text-align: center
+}
+.sc .center .center-layer {
+	display: inline-block;
+	margin: 0 auto
+}
+.sc .center .vam {
+	vertical-align: middle
+}
+.cursor {
+	cursor: pointer
+}
+.clear:after {
+	font-size: 0;
+	display: block;
+	visibility: hidden;
+	clear: both;
+	width: 0;
+	height: 0;
+	content: '.'
+}
+
+
+.home-header .logo {
+	display: inline-block;
+	width: 200px;
+	height: 65px;
+	margin: 5vh 0 4vh 130px;
+	background: url(../imgs/logo-osc-white.svg) no-repeat
+}
+
+.form-item input{ height:54px; color:#999; padding-left:24px; border:none; border-radius: 3px;}
+
+
+ .login-body, .logon-body {
+	position: relative;
+	width:1024px;
+	margin: auto;
+	padding: 35px 30px;
+	color: #fff;
+	background: none;
+}
+
+.login-body .form-wrapper, .logon-body .form-wrapper {
+	width: 100%;
+	margin-right: 52px;
+	margin-left: 38px
+}
+.login-body .login-tabs {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	overflow: hidden;
+	width: 93px;
+	height: 93px
+}
+.login-body .login-tabs .tab-bg {
+	display: inline-block;
+	width: 130px;
+	height: 130px;
+	margin: -65px 0 0 -65px;
+	content: '';
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	background: #31b968
+}
+.login-body .login-tabs .tab-item {
+	position: absolute;
+	z-index: 1;
+	top: 13px;
+	left: 13px;
+	display: none
+}
+.login-body .login-tabs .tab-item.active {
+	display: inline-block
+}
+.login-body .login-tabs .tab-item .ic-svg {
+	width: 40px;
+	height: 40px
+}
+.login-body .wechat-login .login-wechat-qr {
+	width: 150px;
+	height: 150px;
+	margin: 15px 0 35px;
+	padding: 5px;
+	border: 1px solid #eee
+}
+.login-body .wechat-login .login-wechat-qr img {
+	width: 100%;
+	height: 100%
+}
+.logon-body .logon-tabs {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	overflow: hidden;
+	width: 300px;
+	margin-bottom: 30px;
+	margin-left: 38px
+}
+.logon-body .logon-tabs .tab-item {
+	display: inline-block;
+	float: left;
+	width: 50%;
+	max-width: 50%;
+	padding-bottom: 9px;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+	-webkit-box-flex: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex-positive: 1;
+	flex-grow: 1
+}
+.logon-body .logon-tabs .tab-item.active {
+	color: #31b968;
+	border-bottom-color: #31b968
+}
+.logon-body .logon-tabs .tab-item.active .ic-phone {
+	background-image: url(../imgs/icon/ic-phone-green.svg)
+}
+.logon-body .logon-tabs .tab-item.active .ic-mail {
+	background-image: url(../imgs/icon/ic-mail-green.svg)
+}
+.logon-body .logon-tabs .ic-svg {
+	width: 18px;
+	height: 18px;
+	margin-right: 5px;
+	vertical-align: sub
+}
+#mailFemale:checked+label:before, #phone-female:checked+label:before {
+
+	background: #e957fb
+}
+.logon-succuss .ic-svg {
+	width: 100px;
+	height: 100px
+}
+
+.checkbox-group input {
+	display: none;
+	opacity: 0
+}
+.checkbox-group input[type=checkbox]+label, .checkbox-group input[type=radio]+label {
+	line-height: 1;
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	cursor: pointer;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center
+}
+.checkbox-group input[type=checkbox]+label:before, .checkbox-group input[type=radio]+label:before {
+	line-height: 1;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	margin-right: 8px;
+	content: '';
+	-webkit-transition: all .2s;
+	transition: all .2s;
+	color: #fff;
+	border: 1px solid #dce4e6;
+	background-color: #f3f6f8
+}
+.checkbox-group input[type=checkbox]+label:before {
+	border-radius: 3px
+}
+.checkbox-group input[type=radio]+label:before {
+	border-radius: 50%
+}
+.checkbox-group input[type=checkbox]:checked+label:before, .checkbox-group input[type=radio]:checked+label:before {
+	text-align: center;
+	color: #fff;
+	border-color: #31b968
+}
+.checkbox-group input[type=checkbox]:checked+label:before {
+	content: '\2713';
+	background-color: #31b968
+}
+.checkbox-group input[type=radio]:checked+label:before {
+	border-width: 6px;
+	background: #fff
+}
+.btn-link, .btn-link a {
+	color: #31b968
+}
+.btn-link a:hover, .btn-link:hover {
+	color: lighten #31b968
+}
+.hide {
+	display: none;
+	opacity: 0
+}
+.show {
+	display: block;
+	opacity: 1
+}
+.btn, .btn a {
+	padding: .4rem 1.2rem;
+	cursor: pointer;
+	-webkit-transition: all .2s;
+	transition: all .2s;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	outline: 0
+}
+.btn a.block, .btn.block {
+	float:right;
+	display: block;
+	width: 150px;
+	height:56px;
+}
+.btn a.btn-lg, .btn.btn-lg {
+	font-size: 1.125rem
+}
+.btn a:disabled, .btn:disabled {
+	cursor: default;
+	opacity: .9
+}
+.btn a:disabled:not([class~=btn-disabled-green]), .btn:disabled:not([class~=btn-disabled-green]) {
+	color: #ccc;
+	border-color: #eee;
+	background: #f8f8f8
+}
+.btn-link, .btn-link a {
+	padding: 0;
+	color: #31b968;
+	border: none;
+	border-radius: 0
+}
+.btn-link a:not(:disabled):hover, .btn-link:not(:disabled):hover {
+	color: #3bc372
+}
+.btn-blue{ color: #fff;  background: #12A8BC}
+.btn-green {
+	color: #fff;
+	background: #31b968
+}
+.btn-green:not(:disabled):hover {
+	background: #3bc372
+}

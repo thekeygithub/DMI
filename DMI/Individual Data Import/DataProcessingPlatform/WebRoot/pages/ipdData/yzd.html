@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>医嘱单</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		h3 {
+			font-family: "微软雅黑";
+			margin-top: 30px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		 h4 {
+			font-weight: bold;
+		 	text-align: center;
+		 	font-family: "微软雅黑";
+		 }
+		.row {
+			line-height: 30px;
+			margin-top: 10px;
+		}
+	</style>
+    
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">	
+		<h3 class="text-center"><span id="yymv"></span></h3>
+		<h4 class="text-center"><span id="yzdmc"></span></h4>
+		<div class="row">
+			<div class="col-sm-6">姓名：<span id="hzmc"></span></div>
+			<div class="col-sm-6 text-right">科别：<span id="ksmc"></span></div>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>医嘱日期</th>
+						<th>医嘱名称</th>
+						<th>医生签字</th>
+						<th>执行时间</th>
+						<th>护士签字</th>
+					</tr>
+				</thead>
+				<tbody  id="zydmc">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        var type=getvalue("type");
+	        var zyh=getvalue("zyh");
+	        var yztime=getvalue("yztime");
+		    $.ajax({
+				url:"queryYzd.action?zyh="+zyh+"&yztime="+yztime+"&type="+type,
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	//console.info(data);
+			    	var yymv = "";
+			    	var hzmc = "";
+			    	var yzdmc = "";
+			    	var ksmc = "";
+			    	var zydmc=""
+			    	for(var i in data){
+			    		yymv = data[i].yymv;
+			    		hzmc = data[i].hzmc;
+			    		yzdmc = data[i].yzdmc;
+			    		ksmc = data[i].ksmc;
+			    		var temp = parseInt(i)+1;
+			    		zydmc+="<tr><td>"+temp+"</td><td>"+data[i].yztime+"</td><td>"+data[i].yzmc +"  "+ data[i].jx+"</td><td>"+data[i].ysmc+"</td><td>"+data[i].zxtime+"</td><td>"+data[i].zxhs+"</td></tr>";
+			    	}
+			    	$("#yymv").html(yymv);
+			    	$("#hzmc").html(hzmc);
+			    	$("#yzdmc").html(yzdmc);
+			    	$("#ksmc").html(ksmc);
+			    	$("#zydmc").html(zydmc);
+			    }
+		    });
+	    });
+	</script>
+</body>
+</html>
+

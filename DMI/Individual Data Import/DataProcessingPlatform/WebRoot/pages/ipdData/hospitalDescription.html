@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>医院信息</title>
+	<link rel="stylesheet" href="../../css/layout.css">
+	<link rel="stylesheet" href="../../css/base.css">
+	<link href="../../css/animate.min.css" rel="stylesheet">
+    <style type="text/css">
+    	.sub-nav>li {
+			width: 250px;
+		}
+    </style>
+</head>
+<body>
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight page-part">
+		<div class="banner">
+			<img src="../../img/1.png" alt="" width="100%">
+		</div>
+		<div class="content">
+			<!-- <h4>河南大学淮河医院 淮河临床学院简介</h4>
+			<p>河南大学淮河医院创建于1955年，是一所集医疗、教学、科研、预防、保健于一体的国家综合三级甲等医院。全国首批“百姓放心示范医院”、"国家级爱婴医院"、"国家脑卒中筛查与防治基地"、"国家卓越医生教育培训计划基地"、"国家卫计委腹腔镜-内镜培训基地"、"国家卫计委冠心病介入培训基地"。是河南省首家中国循证医学中心河南地区分中心，建有河南大学转化医学院士专家工作站。</p>
+			<p>医院总占地面积150亩，拥有南北两个院区，编制病床3000张。南院区以收治外科和心血管内科患者为主，北院区以收治内科患者和教学、科研为主。</p>
+			<p>北院区中欧合璧建筑风格，花园式庭院，树木葱茏，绿草茵茵，四季常青，环境优雅，为开封市绿化先进单位和花园式单位。病区设有单人间、双人间、三人间、多人间，部分病房配有独立卫生间，通风采光好，并免费提供WI-FI、电视等设施。</p>
+			<p>2013年门急诊近100万人次，出院病人7.5万人次，年手术量1万多台次。这些成绩显示广大患者对医院的认可和信赖。</p> -->
+			<h4><span id="name"></span></h4>
+			<p><span id="jianjieID"></span></p>
+		</div>
+	</div>
+	<script type="text/javascript">
+	    $(function(){
+	    	queryMzcfModel();
+	    });
+	    function queryMzcfModel(){
+	    	var url = location.search; //获取url中"?"符后的字串 
+	    	var str = url.split("=");
+	    	var corpid = str[1];
+	    	//alert(corpid);
+	    	
+	    	$.ajax({
+				url:"queryHospital.action?hos_id="+corpid,
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			        //console.info(data);
+			    	$("#name").html(data.name);
+			    	$("#jianjieID").html(data.id);
+			    }
+	  	});
+	    }
+	</script>
+</body>
+</html>

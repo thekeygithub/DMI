@@ -1,0 +1,272 @@
+@CHARSET "UTF-8";
+body {
+	font-family: "微软雅黑";
+	color:#727273;
+	min-width:1280px;
+}
+.ellipsis {
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+}
+.gray-bg {
+	background-color:#f9f9f9;
+}
+.clearfix:after {
+	content: "";
+	clear:both;
+}
+/*ibox*/
+.ibox-header {
+	border:1px solid #dbdbea;
+	line-height:34px;
+	height:32px;
+	background-color:#fff;
+	position:relative;
+	z-index:0;
+	overflow:hidden;
+}
+.title-bg {
+	width:110px;
+	height:32px;	
+	background-color:#12a7bb;
+	color:#fff;
+	font-size:16px;
+	text-indent:24px;
+	position：relative;
+	overflow-y:hidden;
+	z-index:2;
+}
+.title-bg:after {
+	width:49px;
+	height:49px;
+	content:"";
+	background-color:#12a7bb;
+	position:absolute;
+	top:8px;
+	transform:rotate(45deg);
+	z-index:-1;
+}
+.toggle-content {
+	margin-left:50px;
+	cursor: pointer;
+}
+.ibox-body {
+	border:1px solid #dbdbea;
+	border-top:none;
+	background-color:#fff;
+	position:relative;
+	z-index:3;
+	padding:20px 25px;
+}
+/*jggrid 重写*/
+.ui-jqgrid {
+	border:none;
+}
+.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    background-color: #FFF;
+    color:#333;
+}
+.ui-jqgrid .table-bordered, .ui-jqgrid .table-bordered td, .ui-jqgrid .table-bordered th.ui-th-ltr {
+	border-right:none;
+}
+.table thead tr th{
+	text-align:left!important;
+	padding-left:20px;
+}
+.table>thead>tr {
+	border-bottom:2px solid #86837e!important;
+}
+.table>tbody>tr>td,.table>tbody>tr>td.active{
+	background-color: #FFF !important;
+	padding-left:20px;
+}
+
+!important
+
+/*授权书*/
+.sheet-part {
+	width:790px;
+	margin:0 auto;
+	border:1px solid #dbdbea;
+	padding:20px;
+}
+.sheet-part h2 {
+	margin:0;
+	padding-bottom:10px;
+	border-bottom:2px solid #4a98eb;	
+}
+.sheet-part section {
+	margin-top:2px;
+	border-top:1px solid #4a98eb;
+	padding:10px 0;
+	position:relative;
+}
+.sheet-part section p {
+	line-height:22px;
+}
+.next-btn {
+	background:#6d9ab1;
+	border-radius:0;
+	font-size:14px;
+	border-color:#6d9ab1;
+	margin-top:20px;
+	padding:5px 20px;
+	color:#fff;
+}
+.next-btn i {
+	font-size:20px;
+	vertical-align: middle;
+	margin-left:10px;
+}
+.sheet-part section img {
+	position: absolute;
+	left:10px;
+	bottom:30px;
+}
+/* 智能挂号 */
+/* list&map */
+.search-select {
+	width:100%;
+	height:47px;	
+	background:rgba(0,0,0,.3);
+	position:fixed;
+	top:0;
+	left:0;
+	z-index: 999999999999;
+}
+.input-group,.input-s-sm {
+	margin-top:8px;
+}
+.empty {
+	color:#fff;
+	line-height:47px;
+	cursor: pointer;
+}
+.form-control, .single-line {
+	font-size:12px;
+}
+.search-select .col-xs-1 {
+	padding-left:0;
+	width:9%;
+}
+.search-select .col-xs-3 {
+	width:360px;
+	padding:0 40px;
+}
+.search-select .btn-info {
+	padding:5px 24px;
+	background:#12a8bc;
+	border-color:#12a8bc;
+}
+.left-part {
+	width:340px;
+	height:100%;
+	border-right:1px solid #999;
+	background:#fa;
+	float:left;
+}
+.isopen-left {
+	position:absolute;
+	left:339px;
+	top:50%;
+	margin-top:-15px;
+	z-index:99999999999;
+	cursor: pointer;
+}
+.result {
+	margin-top:47px;
+	line-height:28px;
+	border-bottom: 1px solid #e4e4e9;
+	color:#000;
+	padding:0 9px;
+}
+.result .quantity {
+	color:#ff0000;
+}
+.gh-info,.filter {
+	border-bottom: 1px solid #e4e4e9;
+}
+.gh-info .row div {
+	line-height: 200%;
+	padding: 0 9px;
+}
+.filter {
+	margin-top:11px;
+	
+}
+.filter a:first-child {
+	margin-left:9px;
+}
+.filter a {
+	display:block;
+	float:left;
+	width:48px;
+	line-height:36px;
+	text-align: center;
+	border:1px solid #fa;
+	border-bottom-color:#e4e4e9;
+	margin-bottom:-1px;
+	margin-left:7px;
+	color:#727273;
+	
+}
+.filter a.active {
+	border:1px solid #e4e4e9;
+	border-bottom-color:#fff;
+	background:#fff;
+}
+.filter i {
+	display:none;
+}
+.list-group {
+	background:#fff;
+	padding:0 9px;
+	overflow-y:auto;
+}
+.list-group-item:first-child {
+	border-top-color:#fff;
+}
+.list-group-item {
+	border-radius:0;
+	border-color:#fff;
+	border-top-color:#e4e4e9;
+	border-bottom-color:#e4e4e9;
+	cursor: pointer;
+}
+.list-group-item .col-xs-3 {
+	padding:0;
+	position: relative;
+}
+.list-group-item .col-xs-3 span {
+	position: absolute;
+	bottom:0;
+	left:0;
+	color:#fff;
+	display:block;
+	width:100%;
+	height:24px;
+	font-size:16px;
+	line-height: 24px;
+	text-align:center;
+}
+.able-gh {
+	background: #6bbe3c;
+}
+.disable-gh {
+	background: #ff5c26;
+}
+.list-group-item .col-xs-9 {
+	padding-right:0;
+}
+.right-part {
+	float:left;
+	width:calc( 100% - 341px );
+	height:100%;
+	background:#666;
+}
+
+
+
+
+

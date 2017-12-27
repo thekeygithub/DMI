@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>门诊就医信息详情</title>
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/base.css">
+    <!-- jqgrid-->
+
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        body {
+        	background: #fff!important;
+        }
+        #jsd tr td,#jsd tr th {
+        	width:25%;
+        }
+        .table-bordered  thead tr th {
+        	background: #81BCF8!important;
+        }
+        .table-bordered  tbody tr td {
+        	background: #E0EEFB!important;
+        }
+        
+    </style>
+   	
+
+</head>
+
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include> 
+    <div class="wrapper wrapper-content  animated fadeInRight page-part">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox ">
+                	<div class="tabs-container">
+	                    <ul class="nav nav-tabs">
+	                        <li  id="mzcftab"><a data-toggle="tab" href="#tab-1" aria-expanded="false"> 门诊处方</a>
+	                        </li>
+	                        <li class="" id="jctab"><a data-toggle="tab" href="#tab-2" aria-expanded="true">检查报告</a>
+	                        </li>
+	                        <li class="" id="jytab"><a data-toggle="tab" href="#tab-3" aria-expanded="false">检验报告</a>
+	                        </li>
+	                        <li class="" id="jsdtab"><a data-toggle="tab" href="#tab-4" aria-expanded="true">医保结算单</a> </li>
+	                    </ul>
+	                    <div class="tab-content">
+	                        <div id="tab-1" class="tab-pane ">
+	                            <div class="panel-body">
+	                               	<table class="table table-bordered">
+		                               	<thead>
+			                                <tr>
+			                                    <th>序号</th>
+			                                    <th>时间</th>
+			                                    <th>名称</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody id="CF">
+			                                
+			                            </tbody>
+			                        </table>
+	                            </div>
+	                        </div>
+	                        <div id="tab-2" class="tab-pane">
+	                            <div class="panel-body">
+	                               	<table class="table table-bordered">
+		                               	<thead>
+			                                <tr>
+			                                    <th>序号</th>
+			                                    <!-- <th>时间</th> -->
+			                                    <th>名称</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody id="JC">
+			                                
+			                            </tbody>
+			                        </table>
+	                            </div>
+	                        </div>
+	                        <div id="tab-3" class="tab-pane">
+	                            <div class="panel-body">
+	                               <table class="table table-bordered">
+		                               	<thead>
+			                                <tr>
+			                                    <th>序号</th>
+			                                    <!-- <th>时间</th> -->
+			                                    <th width="20%">报告名称</th>
+			                                    <th>检验项目</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody id="jy">
+			                                
+			                            </tbody>
+			                        </table>
+	                            </div>
+	                        </div>
+	                        <div id="tab-4" class="tab-pane">
+	                            <div class="panel-body">
+		<h4 class="text-center" style="border: 1px solid #fff;border-top-left-radius: 4px;border-top-right-radius: 4px;font-family: '微软雅黑';padding: 15px; color: #fff;background: #81BCF8;margin-bottom: 0;">开封市职工医保结算单 <a href="#" id="lookup" class="pull-right" style="font-size: 12px;font-weight: normal;font-family: 宋体;color: #fff;">查看详情>></a></h4>
+		<table class="table table-bordered" id="jsd" style="border-radius: 0;">
+			<tr>
+				<th width='15%'>就诊机构:</th>
+				<td>河南大学淮河医院</td>
+				<th width='15%'>单据号:</th>
+				<td id="DJH"></td>
+			</tr>
+			<tr>
+				<th>患者姓名:</th>
+				<td id="CXM"></td>
+				<th>患者性别:</th>
+				<td id="CXB"></td>
+			</tr>
+			<tr>
+				<th>患者年龄:</th>
+				<td id="CNL"></td>
+				<th>出生日期:</th>
+				<td id="CSRQ"></td>
+			</tr>
+			<tr>
+				<th>诊断:</th>
+				<td id="zd" colspan="3"></td>
+				
+			</tr>
+			<tr>
+				<!-- <th>住院天数:</th>
+				<td id="ZYTS"></td> -->
+				<th>结算日期:</th>
+				<td id="JSRQ"></td>
+				<th>医疗总费用:</th>
+				<td id="YLFZ"></td>
+			</tr>
+			
+			
+			<tr>
+				<th>本次统筹补偿费用:</th>
+				<td id="TCZF"></td>
+				<th>个人自付费用:</th>
+				<td id="ZFFY"></td>
+			</tr>
+			<tr>
+				<th>个人账户支付费用:</th>
+				<td id="GRZH"></td>
+				<th>乙类药品个人自理:</th>
+				<td id="YLYP"></td>
+			</tr>
+			<tr>
+				<th>经办人:</th>
+				<td id="JBR"></td>
+				<th>经办日期:</th>
+				<td id="JBRQ"></td>
+			</tr>
+		</table>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+     <script>
+	
+	    $(document).ready(function(){
+	        var bname=getvalue("h_no");//门诊号
+	        var cardno=getvalue("cardno");//身份证
+			var hos_id=getvalue("hos_id");//机构id
+			var flag=getvalue("flag");
+			var zd=decodeURIComponent(getvalue("zd"));
+            $("#zd").text(zd);
+            if(flag==1){
+        		$("#jsdtab").hide();
+        	}else{
+        		$.ajax({
+    	    		url:"tian/findSettlement.action",
+    	    		dataType:"json",
+    	    		type:"post",
+    	    		data:{cardno:cardno,bname:bname,ttype:hos_id,flag:"1"},
+    	    	    async:false,
+    	    	    success:function(data){
+    	    	    	
+    	    	    	if(typeof(data.LSH)=="undefined"){
+    	    	    		$("#jsdtab").hide();
+    	    	    		return false;
+    	    	    	}
+    	    	    	$("#jsd").find("td").each(function(s,b){
+    	    	    		$(b).text(data[$(b).attr("id")]);
+    	    	    	});
+    	    	    	$("#lookup").attr("href","../sheets/jsd.html?lsh="+data["LSH"]+"&pjh="+data["DJH"]+"&hos_id="+data["HOS_ID"]+"&cardno="+cardno);
+
+    	    	    }
+    	    	});
+        	}
+			
+			$.ajax({
+					url:"tian/findTestData.action",
+					dataType:"json",
+					type:"post",
+					data:{cardno:bname},
+				    async:false,
+				    success:function(data){
+				        //console.info(data);
+				        if(typeof(data[0])=="undefined"){
+			                $("#jytab").hide();
+			                return false;
+		                }
+				    	var h="";
+				    	for(var i in data){
+				    		var index=parseInt(i)+1;
+				    		//<td>"+data[i].DJYRQ.substring(0,19)+"</td>
+				    		h+="<tr><td>"+index+"</td><td><a href=\"../sheets/routineBlood.html?cardno="+data[i].CBGDH+"&bname="+bname+"&ttype=0\">"+data[i].CBGMC+"</a></td><td>"+data[i].CJYXM+"</td></tr>";
+				    	}
+				    	$("#jy").html(h);
+				    }
+		  	});
+	    	$.ajax({
+				url:"/MDEPlatform/yyxg/getExamList.action?h_no="+bname+"&type=1",
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			       // console.info(data);var
+			    	if(data.list==""){
+		                $("#jctab").hide();
+		                return false;
+	                }
+			    	var h="";
+			    	for(var i in data.list){
+			    		var a = parseInt(i)+1;
+			    		//<td>"+data.list[i].DRYSJ.substring(0,19)+"</td>
+			    		h+="<tr><td>"+a+"</td><td><a href=\"../sheets/inspectionResults.html?exam_id="+data.list[i].ID+"\">"+data.list[i].TITLE+"</a></td></tr>";
+			    	}
+			    	$("#JC").html(h);
+			    }
+	    	});
+	    	
+	    	$.ajax({
+	    		//url:"queryMzcfListModel.action?mzh="+bname,
+	    		url:"queryMzcfListModel.action?mzh="+bname,
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	if(typeof(data[0])=="undefined"){
+		                $("#mzcftab").hide();
+		                return false;
+	                }
+			    	var h="";
+			    	for(var i in data){
+			    		var a = parseInt(i)+1;
+			    		h+="<tr><td>"+a+"</td><td>"+data[i].DXCSJ.substring(0,19)+"</td><td><a href=\"chufang.html?cfh="+data[i].CCFH+"\">处方"+a+"</a></td></tr>";
+			    	}
+			    	$("#CF").html(h);
+			    }
+	    	});
+	    	$(".nav-tabs li").each(function(){
+	    	    if(!$(this).is(":hidden")){
+	    	    	
+	    	    	$(this).addClass("active");
+	    	    	var t=$(this).find("a").attr("href");
+	    	    	$(t).addClass("active");
+	    	    	return false;
+	    	    }
+	    	});
+	    });
+    </script>
+</body>
+</html>

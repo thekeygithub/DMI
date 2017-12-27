@@ -1,0 +1,215 @@
+@charset "utf-8";
+/* CSS Document */
+
+html {
+	font-size: 16px;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	-moz-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%
+}
+body {
+	position: relative;
+	height:8vh;
+	min-height: 600px;
+	background:#F9F9F9;
+	background-size: cover;
+    font: 400 16px/1.618 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', Sathu, EucrosiaUPC, sans-serif;
+}
+/*一大一大的区块*/
+.block{ width:98%; min-width:1160px; margin:15px auto ; border:1px solid #DBDBEA; padding-bottom:15px; background:#fff;}
+.block h1{ display:block; width:100%; height:32px; border-bottom:1px solid #DBDBEA; margin:0; padding:0; font:bold 16px/32px "微软雅黑"; color:#fff;}
+.block h1 span{ display:inline-block; padding-left:16px; }
+/*父类大标题*/
+.block .h1big{height:46px; }
+.block span.tapbig{ background:url(../img/tagbig.png) right center no-repeat; height:46px; width:450px; min-width:308px; line-height:46px;}
+/*父类大标题OVER*/
+.block span.tap{ background:url(../img/tag.png) right center no-repeat; height:32px; min-width:308px;}
+.block span.tap2{ font:12px/24px "微软雅黑"; color:#fff;padding-left:10px;}
+.block span.tap3,.block span.tap3 a{ font:13px/24px "微软雅黑"; color:#999;padding-left:16px;}
+.block .content{ position:relative; padding:12px;font:13px/24px "微软雅黑"; color:#666A6C; }
+.block .content .pay {display:inline-block; margin:0 25px;}
+.block .content .list1 ul{ display:inline-block; padding:0; margin:0; width:100%;}
+.block .content .list1 li{ float:left; list-style:none; padding:4px 15px; margin:8px 18px; border:1px solid #ccc;}.block .content .list1 li:hover{ background:#FFF0C4;} .block .content .on{ background:#FFEAAA;}
+/*表格换色换单元格色*/
+.truecolor {border:1px solid #DBDBEA;text-align:left; color:#666A6C;}
+
+.truecolor th{ color:#FFF;}.truecolor td{ height:34px; padding-left:30px;} 
+
+.color2 {background-color:#F2F2F2;  font-weight:normal; }
+.color2-2 {background-color:#E8E8E8; font:bold 13px/16px "微软雅黑";}
+
+.color1 {background-color:#F8F8F8; font:bold 13px/16px "微软雅黑";}
+.color1-1 {background-color:#fff; font-weight:normal; }
+
+.color3 {background-color:#FFF0C4; color:#333;}
+.red{color:#f00;}
+
+/*表格换色换单元格已滚粗*/
+
+/*通用超简表格*/
+.list{ font:13px/120% "微软雅黑"; width:100%; border-collapse:collapse; text-align:left; color:#333;}
+.list td,.list th{ height:36px; border-bottom:1px solid #86837E; font-weight:normal;  padding-left:20px;}
+.list tr:hover{ background:#FFF0C4;}
+.list td{ border-bottom:1px solid #DADADA;}
+.list .cplete,.list .cplete a{ color:#12A5B9;} .list .uncplete,.list .uncplete a{ color:#FF8000;}
+.button{ display:block; width:235px; height:42px; background:#5AC2E7; margin:0 auto; clear:both; font:bold 20px/40px "宋体"; text-align:center; color:#FFF;cursor:pointer; margin:15px auto 0 auto;}
+.button:hover{background:#06F; color:#CCC;}
+.list td .but{ display:inline-block; padding:0px 5px; cursor:pointer; margin:0px 5px;}
+
+/*通用超简表格OVER*/
+
+/*checkbox组件*/
+.checkbox-group input {
+	display: none;
+	opacity: 0
+}
+.checkbox-group input[type=checkbox]+label, .checkbox-group input[type=radio]+label {
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	cursor: pointer;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center
+}
+
+.checkbox-group input[type=checkbox]+label:before, .checkbox-group input[type=radio]+label:before {
+	line-height: 1;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 8px;
+	content: '';
+	-webkit-transition: all .2s;
+	transition: all .2s;
+	color: #fff;
+	border: 1px solid #999;
+	background-color: #f3f6f8
+}
+
+.checkbox-group input[type=checkbox]+label:before {
+	border-radius: 3px
+}
+.checkbox-group input[type=radio]+label:before {
+	border-radius: 50%
+}
+.checkbox-group input[type=checkbox]:checked+label:before, .checkbox-group input[type=radio]:checked+label:before {
+	text-align: center;
+	color: #fff;
+	border-color: #31b968
+}
+.checkbox-group input[type=checkbox]:checked+label:before {
+	content: '\2713';
+	background-color: #31b968
+}
+.checkbox-group input[type=radio]:checked+label:before {
+	border-width: 1px;
+	background: #31b968;
+}
+/*checkbox组件OVER*/
+
+/*患者信息页样式*/
+         .mumbercont{ overflow:hidden;}
+		 .searchlist{ position:absolute;  list-style:none; padding:0; left:10%; top:30%; width:auto;}
+		 .searchlist li{ display:block;margin-right:15px; float:left;}
+		 .searchlist input{ border:1px solid #DBDBEA; height:40px; border-radius:1px; padding-left:10px; width:160px;}
+       .content .mblockleft{ float:left; border:1px solid #DADADA; margin-bottom:5px; overflow:auto;}
+	   .content .mblockright{ float:right; border:1px solid #DADADA; margin-bottom:5px; overflow:auto;}
+  .content .mblockleft h1, .content .mblockright h1{ height:38px; width:100%; font:15px/38px "微软雅黑"; margin:0; padding:0; border-bottom:none; color:#999;}
+.content .mblockleft h1 span:first-child, .content .mblockright h1  span:first-child{float:left;  color:#12A7BB;}
+	  .content .mblockleft h1 .eng,.mblockright h1 .eng{ float:left; padding-left:5px; font:10px/38px "微软雅黑"; }
+	  .fullscre{ float:right; margin-right:32px; cursor:pointer;}
+	  .content .mblist{ display:block; margin:0; padding:0px;}
+	  .content  .list{ width:98%; margin:5px auto; white-space:nowrap;}
+	.content .mblock{ background:#fff;}
+	  
+	    /*侧滑导航*/
+		
+		.icon-github{ 
+ background:url(../img/ipdDataBrowsing/icon1.png) center no-repeat;
+}
+		.icon-gitter {
+background:url(../img/ipdDataBrowsing/icon2.png) center no-repeat;
+}
+.icon-medium{
+background:url(../img/ipdDataBrowsing/icon3.png) center no-repeat;
+}
+.icon-stack-overflow {
+background:url(../img/ipdDataBrowsing/icon4.png)  center no-repeat;
+}
+		.sidecar {
+  display: none; }
+  @media (min-width: 185px) {
+    .sidecar {
+      display: block;
+      position: fixed;
+      top: 400px;
+      right: 0;
+      z-index: 100; } }
+
+.sidecar__link {
+  display: inline-block;
+  padding: 0.45em;
+  float: right;
+  clear: both;
+  color: #f2f2f2;
+  -webkit-transition: all 250ms;
+  transition: all 250ms; }
+  .sidecar__link:first-of-type {
+    border-top-left-radius: 3px; }
+  .sidecar__link:last-of-type {
+    border-bottom-left-radius: 3px; }
+  .sidecar__link:hover {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    color: #ffffff; }
+
+.sidecar__label {
+  display: block;
+  float: left;
+  width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  -webkit-transition: width 250ms;
+  transition: width 250ms; }
+
+.sidecar__icon {
+  display: inline-block;
+ width:26px; height:28px;
+  vertical-align: middle;
+  font-size: 20px; }
+
+.sidecar__link--github {
+  background: #444; }
+  .sidecar__link--github:hover {
+    background: #333; }
+    .sidecar__link--github:hover .sidecar__label {
+      width: 115px; }
+
+.sidecar__link--gitter {
+  background: #da2c6a; }
+  .sidecar__link--gitter:hover {
+    background: #ed1965; }
+    .sidecar__link--gitter:hover .sidecar__label {
+      width: 85px; }
+
+.sidecar__link--medium {
+  background: #10aa71; }
+  .sidecar__link--medium:hover {
+    background: #02b875; }
+    .sidecar__link--medium:hover .sidecar__label {
+      width: 115px; }
+
+.sidecar__link--so {
+  background: #ec7c27; }
+  .sidecar__link--so:hover {
+    background: #fe7a15; }
+    .sidecar__link--so:hover .sidecar__label {
+      width: 85px; }
+     /*患者信息页样式OVER*/   

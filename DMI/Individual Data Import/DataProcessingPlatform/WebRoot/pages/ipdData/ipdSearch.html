@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ipd数据浏览</title>
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+   <!--  <link href="../../css/plugins/datapicker/datepicker3.css" rel="stylesheet"> -->
+    <link href="../../css/base.css" rel="stylesheet">
+<link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+	<!-- <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet"> -->
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        body {
+        	background: #fff!important;
+        }
+         h3 {
+        	background: #81BCF8;
+        	color: #fff;
+        	font-weight: normal;
+        	margin: 0;
+        	padding: 15px;
+        	border-top-left-radius:4px;
+        	border-top-right-radius:4px;
+        	width:961px; 
+        }
+        .extable {
+        	padding: 15px;
+        	border: 1px solid #ddd;
+        	width:961px;        	
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    <div class="wrapper wrapper-content  animated fadeInRight page-part" style="padding-bottom:80px">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox">
+                	<h3 class="text-center">IPD数据高级检索 <a href="ipdDataIntegrationServices.html" class="pull-right" style="font-size:12px;color:#fff;font-family: '宋体';line-height:18px">IPD数据检索>></a></h3>
+                	<div class="extable">
+                    <div class="btn-part" >
+                    	<div style="margin-bottom: 15px;" id="typelist">
+	                        <button class="btn btn-success" type="button" data-type="0">全部</button>
+	                        <button class="btn btn-white" type="button" data-type="1" >医院数据</button>
+	                        <button class="btn btn-white" type="button" data-type="2" >药店数据</button> 
+	                        <button class="btn btn-white" type="button" data-type="3" >医保结算单</button>
+	                        <button class="btn btn-white" type="button" data-type="4" >医疗可穿戴设备</button>
+	                        <button class="btn btn-white" type="button" data-type="5" >APP使用行为</button>
+	                        <button class="btn btn-white" type="button" data-type="6" >个人健康档案</button>
+	                    </div>
+	                    <div class="clear"></div>
+                    </div>
+                    <div class="row">
+                    	<div class="col-sm-8 m-b-xs">
+	                	    <div class="input-group input-medium date-picker input-daterange">
+	                	    	<span class="input-group-addon" style="background: #eee">开始时间</span>
+							    <input class="form-control layer-date" placeholder="开始时间" id="bdate">							   
+							    <span class="input-group-addon" style="background: #eee">结束时间</span>
+							    <input class="form-control layer-date" placeholder="结束时间" id="edate">
+							</div>
+	                     </div>
+                    </div>
+                    <div class="row select-part">
+                    	<div class="col-sm-3 m-b-xs col-sm-offset-3 m-b-xs2">
+                            <select class="input-sm form-control input-s-sm inline" id="selfirst">
+                                <option value="1">诊断名称</option>
+                                <option value="2">主要诊断名称</option>
+                                <option value="3">药品名称</option>
+                            
+                                <option value="5">检查名称</option>
+                                <option value="10">医院名称</option>
+                                <option value="11">科室名称</option>
+                                <option value="6">身份证号</option>
+                                <option value="7">医保卡号</option>
+                                <option value="8">姓名</option>
+                                <option value="9">住址</option>                                               
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" placeholder="" class="input-sm form-control" width="100%" id="qstfirst"> 
+                        </div>
+                    </div>
+                    <div class="row select-part">
+                    	<div class="col-sm-3 m-b-xs">
+                    		<select class="input-sm form-control input-s-sm inline" id="cdtfirst">
+                                <option value="0">AND</option>
+                                <option value="1">OR</option>
+                                <option value="2">NOT</option>                          
+                            </select>
+                    	</div>
+                    	<div class="col-sm-3 m-b-xs m-b-xs2">
+                            <select class="input-sm form-control input-s-sm inline" id="selsec">
+                                <option value="1">诊断名称</option>
+                                <option value="2">主要诊断名称</option>
+                                <option value="3">药品名称</option>
+                               
+                                <option value="5">检查名称</option>
+                                <option value="10">医院名称</option>
+                                <option value="11">科室名称</option>
+                                <option value="6">身份证号</option>
+                                <option value="7">医保卡号</option>
+                                <option value="8">姓名</option>
+                                <option value="9">住址</option>                  
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" placeholder="" class="input-sm form-control" width="100%" id="qstsec"> 
+                        </div>  
+                    </div>
+                    <div class="row select-part">
+                    	<div class="col-sm-3 m-b-xs">
+                    		<select class="input-sm form-control input-s-sm inline" id="cdtsec">
+                                <option value="0">AND</option>
+                                <option value="1">OR</option>
+                                <option value="2">NOT</option>                          
+                            </select>
+                    	</div>
+                    	<div class="col-sm-3 m-b-xs m-b-xs2">
+                            <select class="input-sm form-control input-s-sm inline" id="selthd">
+                                <option value="1">诊断名称</option>
+                                <option value="2">主要诊断名称</option>
+                                <option value="3">药品名称</option>
+                             
+                                <option value="5">检查名称</option>
+                                <option value="10">医院名称</option>
+                                <option value="11">科室名称</option>
+                                <option value="6">身份证号</option>
+                                <option value="7">医保卡号</option>
+                                <option value="8">姓名</option>
+                                <option value="9">住址</option>                       
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" placeholder="" class="input-sm form-control" width="100%" id="qstthd"> 
+                        </div>
+                    </div> 
+                    <div class="row select-part">
+                    	<div class="col-sm-3 m-b-xs">
+                    		<select class="input-sm form-control input-s-sm inline" id="cdtthd">
+                                <option value="0">AND</option>
+                                <option value="1">OR</option>
+                                <option value="2">NOT</option>                          
+                            </select>
+                    	</div>
+                    	<div class="col-sm-3 m-b-xs m-b-xs2">
+                            <select class="input-sm form-control input-s-sm inline" id="selfth">
+                                <option value="1">诊断名称</option>
+                                <option value="2">主要诊断名称</option>
+                                <option value="3">药品名称</option>
+                    
+                                <option value="5">检查名称</option>
+                                <option value="10">医院名称</option>
+                                <option value="11">科室名称</option>
+                                <option value="6">身份证号</option>
+                                <option value="7">医保卡号</option>
+                                <option value="8">姓名</option>
+                                <option value="9">住址</option>                     
+                            </select>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" placeholder="" class="input-sm form-control" width="100%" id="qstfth"> 
+                        </div>
+                        <div class="col-sm-1 text-right" style="padding-left:0"><i class="fa fa-plus-circle plusItem" onclick="plusItem(this,$('.btn-success').attr('data-type'))" style="font-size:30px;color:#999"></i></div>
+                    </div>
+                    <div class="row">
+	                    
+                    	<div class="col-sm-3 text-right col-sm-offset-9" style="line-height: 30px;">
+                    		<button type="button" class="btn btn-sm" onclick="getTalbeDate()"> 检索</button>
+                    	</div>
+                    </div>
+                </div>    
+                </div>
+               <!--  <div class="jqGrid_wrapper">
+                        <table id="table_list_1"></table>
+                        <div id="pager_list_1"></div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+	<script src="../../js/plugins/iCheck/icheck.min.js"></script>
+	<!-- <script src="../../js/plugins/datapicker/bootstrap-datepicker.js"></script> -->
+	<script src="../../js/plugins/layer/laydate/laydate.js"></script>
+    <script>
+    	var len = $(".extable .select-part").length;
+    	function initSelect() {
+    		$(".extable .select-part").not($(".extable .select-part").eq(0))
+    			.not($(".extable .select-part").eq(1))
+    			.not($(".extable .select-part").eq(2))
+    			.not($(".extable .select-part").eq(3)).remove();    		
+    		$(".extable .select-part input").val("");
+    		$(".extable .select-part").eq(3).find(".plusItem").show();
+    		return len = $(".extable .select-part").length;
+    	}
+    	function plusItem(t,dataType){
+    		var str2 = '';
+    		switch(dataType){
+    			case '0':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    	            	+'<option value="1">诊断名称</option>'
+    	            	+'<option value="2">主要诊断名称</option>'
+    	            	+'<option value="3">药品名称</option>'
+    	            
+    	            	+'<option value="5">检查名称</option>'
+    	            	+'<option value="10">医院名称</option>'
+    	            	+'<option value="11">科室名称</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'                     
+    	            	+'</select>';
+    	            	break;
+    			case '1':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    					+'<option value="1">诊断名称</option>'
+    	            	+'<option value="2">主要诊断名称</option>'
+    	            	+'<option value="3">药品名称</option>'
+    	            	
+    	            	+'<option value="5">检查名称</option>'
+    	            	+'<option value="10">医院名称</option>'
+    	            	+'<option value="11">科室名称</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'                     
+    	            	+'</select>';
+    	            	break;
+    			case '2':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    	            	+'<option value="3">药品名称</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'        
+    	            	+'<option value="16">药店名称</option>'   
+    	            	+'</select>';
+    	            	break; 
+    			case '3':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    					+'<option value="1">诊断名称</option>'
+    	            	+'<option value="2">主要诊断名称</option>'
+    	            	+'<option value="3">药品名称</option>'
+    	            	+'<option value="10">医院名称</option>'
+    	            	+'<option value="11">科室名称</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'                      
+    	            	+'</select>';
+    	            	break; 
+    			case '4':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    	            	+'<option value="14">血压高于</option>'
+    	            	+'<option value="15">血糖高于</option>'
+    	            	+'<option value="20">血压低于</option>'
+    	            	+'<option value="21">血糖低于</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'                   
+    	            	+'</select>';
+    	            	break; 
+    			case '5':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    	            	+'<option value="12">查询</option>'
+    	            	+'<option value="13">购买</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'                  
+    	            	+'</select>';
+    	            	break; 
+    			case '6':
+    				str2='<select class="input-sm form-control input-s-sm inline">'
+    					+'<option value="1">诊断名称</option>'
+  
+    	            	+'<option value="3">药品名称</option>'
+    	            	
+    	            	+'<option value="5">检查名称</option>'
+    	            	+'<option value="10">医院名称</option>'
+    	            	+'<option value="11">科室名称</option>'
+    	            	+'<option value="6">身份证号</option>'
+    	            	+'<option value="7">医保卡号</option>'
+    	            	+'<option value="8">姓名</option>'
+    	            	+'<option value="9">住址</option>'                    
+    	            	+'</select>';
+    	            	break; 
+    		}
+    		var str = '<div class="row select-part">'
+            	+'<div class="col-sm-3 m-b-xs">'
+            	+'<select class="input-sm form-control input-s-sm inline">'
+            	+'<option value="0">AND</option>'
+            	+'<option value="1">OR</option>'
+            	+'<option value="2">NOT</option>'                          
+            	+'</select>'
+            	+'</div>'
+            	+'<div class="col-sm-3 m-b-xs m-b-xs2">'
+            	+str2
+            	+'</div>'
+            	+'<div class="col-sm-5">'
+            	+'<input type="text" placeholder="" class="input-sm form-control" width="100%" id="qstfth">' 
+            	+'</div>'
+            	+'<div class="col-sm-1 text-center" style="padding-left:0"><i class="fa fa-plus-circle plusItem" onclick="plusItem(this,$(\'.btn-success\').attr(\'data-type\'))" style="font-size:30px;color:#999"></i> <i class="fa pull-right fa-minus-circle minusItem" onclick="minusItem(this)" style="font-size:30px;color:#999"></i></div>'
+            	+'</div>'
+           
+            len+=1;
+            if(len<11){
+            	$(t).parent().parent().after(str);
+            	if(len==10){
+            		$(".plusItem").hide();
+            	}
+            }else{
+            	return;
+            }
+            $(t).hide();
+            return len = $(".extable .select-part").length;
+    			
+    	}
+    	function minusItem(t){
+    		var isShow = $(t).parent().parent().next().find(".plusItem").css("display");
+    		if(isShow==undefined){
+    			$(t).parent().parent().prev().find(".plusItem").show();
+    		}else if(len==10){
+    			$(".extable .row").eq(10).find(".plusItem").show();
+    		}
+    		$(t).parent().parent().remove();
+    		
+    		 return len = $(".extable .select-part").length;
+    	}
+        $(document).ready(function(){
+        	var start={
+      			elem:"#bdate",
+      			format:"YYYY/MM/DD hh:mm:ss",
+      			istime:true,
+      			istoday:false,
+      			choose:function(datas){
+      				end.min=datas;
+      				end.start=datas
+      			}
+        	};
+        	var end={
+     			elem:"#edate",
+     			format:"YYYY/MM/DD hh:mm:ss",
+     			istime:true,
+     			istoday:false,
+     			choose:function(datas){
+     				start.max=datas
+     			}
+     		};
+        	laydate(start);
+        	laydate(end);
+        	$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green"});
+            var h = $(window).height()-$(".extable").height()-340;
+            $("#typelist").find("button.btn").click(function(){           	
+                $(this).siblings().removeClass("btn-success").addClass("btn-white")
+                $(this).removeClass("btn-white").addClass("btn-success");
+                var str2 = '';
+                var dataType = $(this).attr("data-type");
+        		switch(dataType){
+        			case '0':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="1">诊断名称</option>'
+        	            	+'<option value="2">主要诊断名称</option>'
+        	            	+'<option value="3">药品名称</option>'
+        	            	
+        	            	+'<option value="5">检查名称</option>'
+        	            	+'<option value="10">医院名称</option>'
+        	            	+'<option value="11">科室名称</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'                    
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break;
+        			case '1':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="1">诊断名称</option>'
+        	            	+'<option value="2">主要诊断名称</option>'
+        	            	+'<option value="3">药品名称</option>'
+        	      
+        	            	+'<option value="5">检查名称</option>'
+        	            	+'<option value="10">医院名称</option>'
+        	            	+'<option value="11">科室名称</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'                     
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break;
+        			case '2':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="3">药品名称</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'     
+        	            	+'<option value="16">药店名称</option>'   
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break; 
+        			case '3':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="1">诊断名称</option>'
+        	            	+'<option value="2">主要诊断名称</option>'
+        	            	+'<option value="3">药品名称</option>'
+        	            	+'<option value="10">医院名称</option>'
+        	            	+'<option value="11">科室名称</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'                    
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break; 
+        			case '4':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="14">血压高于</option>'
+        	            	+'<option value="15">血糖高于</option>'
+        	            	+'<option value="20">血压低于</option>'
+        	            	+'<option value="21">血糖低于</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'                      
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break; 
+        			case '5':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="12">查询</option>'
+        	            	+'<option value="13">购买</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'                     
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break; 
+        			case '6':
+        				str2='<select class="input-sm form-control input-s-sm inline">'
+        					+'<option value="1">诊断名称</option>'
+        	       
+        	            	+'<option value="3">药品名称</option>'
+        	            
+        	            	+'<option value="5">检查名称</option>'
+        	            	+'<option value="10">医院名称</option>'
+        	            	+'<option value="11">科室名称</option>'
+        	            	+'<option value="6">身份证号</option>'
+        	            	+'<option value="7">医保卡号</option>'
+        	            	+'<option value="8">姓名</option>'
+        	            	+'<option value="9">住址</option>'                   
+        	            	+'</select>';
+        	            	$(".col-sm-3.m-b-xs2").html(str2);
+        	            	
+        	            	break; 
+        		}
+        		initSelect(); 
+                
+            })
+        	$.jgrid.defaults.styleUI="Bootstrap";
+   
+        	//初始化表格
+        	$("#table_list_1").jqGrid({
+        		data:{},
+        		datatype:"local",
+        		height:"auto",
+        		MTYPE: 'POST',
+        		autowidth:true,
+        		shrinkToFit:true,
+        		loadonce:true,
+        		rownumbers:true,
+        		sortable:true,
+        		sortname:"RDATE",
+        		sortorder:"desc",
+                rowNum: 10,
+                rowList: [5,10,15], 
+        
+        		colNames:["","","日期","数据源类型","就诊类型","医生","位置","科室","描述"],
+        		colModel:[
+                    {name:"ID",index:"ID",hidden:true, editable:false},
+                    {name:"CORP_ID",index:"CORP_ID",hidden:true, editable:false},
+        		    {name:"RDATE",index:"RDATE",width:110,formatter:function(c,b,rowObject){
+        		    	if(rowObject.DTYPE=="慢病随访"||rowObject.DTYPE=="医保结算单"||rowObject.DTYPE=="健康体检"||rowObject.DTYPE=="健康档案建档"){
+        		    		return c.substring(0,10);
+        		    	}else{
+        		    		return c.substring(0,19);
+        		    	}
+        		    	
+        		    }},
+        		    {name:"MTYPE",index:"MTYPE",width:120,hidden:true},
+        		    {name:"DTYPE",index:"DTYPE",width:130},
+        		    {name:"DCNAME",index:"DCNAME",width:150},
+        		    {name:"CORP",index:"CORP",width:150},
+        		    {name:"UNIT",index:"UNIT",width:150},
+        		    {name:"DETAIL",index:"DETAIL",width:180,formatter:function(cell,options,rowObject){
+        		    	var type = 10;
+        		    	var RDATE=rowObject.RDATE;
+
+        		    	if(rowObject.DTYPE=="住院"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"hospitalInfomation.html?h_no="+rowObject.ID+"&hos_id="+rowObject.CORP_ID+"&cardno="+rowObject.CARD_NO+"&zd="+cell+"&flag=0\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"hospitalInfomation.html?h_no="+rowObject.ID+"&hos_id="+rowObject.CORP_ID+"&cardno="+rowObject.CARD_NO+"&zd="+cell+"&flag=0\">查看详情</a>";
+        		    	}else if(rowObject.DTYPE=="门诊"){
+        		    		
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"medicalInformation.html?h_no="+rowObject.ID+"&hos_id="+rowObject.CORP_ID+"&hos_id="+rowObject.CORP_ID+"&cardno="+rowObject.CARD_NO+"&zd="+cell+"&flag=0\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"medicalInformation.html?h_no="+rowObject.ID+"&hos_id="+rowObject.CORP_ID+"&cardno="+rowObject.CARD_NO+"&zd="+cell+"&flag=0\">查看详情</a>";
+        		    	}else if(rowObject.DTYPE=="购药"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../sheets/gouyao.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../sheets/gouyao.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    	}else if(rowObject.DTYPE=="APP使用行为"){
+        		    		
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../sheets/appuse.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../sheets/appuse.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    	}else if(rowObject.DTYPE=="血压"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../sheets/celiangxueya.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../sheets/celiangxueya.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    	
+        		    	}else if(rowObject.DTYPE=="血糖"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../sheets/celiangxuetang.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../sheets/celiangxuetang.html?id="+rowObject.ID+"&xm="+xm+"\">查看详情</a>";
+        		    	
+        		    	}else if(rowObject.DTYPE=="健康档案建档"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../sheets/healthcover.html?id="+rowObject.ID+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../sheets/healthcover.html?id="+rowObject.ID+"\">查看详情</a>";
+        		    	
+        		    	}else if(rowObject.DTYPE=="健康体检"){
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\"../sheets/jktijian.html?cardno="+rowObject.ID+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../sheets/jktijian.html?cardno="+rowObject.ID+"\">查看详情</a>";
+        		    	
+        		    	}else if(rowObject.DTYPE=="慢病随访"){
+        		    		var htmlpage="../sheets/tnbsfjl.html?id="+rowObject.ID;
+        		    		if(cell=="高血压"){
+        		    			htmlpage="../sheets/gxysfjl.html?id="+rowObject.ID;
+        		    		}
+        		    		if(cell.length>type){
+        		    			return cell.substring(0,type)+"   <a href=\""+htmlpage+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\""+htmlpage+"\">查看详情</a>";
+        		    	
+        		    	
+        		    	}else{
+        		    		if(cell!=null&&cell!=""){
+        		    			if(cell.length>type){
+            		    			return cell.substring(0,type)+"   <a href=\"../sheets/settlements.html?id="+rowObject.ID+"&cardno="+rowObject.CARD_NO+"&zd="+cell+"&hos_id="+rowObject.CORP_ID+"\">查看详情</a>";
+            		    		}
+            		    		return cell+"   <a href=\"../sheets/settlements.html?id="+rowObject.ID+"&cardno="+rowObject.CARD_NO+"&zd="+cell+"&hos_id="+rowObject.CORP_ID+"\">查看详情</a>";
+        		    		}
+        		    		return cell;
+        		    	}
+        		    }}
+        		],
+        		pager:"#pager_list_1",viewrecords:true,hidegrid:false,
+        	});
+        	$(window).bind("resize",function(){var width=$(".jqGrid_wrapper").width();$("#table_list_1").setGridWidth(width);})  
+            
+        	//日期
+        	//$(".date-picker").datepicker();
+        });
+      //查询
+        function sel(){
+        	$(".blackBox2").fadeIn(50);
+        	setTimeout(function(){
+	        	var d=getTalbeDate();
+	        	$("#table_list_1").clearGridData();
+	        	$("#table_list_1").setGridParam({
+	        		datatype:"local",
+	        		data:d,
+	        		gridComplete:function(){
+	                	$(".blackBox2").fadeOut(100);
+	                }
+	        	}).trigger("reloadGrid");
+        	},100)
+        	var width=$(".jqGrid_wrapper").width();$("#table_list_1").setGridWidth(width);
+        }
+      var newWindow="";
+        //获取数据
+        function getTalbeDate(){
+        	
+        	var cs=$("#typelist .btn-success").attr("data-type")+"@#&"+$("#bdate").val()+"@#&"+$("#edate").val()+"@#&";
+        	
+        	$(".select-part").each(function(s,b){
+        		
+        	    if(s==0){
+        	    	if($(this).find("input[type='text']").val().trim()!=""){
+        	    		cs+=$(this).find("select").val()+"@#"+$(this).find("input[type='text']").val()+"@#";
+        	    	}
+        	    }else{
+        	    	if($(this).find("input[type='text']").val().trim()!=""){
+        	    		if(cs.charAt(cs.length-1)=="&"){
+        	    			cs+=$(this).find("select").eq(1).val()+"@#"+$(this).find("input[type='text']").val()+"@#";
+        	    		}else{
+        	    			cs+=$(this).find("select").eq(0).val()+"@#"+$(this).find("select").eq(1).val()+"@#"+$(this).find("input[type='text']").val()+"@#";
+        	    		}
+        	    	}
+        	    }	
+        	    
+        	});
+        	
+        	var sjytype=$("#typelist .btn-success").attr("data-type");
+        	
+        	if(cs.charAt(cs.length-1)=="&"){
+        		alertShow('请输入检索条件','alert')
+        		return false;
+        	}
+        	var searchUrl="";
+        	switch(sjytype){
+        	case "0":
+        	    searchUrl="senior/ipd.html";
+        	    break;
+        	case "1":
+    	        searchUrl="senior/hospital.html";
+    	        break;
+        	case "2":
+    	        searchUrl="senior/pharmacy.html";
+    	        break;
+        	case "3":
+    	        searchUrl="senior/jsd.html";
+    	        break;
+        	case "4":
+    	        searchUrl="senior/device.html";
+    	        break;
+        	case "5":
+    	        searchUrl="senior/behavior.html";
+    	        break;
+    	    default:
+    	    	searchUrl="senior/healthRecords.html";
+    	        break;
+        	}
+        	newWindow=window.open(searchUrl+"?"+Math.random()+"cs="+cs,"view_frame");	
+        	
+        }
+    </script>
+</body>
+</html>

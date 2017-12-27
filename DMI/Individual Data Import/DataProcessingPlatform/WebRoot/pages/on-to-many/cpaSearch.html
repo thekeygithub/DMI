@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>一次录入多种输出</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+    
+    <style>
+		/* Additional style to fix warning dialog position */
+		body{
+		
+              background:#161616 url(../../img/one-to-many/onetomanybg.jpg) top center no-repeat fixed;
+			  background-size: cover;
+		}
+		.nav{
+           
+           
+            width:100%;
+            height:100%;
+            
+        }
+        .search-box-wrap{
+        	margin:0 auto;
+        	width:858px;
+        	height:150px;
+        	border:1px;
+			
+			position: absolute;  
+			top: 20%; left: 0; bottom: 0; right: 0;   
+        }
+        .search-box-wrap-menu{
+        	padding-left:10px;
+        }
+        .search-box-wrap-menu ul{
+            display: block;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+			color:#fff;
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+       
+        }
+        .search-box-wrap-menu li{
+            list-style: none;
+             cursor:pointer;
+		    margin: 0;
+		    padding: 0;
+		    float: left;
+		    height: 43px;
+        }
+        .search-box-wrap-menu li:hover{
+               opacity: .7;
+        }
+        .search-box-wrap-menu span{
+        	padding: 0 20px 0 0;
+		    height: 32px;
+		    line-height: 32px;
+        }
+        .search-box-wrap-menu i{
+        	border-left: 9px solid transparent;
+		    border-right: 9px solid transparent;
+		    position: absolute;
+		    top: 33px;
+		    left: 15px;
+		    border-bottom: 10px solid #fff;
+		    z-index: 9;
+        }
+        .search-box-wrap-text{
+        	background:#fff;
+        }
+        .search-box-wrap-text-input{
+        	width: 709px;
+		    border: 0;
+		    height: 60px;
+		    line-height: 55px;
+		    border-radius: 2px;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+		    float:left;
+		    padding-left: 10px;
+		    outline: none;
+		    background:#fff url(../../img/arrow-black.png) no-repeat top 20px right 12px;
+        }
+         
+        .search-box-wrap-text-btndiv{
+        	float:right;
+        }
+        .search-box-wrap-text-btn{
+        	border-radius: 0!important;
+		    background-color: #12a7bb!important;
+		    outline: none!important;
+		    border-color: #12a7bb!important;
+		    font-size: 24px;
+		    color: #fff;
+		    height: 60px;
+		    width: 149px;
+		    float:right;
+		    border: 0;
+		    display: block;
+		    border-radius: 0 2px 2px 0;
+		    position: absolute;
+		    right: -1px;
+		    cursor: pointer;
+		    text-align: center;
+		   
+		    margin-left: 10px;
+        }
+        .foot{display: none;}
+        /*地址弹窗样式*/
+.dres{ display:none;  margin-top:15%;  width:100%; background:#fff; padding:20px 10px; border:1px solid #DBDBEA; border-radius:5px;}
+.dres table.list{ font:13px/120% "微软雅黑"; width:100%; border-collapse:collapse;  text-indent:20px; color:#333;}
+.dres table.list td,.dres table.list th{ height:36px; border-bottom:1px solid #86837E; font-weight:normal;text-align:center; }
+.dres table.list tr:hover{ background:#FFF0C4;}
+.dres table.list td{ border-bottom:1px solid #DADADA;}
+.dres .button{ display:block; width:235px; height:42px; background:#5AC2E7; margin:0 auto; clear:both; font:bold 20px/40px "宋体"; text-align:center; color:#FFF;cursor: pointer; margin:15px auto 0 auto;}
+.dres .button:hover{background:#06F; color:#CCC;}
+
+/*地址弹窗样式OVER*/
+	</style>
+
+</head>
+
+<body class="gray-bg">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    
+    <div class="nav animated fadeInRight">
+    	<div class="search-box-wrap">
+    		<input type="hidden"  id="searchMenu" value="0"  />
+    		<div class="search-box-wrap-menu">
+    			<ul id="ul">
+    			<li class="tab4" actdata=0 ><span>处方结算单</span></li>
+    			<li class="tab4" actdata=1 ><span>医院电子病历</span></li>
+    			<li class="tab4" actdata=2 ><span>医院健康档案</span></li>
+    			<li class="tab4" actdata=3 ><span>疾病预防控制中心</span></li>
+    
+    			
+    			</ul>
+    			<i style="left: 40px;"></i>
+    		</div>
+    		<div class="search-box-wrap-text" >
+    			<input class="search-box-wrap-text-input" id="searchText" onclick="showList(event)" readonly placeholder="选择要导入的内容">
+    		
+    			<div class="search-box-wrap-text-btndiv">
+    			<button  class="search-box-wrap-text-btn"  type="button" onclick="searchBookService()"  >导入</button>
+    			 
+    		</div>
+    	</div>
+    	<div id="dres" class="dres">
+
+						<table class="list">
+							
+								<tr id="biaoti">
+								<th width="5px"></th>
+									<th >处方号</th>
+									<th >科室</th>
+									<th >医师</th>
+									<th >日期</th>
+									
+							<tbody id="addrList" class="ttbb">	
+							<tr>
+							<td>1</td><td>1603017930</td><td>泌尿外科门诊</td><td>侯俊清</td><td>2016-03-11</td>
+							</tr>
+							<tr>
+							<td>2</td><td>1603017959</td><td>乳腺甲状腺门诊</td><td>王顺昌</td><td>2016-03-11</td>
+							</tr>
+							<tr>
+							<td>3</td><td>1604036132</td><td>内分泌门诊</td><td>薛磊</td><td>2016-04-23</td>
+							</tr>
+							<tr>
+							<td>4</td><td>1608025070</td><td>神经内科门诊</td><td>刘伟</td><td>2016-08-16</td>
+							</tr>
+							</tbody>
+						</table>
+
+					</div>
+    </div>
+   </div>
+    <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+   <script src="../../js/ajaxfileupload.js"></script>
+    <script>
+    $(document).ready(function(){
+    	$(document).click(function(){
+    		
+    		$("div.dres").slideUp();
+    	});
+    	$(".tab4 ").click(function(){
+    		$("i").animate({left:$(this).position().left+30});
+    		$("#searchMenu").val($(this).attr("actdata"));
+    		$('div.dres').hide();
+    	});
+    	$("body,html").on("click",".ttbb > tr",function(event){  
+    		event.stopPropagation(); 
+			$('div.dres').slideToggle('fast');
+			var h="";
+            $(this).find("td").each(function(s,b){
+            	if(s>0){
+            		h+=$(b).text()+",";
+            	}
+            });
+            $("#searchText").val(h.substring(0,h.length-1));
+        })
+    });
+    function showList(event){
+    
+    	var type=$("#searchMenu").val();
+    	if(type!=0){
+    		return false;
+    	}
+    	var h="";
+    	$.ajax({
+			url:"findOtmData.action?sjType="+type,
+			dataType:"json",
+			type:"post",
+		    async:false,
+		    success:function(data){
+		    	if(type==0){
+		    		h="<thead><tr id=\"biaoti\"><th width=\"5px\"></th><th >处方号</th><th >科室</th><th >医师</th><th >日期</th></tr></thead>";
+		    	}else if(type==1){
+		    		h="<thead><tr id=\"biaoti\"><th width=\"5px\"></th><th >病案号</th><th>患者</th><th>医师</th><th>时间</th></tr></thead>"
+		    	}else if(type==2){
+		    		
+		    	}else{
+		    		
+		    	}
+		    	h+="<tbody id=\"addrList\" class=\"ttbb\">";
+		    	for(var i in data){
+		    		var index=parseInt(i)+1;
+		    		h+="<tr><td>"+index+"</td><td>"+data[i].a1+"</td><td>"+data[i].a2+"</td><td>"+data[i].a3+"</td><td>"+data[i].a4+"</td></tr>";	
+		    	}
+		    	h+="</tbody>";
+		    }
+	   });
+    	$(".list").html(h);
+    	$(".dres").slideToggle('fast');
+    	event.stopPropagation(); 
+    }
+    function searchBookService(){
+    	var t=$("#searchText").val();
+    	var type=$("#searchMenu").val();
+    	if(type!=0){
+    		return false;
+    	}
+    	if(t==""){
+    		alertShow("请先选择要导入的数据");
+    		return false;
+    	}
+        var t=t.split(",");
+    	location.href="cpajsd.html?id="+t[0]+"&type="+$("#searchMenu").val();
+    }
+    </script>
+</body>
+</html>

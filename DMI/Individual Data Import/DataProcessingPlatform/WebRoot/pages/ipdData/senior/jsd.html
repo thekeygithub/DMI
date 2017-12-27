@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级检索-医保结算单</title>
+    <link href="../../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet" >
+    <link href="../../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../../css/animate.min.css" rel="stylesheet">
+    <link href="../../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../../css/style.css">
+    <style type="text/css">
+		.font_size_color{font:13px/120% "微软雅黑";color:#12A5B9;padding-right: 15px;padding-left: 10px;}
+		.ui-jqgrid .loading {
+        	background:rgba(0,0,0,0);
+        	border:none;
+        } 
+	</style>
+
+</head>
+
+<body class="gray-bg">
+<jsp:include flush="true" page="../../topAndFooter.html"></jsp:include>
+    <div class="block">
+		<h1>
+			<span class="tap">医保结算单<span class="tap2">// ADVICE OF SETTLEMENT</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content">
+			<div class="jqGrid_wrapper">
+				<table id="table_list_1"></table>
+				<div id="pager_list_1"></div>
+			</div>
+		</div>
+	</div>
+	<!-- 医保结算单 -->
+
+    <script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script>
+        $(document).ready(function(){
+        	var h = $(window).height()-280;
+        	var cs=decodeURIComponent(document.URL.split("cs=")[1]);
+        	$.jgrid.defaults.styleUI="Bootstrap";
+        	$(".blackBox2").fadeIn(50);
+        	//初始化表格
+        	$("#table_list_1").jqGrid({
+        		url:"searchIPDData.action",
+				postData:{queryParam:cs},
+        		mtype:"POST",
+				datatype: "json",
+				loadtext:"",
+        		height:h,
+        		autowidth:true,
+        		shrinkToFit:true,
+        		rownumbers:true,
+        		rowNum:30,
+        		rownumWidth:70,
+        		onPaging:function(){$(".blackBox2").fadeIn(50);},
+        		rowList:[10,20,30,50,100], 
+        		colNames:["id","姓名","日期","医院","科室","医生","诊断"],
+        		colModel:[
+                    {name:"ID",index:"ID",hidden:true, editable:false},
+                    {name:"XM",index:"XM",width:110},
+        		    {name:"RDATE",index:"RDATE",width:160,formatter:function(cell,option,rowObject){
+        		    	if(cell!=""){
+        		    		return cell.substring(0,10);
+        		    	}else{
+        		    		return cell;
+        		    	}
+        		    }},
+        		    {name:"CORP",index:"CORP",width:130},
+        		    {name:"UNIT",index:"UNIT",width:120},
+        		    {name:"DCNAME",index:"DCNAME",width:220},
+        		    {name:"ZD",index:"ZD",width:230,formatter:function(cell,option,rowObject){
+        		    	if(cell!=null&&cell!=""){
+    		    			if(cell.length>15){
+        		    			return cell.substring(0,15)+"   <a href=\"../../sheets/settlements.html?id="+rowObject.ID+"&cardno="+rowObject.SFZH+"&zd="+cell+"&hos_id="+rowObject.CORP_ID+"\">查看详情</a>";
+        		    		}
+        		    		return cell+"   <a href=\"../../sheets/settlements.html?id="+rowObject.ID+"&cardno="+rowObject.SFZH+"&zd="+cell+"&hos_id="+rowObject.CORP_ID+"\">查看详情</a>";
+    		    		}
+    		    		return cell;
+    		    	}}
+        		],
+        		pager:"#pager_list_1",
+        		viewrecords:true,
+        		multiselect:false,
+        		hidegrid:false,
+        		rows: 30,//初始化每页多少条
+				page: 1,//初始化第几页
+				jsonReader: {
+					root: "list", //数据对象
+					total: "totalPage", //总页数
+					page: "currentPage", //第几页
+					records: "totalRecord", //总条数
+					repeatitems: false
+				},
+        		gridComplete:function(){
+        			
+                	$(".blackBox2").fadeOut(100);
+                }
+        	});
+        	$(window).bind("resize",function(){var width=$(".jqGrid_wrapper").width();$("#table_list_1").setGridWidth(width);})  
+          
+
+        });
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>一次录入多种输出</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+    <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
+    <style>
+		.topdiv{
+		    margin-top:1%;
+		    width:100%;
+		    height:100px;
+		   
+		}
+		.centerdiv{
+		    margin-top:8px;
+		    width:100%;
+		    display:none;
+		}
+        .nav{
+           
+            
+            width:100%;
+            height:100%;
+            
+        }
+        .search-box-wrap{
+        
+        	width:858px;
+        	height:150px;
+        	border:1px;
+		    margin-left:20%;
+        }
+        
+        .search-box-wrap-menu ul{
+            display: block;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+       
+        }
+        .search-box-wrap-menu li{
+            list-style: none;
+            cursor:pointer;
+		    margin: 0;
+		    padding:6px 30px 5px 30px;
+		    float: left;
+		    height: 43px;
+		    font:13px '微软雅黑' #333333;
+		    
+        }
+      
+       
+       
+        .search-box-wrap-text{
+        	background:#fff;
+        	
+        }
+        .search-box-wrap-text-input{
+        	width: 700px;
+		    border: 0;
+		    height: 46px;
+		    
+		    border-radius: 2px;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+			
+		    float:left;
+		    padding-left: 10px;
+		    outline: none;
+		    background:#fff url(../../img/arrow-black.png) no-repeat top 20px right 12px;
+        }
+         
+        .search-box-wrap-text-btndiv{
+        	float:left;margin-left: 5px;
+        }
+        .search-box-wrap-text-btn{
+        	border-radius: 0!important;
+		    background-color: #12a7bb!important;
+		    outline: none!important;
+		    border-color: #12a7bb!important;
+		    font-size: 24px;
+		    color:#fff;
+		    height: 46px;
+		    width: 150px;
+		    float:left;
+		    border: 0;
+		    display: block;
+		    border-radius: 0 2px 2px 0;
+		    cursor: pointer;
+		    text-align: center;
+            margin-left: 5px;
+        }
+        .tab1{
+            background-color: #12a7bb;
+		    color:#fff;
+		    border-color: #12a7bb;
+		  
+        }
+        .foot{display: none;}
+        /*地址弹窗样式*/
+.dres{ display:none;position:absolute;top:170px;  width:750px; background:#fff; padding:20px 10px; border:1px solid #DBDBEA; border-radius:5px;z-index:99999;}
+.dres table.list{ font:13px/120% "微软雅黑"; width:100%; border-collapse:collapse;  text-indent:20px; color:#333;}
+.dres table.list td,.dres table.list th{ height:36px; border-bottom:1px solid #86837E; font-weight:normal;text-align:center; }
+.dres table.list tr:hover{ background:#FFF0C4;}
+.dres table.list td{ border-bottom:1px solid #DADADA;}
+.dres .button{ display:block; width:235px; height:42px; background:#5AC2E7; margin:0 auto; clear:both; font:bold 20px/40px "微软雅黑"; text-align:center; color:#FFF;cursor: pointer; margin:15px auto 0 auto;}
+.dres .button:hover{background:#06F; color:#CCC;}
+.bt{font:22px "微软雅黑" ; text-align:center;color:#666;width: 100%;margin-bottom: 16px;}
+
+.jsd{margin-left: 10%;width:80%;background:#f9f9f9;padding-top:18px;}
+.rbd{border-right: 1px solid;}
+.bbd{border-bottom: 1px solid;}
+.scgs{margin-left: 10%;width:80%;margin-top: 2%}
+.scgslist{width:100%;}
+.scgslist li{border-bottom: 1px solid;width:100%;height: 49px;padding-top:10px; }
+.btndd{border-radius: 0!important;
+		    background-color: #5ac2e7!important;
+		    outline: none!important;
+		    border-color: #5ac2e7!important;
+		    font-size: 22px;
+		    font-family:'微软雅黑';
+		    color:#fff;
+		    height: 65px;
+		    width: 375px;
+		    border: 0;
+		    display: block;
+		    border-radius: 0 2px 2px 0;
+		    cursor: pointer;
+		    text-align: center;
+		    margin-left: 40%}
+.bingli_title { width:100%; min-width:1100px;}
+.bingli_title ul { padding:0;}
+.bingli_title ul li:first-child{ padding-left:0;}
+.bingli_title ul li{list-style:none; float:left; padding:5px 20px; }
+.bingli_title ul li span{ display:inline-block; padding:0 20px; border-bottom:1px solid #ccc;}
+.bingli_blacktb{font:16px/180% "微软雅黑"; width:100%; border-collapse:collapse; text-align:left; color:#333;}
+.bingli_blacktb td,.bingli_blacktb th{ height:36px; border-left:1px solid #ccc; border-bottom:1px solid #ccc; font-weight:normal;  padding: 12px 20px;}.bingli_blacktb th{ background:#f5f5f5;}
+.bingli_blacktb tD:first-child,.bingli_blacktb th:first-child{ border-left:none;}
+.bingli_blacktb h1{ font:32px/200% "微软雅黑"; font-weight:bold; text-align:center;}
+.bingli_blacktb h2{ font:28px/200% "微软雅黑"; font-weight:bold; text-align:center;}
+.bingli_blacktb h3{ font:20px/200% "微软雅黑"; font-weight:bold; }
+.bingli_blacktb span{font:15px/180% "微软雅黑"; color:#777;}
+.cfd{ margin:0; padding:0;}
+.cfd_title ul li { white-space:nowrap; margin-left:10px;list-style:none; float:left; padding:5px 20px;}
+.cfd_title ul li span{width:120px; border-color:#000;display:inline-block; padding:0 20px; border-bottom:1px solid #ccc;}
+
+	</style>
+
+</head>
+
+<body class="gray-bg  animated fadeInRight">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    
+    <div class="topdiv">
+    <div class="nav">
+    	<div class="search-box-wrap">
+    		
+    		<div class="search-box-wrap-menu">
+    			<ul id="ul">
+    			<li class="tab1" actdata=0 >处方结算单</li>
+    			<li class="tab2" actdata=1 >医院电子病历</li>
+    			<li class="tab2" actdata=2 >医院健康档案</li>
+    			<li class="tab2" actdata=3 >疾病预防控制中心</li>
+    			</ul>
+
+    		</div>
+    		<div class="search-box-wrap-text" >
+    			<input class="search-box-wrap-text-input" id="searchText" onclick="showList(event)" readonly placeholder="选择要导入的内容">
+    		
+    			
+    			<button  class="search-box-wrap-text-btn"  type="button" onclick="searchBookService()"  >导入</button>
+         	</div>
+         	<div class="search-box-wrap-text-btndiv"></div>
+         	<br>
+    	<div id="dres" class="dres">
+
+						<table class="list">
+							
+								<tr>
+								<th width="5px"></th>
+									<th >处方号</th>
+									<th >科室</th>
+									<th >医师</th>
+									<th >日期</th>
+									</tr>
+							<tbody id="addrList" class="ttbb">	
+							<tr>
+							<td>1</td><td>1603017930</td><td>泌尿外科门诊</td><td>侯俊清</td><td>2016-03-11</td>
+							</tr>
+							<tr>
+							<td>2</td><td>1603017959</td><td>乳腺甲状腺门诊</td><td>王顺昌</td><td>2016-03-11</td>
+							</tr>
+							<tr>
+							<td>3</td><td>1604036132</td><td>内分泌门诊</td><td>薛磊</td><td>2016-04-23</td>
+							</tr>
+							<tr>
+							<td>4</td><td>1608025070</td><td>神经内科门诊</td><td>刘伟</td><td>2016-08-16</td>
+							</tr>
+							</tbody>
+						</table>
+
+					</div>
+    </div>
+   </div>
+ 
+    </div>
+      <i class="glyphicon glyphicon-menu-up htop" style="margin-left:95%;cursor: pointer;margin-top: 0"></i>
+   <hr style=" height:2px;border:none;border-top:2px double gray;margin: 0;" >
+    <div class="centerdiv" id="cfjsd">
+    <div class="jsd">
+    
+<div class="dj" style=" -webkit-box-shadow:0 0 10px #666;  
+  -moz-box-shadow:0 0 10px #666;  
+  box-shadow:0 0 10px #666; width:90%; min-width:1100px; margin:0 auto; padding-top:0px; background:#fff;">
+        <img alt="" onclick="showdetail()" onmouseover="showsc2(this)" onmouseout="showsc1(this)" src="../../img/sc1.png" style="position: relative;float:right;margin: 0;padding:0;cursor: pointer;">
+
+<table  class="bingli_blacktb" style="width:85%;margin:0 auto; background:#fff; " border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+  <td class="cfd_title" style="border-color:#000; border-width:2px; padding-bottom:30px;"> 
+        <div  class="bingli_blacktb " style=" position:relative; width:550px; margin:0 auto; background:#fff;"><div style="font-weight: bold; width:88px; position: absolute; left:500px; top: -26px; border: 1px solid #333; padding: 0 10px;">普通处方</div>
+  <h2 style="font-family:'楷体';" >佳木斯大学附属第一医院</h2></div>
+<div  class="bingli_blacktb "  style="background:#fff;">
+  <h1 style="font-family:'楷体'; font-size:40px; font-weight:bold; line-height:50px;padding-bottom:20px;"> 处方笺</h1></div>
+       <ul class="cfd">
+        <li style="width:28%; padding-left:20px;">门诊／住院病历号：<span id="blh"></span></li>
+          <li style="width:25%; text-align:left;">定点机构编码：<span id="jgbm"></span></li>
+        <li style="width:25%;">处方号：<span id="cfh"></span></li>
+        <li style="width:28%;">姓名：<span id="xm"></span></li>
+          <li style="width:25%; text-align:left;">性别：<span id="xb"></span></li>
+        <li style="width:25%;">年龄：<span id="nl"></span></li>
+         <li style="width:28%; text-align:left;">费别：<span id="fb"></span></li>
+        <li style="width:25%; text-align:left;">科室：<span id="ks"></span></li>
+          <li style="width:25%; ">日期：<span style="width:150px" id="rq"></span></li>
+        <li style="width:80%; ">临床诊断：<span style="width:80%;" id="lczd"></span></li>
+      
+        </ul>
+        </td>
+    </tr>
+    <tr>
+      <td style="font-family:'楷体'; font-size:20px; line-height:180%; height:350PX; vertical-align:top; padding:40px;border-color:#000; border-width:2px;"><span style="font:bold 22px '微软雅黑'; color:#000;" >RP:</span><br><span id="zdjg"></span></td>
+    </tr>
+    <tr>
+      <td class="cfd_title" style="border:none;"><ul class="cfd">
+      <li style="padding-left:20px;">医师：<span id="ys"></span></li>
+      <li>金额：<span id="je"></span></li>
+      <li>医师：<span></span></li>
+      <li>药师（审核、核对、发药）：<span></span></li>   
+      <li>调配：<span></span></li>         
+      </ul></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+  
+    </div>
+    <div class="scgs">
+    <div style="float:left;width:15%;font: 16px #999;">
+    选择输出格式：
+    </div>
+    <div style="float:left;margin-left: 1%;width:80%">
+    <ul class="scgslist">
+    <li>
+        <label class="checkbox-inline i-checks" ><input type="checkbox" id="bdgscheck">佳木斯结算单类型：</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="bdgs1" value="01">新农合</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="bdgs1" value="02">城镇职工</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="bdgs1" value="03">城镇居民</label>
+    </li>
+    <li>
+        <label class="checkbox-inline i-checks" ><input type="checkbox" id="szgscheck">黑龙江省直结算单类型：</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 15px"><input type="checkbox" name="szgs1" value="11">城镇职工</label>
+  </li>
+    <li>
+        <label class="checkbox-inline i-checks" ><input type="checkbox" id="shgscheck">哈尔滨结算单类型：</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="shgs1" value="24">新农合</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="shgs1" value="21">城镇职工</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="shgs1" value="22">城镇居民</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="shgs1" value="23">森工医疗</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" name="shgs1" value="25">铁路职工</label>
+    </li>
+    </ul>
+    </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div style="width:100%;margin-top: 5%;text-align: center;">
+    <button class="btndd" onclick="scjsd()">输出已选格式结算单</button>
+    </div>
+   
+   
+   
+    </div>
+    
+    <!-- *******************************处方结算单结束，电子病历开始*********************************************** -->
+     <div class="centerdiv" id="yydzbl">
+    <div class="jsd">
+    
+        <img alt="" onclick="showdetail()" onmouseover="showsc2(this)" onmouseout="showsc1(this)" src="../../img/sc1.png" style="position: relative;float:right;margin: 0;padding:0;top:-18px;cursor: pointer;">
+
+    <h1 class="bt">当前导入电子病历</h1>
+    <div class="search-box-wrap-menu">
+    			<ul id="dzbllx" style="margin-left: 50px;">
+    			<li class="tab1" actdata=0 >病案首页</li>
+    			<li class="tab2" actdata=1 >住院记录</li>
+    			<li class="tab2" actdata=2 >首次病程</li>
+    			<li class="tab2" actdata=3 >病程记录</li>
+    			<li class="tab2" actdata=4 >出院记录</li>
+    			</ul>
+
+    		</div>
+    <div style="clear: both;"></div>
+    <div id="bl">
+    <div id="basydiv">
+    <div  class="bingli_blacktb ">
+  <h1> 住院病案首页</h1></div>
+<table  class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td class="bingli_title" colspan="5">  <ul>
+        <li style="width:65%;">医疗付费方式：<span class="YLFFFS"></span></li>
+        <li style="float:right;">医保细分类：<span class="YBXFL"></span></li></ul></td>
+    </tr>
+    <tr>
+      <td class="bingli_title" colspan="5">
+      <ul>
+      <li style="width:20%; text-align:left;">健康卡号：<span class="JKKH"></span></li>
+      <li style="width:20%; text-align:left;">登记号：<span class="DJH"></span></li>
+      <li style="width:15%; text-align:left;">第<span class="DJCZY"></span></li>
+      <li style="width:25%; text-align:left;">病案号：<span class="CBAH"></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td>姓名：<span class="CXM"></span></td>
+      <td>性别：(<span class="CXB"></span>)1.男 2.女</td>
+      <td>出生日期：<span class="DCSNY"></span></td>
+      <td>年龄：<span class="CBRNL"></span></td>
+      <td>国籍：<span class="CGJ"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">(年龄不足1周岁的）年龄<span>——</span>月</td>
+      <td>新生儿出生体重:<span class="XSECSTZ"></span>克</td>
+      <td colspan="2">新生儿入院体重:<span class="XSERYTZ"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">出生地：<span class="CSD"></span></td>
+      <td colspan="2">籍贯：<span class="JG"></span></td>
+      <td>民族：<span class="CMZ"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">身份证号：<span class="CSFZH"></span></td>
+      <td>职业：<span class="CZY"></span></td>
+      <td colspan="2">婚姻：<span class="CHYZK"></span>（1.未婚 ;2.已婚 ;3.丧偶; 4.离婚; 9.其他）</td>
+    </tr>
+    <tr>
+      <td colspan="2">现住址：<span class="XZZ"></span></td>
+      <td>电话：<span class="CLXDH"></span></td>
+      <td colspan="2">邮编：<span class="CHKDZYB"></span></td>
+    </tr>
+    <tr>
+      <td colspan="3">户口地址：<span class="HKDZ"></span></td>
+     <td colspan="2">邮编：<span class="CHKDZYB"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">工作单位及地址：<span class="CGZDW"></span></td>
+      <td>单位电话：<span class="CDWDH"></span></td>
+      <td colspan="2">邮编：<span class="CGZDWYB"></span></td>
+    </tr>
+    <tr>
+      <td>联系人姓名：<span class="CLXR"></span></td>
+      <td>关系：<span class="CLXRGX"></span></td>
+      <td colspan="2">地址：<span class="CLGZDW"></span></td>
+      <td>电话：<span class="CLXDH"></span></td>
+    </tr>
+    <tr>
+      <td colspan="5">入院途径：<span class="CRYFS"></span> （1急诊 2门诊 3其他医疗机构转入 9其他）</td>
+    </tr>
+    <tr>
+      <td>入院时间 :<span class="DRYSJ"></span></td>
+      <td>入院科别：<span class="CRYKSMC"></span></td>
+      <td colspan="2">病房：<span class="CRYBQBM"></span></td>
+      <td>转科科别：<span  class="ZKKB"></span></td>
+    </tr>
+    <tr>
+      <td>出院时间：<span class="DCYSJ"></span></td>
+      <td>出院科别：<span class="CCYKSMC"></span></td>
+      <td colspan="2">病房：<span class="CCYBQMC"></span></td>
+      <td>住院天数：<span class="ZYTS"></span>天</td>
+    </tr>
+    <tr>
+      <td colspan="4">门（急）诊诊断：<span class="CMZZDMC"></span></td>
+      <td>疾病编码：<span class="JBBM"></span></td>
+    </tr>
+  </tbody>
+</table>
+<table  class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td width="27%">出院诊断</td>
+          <td width="15%">疾病编码</td>
+          <td width="16%">入院病情</td>
+          <td width="12%">出院诊断</td>
+          <td width="12%">疾病编码</td>
+          <td width="18%">入院病情</td>
+        </tr>
+        <tr>
+          <td class="CYZD"></td>
+          <td class="JBBM"></td>
+          <td class="RYBQ"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="6">入院病情：<span>1.有，2.临床未确定，3.情况不明，4.无</span></td>
+        </tr>
+        <tr>
+          <td colspan="4">损伤、中毒外部原因：<span class="WBYY"></span></td>
+          <td colspan="2">疾病编码：<span class="JBBM"></span></td>
+        </tr>
+        <tr>
+          <td colspan="6">病理诊断：<span class="BLZD"></span></td>
+        </tr>
+        <tr>
+          <td colspan="3">疾病编码：<span class="JBBM"></span></td>
+          <td colspan="3">病理号：<span class="BLH"></span></td>
+        </tr>
+        <tr>
+          <td>药物过敏：<span class="YWGM"></span>（1.无 ;2.有）</td>
+          <td colspan="3">过敏药物：<span class="CGMYW"></span></td>
+          <td colspan="2">死亡患者尸检：<span class="BSJ"></span>（1是&nbsp;2否）</td>
+        </tr>
+        <tr>
+          <td colspan="3">血型：<span class="CXX"></span> （1.A ;2.B ;3.O ;4.AB; 5.不详 ;6.未查）</td>
+          <td colspan="3">RH:<span class="CRH"></span> (1.阴 ;2.阳; 3.不详 ;4.未查)</td>
+        </tr>
+        <tr>
+          <td>科主任：<span class="CKZR"></span></td>
+          <td colspan="2">主任（副主任）医师：<span class="CKZYS"></span></td>
+          <td colspan="2">主治医师：<span class="CZYYS"></span></td>
+          <td>住院医师：<span class="CZYYS"></span></td>
+        </tr>
+<tr>
+          <td>责任护士：<span class="ZRHS"></span></td>
+          <td colspan="2">进修医师：<span class="JXYS"></span></td>
+          <td colspan="2">实习医师：<span class="SXYS"></span></td>
+          <td>编码员：<span class="CBMY"></span></td>
+        </tr>
+        <tr>
+          <td>病案质量：<span class="BAZL"></span>（1.甲 ;2.乙; 3.丙）</td>
+          <td colspan="2">质控医师：<span class="ZKYS"></span></td>
+          <td colspan="2">质控护士：<span class="ZKHS"></span></td>
+          <td>质控日期：<span class="ZKRQ"></span></td>
+        </tr>
+      </tbody>
+</table>
+<table  class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td colspan="9">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="17%" rowspan="2">手术及操作编码</td>
+          <td width="15%" rowspan="2">手术及操作日期</td>
+          <td width="12%" rowspan="2">手术级别</td>
+          <td colspan="3">手术及操作医师</td>
+          <td width="11%" rowspan="2">切口愈合等级</td>
+          <td width="11%" rowspan="2">麻醉方式</td>
+          <td width="8%" rowspan="2">麻醉医师</td>
+        </tr>
+        <tr>
+          <td width="9%">术者</td>
+          <td width="8%">I助</td>
+          <td width="9%">II助</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td colspan="3">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </tbody>
+</table>
+<table  class="bingli_blacktb"   width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td colspan="3">离院方式：<span class="CCYQX"></span>（1.医嘱离院 ；2.医嘱转院，拟接收医疗机构名称：------------------；3.医嘱转社区卫生服务机构/乡镇卫生院，拟接收医疗机构名称：------------------；4.非医嘱离院；5.死亡； 9.其他）&nbsp; </td>
+        </tr>
+        <tr>
+          <td>急症手术：<span class="JZSS"></span></td>
+          <td colspan="2">危重病人：<span class="WZBR"></span></td>
+        </tr>
+        <tr>
+          <td>是否有出院31天内再住院计划：<span class="SFYCY31TNZZYJH"></span>（1.无；2.有，目的：---）</td>
+          <td>抢救次数：<span class="QJCS"></span></td>
+          <td>成功次数：<span class="CGCS"></span></td>
+        </tr>
+        <tr>
+          <td colspan="3">颅脑损伤患者昏迷时间：<span class="LNSSHZHMSJ"></span></td>
+        </tr>
+      </tbody>
+    </table>
+    <table  class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td>住院费用（元）：<span class="JE"></span>（自付金额：<span class="JE_ZF"></span>）</td>
+        </tr>
+        <tr>
+          <td><p>1.综合医疗服务类：<span>（1）一般医疗服务费：（）；&nbsp;（2）一般治疗操作费：（）；（3）护理费：（）；（4）其他费用：（<span class="JE_91"></span>）</span></p>
+          <p>2.诊断类：<span>（5）病理诊断费：（）；（6）实验室诊断费：（）；（7）影像学诊断费：（）；（8）临床诊断项目费：（）；</span></p>
+          <p>3.治疗费：<span>（9）非手术治疗项目费：临床物理治疗费（）&nbsp;； &nbsp;&nbsp; &nbsp;&nbsp; （10）手术治疗费：麻醉费（），手术费（<span class="JE_10"></span>）</span>；</p>
+          <p>4.康复类：<span>（11）康复费（）</span></p>
+          <p>5.中医类：<span>（12）中医治疗费（）</span></p>
+          <p>6.西药类：<span>（13）西药费（<span class="JE_1"></span>）（抗菌药物费用：）；</span></p>
+          <p>7.中药类：<span>（14）中成药费（<span class="JE_2"></span>）；（15）中草药费（<span class="JE_3"></span>）</span></p>
+          <p>8.血液和血液制品类：<span>（16）血费：（<span class="JE_13"></span>）；（17）白蛋白类制品费：（）；（18）球蛋白类制品费：（）；（19）凝血因子类制品费：（）；（20）细胞因子类制品费：（）</span></p>
+          <p>9.耗材类：<span>（21）检查用一次性医用材料费：（）；（22）治疗用一次性医用材料费：（）；（23）手术用一次性医用材料费：（）</span></p>
+          <p>10.其他类：<span>（24）其他费：（<span class="JE_91"></span>）</span></p></td>
+        </tr>
+        <tr>
+          <td><span>说明： (一)医疗付费方式 1.城镇职工医疗保险 2.城镇居民基本医疗保险 3.新型农村合作医疗 4.贫困救助	
+5.商业医疗保险 6.全公费 7.全自费 8.其他社会保险 9.其他	
+(二)凡可由医院信息系统提供住院费用清单的，住院病案首页中可不填写“住院费用”。</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- **************病案首页结束***************** -->
+    <div id="zyjldiv" style="display:none;">
+    <div  class="bingli_blacktb ">
+  <h1>住院记录</h1></div>
+<table class="bingli_blacktb " width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td class="bingli_title"  colspan="2"><ul>
+      <li style=" width:20%; text-align:left;">姓名：<span id="CXM"></span></li>
+      <li style=" width:25%; text-align:left;">医院：<span id="YYMC"></span></li>
+      <li style=" width:20%; text-align:center;">入院科室：<span id="RYKS"></span></li>
+      <li style="  width:30%;text-align:right;">病案号：<span id="ZYX_1"></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td class="bingli_title"   colspan="2"><ul>
+      <li style=" padding-left:20px; text-align:left;">姓名：<span id="CXM"></span></li>
+      <li style=" text-align:left;">性别：<span id="CXB"></span></li>
+      <li style=" text-align:left;">出生：<span id="DCSNY"></span></li>
+     <li style=" text-align:left;">年龄：<span id="CBRNL"></span></li>
+      <li style=" text-align:left;">婚姻状况：<span id="JBX_7"></span></li>
+      <li style=" text-align:left;">出生地：<span id="JBX_5"></span></li>
+      <li style=" text-align:left;">民族：<span id="JBX_8"></span></li>
+      <li style=" text-align:left;">国籍：<span>中国</span></li>
+      <li style=" text-align:left;">身份证号：<span id="CSFZH"></span></li>
+      <li style=" text-align:left;">工作单位及地址：<span id="JBX_17"></span></li>
+      <li style=" text-align:left;">电话：<span id="LXRDH"></span></li>
+      <li style=" text-align:left;">邮政编码：<span id="YZBM"></span></li>
+      <li style=" text-align:left;">户口地址：<span id="JBX_16"></span></li>
+      <li style=" text-align:left;">户口编码：<span>----</span></li>
+       <li style=" text-align:left;">供史者：<span id="RYJ_3"></span></li>
+        <li style=" text-align:left;">在本院第<span id="RYCS"></span>次住院</li>
+         <li style=" text-align:left;">如愿时情况：<span id="RYQK"></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td>入院日期：<span id="ZYX_42"></span></td>
+      <td>记录日期：<span id="RYJ_16"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">主诉：<span id="ZSX"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">现病史：<span id="XBS"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">既往史：<span id="JWS"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">个人史：<span id="GRS"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">婚姻史：<span id="HYS"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">家族史：<span id="JZS"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2"><h2>体格检查</h2></td>
+    </tr>
+    <tr>
+      <td colspan="2"><span id="TGJ"></span></td>
+    </tr>
+   
+   
+            <tr>
+       <td colspan="2"><h3>辅助检查</h3></td>
+    </tr>
+        <tr>
+      <td colspan="2"><span id="FZJC"></span></td>
+    </tr>
+    <tr>
+    <td colspan="2"><h2>病历小结</h2></td>
+    </tr>
+            <tr>
+      <td colspan="2">初步诊断：<span id="CBZD"></span> <p style="text-align:right; padding-right:40px;"> 医师：<span id="YS"></span><br></p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+     <!-- **************住院记录结束，首次病程开始***************** -->
+     <div id="scbcdiv">
+     
+     </div>
+     
+      <!-- **************首次病程结束,病程记录开始***************** -->
+      <div id="bcjldiv">
+    
+      </div>
+      
+      <!-- **************病程记录结束，出院记录开始***************** -->
+      <div id="cyjldiv">
+      <div  class="bingli_blacktb ">
+  <h1>出院记录</h1></div>
+<table class="bingli_blacktb " width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td  colspan="4" class="bingli_title"><ul>
+      <li style=" width:32%; text-align:left;">出院科室：<span class="CCYKSMC4"></span></li>
+      <li style=" width:29%; text-align:center;">门诊号：<span class="CBRH4"></span></li>
+      <li style="  width:29%;text-align:right;">病案号：<span class="CBAH4"></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td>姓名：<span class="CXM4"></span></td>
+      <td>性别：<span class="CXB4"></span></td>
+      <td>年龄：<span class="CBRNL4"></span></td>
+      <td>入院时科别：<span class="CRYKSMC4"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">入院日期：<span class="DRYSJ4"></span></td>
+      <td colspan="2">出院日期：<span class="DCYSJ4"></span></td>
+    </tr>
+    <tr>
+      <td colspan="4">门诊收治诊断：<span class="CMZZDMC4"></span></td>
+    </tr>
+    <tr>
+      <td colspan="4">临床初步诊断：<span class="CRYZDMC4"></span></td>
+    </tr>
+    <tr>
+      <td colspan="4">出院确定诊断：<span class="CCYQX4"></span></td>
+    </tr>
+    <tr>
+      <td colspan="4">入院时情况:<span class="CRYQK4"></span></td>
+    </tr>
+    <tr>
+           <td colspan="4">	治疗经过:<span class="ZLJG4"></span></td>
+    </tr>
+    <tr>
+      <td colspan="4"><p>出院时情况:<span class="CYSQK4"></span>
+        </p>
+        <p>治疗结果:	<span class="ZLJGG4"></span></p></td>
+    </tr>
+    <tr>
+      <td colspan="4"><p>出院医嘱:<span class="CYYZ4"></span>
+        </p>
+        <p>随访:	<span>是</span></p></td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bingli_title">	<ul><li class="HOS_NAME4"></li>		<li>主治医师:<span class="CZZYS4"></span></li>	<li>住院医师:	<span class="CZYYS4">任璐</span></li></ul>
+      <p style="float:right;"><span>医疗表格统一编号 2-01 </span></p></td>    
+    </tr>
+  </tbody>
+</table>
+      </div>
+      <!-- **************出院记录结束***************** -->
+      
+    </div>
+    </div>
+    <div class="scgs">
+    <div style="float:left;width:15%;font: 16px #999;">
+    选择输出格式：
+    </div>
+    <div style="float:left;margin-left: 1%;width:70%">
+    <ul class="scgslist">
+    <li>
+        <label class="checkbox-inline i-checks" ><input type="checkbox" value="0">本地其他医院</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" value="1">省内其他医院</label>
+        <label class="checkbox-inline i-checks" style="margin-left: 40px"><input type="checkbox" value="2">全国其他医院</label>
+
+    </li>
+  
+    </ul>
+    </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div style="width:100%;margin-top: 5%;text-align: center;">
+    <button class="btndd">输出已选格式电子病历</button>
+    </div>
+    </div>
+    <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+<script>
+   $(document).ready(function(){
+	   var id=getvalue("id");
+	   var dtype=getvalue("type");
+	   $("#ul li").removeClass("tab1");
+	   $("#ul li[actdata='"+dtype+"']").addClass("tab1");
+	   selData();
+	   $("#addrList tr").each(function(s,b){
+		   if($(b).find("td").eq(1).text()==id){
+			   var h="";
+			   $(b).find("td").each(function(i,j){
+			      	if(i>0){
+			      		h+=$(j).text()+",";
+			      	}
+			   });
+			   $("#searchText").val(h.substring(0,h.length-1));
+		   }
+	   });
+	   if(dtype!=""&&dtype==0){
+		   
+		   
+		   selJsd();
+		  
+	       $("#cfjsd").fadeIn(300);
+	   }else if(dtype!=""&&dtype==1){
+		   
+	   	   $("#yydzbl").fadeIn(300);
+	   	   
+	   	   showDzbl(0);
+	   	   
+	   }
+	   $(document).click(function(){
+   		
+   	       $("div.dres").slideUp();
+   	   });
+	   $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green"});
+	   $("#bdgscheck").on("ifChecked",function(){
+		   $("input[name='bdgs1']").iCheck("check");
+	   });
+	   $("input[name='bdgs1']").on("ifChanged",function(){
+		   var ck=true;
+		   $("input[name='bdgs1']").each(function(s,b){
+			   if(!$(b).is(":checked")){
+				   ck=false;
+			   }
+		   });
+		   if(ck){
+			   $("#bdgscheck").iCheck("check");
+		   }else{
+			   $("#bdgscheck").iCheck("uncheck");
+		   }
+	   });
+	   $("input[name='shgs1']").on("ifChanged",function(){
+		   var ck=true;
+		   $("input[name='shgs1']").each(function(s,b){
+			   if(!$(b).is(":checked")){
+				   ck=false;
+			   }
+		   });
+		   if(ck){
+			   $("#shgscheck").iCheck("check");
+		   }else{
+			   $("#shgscheck").iCheck("uncheck");
+		   }
+	   });
+	   
+	   $("#shgscheck").on("ifChecked",function(){
+		   $("input[name='shgs1']").iCheck("check");
+	   });
+	   $("#szgscheck").on("ifChecked",function(){
+		   $("input[name='szgs1']").iCheck("check");
+	   });
+	   $("#bdgscheck").on("ifUnchecked",function(){
+		   var ck=true;
+		   $("input[name='bdgs1']").each(function(s,b){
+			   if(!$(b).is(":checked")){
+				   ck=false;
+			   }
+		   });
+		   if(ck){
+			   $("input[name='bdgs1']").iCheck("uncheck");   
+		   }
+	   });
+	   $("#shgscheck").on("ifUnchecked",function(){
+		   var ck=true;
+		   $("input[name='shgs1']").each(function(s,b){
+			   if(!$(b).is(":checked")){
+				   ck=false;
+			   }
+		   });
+		   if(ck){
+			   $("input[name='shgs1']").iCheck("uncheck");   
+		   }
+		   
+	   });
+	   $("#szgscheck").on("ifUnchecked",function(){
+		   $("input[name='szgs1']").iCheck("uncheck");
+	   });
+	   $("#ul li").click(function(){
+		   
+		   $(this).addClass("tab1");
+		   $(this).siblings().removeClass("tab1");
+		   
+	   });
+	   $("body,html").on("click",".ttbb > tr",function(event){  
+		   event.stopPropagation(); 
+       	   $('.dres').slideToggle('fast');
+		   var h="";
+           $(this).find("td").each(function(s,b){
+           if(s>0){
+      		  h+=$(b).text()+",";
+      	   }
+           $("#cfjsd").fadeOut(300);
+           $("#yydzbl").fadeOut(300);
+      });
+      $("#searchText").val(h.substring(0,h.length-1));
+      
+       });
+	   $("#dzbllx li").click(function(){
+		   $(this).addClass("tab1");
+		   $(this).siblings().removeClass("tab1");
+		   var type=$(this).attr("actdata");
+		   showDzbl(type);
+	   });
+	   $(".htop").click(function(){
+		   $(".topdiv").slideToggle('fast');
+		   if($(this).hasClass("glyphicon-menu-up")){
+			   $(this).removeClass("glyphicon-menu-up").addClass("glyphicon-menu-down");
+		   }else{
+			   $(this).removeClass("glyphicon-menu-down").addClass("glyphicon-menu-up");
+		   }
+		   
+	   });
+	  
+   });
+   function showDzbl(type){
+	   $("#bl>div").hide();
+	   var zyh=$("#searchText").val();  
+	   var zyh=zyh.split(",")[0];
+	   if(type==0){
+		   $.ajax({
+				url:"/MDEPlatform/yyxg/getECaseRecord.action",
+				data:{h_no:zyh},
+				type:"post",
+				dataType:"json",
+				success:function(res){
+					if(res.code==1){
+						for(var i in res.list[0].feiyong) {
+							$("#basydiv ."+i).text(res.list[0].feiyong[i]);
+						}
+						for(var i in res.list[0].info) {
+							$("#basydiv ."+i).text(res.list[0].info[i]);
+							if(i=="DCSNY") {
+								$("#basydiv ."+i).text(res.list[0].info[i].substring(0,10));
+							}else if(i=="DRYSJ"||i=="DCYSJ") {
+								$("#basydiv ."+i).text(res.list[0].info[i].substring(0,19));
+							}else if(i=="CLXDH"){
+								$("#basydiv ."+i).text(res.list[0].info[i].substring(0,11));
+							}
+							
+						}
+						$("#basydiv .JBBM").text(res.list[0].chuyuan[0].JBBM);
+						$("#basydiv .RYBQ").text(res.list[0].chuyuan[0].RYBQ);
+						$("#basydiv .CYZD").text(res.list[0].chuyuan[0].CYZD);
+						
+					}else {
+						alertShow(res.message);
+					}
+				}
+		   });
+		   $("#basydiv").fadeIn(300);
+	   }else if(type==1){
+		   $.ajax({
+				url:"tian/findZyjl.action",
+				dataType:"json",
+				data:{cardno:zyh},
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	var d=data[""];
+			    	$("#RYCS").text(d[0]);
+			    	$("#RYQK").text(d[1]);
+			    	$("#YS").text(d[4]);
+			    	$("#YYMC").text(data["YYMC"]);
+			    	$("#CBZD").text(d[2]);
+			    	$("#zyjldiv span").each(function(){
+			    		$(this).text(data[$(this).attr("id")]);
+			    	});
+			    }
+		   });
+		   $("#zyjldiv").fadeIn(300);
+	   }else if(type==2){
+		   $.ajax({
+				url:"queryBcjl.action?zyh="+zyh+"&type=1",
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	
+			    	var	h="<div  class=\"bingli_blacktb\"><h1>"+data[0].CBCLXMC+"</h1></div>"
+					    	 +"<table class=\"bingli_blacktb\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">"
+					    	 +"<tbody><tr><td class=\"bingli_title\"  colspan=\"2\"><ul>"
+					    	 +"<li style=\" width:32%; text-align:left;\">姓名：<span>"+data[0].CXM+"</span></li>"
+					    	 +"<li style=\"width:29%; text-align:center;\">科室名称：<span>"+data[0].CRYKSMC+"</span></li>"
+					    	 +"<li style=\"width:29%;text-align:right;\">病案号：<span>"+data[0].CZYH+"</span></li>"
+					    	 +"</ul></td></tr><tr><td>"+data[0].CBCLXMC+"</td><td>记录日期：<span>"+data[0].DJLSJ.substring(0,19)+"</span></td></tr>"
+					    	 +"<tr><td colspan=\"2\" >"+data[0].TJLNR+"</td></tr></tbody></table>";
+			    	
+			    	$("#scbcdiv").html(h);
+			    }
+		   });
+			    
+		   $("#scbcdiv").fadeIn(300);
+	   }else if(type==3){
+		   $.ajax({
+				url:"queryBcjl.action?zyh="+zyh+"&type=2",
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	var	h=""
+			    	for(var i in data){
+			    	h+="<div  class=\"bingli_blacktb\"><h1>"+data[i].CBCLXMC+"</h1></div>"
+			    	 +"<table class=\"bingli_blacktb\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">"
+			    	 +"<tbody><tr><td class=\"bingli_title\"  colspan=\"2\"><ul>"
+			    	 +"<li style=\" width:32%; text-align:left;\">姓名：<span>"+data[i].CXM+"</span></li>"
+			    	 +"<li style=\"width:29%; text-align:center;\">科室名称：<span>"+data[i].CRYKSMC+"</span></li>"
+			    	 +"<li style=\"width:29%;text-align:right;\">病案号：<span>"+data[i].CZYH+"</span></li>"
+			    	 +"</ul></td></tr><tr><td>"+data[i].CBCLXMC+"</td><td>记录日期：<span>"+data[i].DJLSJ.substring(0,19)+"</span></td></tr>"
+			    	 +"<tr><td colspan=\"2\" >"+data[i].TJLNR+"</td></tr></tbody></table>";
+			    	}
+	    	        $("#bcjldiv").html(h);
+			    }
+		   });
+		   $("#bcjldiv").fadeIn(300);
+	   }else{
+		   $.ajax({
+				url:"/MDEPlatform/yyxg/outHospital.action",
+				data:{
+					h_no:zyh
+				},
+				type:"post",
+				dataType:"json",
+				success:function(res){
+					if(res.code==1){
+						$(".CBRH4").text(res.list[0].CBRH);
+						$(".CCYKSMC4").text(res.list[0].CCYKSMC);
+						$(".CRYKSMC4").text(res.list[0].CRYKSMC);
+						$(".CBAH4").text(res.list[0].CBAH);
+						$(".CXM4").text(res.list[0].CXM);
+						$(".CXB4").text(res.list[0].CXB);
+						$(".CBRNL4").text(res.list[0].CBRNL);
+						$(".CRYZDMC4").text(res.list[0].CRYZDMC);
+						$(".DRYSJ4").text(res.list[0].DRYSJ.substring(0,10));
+						$(".DCYSJ4").text(res.list[0].DCYSJ.substring(0,10));
+						$(".CMZZDMC4").text(res.list[0].CMZZDMC);
+						$(".CRYZDMC4").text(res.list[0].CRYZDMC);
+						$(".CRYQK4").text(res.list[0].RYSQK);
+						$(".CCYQX4").text(res.list[0].CCYQX);
+						$(".CZZYS4").text(res.list[0].CZZYS);
+						$(".CZYYS4").text(res.list[0].CZYYS);
+						$(".ZLJG4").text(res.list[0].ZLJG);
+						$(".ZLJGG4").text(res.list[0].ZLJGG);
+						$(".CYSQK4").text(res.list[0].CYSQK);
+						$(".HOS_NAME4").text(res.list[0].HOS_NAME);
+						$(".CYYZ4").text(res.list[0].CYYZ);
+					}else {
+						alertShow(res.message);
+					}	
+				}
+		   });
+		   $("#cyjldiv").fadeIn(300);
+	   }
+   }
+   function showsc2(obj){
+	   $(obj).attr("src","../../img/sc2.png");
+   }
+   function showsc1(obj){
+	   $(obj).attr("src","../../img/sc1.png");
+   }
+   function showdetail(){
+	   $("body,html").animate({ scrollTop: $(".scgs:visible").offset().top }, 300);
+   }
+   function showList(){
+	   var type=$("#ul .tab1").attr("actdata");
+	   if(type!=0){
+		   return false;
+	   }
+	   selData();
+       $(".dres").slideToggle('fast');
+       event.stopPropagation(); 
+   }
+   function selData(){
+	   var type=$("#ul .tab1").attr("actdata");
+	   var h="";
+	  
+	   $.ajax({
+			url:"findOtmData.action?sjType="+type,
+			dataType:"json",
+			type:"get",
+		    async:false,
+		    success:function(data){
+		    	if(type==0){
+		    		h="<thead><tr id=\"biaoti\"><th width=\"5px\"></th><th >处方号</th><th >科室</th><th >医师</th><th >日期</th></tr></thead>";
+		    	}else if(type==1){
+		    		h="<thead><tr id=\"biaoti\"><th width=\"5px\"></th><th >病案号</th><th>患者</th><th>医师</th><th>时间</th></tr></thead>"
+		    	}else if(type==2){
+		    		
+		    	}else{
+		    		
+		    	}
+		    	h+="<tbody id=\"addrList\" class=\"ttbb\">";
+		    	for(var i in data){
+		    		var index=parseInt(i)+1;
+		    		h+="<tr><td>"+index+"</td><td>"+data[i].a1+"</td><td>"+data[i].a2+"</td><td>"+data[i].a3+"</td><td>"+data[i].a4+"</td></tr>";	
+		    	}
+		    	h+="</tbody>";
+		    }
+	   });
+   	   
+       $(".list").html(h);
+   }
+   function selJsd(){
+	   var type=$("#ul .tab1").attr("actdata");
+	   if(type==0){
+		   var cfh=$("#searchText").val();  
+		   var cfh=cfh.split(",")[0];
+		   $.ajax({
+				url:"findJsdBasyData.action?id="+cfh,
+				dataType:"json",
+				type:"get",
+			    async:false,
+			    success:function(data){
+			    	for(var i in data){
+			    		if(i=="zdjg"){
+			    			
+			    			var zdjgs=data[i];
+			    			
+			    			$(".dj #zdjg").text("");
+			    			for(var z in zdjgs){
+			    				$(".dj #zdjg").append(zdjgs[z]+"<br>");
+			    			}
+			    		}else{
+			    			$(".dj #"+i).text(data[i]);
+			    		}
+			    		
+			    	}
+			    }
+		   });
+	   }
+	   
+   }
+   function scjsd(){
+	   var h="";
+       $(".scgslist input:checked").each(function(s,b){
+    	   h+=$(b).val()+"@";
+       });
+       if(h==""){
+    	   alertShow("请选择一个输出类型");
+       }
+       var type=$("#ul .tab1").attr("actdata");
+       var id=$("#searchText").val();
+       var id=id.split(",")[0];
+       if(type==0){
+    	   location.href="cpajsd_detail.html?id="+id+"&sc="+h;
+       }
+   }
+   function searchBookService(){
+	   var type=$("#ul .tab1").attr("actdata");
+	   $(".centerdiv").hide();
+	   if(type!=0){
+		   return false;
+	   }
+	   if(type==0){
+	       selJsd(); 
+	       $("#cfjsd").fadeIn(300);  
+	   }else if(type==1){
+	       $("#dzbllx li").removeClass("tab1");
+	       $("#dzbllx li[actdata='0']").addClass("tab1");
+	       $("#yydzbl").fadeIn(300);
+	       showDzbl(0);
+	   }else{
+	    	  
+	   }
+	   $(".scgslist input").prop("checked",false);
+	   $(".scgslist div").removeClass("checked");
+   }
+  
+    </script>
+</body>
+</html>

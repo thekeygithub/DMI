@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>药品说明</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		h4 {
+			font-weight: bold;
+			font-family: "微软雅黑";
+			margin-top: 30px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.row {
+			line-height: 30px;
+			margin-top: 10px;
+		}
+		p {
+			line-height: 24px;
+		}
+	</style>
+    
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<div class="content" style="padding: 30px 0;">
+			<p id="ypmc"><strong>药品名称：</strong><samp id="DRUG_NAME"></samp></p>
+			<p id="jyl"><strong>国家医保甲乙类：</strong><samp id="MEDICAL_INSU"></samp></p>
+			<p id="syz"><strong>适应症：</strong><samp id="INDICATION"></samp></p>
+			<p id="jzz"><strong>禁忌症：</strong><samp id="CONTRA"></samp></p>
+			<p id="blfy"><strong>不良反应：</strong><samp id="ADVERSE"></samp></p>
+			<p id="yfyl"><strong>用法用量：</strong><samp id="USE_DOSAGE"></samp></p>
+			<p id="zysx"><strong>注意事项：</strong><samp id="NOTES"></samp></p>
+			<p id="xhzy"><strong>药物相互作用：</strong><samp id="INTERACTION"></samp></p>
+			<p id="ylzy"><strong>药理作用：</strong><samp id="PHARMACO"></samp></p>
+			<p id="ypdlx"><strong>药品动力学：</strong><samp id="DYNAMICS"></samp></p>
+		</div>
+	</div>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	        var ypid=getvalue("ypid");
+		    $.ajax({
+				url:"queryDrugDetails.action?ypid="+ypid,
+				dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	//console.info(data);
+			    	if(data.DRUG_NAME==""){
+			    		$("#ypmc").hide();
+			    	}else{
+			    		$("#DRUG_NAME").html(data.DRUG_NAME);
+			    	}
+			    	if(data.MEDICAL_INSU==""){
+			    		$("#jyl").hide();
+			    	}else{
+			    		$("#MEDICAL_INSU").html(data.MEDICAL_INSU);
+			    	}
+			    	if(data.INDICATION==""){
+			    		$("#syz").hide();
+			    	}else{
+			    		$("#INDICATION").html(data.INDICATION);
+			    	}
+			    	if(data.CONTRA==""){
+			    		$("#jzz").hide();
+			    	}else{
+			    		$("#CONTRA").html(data.CONTRA);
+			    	}
+			    	if(data.ADVERSE==""){
+			    		$("#blfy").hide();
+			    	}else{
+			    		$("#ADVERSE").html(data.ADVERSE);
+			    	}
+			    	if(data.USE_DOSAGE==""){
+			    		$("#yfyl").hide();
+			    	}else{
+			    		$("#USE_DOSAGE").html(data.USE_DOSAGE);
+			    	}
+			    	if(data.NOTES==""){
+			    		$("#zysx").hide();
+			    	}else{
+			    		$("#NOTES").html(data.NOTES);
+			    	}
+			    	if(data.INTERACTION==""){
+			    		$("#xhzy").hide();
+			    	}else{
+			    		$("#INTERACTION").html(data.INTERACTION);
+			    	}
+			    	if(data.PHARMACO==""){
+			    		$("#ylzy").hide();
+			    	}else{
+			    		$("#PHARMACO").html(data.PHARMACO);
+			    	}
+			    	if(data.DYNAMICS==""){
+			    		$("#ypdlx").hide();
+			    	}else{
+			    		$("#DYNAMICS").html(data.DYNAMICS);
+			    	}
+			    }
+		    });
+		    $("a").each(function(index,obj){  
+		   		$(obj).attr("href","#").attr("target","").unbind("click");
+	    	});
+		    //$("img").attr("src","");
+		    $("img").attr("width","");
+		    $("img").attr("height","");
+	    });
+	</script>
+</body>
+</html>
+

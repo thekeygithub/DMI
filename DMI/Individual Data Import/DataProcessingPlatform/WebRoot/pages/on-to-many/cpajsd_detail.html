@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>一次录入多种输出</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+    
+    <style>
+	.bingli_title { width:100%;}.bingli_title ul li{list-style:none; float:left; padding:0 20px;}
+.bingli_title ul li span{ display:inline-block; padding:0 20px; border-bottom:1px solid #ccc;}
+.bingli_blacktb{font:16px/180% "微软雅黑"; width:100%; border-collapse:collapse; text-align:left; color:#333;}
+.bingli_blacktb td,.bingli_blacktb th{ height:36px; border-left:1px solid #ccc; border-bottom:1px solid #ccc; font-weight:normal;  padding: 12px 20px;}.bingli_blacktb th{ background:#f5f5f5;}
+.bingli_blacktb tD:first-child,.bingli_blacktb th:first-child{ border-left:none;}
+.bingli_blacktb h1{ font:32px/200% "微软雅黑"; font-weight:bold; text-align:center;}
+.bingli_blacktb h2{ font:28px/200% "微软雅黑"; font-weight:bold; text-align:center;}
+.bingli_blacktb h3{ font:20px/200% "微软雅黑"; font-weight:bold; }
+.bingli_blacktb span{font:15px/180% "微软雅黑"; color:#777;}
+
+.ctlbut517{ width:100%;}
+.daochu{font:13px "微软雅黑"; color:#777;display:inline-block; padding:2px 10px 0 25px; margin:0 10px; border:1px solid #bbb; border-radius:5px; float:right; background:url(../../img/icontable.png) 5px 6px no-repeat; cursor:pointer;}
+.daochu:hover{  border:1px solid #f00;}
+.dayin{font:13px "微软雅黑"; color:#777; display:inline-block; padding:2px 10px 0 25px; margin:0 10px; border:1px solid #bbb; border-radius:5px; float:right; background:url(../../img/icontable.png) 5px -25px no-repeat; cursor:pointer;}
+.dayin:hover{  border:1px solid #f00;}
+	.topdiv{
+	    width:100%;
+	    height:175px;
+	    padding-left:10px;
+	}
+	.centerdiv{
+	    background: #fff;
+	}
+	.bigbtn{
+	    width:230px;
+	    height:50px;
+	    text-align:center;
+	  
+	    padding:16px 28px 16px 28px;
+	    font: 14px bold;
+	    color:#12a7bb;
+	    font-family: "微软雅黑";
+	    border-radius: 0!important;
+		background-color: #f2f2f2!important;
+		outline: none!important;
+		border-color: #f2f2f2!important;
+		    
+		    float:left;
+		    border: 0;
+		    display: block;
+		    border-radius: 5px;
+		    cursor: pointer;
+
+            margin-left: 20px;
+            margin-top:25px;
+	}
+	.bigbtn1{
+	    color:#fff;
+	    background-color: #12a7bb!important;
+		border-color: #12a7bb!important;
+	}
+	</style>
+
+</head>
+
+<body class="gray-bg animated fadeInRight">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    
+    <div class="topdiv">
+    	<button class="bigbtn" style="display:none;" data-xh="01" data-table="bdgsxnh">佳木斯-新农合结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-table="bdgsczzg" data-xh="02">佳木斯-城镇职工结算单据</button>
+    	<button class="bigbtn" style="display:none;"  data-table="bdgsczjm" data-xh="03">佳木斯-城镇居民结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-xh="11" data-table="szgsczzg">黑龙江省直-城镇职工结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-xh="21" data-table="shgsczzg">哈尔滨-城镇职工结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-xh="22" data-table="shgsczjm">哈尔滨-城镇居民结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-xh="23" data-table="shgssgyl">哈尔滨-森工医疗结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-xh="24" data-table="shgsxnh">哈尔滨-新农合结算单据</button>
+    	<button class="bigbtn" style="display:none;" data-xh="25" data-table="shgstlzg">哈尔滨-铁路职工结算单据</button>
+   </div>
+   <div class="centerdiv">
+   <div class="ctlbut517"><span class="dayin">打印</span><span class="daochu">导出Excel</span></div>
+   <!-- ****************************本地格式-城镇职工***************************** -->
+   <div id="bdgsczzg" style="display:none">
+   <table class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="2">
+  <h1 id="bdgsbt"> 佳木斯-城镇职工结算单据</h1>
+      </td>
+    </tr>
+    <tr>
+      <td>就诊机构：<span id="jzjg02"></span></td>
+      <td>单据号：<span id="djh02"></span></td>
+    </tr>
+    <tr>
+      <td>患者姓名：<span id="xm02"></span></td>
+      <td>患者性别：<span id="xb02"></span></td>
+    </tr>
+    <tr>
+      <td>患者年龄：<span id="hznl02"></span></td>
+      <td>出生日期：<span id="csrq02"></span></td>
+    </tr>
+  <tr>
+      <td colspan="2">诊断结果：<span id="zdjg02"></span></td>
+    </tr>
+    <tr>
+      <td>结算日期：<span id="jsrq02"></span></td>
+      <td>医疗总费用：<span id="ylzfy02"></span></td>
+    </tr>
+    <tr>
+      <td>本次统筹补偿费用：<span id="bctcbcfy02"></span></td>
+      <td>个人自付费用：<span id="grzffy02"></span></td>
+    </tr>
+    <tr>
+      <td>个人账户支付费用：<span id="grzhzffy02"></span></td>
+      <td>乙类药品个人自理：<span id="ylypgrzl02"></span></td>
+    </tr>
+   <tr>
+      <td>经办人：<span id="jbr02"></span></td>
+      <td>经办日期：<span id="jbrq02"></span></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx02">
+    
+    
+  </tbody>
+</table>
+</div>
+<!-- *****************************************本地格式-新农合************************************************************* -->
+<div id="bdgsxnh" style="display:none">
+<table class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td  class="bingli_blacktb " colspan="3"><h1> 佳木斯-新农合结算单据</h1></div></td>
+    </tr>
+    <tr>
+      <td width="29%">合作医疗证号：<span id="hzylzh01"></span></td>
+      <td width="35%">户主：<span id="hz01"></span></td>
+      <td width="36%">患者：<span id="huanzhe01"></span></td>
+    </tr>
+    <tr>
+      <td>性别：<span id="xb01"></span></td>
+      <td>家庭住址：<span id="jtzz01"></span></td>
+      <td>医院：<span id="yy01"></span></td>
+    </tr>
+    <tr>
+      <td>入院时间：<span id="rysj01"></span></td>
+      <td>住院号：<span id="zyh01"></span></td>
+      <td>结算开始日期：<span id="jsksrq01"></span></td>
+    </tr>
+    <tr>
+      <td>结算终止日期：<span id="jszzrq01"></span></td>
+      <td>单位：元</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+
+<table  class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td width="9%" rowspan="2">结报次数</td>
+      <td colspan="3">住院医药费用</td>
+      <td colspan="3">垫付的补偿费用</td>
+      <td colspan="3">实际结算费用</td>
+    </tr>
+    <tr>
+      <td width="10%">总医药费用</td>
+      <td width="12%">其中药品费用</td>
+      <td width="15%">符合报销范围医药费用</td>
+      <td width="10%">新农合</td>
+      <td width="9%">医疗救助</td>
+      <td width="6%">其他</td>
+      <td width="8%">新农合</td>
+      <td width="9%">医疗救助</td>
+      <td width="6%">其他</td>
+    </tr></tbody>
+    <tbody id="jsd01">
+    
+    </tbody>
+    <tbody>
+    <tr>
+      <td  class="bingli_title"  colspan="10">  <ul >
+      <li> 定点医院审批人：<span id="ddyyspr01"></span></li>
+      <li>填报人：<span id="tbr01"></span></li>
+      <li>联系电话<span id="lxdh01"></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td  class="bingli_title"  colspan="10">  <ul >
+      <li> 统筹地区审批人：<span id="tcdqspr01"></span></li>
+      <li>审核人：<span id="shr01"></span></li>
+      <li>联系电话<span id="lxdh0101"></span></li>
+      </ul></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="18"><h2>结算单据明细</h2></td>
+    </tr>
+    <tr>
+         <th rowspan="2">姓名</th>
+          <th rowspan="2">参合证号</th>
+          <th rowspan="2">性别</th>
+          <th rowspan="2">年龄</th>
+      <th rowspan="2">家庭住址</th>
+         <th rowspan="2">第一诊断</th>
+          <th colspan="3">异地就医方式</th>
+          <th colspan="2">住院医药费用</th>
+          <th colspan="3">垫付的补偿费用</th>
+          <th colspan="3">结算费用</th>
+          <th rowspan="2">联系方式</th>
+    </tr>
+    <tr>
+      <th>转诊</th>
+      <th>异地居住</th>
+      <th>非转诊</th>
+      <th>总医药费用</th>
+      <th>符合报销范围医药费用</th>
+      <th>新农合</th>
+      <th>医疗救助</th>
+      <th>其他</th>
+      <th>新农合</th>
+      <th>医疗救助</th>
+        <th>其他</th>
+    </tr>
+    </tbody>
+    <tbody id="jsdmx01">
+    
+    </tbody>
+    <tbody>
+    <tr>
+       <td colspan="6">合计：<span id="hj01"></span></td>
+      <td colspan="3">&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td  class="bingli_title"  colspan="18">  <ul >
+      <li> 定点医院审批人：<span></span></li>
+      <li>填报人：<span id="tbr0101"></span></li>
+      <li>联系电话<span></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td  class="bingli_title"  colspan="18">  <ul >
+      <li> 统筹地区审批人：<span></span></li>
+      <li>审核人：<span id="shr0101"></span></li>
+      <li>联系电话<span></span></li>
+      </ul></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- *****************************************省直格式-城镇职工******************************************************* -->
+<div id="szgsczzg" style="display:none;">
+<table class="bingli_blacktb " width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="4">
+  <h1> 黑龙江省直格式-城镇职工结算单据</h1>
+      </td>
+    </tr>
+    <tr>
+      <td>就诊机构：<span id="jzjg11"></span></td>
+      <td>单据号：<span id="djh11"></span></td>
+      <td>患者姓名：<span id="xm11"></span></td>
+      <td>患者性别：<span id="xb11"></span></td>
+    </tr>
+    <tr>
+      <td>患者年龄：<span id="hznl11"></span></td>
+      <td>出生日期：<span id="csrq11"></span></td>
+      <td colspan="2">结算日期：<span id="jsrq11"></span></td>
+    </tr>
+    <tr>
+      <td colspan="4">诊断结果：<span id="zdjg11">患者半小时前干活时左手食指及中指不慎被机器皮带切伤，当即疼 痛，流血，活动正常，自行往伤口上涂抹清凉油，行简单包扎后急来我院就诊。患者自病以来无体重减轻，饮食差，睡眠差、二便正常，精神尚可。</span></td>
+    </tr>
+    <tr>
+      <td>医疗总费用：<span id="ylzfy11"></span></td>
+      <td>本次统筹补偿费用：<span id="bctcbcfy11"></span></td>
+      <td>个人自付费用：<span id="grzffy11">0</span></td>
+      <td>个人账户支付费用：<span id="grzhzffy11">228.51</span></td>
+    </tr>
+    <tr>
+      <td>乙类药品个人自理：<span id="ylypgrzl11">0</span></td>
+      <td>经办人：<span id="jbr11"></span></td>
+      <td colspan="2">经办日期：<span id="jbrq11"></span></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx11">
+      </tbody>
+</table>
+
+</div>
+<!--******************************************省会格式-城镇职工********************************************************* -->
+<div id="shgsczzg" style="display:none;">
+<table class="bingli_blacktb " width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="4">
+  <h1> 哈尔滨-城镇职工结算单据</h1>
+      </td>
+    </tr>
+    <tr>
+      <td>就诊机构：<span id="jzjg21">河南大学淮河医院</span></td>
+      <td>单据号：<span id="djh21"></span></td>
+      <td>填表时间：<span id="tbsj21"></span></td>
+      <td>患者姓名：<span  id="xm21"></span></td>
+    </tr>
+    <tr>
+      <td>性别：<span id="xb21"></span></td>
+      <td>患者年龄：<span  id="hznl21"></span></td>
+      <td>出生日期：<span id="csrq21"></span></td>
+      <td>结算日期：<span id="jsrq21"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">工作单位：<span id="gzdw21"></span></td>
+      <td>保险号：<span id="bxh21"></span></td>
+      <td>联系电话:：<span id="lxdh21"></span></td>
+    </tr>
+    <tr>
+      <td>乙类药品个人自理：<span id="ylypgrzl21"></span></td>
+      <td>经办人：<span id="jbr21"></span></td>
+      <td>个人自付费用：<span id="grzffy21"></span></td>
+      <td>经办日期：<span id="jbrq21"></span></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx21">
+    
+  </tbody>
+</table>
+</div>
+<!--******************************************省会格式-城镇居民********************************************************* -->
+<div id="shgsczjm" style="display:none;">
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="3"><h1> 哈尔滨-城镇居民结算单据</h1></td>
+    </tr>
+    <tr>
+      <td>就诊编号：<span id="jzbh22"></span></td>
+      <td>个人编号：<span id="grbh22"></span></td>
+      <td>姓名：<span id="xm22"></span></td>
+    </tr>
+    <tr>
+      <td>性别：<span id="xb22"></span></td>
+      <td>年龄：<span id="nl22"></span></td>
+      <td>人员类别：<span>成年居民</span></td>
+    </tr>
+    <tr>
+      <td>所属单位：<span id="ssdw22"></span></td>
+      <td>所属地区：<span id="ssdq22"></span></td>
+      <td>就诊类型：<span id="jzlx22"></span></td>
+    </tr>
+    <tr>
+      <td>就诊机构：<span id="jzjg22"></span></td>
+      <td>就诊诊断：<span id="jzzd22"></span></td>
+      <td>结算日期：<span id="jsrq22"></span></td>
+    </tr>
+    <tr>
+      <td>就诊科室：<span id="jzks22"></span></td>
+      <td>本次统筹补偿费用：<span id="bctcbcfy22">0</span></td>
+      <td>个人自付费用：<span id="grzffy22">0</span></td>
+    </tr>
+    <tr>
+      <td>个人账户支付费用：<span id="grzhzffy22">228.51</span></td>
+      <td>乙类药品个人自理：<span id="ylypgrzl22">0</span></td>
+      <td>经办人：<span id="jbr22">李冰</span></td>
+    </tr>
+    <tr>
+      <td>经办日期：<span id="jbrq22"></span></td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx22">
+   
+  </tbody>
+</table>
+</div>
+<!--******************************************省会格式-森工医疗********************************************************* -->
+<div id="shgssgyl" style="display:none">
+<table class="bingli_blacktb " width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="4">
+  <h1> 森工医疗结算单据</h1>
+      </td>
+    </tr>
+    <tr>
+      <td>就诊机构：<span id="jzjg23"></span></td>
+      <td>单据号：<span id="djh23"></span></td>
+      <td>患者姓名：<span id="xm23"></span></td>
+      <td>患者性别：<span id="xb23"></span></td>
+    </tr>
+    <tr>
+      <td>患者年龄：<span id="hznl23"></span></td>
+      <td>结算日期：<span id="jsrq23"></span></td>
+      <td colspan="2">出生日期：<span id="csrq23">1977-01-01 00：00：00</span></td>
+    </tr>
+  
+    <tr>
+      <td colspan="4">医疗总费用：<span id="ylzfy23">228.51</span></td>
+    </tr>
+    <tr>
+      <td colspan="2">本次统筹补偿费用：<span id="bctcbcfy23">0</span></td>
+      <td colspan="2">个人自付费用：<span id="grzffy23">0</span></td>
+    </tr>
+    <tr>
+      <td colspan="2">个人账户支付费用：<span id="grzhzffy23">228.51</span></td>
+      <td colspan="2">乙类药品个人自理：<span id="ylypgrzl23">0</span></td>
+    </tr>
+   <tr>
+      <td colspan="2">经办人：<span id="jbr23">李冰</span></td>
+      <td colspan="2">经办日期：<span id="jbrq23">2016-11-28 00：00：00</span></td>
+    </tr>
+    <tr>
+      <td colspan="4">诊断结果：<span id="zdjg23">者半小时前干活时左手食指及中指不慎被机器皮带切伤，当即疼 痛，流血，活动正常，自行往伤口上涂抹清凉油，行简单包扎后急来我院就诊。患者自病以来无体重减轻，饮食差，睡眠差、二便正常，精神尚可。</span></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx23">
+ 
+  </tbody>
+</table>
+</div>
+
+<!--******************************************省会格式-新农合********************************************************* -->
+<div id="shgsxnh" style="display: none">
+<div  class="bingli_blacktb ">
+  <h1 id="xnhbt">哈尔滨-新农合结算单据</h1></div>
+<table  class="bingli_blacktb"  width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td  class="bingli_title" colspan="11">
+       <ul >
+      <li> 医院：<span id="yy24"></span></li>
+      <li>结算开始日期：<span id="jsksrq24"></span></li>
+      <li>结算终止日期：<span id="jszzrq24"></span></li>
+      <li>单位：元</li> 
+      </ul></td>
+    </tr>
+    <tr>
+      <td width="9%" rowspan="2" >结报次数</td>
+      <td colspan="3" >住院医药费用</td>
+      <td colspan="3" >垫付的补偿费用</td>
+      <td colspan="3" >实际结算费用</td>
+      <td width="6%" rowspan="2" >备注</td>
+    </tr>
+    <tr>
+      <td width="10%" >总医药费用</td>
+      <td width="12%" >其中药品费用</td>
+      <td width="15%" >符合报销范围医药费用</td>
+      <td width="10%" >新农合</td>
+      <td width="9%" >医疗救助</td>
+      <td width="6%" >其他</td>
+      <td width="8%" >新农合</td>
+      <td width="9%" >医疗救助</td>
+      <td width="6%" >其他</td>
+    </tr>
+    </tbody>
+    <tbody id="jsd24">
+   </tbody>
+   <tbody>
+    <tr>
+      <td  class="bingli_title"  colspan="11">  <ul >
+      <li> 定点医院审批人：<span id="ddyyspr24"></span></li>
+      <li>填报人：<span id="tbr24"></span></li>
+      <li>联系电话<span id="lxdh24"></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td  class="bingli_title"  colspan="11">  <ul >
+      <li> 统筹地区审批人：<span id="tcdqspr24"></span></li>
+      <li>审核人：<span id="shr24"></span></li>
+      <li>联系电话<span id="shdh24"></span></li>
+      </ul></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="18"><h2>结算单明细</h2></td>
+    </tr>
+    <tr>
+         <th rowspan="2">姓名</th>
+          <th rowspan="2">参合证号</th>
+          <th rowspan="2">性别</th>
+          <th rowspan="2">年龄</th>
+      <th rowspan="2">家庭住址</th>
+         <th rowspan="2">第一诊断</th>
+          <th colspan="3">异地就医方式</th>
+          <th colspan="2">住院医药费用</th>
+          <th colspan="3">垫付的补偿费用</th>
+          <th colspan="3">结算费用</th>
+          <th rowspan="2">联系方式</th>
+    </tr>
+    <tr>
+      <th>转诊</th>
+      <th>异地居住</th>
+      <th>非转诊</th>
+      <th>总医药费用</th>
+      <th>符合报销范围医药费用</th>
+      <th>新农合</th>
+      <th>医疗救助</th>
+      <th>其他</th>
+      <th>新农合</th>
+      <th>医疗救助</th>
+        <th>其他</th>
+    </tr>
+    </tbody>
+    <tbody id="jsdmx24">
+    </tbody>
+    <tbody>
+    <tr><td colspan="6">合计：<span id="hj24"></span></td><td colspan="3">&nbsp;</td>
+      <td colspan="2">&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td  class="bingli_title"  colspan="18">  <ul >
+      <li> 定点医院审批人：<span></span></li>
+      <li>填报人：<span id="tbr2401"></span></li>
+      <li>联系电话<span></span></li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td  class="bingli_title"  colspan="18">  <ul >
+      <li> 统筹地区审批人：<span></span></li>
+      <li>审核人：<span id="shr2401"></span></li>
+      <li>联系电话<span></span></li>
+      </ul></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!--******************************************省会格式-铁路职工********************************************************* -->
+<div id="shgstlzg" style="display:none;">
+<table class="bingli_blacktb " width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="4">
+  <h1> 铁路职工结算单据</h1>
+      </td>
+    </tr>
+    <tr>
+      <td>就诊机构：<span id="jzjg25"></span></td>
+      <td>单据号：<span id="djh25">212121212</span></td>
+      <td>填表时间：<span id="tbrq25"></span></td>
+      <td>患者姓名：<span id="xm25">李艾</span></td>
+    </tr>
+    <tr>
+      <td>性别：<span id="xb25">女</span></td>
+      <td>患者年龄：<span id="hznl25">64</span></td>
+      <td>出生日期：<span id="csrq25">1977-01-01 00：00：00</span></td>
+      <td>结算日期：<span id="jsrq25">2011年9月22日13：30</span></td>
+    </tr>
+    <tr>
+      <td colspan="2">保险号：<span id="bxh25"></span></td>
+      <td colspan="2">联系电话:：<span id="lxdh25"></span></td>
+    </tr>
+    <tr>
+      <td>乙类药品个人自理：<span id="ylypgrzl25"></span></td>
+      <td>经办人：<span id="jbr25"></span></td>
+      <td>个人自付费用：<span id="grzffy25"></span></td>
+      <td>经办日期：<span id="jbrq25">2016-11-28 00：00：00</span></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx25">
+    
+  </tbody>
+</table>
+</div>
+<!--******************************************本地各式-城镇职工********************************************************* -->
+
+<div id="bdgsczjm" style="display:none">
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+    <tr>
+      <td colspan="6"><h1 id="shgsbt">佳木斯-城镇居民结算单据</h1></td>
+    </tr>
+    <tr>
+      <td>就诊编号：<span id="jzbh03"></span></td>
+      <td>个人编号：<span id="grbh03"></span></td>
+      <td>姓名：<span id="xm03"></span></td>
+      <td>性别：<span id="xb03"></span></td>
+      <td>年龄：<span id="nl03"></span></td>
+      <td>人员类别：<span id="rylb03"></span></td>
+    </tr>
+    <tr>
+      <td colspan="3">所属单位：<span id="ssdw03"></span></td>
+      <td colspan="3">所属地区：<span id="ssdq03"></span></td>
+    </tr>
+    <tr>
+      <td colspan="2">就诊类型：<span id="jzlx03"></span></td>
+      <td colspan="2">就诊机构：<span id="jzjg03"></span></td>
+      <td colspan="2">就诊诊断：<span id="jzzd03"></span></td>
+    </tr>
+    <tr>
+      <td>结算日期：<span id="jsrq03"></span></td>
+      <td>就诊科室：<span id="jzks03"></span></td>
+      <td colspan="2">本次统筹补偿费用：<span id="bctcbcfy03"></span></td>
+      <td colspan="2">个人自付费用：<span id="grzffy03"></span></td>
+    </tr>
+    <tr>
+      <td>个人账户支付费用：<span id="grzhzffy03"></span></td>
+      <td>乙类药品个人自理：<span id="ylypgrzl03"></span></td>
+      <td colspan="2">经办人：<span id="jbr03"></span></td>
+      <td colspan="2">经办日期：<span id="jbrq03"></span></td>
+    </tr>
+  </tbody>
+</table>
+<table class="bingli_blacktb" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody id="jsdmx03">
+    
+  </tbody>
+</table>
+</div>
+</div>
+    <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+   <script src="../../js/ajaxfileupload.js"></script>
+    <script>
+    $(document).ready(function(){
+    	var sc=getvalue("sc").split("@");
+    	$(".topdiv button").each(function(s,b){
+    		var dm=$(b).attr("data-xh");
+    		for(var i in sc){
+    			
+    			if(sc[i]==dm){
+    				$(b).show();
+    			}
+    		}
+    	});
+    	var obb=$(".topdiv button:visible")[0];
+    	$(obb).addClass("bigbtn1");
+    	var id=$(obb).attr("data-table");
+    	$(".centerdiv>div").not(".ctlbut517").hide();
+		
+		$("#"+id).fadeIn(300);
+    	$(".topdiv button").click(function(){
+    		if($(this).hasClass("bigbtn1")){
+    			return false;
+    		}else{
+    			$(this).addClass("bigbtn1");
+    			$(this).siblings().removeClass("bigbtn1");
+    			var id=$(this).attr("data-table");
+    			$(".centerdiv>div").not(".ctlbut517").hide();
+    			seljsd();
+    			$("#"+id).fadeIn(300);
+    		}
+    	});
+        seljsd();
+        
+    });
+    function seljsd(){
+    	var id=getvalue("id");
+        var xh=$(".bigbtn1").attr("data-xh");
+    
+        if(xh=="02"){
+        	
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+   		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+            if(id=="1603017930"){
+        		$("#jzjg02").text("河南大学淮河医院");
+        		$("#djh02").text("1603020053");
+        		$("#xm02").text("孙威威");
+        		$("#xb02").text("男");
+        		$("#hznl02").text("20");
+        		$("#csrq02").text("1995年8月20日");
+        		$("#zdjg02").text("泌尿系统疾病    N39.900");
+        		$("#jsrq02").text("2016年3月21日");
+        		$("#ylzfy02").text("22.00");
+        		$("#bctcbcfy02").text("0.00");
+        		$("#grzffy02").text("0.00");
+        		$("#grzhzffy02").text("22.00");
+        		$("#ylypgrzl02").text("0.00");
+        		$("#jbr02").text("王丽芬");
+        		$("#jbrq02").text("2016年3月22日");
+        		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+        		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+        		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                
+            }else if(id=="1603017959"){
+            	$("#jzjg02").text("开封市第二人民医院分院");
+        		$("#djh02").text("1603020131");
+        		$("#xm02").text("王素敏");
+        		$("#xb02").text("女");
+        		$("#hznl02").text("47");
+        		$("#csrq02").text("1968年10月19日");
+        		$("#zdjg02").text("乳腺腺病    N60.201");
+        		$("#jsrq02").text("2016年3月22日");
+        		$("#ylzfy02").text("217.98");
+        		$("#bctcbcfy02").text("0.00");
+        		$("#grzffy02").text("0.00");
+        		$("#grzhzffy02").text("217.98");
+        		$("#ylypgrzl02").text("13.28");
+        		$("#jbr02").text("王丽芬");
+        		$("#jbrq02").text("2016年3月23日");
+        		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>甲类</td>"
+        		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>甲类</td>"
+        		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>乙类</td>"
+        		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>丙类</td>"
+        		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>甲类</td>"
+        		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>甲类</td>"
+        		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>丙类</td>"
+        		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+        		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                
+            }else if(id=="1604036132"){
+            	$("#jzjg02").text("开封市第二人民医院分院");
+        		$("#djh02").text("1604040131");
+        		$("#xm02").text("常怡飞");
+        		$("#xb02").text("男");
+        		$("#hznl02").text("26");
+        		$("#csrq02").text("19989年8月20日");
+        		$("#zdjg02").text("甲状腺机能亢进症    E05.900");
+        		$("#jsrq02").text("2016年4月4日");
+        		$("#ylzfy02").text("115.50");
+        		$("#bctcbcfy02").text("0.00");
+        		$("#grzffy02").text("0.00");
+        		$("#grzhzffy02").text("115.50");
+        		$("#ylypgrzl02").text("0.00");
+        		$("#jbr02").text("白雪");
+        		$("#jbrq02").text("2016年4月4日");
+        		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>甲类</td>"
+        		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>甲类</td>"
+        		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>丙类</td>"
+        		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+        		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                
+            }else{
+            	$("#jzjg02").text("通许县中医院");
+        		$("#djh02").text("1608030112");
+        		$("#xm02").text("李随群");
+        		$("#xb02").text("男");
+        		$("#hznl02").text("53");
+        		$("#csrq02").text("1962年1月11日");
+        		$("#zdjg02").text("高血压病    I10.x00");
+        		$("#jsrq02").text("2016年8月3日");
+        		$("#ylzfy02").text("60.00");
+        		$("#bctcbcfy02").text("0.00");
+        		$("#grzffy02").text("0.00");
+        		$("#grzhzffy02").text("60.00");
+        		$("#ylypgrzl02").text("12.00");
+        		$("#jbr02").text("韩英");
+        		$("#jbrq02").text("2016年8月3日");
+        		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>乙类</td>"
+        		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+        		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                
+            }
+            $("#jsdmx02").html(h);
+        }else if(xh=="03"){
+        	
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+      		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+            if(id=="1603017930"){
+            	$("#jzbh03").text("1603020053");
+           		$("#jzjg03").text("河南大学淮河医院");
+           		$("#grbh03").text("41020410713029");
+           		$("#xm03").text("孙威威");
+           		$("#xb03").text("男");
+           		$("#nl03").text("20");
+           		$("#rylb03").text("成年居民");
+           		$("#ssdw03").text("开封市迎宾小学工伤医疗专户");
+           		$("#ssdq03").text("410200");
+           		$("#jzlx03").text("普通门诊");
+           		$("#jzzd03").text("泌尿系统疾病    N39.900");
+           		$("#jzks03").text("泌尿外科门诊");
+           		$("#jsrq03").text("2016年3月21日");
+           		$("#bctcbcfy03").text("0.00");
+           		$("#grzffy03").text("0.00");
+           		$("#grzhzffy03").text("22.00");
+           		$("#ylypgrzl03").text("0.00");
+           		$("#jbr03").text("王丽芬");
+           		$("#jbrq03").text("2016年3月22日");
+           		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+            }else if(id=="1603017959"){
+            	$("#jzbh03").text("1603020131");
+               	$("#jzjg03").text("开封市第二人民医院分院");
+           		$("#grbh03").text("41021110999368");
+           		$("#xm03").text("王素敏");
+           		$("#xb03").text("女");
+           		$("#nl03").text("47");
+           		$("#rylb03").text("成年居民");
+           		$("#ssdw03").text("开封新区财政局（财政全供）");
+           		$("#ssdq03").text("410211");
+           		$("#jzlx03").text("普通门诊");
+           		$("#jzzd03").text("乳腺腺病    N60.201");
+           		$("#jsrq03").text("2016年3月22日");
+           		$("#jzks03").text("乳腺甲状腺门诊");
+           		$("#bctcbcfy03").text("0.00");
+           		$("#grzffy03").text("0.00");
+           		$("#grzhzffy03").text("217.98");
+           		$("#ylypgrzl03").text("13.28");
+           		$("#jbr03").text("王丽芬");
+           		$("#jbrq03").text("2016年3月23日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>1</td>"
+           		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>1</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>2</td>"
+           		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>3</td>"
+           		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>1</td>"
+           		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>1</td>"
+           		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>3</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+            }else if(id=="1604036132"){
+            	$("#jzbh03").text("1604040131");
+               	$("#jzjg03").text("开封市第二人民医院分院");
+           		$("#grbh03").text("41020060026222");
+           		$("#xm03").text("常怡飞");
+           		$("#xb03").text("男");
+           		$("#nl03").text("26");
+           		$("#rylb03").text("成年居民");
+           		$("#ssdw03").text("开封市空气压缩机厂");
+           		$("#ssdq03").text("410200");
+           		$("#jzlx03").text("普通门诊");
+           		$("#jzzd03").text("甲状腺机能亢进症    E05.900");
+           		$("#jsrq03").text("2016年4月4日");
+           		$("#jzks03").text("内分泌门诊");
+           		$("#bctcbcfy03").text("0.00");
+           		$("#grzffy03").text("0.00");
+           		$("#grzhzffy03").text("115.50");
+           		$("#ylypgrzl03").text("0.00");
+           		$("#jbr03").text("白雪");
+           		$("#jbrq03").text("2016年4月4日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>1</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>1</td>"
+           		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>3</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+            }else{
+            	$("#jzbh03").text("1608030112");
+               	$("#jzjg03").text("通许县中医院");
+           		$("#grbh03").text("41022210726231");
+           		$("#xm03").text("李随群");
+           		$("#xb03").text("男");
+           		$("#nl03").text("53");
+           		$("#rylb03").text("成年居民");
+           		$("#ssdw03").text("中国农业银行股份有限公司通许县支行");
+           		$("#ssdq03").text("410222");
+           		$("#jzlx03").text("普通门诊");
+           		$("#jzzd03").text("高血压病    I10.x00");
+           		$("#jsrq02").text("2016年8月3日");
+           		$("#jzks03").text("神经内科门诊");
+           		$("#bctcbcfy03").text("0.00");
+           		$("#grzffy03").text("0.00");
+           		$("#grzhzffy03").text("60.00");
+           		$("#ylypgrzl03").text("12.00");
+           		$("#jbr03").text("韩英");
+           		$("#jbrq03").text("2016年8月3日");
+           		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>2</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+            }
+            $("#jsdmx03").html(h);
+        }else if(xh=="24"){
+        	 
+        	   var h="";
+               if(id=="1603017930"){
+            	   var h1="<tr><td>1</td><td>22.00</td><td>0.00</td><td>22.00</td><td>22.00</td><td>0.00</td><td>0.00</td><td>22.00</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                   $("#jsd24").html(h1);        
+                   $("#lxdh24").text("22197117");
+            	   $("#yy24").text("河南大学淮河医院");
+           		   $("#jsksrq24").text("2016年3月21日");
+           		   $("#jszzrq24").text("2016年3月21日");
+           		   $("#hj24").text("22.00");
+           		   $("#tbr24").text("孙威威");
+           		   $("#shr24").text("王丽芬");
+           		   $("#tbr2401").text("孙威威");
+           		   $("#shr2401").text("王丽芬");
+           	       h+="<tr><td>孙威威</td><td>41020410713029</td><td>男</td><td>20</td><td></td><td>泌尿系统疾病    N39.900</td><td></td><td></td><td></td><td>22.00</td><td>22.00</td><td></td><td></td><td></td><td>22.00</td><td></td><td></td><td></td></tr>";
+               }else if(id=="1603017959"){
+            	   var h1="<tr><td>1</td><td>217.98</td><td>150.98</td><td>217.98</td><td>217.98</td><td>0.00</td><td>0.00</td><td>217.98</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                   $("#jsd24").html(h1);           
+                   $("#lxdh24").text("13603785512");
+               	   $("#yy24").text("开封市第二人民医院分院");
+              	   $("#jsksrq24").text("2016年3月22日");
+              	   $("#jszzrq24").text("2016年3月22日");
+              	   $("#hj24").text("217.98");
+              	   $("#tbr24").text("王素敏");
+              	   $("#shr24").text("王丽芬");
+              	   $("#tbr2401").text("王素敏");
+            	   $("#shr2401").text("王丽芬");
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>7.00</td><td>7.00</td><td></td><td></td><td></td><td>7.00</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>11.20</td><td>11.20</td><td></td><td></td><td></td><td>11.20</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>66.40</td><td>66.40</td><td></td><td></td><td></td><td>66.40</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>64.80</td><td>64.80</td><td></td><td></td><td></td><td>64.80</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>0.84</td><td>0.84</td><td></td><td></td><td></td><td>0.84</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>0.74</td><td>0.74</td><td></td><td></td><td></td><td>0.74</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>67.00</td><td>67.00</td><td></td><td></td><td></td><td>67.00</td><td></td><td></td><td></td></tr>";  
+            	
+                   
+               }else if(id=="1604036132"){
+            	   
+            	   var h1="<tr><td>1</td><td>115.50</td><td>91.50</td><td>115.50</td><td>115.50</td><td>0.00</td><td>0.00</td><td>115.50</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                   $("#jsd24").html(h1);           		
+               	   $("#yy24").text("开封市第二人民医院分院");
+               	   $("#lxdh24").text("0371-23386385");
+              	   $("#jsksrq24").text("2016年4月4日");
+              	   $("#jszzrq24").text("2016年4月4日");
+              	   $("#hj24").text("115.50");
+              	   $("#tbr24").text("常怡飞");
+              	   $("#shr24").text("白雪");
+              	   $("#tbr2401").text("常怡飞");
+            	   $("#shr2401").text("白雪");
+              	   h+="<tr><td>常怡飞</td><td>41020060026222</td><td>男</td><td>26</td><td></td><td>甲状腺机能亢进症    E05.900</td><td></td><td></td><td></td><td>10.50</td><td>10.50</td><td></td><td></td><td></td><td>10.50</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>常怡飞</td><td>41020060026222</td><td>男</td><td>26</td><td></td><td>甲状腺机能亢进症    E05.900</td><td></td><td></td><td></td><td>81.00</td><td>81.00</td><td></td><td></td><td></td><td>81.00</td><td></td><td></td><td></td></tr>";
+              	   h+="<tr><td>常怡飞</td><td>41020060026222</td><td>男</td><td>26</td><td></td><td>甲状腺机能亢进症    E05.900</td><td></td><td></td><td></td><td>24.00</td><td>24.00</td><td></td><td></td><td></td><td>24.00</td><td></td><td></td><td></td></tr>";
+              	  
+              
+               }else{
+            	   
+            	   var h1="<tr><td>1</td><td>60.00</td><td>0.00</td><td>60.00</td><td>60.00</td><td>0.00</td><td>0.00</td><td>60.00</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                   $("#jsd24").html(h1);           		
+               	   $("#yy24").text("通许县中医院");
+               	   $("#lxdh01").text("13839974806");
+               	   $("#jsksrq24").text("2016年8月3日");
+              	   $("#jszzrq24").text("2016年8月3日");
+              	   $("#hj24").text("60.00");
+              	   $("#tbr24").text("李随群");
+              	   $("#shr24").text("韩英");
+              	   $("#tbr2401").text("李随群");
+              	   $("#shr2401").text("韩英");
+              	   h+="<tr><td>李随群</td><td>41022210726231</td><td>男</td><td>53</td><td></td><td>高血压病    I10.x00</td><td></td><td></td><td></td><td>60.00</td><td>60.00</td><td></td><td></td><td></td><td>60.00</td><td></td><td></td><td></td></tr>";
+                  
+            	
+               }
+              
+               $("#jsdmx24").html(h);
+        }else if(xh=="01"){
+        	var h="";
+            if(id=="1603017930"){
+         	   var h1="<tr><td>1</td><td>22.00</td><td>0.00</td><td>22.00</td><td>22.00</td><td>0.00</td><td>0.00</td><td>22.00</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                $("#jsd01").html(h1);           		
+         	   $("#yy01").text("河南大学淮河医院");
+         	  $("#jtzz01").text("开封市顺河回族区顺河南街2号楼3单元4楼2号");
+         	   $("#lxdh01").text("22197117");
+         	  
+        		   $("#jsksrq01").text("2016年3月21日");
+        		   $("#jszzrq01").text("2016年3月21日");
+        		   $("#hzylzh01").text("41020410713029");
+        		   $("#hz01").text("孙威威");
+        		   $("#huanzhe01").text("孙威威");
+        		   $("#xb01").text("男");
+        		   $("#zyh01").text("1603020053");
+        		   $("#hj01").text("22.00");
+        		   $("#tbr01").text("孙威威");
+        		   $("#shr01").text("王丽芬");
+        		   $("#tbr0101").text("孙威威");
+        		   $("#shr0101").text("王丽芬");
+        	       h+="<tr><td>孙威威</td><td>41020410713029</td><td>男</td><td>20</td><td></td><td>泌尿系统疾病    N39.900</td><td></td><td></td><td></td><td>22.00</td><td>22.00</td><td></td><td></td><td></td><td>22.00</td><td></td><td></td><td></td></tr>";
+            }else if(id=="1603017959"){
+         	   var h1="<tr><td>1</td><td>217.98</td><td>150.98</td><td>217.98</td><td>217.98</td><td>0.00</td><td>0.00</td><td>217.98</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                $("#jsd01").html(h1);           		
+            	$("#yy01").text("开封市第二人民医院分院");
+            	$("#jtzz01").text("开封市集英街金祥苑6号楼");
+            	$("#lxdh01").text("13603785512");
+           	
+           	   $("#jsksrq01").text("2016年3月22日");
+           	   $("#jszzrq01").text("2016年3月22日");
+           	   $("#hzylzh01").text("41021110999368");
+  		       $("#hz01").text("王素敏");
+  		       $("#huanzhe01").text("王素敏");
+  		       $("#xb01").text("女");
+  		       $("#zyh01").text("1603020131");
+           	   $("#hj01").text("217.98");
+           	   $("#tbr01").text("王素敏");
+           	   $("#shr01").text("王丽芬");
+           	   $("#tbr0101").text("王素敏");
+         	   $("#shr0101").text("王丽芬");
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>7.00</td><td>7.00</td><td></td><td></td><td></td><td>7.00</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>11.20</td><td>11.20</td><td></td><td></td><td></td><td>11.20</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>66.40</td><td>66.40</td><td></td><td></td><td></td><td>66.40</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>64.80</td><td>64.80</td><td></td><td></td><td></td><td>64.80</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>0.84</td><td>0.84</td><td></td><td></td><td></td><td>0.84</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>0.74</td><td>0.74</td><td></td><td></td><td></td><td>0.74</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>王素敏</td><td>41021110999368</td><td>女</td><td>47</td><td></td><td>乳腺腺病    N60.201</td><td></td><td></td><td></td><td>67.00</td><td>67.00</td><td></td><td></td><td></td><td>67.00</td><td></td><td></td><td></td></tr>";  
+         	
+                
+            }else if(id=="1604036132"){
+         	   
+         	   var h1="<tr><td>1</td><td>115.50</td><td>91.50</td><td>115.50</td><td>115.50</td><td>0.00</td><td>0.00</td><td>115.50</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                $("#jsd01").html(h1);           		
+            	   $("#yy01").text("开封市第二人民医院分院");
+            	   $("#lxdh01").text("0371-23386385");
+              	  
+              	$("#jtzz01").text("");
+           	   $("#jsksrq01").text("2016年4月4日");
+           	   $("#jszzrq01").text("2016年4月4日");
+           	   $("#hzylzh01").text("41020060026222");
+		       $("#hz01").text("常怡飞");
+		       $("#huanzhe01").text("常怡飞");
+		       $("#xb01").text("男");
+		       $("#zyh01").text("1604040131");
+           	   $("#hj01").text("115.50");
+           	   $("#tbr01").text("常怡飞");
+           	   $("#shr01").text("白雪");
+           	   $("#tbr0101").text("常怡飞");
+         	   $("#shr0101").text("白雪");
+           	   h+="<tr><td>常怡飞</td><td>41020060026222</td><td>男</td><td>26</td><td></td><td>甲状腺机能亢进症    E05.900</td><td></td><td></td><td></td><td>10.50</td><td>10.50</td><td></td><td></td><td></td><td>10.50</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>常怡飞</td><td>41020060026222</td><td>男</td><td>26</td><td></td><td>甲状腺机能亢进症    E05.900</td><td></td><td></td><td></td><td>81.00</td><td>81.00</td><td></td><td></td><td></td><td>81.00</td><td></td><td></td><td></td></tr>";
+           	   h+="<tr><td>常怡飞</td><td>41020060026222</td><td>男</td><td>26</td><td></td><td>甲状腺机能亢进症    E05.900</td><td></td><td></td><td></td><td>24.00</td><td>24.00</td><td></td><td></td><td></td><td>24.00</td><td></td><td></td><td></td></tr>";
+           	  
+           
+            }else{
+         	   
+         	   var h1="<tr><td>1</td><td>60.00</td><td>0.00</td><td>60.00</td><td>60.00</td><td>0.00</td><td>0.00</td><td>60.00</td><td>0.00</td><td>0.00</td><td></td></tr>";
+                $("#jsd01").html(h1);           		
+            	   $("#yy01").text("通许县中医院");
+            	   $("#lxdh01").text("13839974806");
+              	 
+           	   $("#jsksrq01").text("2016年8月3日");
+           	   $("#jszzrq01").text("2016年8月3日");
+           	   $("#hzylzh01").text("41022210726231");
+           	   $("#jtzz01").text("河南省开封市通许县人民路6号");
+		       $("#hz01").text("李随群");
+		       $("#huanzhe01").text("李随群");
+		       $("#xb01").text("男");
+		       $("#zyh01").text("1608030112");
+           	   $("#hj01").text("60.00");
+           	   $("#tbr01").text("李随群");
+           	   $("#shr01").text("韩英");
+           	   $("#tbr0101").text("李随群");
+           	   $("#shr0101").text("韩英");
+           	   h+="<tr><td>李随群</td><td>41022210726231</td><td>男</td><td>53</td><td></td><td>高血压病    I10.x00</td><td></td><td></td><td></td><td>60.00</td><td>60.00</td><td></td><td></td><td></td><td>60.00</td><td></td><td></td><td></td></tr>";
+               
+         	
+            }
+           
+            $("#jsdmx01").html(h);
+        }else if(xh=="11"){
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+      		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+               if(id=="1603017930"){
+           		$("#jzjg11").text("河南大学淮河医院");
+           		$("#djh11").text("1603020053");
+           		$("#xm11").text("孙威威");
+           		$("#xb11").text("男");
+           		$("#hznl11").text("20");
+           		$("#csrq11").text("1995年8月20日");
+           		$("#zdjg11").text("泌尿系统疾病    N39.900");
+           		$("#jsrq11").text("2016年3月21日");
+           		$("#ylzfy11").text("22.00");
+           		$("#bctcbcfy11").text("0.00");
+           		$("#grzffy11").text("0.00");
+           		$("#grzhzffy11").text("22.00");
+           		$("#ylypgrzl11").text("0.00");
+           		$("#jbr11").text("王丽芬");
+           		$("#jbrq11").text("2016年3月22日");
+           		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else if(id=="1603017959"){
+               	$("#jzjg11").text("开封市第二人民医院分院");
+           		$("#djh11").text("1603020131");
+           		$("#xm11").text("王素敏");
+           		$("#xb11").text("女");
+           		$("#hznl11").text("47");
+           		$("#csrq11").text("1968年10月19日");
+           		$("#zdjg11").text("乳腺腺病    N60.201");
+           		$("#jsrq11").text("2016年3月22日");
+           		$("#ylzfy11").text("217.98");
+           		$("#bctcbcfy11").text("0.00");
+           		$("#grzffy11").text("0.00");
+           		$("#grzhzffy11").text("217.98");
+           		$("#ylypgrzl11").text("13.28");
+           		$("#jbr11").text("王丽芬");
+           		$("#jbrq11").text("2016年3月23日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>乙类</td>"
+           		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>丙类</td>"
+           		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>甲类</td>"
+           		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else if(id=="1604036132"){
+               	$("#jzjg11").text("开封市第二人民医院分院");
+           		$("#djh11").text("1604040131");
+           		$("#xm11").text("常怡飞");
+           		$("#xb11").text("男");
+           		$("#hznl11").text("26");
+           		$("#csrq11").text("19989年8月20日");
+           		$("#zdjg11").text("甲状腺机能亢进症    E05.900");
+           		$("#jsrq11").text("2016年4月4日");
+           		$("#ylzfy11").text("115.50");
+           		$("#bctcbcfy11").text("0.00");
+           		$("#grzffy11").text("0.00");
+           		$("#grzhzffy11").text("115.50");
+           		$("#ylypgrzl11").text("0.00");
+           		$("#jbr11").text("白雪");
+           		$("#jbrq11").text("2016年4月4日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>甲类</td>"
+           		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else{
+               	$("#jzjg11").text("通许县中医院");
+           		$("#djh11").text("1608030112");
+           		$("#xm11").text("李随群");
+           		$("#xb11").text("男");
+           		$("#hznl11").text("53");
+           		$("#csrq11").text("1962年1月11日");
+           		$("#zdjg11").text("高血压病    I10.x00");
+           		$("#jsrq11").text("2016年8月3日");
+           		$("#ylzfy11").text("60.00");
+           		$("#bctcbcfy11").text("0.00");
+           		$("#grzffy11").text("0.00");
+           		$("#grzhzffy11").text("60.00");
+           		$("#ylypgrzl11").text("12.00");
+           		$("#jbr11").text("韩英");
+           		$("#jbrq11").text("2016年8月3日");
+           		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>乙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }
+               $("#jsdmx11").html(h);
+        }else if(xh=="21"){
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+      		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+               if(id=="1603017930"){
+            	$("#gzdw21").text("开封市迎宾小学");
+            	$("#bxh21").text("41020410713029");
+           		$("#jzjg21").text("河南大学淮河医院");
+           		$("#djh21").text("1603020053");
+           		$("#xm21").text("孙威威");
+           		$("#xb21").text("男");
+           		$("#lxdh21").text("22197117");
+           		$("#hznl21").text("20");
+           		$("#csrq21").text("1995年8月20日");
+           		$("#zdjg21").text("泌尿系统疾病    N39.900");
+           		$("#jsrq21").text("2016年3月21日");
+           		$("#ylzfy21").text("22.00");
+           		$("#bctcbcfy21").text("0.00");
+           		$("#grzffy21").text("0.00");
+           		$("#grzhzffy21").text("22.00");
+           		$("#ylypgrzl21").text("0.00");
+           		$("#jbr21").text("王丽芬");
+           		$("#jbrq21").text("2016年3月22日");
+           		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else if(id=="1603017959"){
+            	   $("#gzdw21").text("开封新区财政局");
+            	   $("#bxh21").text("41021110999368");
+            	   $("#lxdh21").text("13603785512");
+               	$("#jzjg21").text("开封市第二人民医院分院");
+           		$("#djh21").text("1603020131");
+           		$("#xm21").text("王素敏");
+           		$("#xb21").text("女");
+           		$("#hznl21").text("47");
+           		$("#csrq21").text("1968年10月19日");
+           		$("#zdjg21").text("乳腺腺病    N60.201");
+           		$("#jsrq21").text("2016年3月22日");
+           		$("#ylzfy21").text("217.98");
+           		$("#bctcbcfy21").text("0.00");
+           		$("#grzffy21").text("0.00");
+           		$("#grzhzffy21").text("217.98");
+           		$("#ylypgrzl21").text("13.28");
+           		$("#jbr21").text("王丽芬");
+           		$("#jbrq21").text("2016年3月23日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>乙类</td>"
+           		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>丙类</td>"
+           		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>甲类</td>"
+           		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else if(id=="1604036132"){
+            	   $("#gzdw21").text("开封市空气压缩机厂");
+            	   $("#bxh21").text("41020060026222");
+            	   $("#lxdh21").text("0371-23386385");
+               	$("#jzjg21").text("开封市第二人民医院分院");
+           		$("#djh21").text("1604040131");
+           		$("#xm21").text("常怡飞");
+           		$("#xb21").text("男");
+           		$("#hznl21").text("26");
+           		$("#csrq21").text("19989年8月20日");
+           		$("#zdjg21").text("甲状腺机能亢进症    E05.900");
+           		$("#jsrq21").text("2016年4月4日");
+           		$("#ylzfy21").text("115.50");
+           		$("#bctcbcfy21").text("0.00");
+           		$("#grzffy21").text("0.00");
+           		$("#grzhzffy21").text("115.50");
+           		$("#ylypgrzl21").text("0.00");
+           		$("#jbr21").text("白雪");
+           		$("#jbrq21").text("2016年4月4日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>甲类</td>"
+           		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else{
+            	   $("#gzdw21").text("中国农业银行股份有限公司通许县支行");
+            	   $("#bxh21").text("41022210726231");
+            	   $("#lxdh21").text("13839974806");
+               	$("#jzjg21").text("通许县中医院");
+           		$("#djh21").text("1608030112");
+           		$("#xm21").text("李随群");
+           		$("#xb21").text("男");
+           		$("#hznl21").text("53");
+           		$("#csrq21").text("1962年1月11日");
+           		$("#zdjg21").text("高血压病    I10.x00");
+           		$("#jsrq21").text("2016年8月3日");
+           		$("#ylzfy21").text("60.00");
+           		$("#bctcbcfy21").text("0.00");
+           		$("#grzffy21").text("0.00");
+           		$("#grzhzffy21").text("60.00");
+           		$("#ylypgrzl21").text("12.00");
+           		$("#jbr21").text("韩英");
+           		$("#jbrq21").text("2016年8月3日");
+           		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>乙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }
+               $("#jsdmx21").html(h);
+        }else if(xh=="22"){
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+     		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+           if(id=="1603017930"){
+           	$("#jzbh22").text("1603020053");
+          		$("#jzjg22").text("河南大学淮河医院");
+          		$("#grbh22").text("41020410713029");
+          		$("#xm22").text("孙威威");
+          		$("#xb22").text("男");
+          		$("#nl22").text("20");
+          		$("#rylb22").text("成年居民");
+          		$("#ssdw22").text("开封市迎宾小学工伤医疗专户");
+          		$("#ssdq22").text("410200");
+          		$("#jzlx22").text("普通门诊");
+          		$("#jzzd22").text("泌尿系统疾病    N39.900");
+          		$("#jzks22").text("泌尿外科门诊");
+          		$("#jsrq22").text("2016年3月21日");
+          		$("#bctcbcfy22").text("0.00");
+          		$("#grzffy22").text("0.00");
+          		$("#grzhzffy22").text("22.00");
+          		$("#ylypgrzl22").text("0.00");
+          		$("#jbr22").text("王丽芬");
+          		$("#jbrq22").text("2016年3月22日");
+          		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+           }else if(id=="1603017959"){
+           	$("#jzbh22").text("1603020131");
+              	$("#jzjg22").text("开封市第二人民医院分院");
+          		$("#grbh22").text("41021110999368");
+          		$("#xm22").text("王素敏");
+          		$("#xb22").text("女");
+          		$("#nl22").text("47");
+          		$("#rylb22").text("成年居民");
+          		$("#ssdw22").text("开封新区财政局（财政全供）");
+          		$("#ssdq22").text("410211");
+          		$("#jzlx22").text("普通门诊");
+          		$("#jzzd22").text("乳腺腺病    N60.201");
+          		$("#jsrq22").text("2016年3月22日");
+          		$("#jzks22").text("乳腺甲状腺门诊");
+          		$("#bctcbcfy22").text("0.00");
+          		$("#grzffy22").text("0.00");
+          		$("#grzhzffy22").text("217.98");
+          		$("#ylypgrzl22").text("13.28");
+          		$("#jbr22").text("王丽芬");
+          		$("#jbrq22").text("2016年3月23日");
+          		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>1</td>"
+          		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>1</td>"
+          		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>2</td>"
+          		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>3</td>"
+          		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>1</td>"
+          		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>1</td>"
+          		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>3</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+           }else if(id=="1604036132"){
+           	$("#jzbh22").text("1604040131");
+              	$("#jzjg22").text("开封市第二人民医院分院");
+          		$("#grbh22").text("41020060026222");
+          		$("#xm22").text("常怡飞");
+          		$("#xb22").text("男");
+          		$("#nl22").text("26");
+          		$("#rylb22").text("成年居民");
+          		$("#ssdw22").text("开封市空气压缩机厂");
+          		$("#ssdq22").text("410200");
+          		$("#jzlx22").text("普通门诊");
+          		$("#jzzd22").text("甲状腺机能亢进症    E05.900");
+          		$("#jsrq22").text("2016年4月4日");
+          		$("#jzks22").text("内分泌门诊");
+          		$("#bctcbcfy22").text("0.00");
+          		$("#grzffy22").text("0.00");
+          		$("#grzhzffy22").text("115.50");
+          		$("#ylypgrzl22").text("0.00");
+          		$("#jbr22").text("白雪");
+          		$("#jbrq22").text("2016年4月4日");
+          		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>1</td>"
+          		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>1</td>"
+          		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>3</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+           }else{
+           	$("#jzbh22").text("1608030112");
+              	$("#jzjg22").text("通许县中医院");
+          		$("#grbh22").text("41022210726231");
+          		$("#xm22").text("李随群");
+          		$("#xb22").text("男");
+          		$("#nl22").text("53");
+          		$("#rylb22").text("成年居民");
+          		$("#ssdw22").text("中国农业银行股份有限公司通许县支行");
+          		$("#ssdq22").text("410222");
+          		$("#jzlx22").text("普通门诊");
+          		$("#jzzd22").text("高血压病    I10.x00");
+          		$("#jsrq02").text("2016年8月3日");
+          		$("#jzks22").text("神经内科门诊");
+          		$("#bctcbcfy22").text("0.00");
+          		$("#grzffy22").text("0.00");
+          		$("#grzhzffy22").text("60.00");
+          		$("#ylypgrzl22").text("12.00");
+          		$("#jbr22").text("韩英");
+          		$("#jbrq22").text("2016年8月3日");
+          		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>2</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+           }
+           $("#jsdmx22").html(h);
+        }else if(xh=="23"){
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+      		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+               if(id=="1603017930"){
+           		$("#jzjg23").text("河南大学淮河医院");
+           		$("#djh23").text("1603020053");
+           		$("#xm23").text("孙威威");
+           		$("#xb23").text("男");
+           		$("#hznl23").text("20");
+           		$("#csrq23").text("1995年8月20日");
+           		$("#zdjg23").text("泌尿系统疾病    N39.900");
+           		$("#jsrq23").text("2016年3月21日");
+           		$("#ylzfy23").text("22.00");
+           		$("#bctcbcfy23").text("0.00");
+           		$("#grzffy23").text("0.00");
+           		$("#grzhzffy23").text("22.00");
+           		$("#ylypgrzl23").text("0.00");
+           		$("#jbr23").text("王丽芬");
+           		$("#jbrq23").text("2016年3月22日");
+           		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else if(id=="1603017959"){
+               	$("#jzjg23").text("开封市第二人民医院分院");
+           		$("#djh23").text("1603020131");
+           		$("#xm23").text("王素敏");
+           		$("#xb23").text("女");
+           		$("#hznl23").text("47");
+           		$("#csrq23").text("1968年10月19日");
+           		$("#zdjg23").text("乳腺腺病    N60.201");
+           		$("#jsrq23").text("2016年3月22日");
+           		$("#ylzfy23").text("217.98");
+           		$("#bctcbcfy23").text("0.00");
+           		$("#grzffy23").text("0.00");
+           		$("#grzhzffy23").text("217.98");
+           		$("#ylypgrzl23").text("13.28");
+           		$("#jbr23").text("王丽芬");
+           		$("#jbrq23").text("2016年3月23日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>乙类</td>"
+           		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>丙类</td>"
+           		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>甲类</td>"
+           		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else if(id=="1604036132"){
+               	$("#jzjg23").text("开封市第二人民医院分院");
+           		$("#djh23").text("1604040131");
+           		$("#xm23").text("常怡飞");
+           		$("#xb23").text("男");
+           		$("#hznl23").text("26");
+           		$("#csrq23").text("19989年8月20日");
+           		$("#zdjg23").text("甲状腺机能亢进症    E05.900");
+           		$("#jsrq23").text("2016年4月4日");
+           		$("#ylzfy23").text("115.50");
+           		$("#bctcbcfy23").text("0.00");
+           		$("#grzffy23").text("0.00");
+           		$("#grzhzffy23").text("115.50");
+           		$("#ylypgrzl23").text("0.00");
+           		$("#jbr23").text("白雪");
+           		$("#jbrq23").text("2016年4月4日");
+           		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>甲类</td>"
+           		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>甲类</td>"
+           		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>丙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }else{
+               	$("#jzjg23").text("通许县中医院");
+           		$("#djh23").text("1608030112");
+           		$("#xm23").text("李随群");
+           		$("#xb23").text("男");
+           		$("#hznl23").text("53");
+           		$("#csrq23").text("1962年1月11日");
+           		$("#zdjg23").text("高血压病    I10.x00");
+           		$("#jsrq23").text("2016年8月3日");
+           		$("#ylzfy23").text("60.00");
+           		$("#bctcbcfy23").text("0.00");
+           		$("#grzffy23").text("0.00");
+           		$("#grzhzffy23").text("60.00");
+           		$("#ylypgrzl23").text("12.00");
+           		$("#jbr23").text("韩英");
+           		$("#jbrq23").text("2016年8月3日");
+           		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>乙类</td>"
+           		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+           		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                   
+               }
+               $("#jsdmx23").html(h);
+        }else{
+        	var h="<tr><td colspan=\"9\"><h2>结算单明细</h2></td></tr>"
+     		     +"<tr><th>收费类别</th><th>医院收费项目代码</th><th>医保中心收费项目代码</th><th>医院收费项目名称</th><th>医保中心收费项目名称</th><th>单价</th><th>数量</th><th>金额</th><th>报销类型</th></tr>";
+              if(id=="1603017930"){
+          
+           	$("#bxh25").text("41020410713029");
+          		$("#jzjg25").text("河南大学淮河医院");
+          		$("#djh25").text("1603020053");
+          		$("#xm25").text("孙威威");
+          		$("#xb25").text("男");
+          		$("#lxdh25").text("22197117");
+          		$("#hznl25").text("20");
+          		$("#csrq25").text("1995年8月20日");
+          		$("#zdjg25").text("泌尿系统疾病    N39.900");
+          		$("#jsrq25").text("2016年3月21日");
+          		$("#ylzfy25").text("22.00");
+          		$("#bctcbcfy25").text("0.00");
+          		$("#grzffy25").text("0.00");
+          		$("#grzhzffy25").text("22.00");
+          		$("#ylypgrzl25").text("0.00");
+          		$("#jbr25").text("王丽芬");
+          		$("#jbrq25").text("2016年3月22日");
+          		h+="<tr><td>中成药</td><td>9074261</td><td></td><td>泌淋胶囊 </td><td></td><td>22.00</td><td>1</td><td>22.00</td><td>丙类</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+              }else if(id=="1603017959"){
+    
+           	   $("#bxh25").text("41021110999368");
+           	   $("#lxdh25").text("13603785512");
+              	$("#jzjg25").text("开封市第二人民医院分院");
+          		$("#djh25").text("1603020131");
+          		$("#xm25").text("王素敏");
+          		$("#xb25").text("女");
+          		$("#hznl25").text("47");
+          		$("#csrq25").text("1968年10月19日");
+          		$("#zdjg25").text("乳腺腺病    N60.201");
+          		$("#jsrq25").text("2016年3月22日");
+          		$("#ylzfy25").text("217.98");
+          		$("#bctcbcfy25").text("0.00");
+          		$("#grzffy25").text("0.00");
+          		$("#grzhzffy25").text("217.98");
+          		$("#ylypgrzl25").text("13.28");
+          		$("#jbr25").text("王丽芬");
+          		$("#jbrq25").text("2016年3月23日");
+          		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>2.00</td><td>7.00</td><td>甲类</td>"
+          		 +"<tr><td>西药费</td><td>2643</td><td>XJ0010460000</td><td>5%葡萄糖注射液</td><td>葡萄糖</td><td>2.80</td><td>4.00</td><td>11.20</td><td>甲类</td>"
+          		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000430000</td><td>头孢哌酮舒巴坦针</td><td>头孢哌酮舒巴坦</td><td>16.60</td><td>4.00</td><td>66.40</td><td>乙类</td>"
+          		 +"<tr><td>西药费</td><td>3174</td><td></td><td>炎琥宁针</td><td>炎琥宁针</td><td>16.20</td><td>4.0</td><td>64.80</td><td>丙类</td>"
+          		 +"<tr><td>西药费</td><td>2865</td><td>XJ0007500001</td><td>西米替丁针</td><td>西米替丁</td><td>0.42</td><td>2.0</td><td>0.84</td><td>甲类</td>"
+          		 +"<tr><td>西药费</td><td>1866</td><td>XJ0002840000</td><td>维生素B6针</td><td>维生素B6</td><td>0.37</td><td>2.0</td><td>0.74</td><td>甲类</td>"
+          		 +"<tr><td>其他费用</td><td>9074267</td><td></td><td>治疗费</td><td></td><td>67.00</td><td>1.00</td><td>67.00</td><td>丙类</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+              }else if(id=="1604036132"){
+       
+           	   $("#bxh25").text("41020060026222");
+           	   $("#lxdh25").text("0371-23386385");
+              	$("#jzjg25").text("开封市第二人民医院分院");
+          		$("#djh25").text("1604040131");
+          		$("#xm25").text("常怡飞");
+          		$("#xb25").text("男");
+          		$("#hznl25").text("26");
+          		$("#csrq25").text("19989年8月20日");
+          		$("#zdjg25").text("甲状腺机能亢进症    E05.900");
+          		$("#jsrq25").text("2016年4月4日");
+          		$("#ylzfy25").text("115.50");
+          		$("#bctcbcfy25").text("0.00");
+          		$("#grzffy25").text("0.00");
+          		$("#grzhzffy25").text("115.50");
+          		$("#ylypgrzl25").text("0.00");
+          		$("#jbr25").text("白雪");
+          		$("#jbrq25").text("2016年4月4日");
+          		h+="<tr><td>西药费</td><td>2591</td><td>XJ0010550000</td><td>氯化钠注射液0.9%</td><td>氯化钠</td><td>3.50</td><td>3.00</td><td>10.50</td><td>甲类</td>"
+          		 +"<tr><td>西药费</td><td>1772</td><td>XJ0000290001</td><td>头孢呋辛钠</td><td>头孢呋辛</td><td>13.50</td><td>6.00</td><td>81.00</td><td>甲类</td>"
+          		 +"<tr><td>其他费用</td><td>9074263</td><td></td><td>治疗费</td><td></td><td>24.00</td><td>1.00</td><td>24.00</td><td>丙类</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+              }else{
+        
+           	   $("#bxh25").text("41022210726231");
+           	   $("#lxdh25").text("13839974806");
+              	$("#jzjg25").text("通许县中医院");
+          		$("#djh25").text("1608030112");
+          		$("#xm25").text("李随群");
+          		$("#xb25").text("男");
+          		$("#hznl25").text("53");
+          		$("#csrq25").text("1962年1月11日");
+          		$("#zdjg25").text("高血压病    I10.x00");
+          		$("#jsrq25").text("2016年8月3日");
+          		$("#ylzfy25").text("60.00");
+          		$("#bctcbcfy25").text("0.00");
+          		$("#grzffy25").text("0.00");
+          		$("#grzhzffy25").text("60.00");
+          		$("#ylypgrzl25").text("12.00");
+          		$("#jbr25").text("韩英");
+          		$("#jbrq25").text("2016年8月3日");
+          		h+="<tr><td>放射费</td><td>14701</td><td>210102015</td><td>数字化摄影(DR)</td><td>数字化摄影(DR)(异地)</td><td>60.00</td><td>1.00</td><td>60.00</td><td>乙类</td>"
+          		 +"</tr><tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>"
+          		 +"<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+                  
+              }
+              $("#jsdmx25").html(h);
+        }
+    }
+    </script>
+</body>
+</html>

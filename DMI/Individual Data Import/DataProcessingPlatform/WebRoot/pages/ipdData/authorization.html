@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+	<title>信息查询授权书</title>
+	<link rel="stylesheet" href="../../css/base.css">
+	<link rel="stylesheet" href="../../css/layout.css" />	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<style type="text/css">
+		.sheet-part {
+			width: 60%;
+		}
+		.sheet-part section {
+			padding: 20px;
+			border: 1px solid #D2D2D2;
+		}
+		.sheet-part p {
+			text-indent: 0;
+		}
+		.sub-nav>li {
+			width: 250px;
+		}
+		p{
+			font:12px/180% "宋体"; 
+			display:inline-block; 
+			float:right; 
+			clear:both; 
+			margin-bottom:30px;
+		}
+		.button{ 
+			display:block; 
+			width:180px; 
+			height:40px; 
+			background:#6D9AB1; 
+			margin:0 auto; 
+			clear:both; 
+			font:bold 14px/40px "宋体"; 
+			text-align:center; 
+			color:#FFF;
+			cursor: pointer;
+		}
+		.button:hover{
+			background:#06F; 
+			color:#CCC;
+		}
+	</style>
+    
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div style="width:790px;height:400px; padding:23px; border:1px solid #DBDBEA; margin:0 auto;margin-top:20px; color:#545454; background:url(../../img/shouquan.png) 32px 250px no-repeat #FFF;">
+			<H1 align="center" style="border-bottom: 2px solid #4A98EB;font:24px 微软雅黑;height:40px;" >信息查询授权书</H1>
+			<div style="border-top: 1px solid #4A98EB;margin-top:3px;">
+				<p style="margin-bottom:30px; font-size:14px;margin-top:10px;">&nbsp;&nbsp; 本人授权本人的个人健康数据供给就诊医生、管理机构进行信息查询，用于医疗服务、管理建设、系统自动对数据进行脱敏、脱密处理。</p>
+				<p style="text-align:right;" >授权期限：本授权自签署之日起生效,至本次医疗行为结束。</p>
+				<p>本人承诺文件由本人亲笔签署 ：个人认证</p>
+				<p style=" float:right; text-align:right;">
+					授权人签名：<span class="name" id="name"></span><br>
+					授权人证件号码：<span class="card_no" id="card_no"></span><br>
+					授权日期： <span class="data" id="data"></span>
+				</p>
+				<div class="button" onclick="clickbutton();">下一步&nbsp; &gt;</div>
+			</div>
+		<input id="id" hidden>
+	</div>
+	<script type="text/javascript">
+	    $(function(){
+	    	queryMzcfModel();
+	    });
+	    function queryMzcfModel(){
+	    	var url = location.search; //获取url中"?"符后的字串 
+	    	var str = decodeURI(url).split("=");
+	    	var a = str[1].split("-");
+	    	var card_no = a[0];
+	    	var name = a[1];
+	    	var data = getNowFormatDate();
+	    	$("#name").html(name);
+	    	$("#card_no").html(card_no);
+	    	$("#data").html(data);
+	    	$("#id").val(card_no);
+	    }
+	    function getNowFormatDate() {
+	        var date = new Date();
+	        var seperator1 = "-";
+	        var seperator2 = ":";
+	        var month = date.getMonth() + 1;
+	        var strDate = date.getDate();
+	        if (month >= 1 && month <= 9) {
+	            month = "0" + month;
+	        }
+	        if (strDate >= 0 && strDate <= 9) {
+	            strDate = "0" + strDate;
+	        }
+	        var currentdate = date.getFullYear() + "年" + month + "月"  + strDate + "日" ;
+	        return currentdate;
+	    }
+	    function clickbutton(){
+	    	var card_no = $("#id").val();
+	    	window.location.href="ipdDataBrowsing.html?card_no="+card_no;
+	    }
+	</script>
+</body>
+</html>
