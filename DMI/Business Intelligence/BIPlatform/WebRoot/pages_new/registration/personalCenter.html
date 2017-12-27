@@ -1,0 +1,363 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>个人中心</title>
+	<link rel="stylesheet" href="../../css/base.css">
+	<link href="../../css/bootstrap.min14ed.css" rel="stylesheet">
+	<link href="../../css/font-awesome.min93e3.css" rel="stylesheet">   
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/style.min862f.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link href="../../css/commond.css" rel="stylesheet" type="text/css">
+	<link href="../../css/but.css" rel="stylesheet" type="text/css">
+	<!-- <script type="text/javascript">
+		$(document).ready(function() {
+			$(".truecolor tr:odd ").addClass("color1");
+			$(".truecolor tr:odd >td:odd").addClass("color1-1");
+			$(".truecolor tr:even").addClass("color2");
+			$(".truecolor tr:even >td:even").addClass("color2-2");
+			$(".truecolor tr").hover(function() {
+				$(this).children("td").addClass("color3")
+			}, function() {
+				$(this).children("td").removeClass("color3")
+			});
+		});
+	</script> -->
+</head>
+<body>
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include> 
+	<div id="addpersoninfo" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="false"  style="display:none">
+		<div class="modal-dialog modal-lg">
+	        <div class="modal-content animated bounceInRight" style="height: 380px;">
+		        <div class="modal-header" style=" padding-top: 21px; padding-left: 0px;">
+		        	<span style="float: left; height:40px; width: 300px; display: inline; background: url(../../img/tag.png) right center no-repeat;">
+		        		<span class="tap" style="color: #fff; font-size: 13px; margin-top:2px;">个人信息<span class="tap2" style="font-size: 10px;"> // PERSONAL INFORMATION</span></span>
+		        	</span>
+		        	<button type="button" class="close" data-dismiss="modal" style="padding-top: 10px;"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		        </div>
+	        	<div class="modal-body1" style="padding-left: 35px; padding-top: 10px;">
+	        		<input type="hidden" id="n_addr_id" style="width: 89%;"/>
+	        		<p>姓名：<input type="text" id="n_username" style="width: 89%;"/></p>
+	        		<p>性别：<select id="n_gender" style="width:33%; height: 29px;"><option value="">请选择</option><option value="1">男</option><option value="2">女</option></select>
+	        			&nbsp;&nbsp;年龄：<input type="text" id="n_age" style="width: 48.7%;"/>
+	        		</p>
+	        		<p>电话：<input type="text" id="n_mobile" style="width: 33%;"/>
+	        			&nbsp;&nbsp;身份证号：<input type="text" id="n_cardno" style="width: 45%;"/></p>
+	        		<p>
+	        		省份：<input type="text" id="n_province" style="width: 11%;"/>&nbsp;&nbsp;
+	        		城市：<input type="text" id="n_city" style="width: 11%;"/>&nbsp;&nbsp;
+	        		地址：<input type="text" id="n_address" style="width: 52.5%;"/>
+	        		</p>
+	        		<p><input type="checkbox" id="n_default"/>&nbsp;<label for="n_default" style="font-size: 16px; font-weight: normal; cursor: pointer;">设为常用</label></p>
+					<div style="position:relative; clear:both; width:100%; height:30px;display:inline-block; ">
+						<div class="button button-highlight" style=" position:absolute; width:120px; top:20px; left:450px;" onclick="reset1();">重置</div>
+						<div class="button button-primary" style=" position:absolute;width:180px; top:20px; left:600px;" onclick="saveAddr();">保存设置</div>
+					</div>
+	        	</div>
+	        </div>
+	    </div>
+	 </div>
+	<!--大框子-->
+	<div class="block" style="padding: 0 0 30px;">
+	<!--个人-->
+	<div class="block">
+		<h1>
+			<span class="tap">个人信息<span class="tap2">// PERSONAL INFORMATION</span>
+			</span><span class="tap3">收起</span>
+		</h1>
+		<div class="content">
+			<table class="list checkbox-group" >
+				<thead>
+					<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>年龄</th>
+					<th>电话</th>
+					<th>地址</th>
+					<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+			<div class="button button-primary" style=" margin:20px 500px;" onclick="addinfo()">添加信息</div>
+		</div>
+	</div>
+	<!--个人OVER-->
+	<!--偏好设置-->
+	<div class="block">
+		<h1>
+			<span class="tap">偏好设置<span class="tap2">// PREFERENCES</span></span>
+			<span class="tap3">收起</span>
+		</h1>
+		<div class="content">
+			<ul class="list1">
+				<li><input type="checkbox" name="che" id="che0" value="0"><label for="che0">距离最近</label></li>
+				<li><input type="checkbox" name="che"  id="che1" value="1"><label for="che1">医保报销优先</label></li>
+				<li><input type="checkbox" name="che"  id="che2" value="2"><label for="che2">有号优先</label></li>
+				<li><input type="checkbox" name="che" id="che3" value="3"><label for="che3">专家号优先</label></li>
+				<li><input type="checkbox" name="che" id="che4" value="4"><label for="che4">普通号优先</label></li>
+				<li><input type="checkbox" name="che" id="che5" value="5"><label for="che5">主任医师优先</label></li>
+				<li><input type="checkbox" name="che" id="che6" value="6"><label for="che6">三甲医院优先</label></li>
+			</ul>
+			<div style="position:relative; clear:both; width:100%; height:50px;display:inline-block; ">
+				<div class="button button-highlight" style=" position:absolute; width:120px; top:20px; left:450px;">重置</div>
+				<div class="button button-primary" style=" position:absolute;width:180px; top:20px; left:600px;" onclick="updatePrefer()">保存设置</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$("ul.list1>li>label").click(function(){  
+	 		if ($(this).hasClass("on")) {
+	 			$(this).removeClass("on") ;
+	      		$(this).parent("li").removeClass("on") ;
+	  		} else{$(this).addClass("on");
+	   			$(this).parent("li").addClass("on") ;
+	  		}
+		});
+		
+		function addinfo(){
+			$("#addpersoninfo").modal("show");
+		}
+		
+		$(function(){
+			var user_id=getvalue("q_user_id");
+			$.ajax({
+				url:"queryUserInfo.action",
+				dataType:"json",
+				data:{q_user_id:user_id},
+				type:"post",
+				async:false,
+				success:function(data){
+					console.info(data);
+					var prefer=data.PREFER;
+					if(prefer!=""){
+						var pps=prefer.split(",");
+						for(var i in pps){
+							$("ul.list1 li input").each(function(s,b){
+								if($(b).val()==pps[i]){
+									$(b).prop("checked",true);
+								}
+							});
+						}
+					}
+				}
+			});
+		
+			initAddr();
+		});
+	  
+		function initAddr() {
+			$(".list tbody").empty();
+			var user_id=getvalue("q_user_id");
+			$.ajax({
+				url:"queryUserInfoList.action",
+				dataType:"json",
+				data:{q_user_id:user_id},
+				type:"post",
+				async:false,
+				success:function(data){
+					var h="";
+					for(var i in data){
+						var index=parseInt(i)+1;
+						var genderStr = data[i].GENDER=='1'?'男':'女';
+						h+="<tr><td>"+index+"</td><td>"+data[i].USER_NAME+"</td><td>"+genderStr+"</td><td>"+data[i].AGE+"</td><td>"+data[i].MOBILE+"</td><td>"+data[i].ADDRESS.replace(new RegExp(/(@#)/g),"")+"</td>";
+						h+="<td><span class=\"but\"  style=\"margin-left:0;\"><input type=\"radio\" name=\"defaultaddr\" onclick=\"updateDefault('"+data[i].ADDR_ID+"')\"";
+						if(data[i].IS_DEFAULT==1){ h+="checked"; }
+						h+=" >"
+						+"<label for=\"radio3\" onclick=\"updateAddr('"+data[i].ADDR_ID+"')\">设为常用  </label></span>"
+						+"<span class=\"but\" onclick=\"editAddr('"+data[i].ADDR_ID+"')\"><img src=\"../../img/edit.png\" width=\"14\" height=\"14\" alt=\"\"/>编辑</span><span class=\"but\" onclick=\"delAddr('"+data[i].ADDR_ID+"')\"> <img src=\"../../img/del.png\" width=\"14\" height=\"14\" alt=\"\"/>删除</span></td></tr>";
+					}
+	  	    	
+					$(".list tbody").append(h);
+				}
+			});
+		}
+		
+		function reset1() {
+			$(".modal-body1 input").each(function(){
+				$(this).val("");
+			});
+			$(".modal-body1 select").val("");
+			$(".modal-body1 input[type='checkbox']").attr("checked", false);
+		}
+		
+		function saveAddr() {
+			var user_id=getvalue("q_user_id");
+			var addr_id = $("#n_addr_id").val();
+			var n_username = $("#n_username").val();
+			var n_gender = $("#n_gender").val();
+			var n_age = $("#n_age").val();
+			var n_mobile = $("#n_mobile").val();
+			var n_province = $("#n_province").val();
+			var n_city = $("#n_city").val();
+			var n_address = $("#n_address").val();
+			var n_cardno = $("#n_cardno").val();
+			var n_default = $("#n_default").is(":checked")?"1":"0";
+			if (!user_id || user_id.length==0) {
+				alert("无效用户"); return;
+			}
+			if (n_username.length==0) {
+				alert("请填写姓名"); return;
+			}
+			if (n_gender.length==0) {
+				alert("请选择性别"); return;
+			}
+			if (n_age.length==0) {
+				alert("请填写年龄"); return;
+			}
+			if (n_mobile.length==0) {
+				alert("请填写电话"); return;
+			}
+			if (n_cardno.length==0) {
+				alert("请填写身份证号"); return;
+			}
+			if (n_province.length==0) {
+				alert("请填写省份"); return;
+			}
+			if (n_city.length==0) {
+				alert("请填写城市"); return;
+			}
+			if (n_address.length==0) {
+				alert("请填写地址"); return;
+			}
+			
+			var url = addr_id==""?"addUserInfo.action":"modifyUserInfo.action";
+			var new_addr = n_province+"@#"+n_city+"@#"+n_address;
+			$.ajax({
+				url: url,
+				dataType: "json",
+				data:{q_addr_id: addr_id, user_id: user_id, user_name: n_username, gender: n_gender, mobile: n_mobile, address: new_addr, is_default: n_default, age: n_age, card_no: n_cardno},
+				type: "post",
+				async: false,
+				success: function(data){
+					if(data.status==0){
+						$("#addpersoninfo").modal("hide");
+						alert("保存地址成功");
+						initAddr();
+						reset1();
+					}else{
+						var msg = data.msg;
+						if (msg&&msg.length>0)
+							alert(msg);
+						else 
+							alert("保存地址出错");
+					}
+				}
+			});
+		}
+	  
+		function editAddr(addr_id) {
+			$.ajax({
+				url: "queryAddressInfo.action",
+				dataType: "json",
+				data:{q_addr_id: addr_id},
+				type: "post",
+				async: false,
+				success: function(data){
+					$("#addpersoninfo").modal("show");
+					$("#n_addr_id").val(data.ADDR_ID);
+					$("#n_username").val(data.USER_NAME);
+					$("#n_gender").val(data.GENDER);
+					$("#n_age").val(data.AGE);
+					$("#n_mobile").val(data.MOBILE);
+					$("#n_cardno").val(data.CARD_NO);
+					$("#n_default").attr("checked", true);
+					var addrArr = data.ADDRESS.split("@#");
+					$("#n_province").val(addrArr[0]);
+					$("#n_city").val(addrArr[1]);
+					$("#n_address").val(addrArr[2]);
+				}
+			});
+		}
+		
+		function updateAddr(addr_id) {
+			var user_id=getvalue("q_user_id");
+			$.ajax({
+				url: "modifyUserDefault.action",
+				dataType: "json",
+				data:{q_addr_id: addr_id, q_user_id: user_id},
+				type: "post",
+				async: false,
+				success: function(data){
+					alert("设置默认地址成功");
+					initAddr();
+				}
+			});
+		}
+	  
+		function delAddr(addr_id) {
+			if(confirm("确定要删除地址吗？")==true) {
+				$.ajax({
+					url: "delAddressInfo.action",
+					dataType: "json",
+					data:{q_addr_id: addr_id},
+					type: "post",
+					async: false,
+					success: function(data){
+						alert("删除地址成功");
+						initAddr();
+					}
+				});
+			}
+		}
+	  
+		//修改偏好设置
+		function updatePrefer(){
+			var user_id=getvalue("q_user_id");
+			if (!user_id || user_id.length==0) {
+				alert("无效用户！"); return ;
+			}
+		  
+			var q_prefer_list="";
+			$("ul.list1 li input").each(function(s,b){
+				if($(b).prop("checked")){
+					q_prefer_list+=$(b).val()+",";
+				}
+			});
+			if(q_prefer_list!=""){
+				q_prefer_list=q_prefer_list.substring(0,q_prefer_list.length-1);
+			}
+			$.ajax({
+				url:"setPreference.action",
+				dataType:"json",
+				data:{q_user_id:user_id,q_prefer_list:q_prefer_list},
+				type:"post",
+				async:false,
+				success:function(data){
+					if(data.status==0){
+						alert("保存偏好设置成功");
+					}else{
+						alert("保存偏好设置出错");
+					}
+				}
+			});
+		}
+		
+		function updateDefault(q_addr_id){
+			var user_id=getvalue("q_user_id");
+			$.ajax({
+				url:"modifyUserDefault.action",
+				dataType:"json",
+				data:{q_user_id:user_id,q_addr_id:q_addr_id},
+				type:"post",
+				async:false,
+				success:function(data){
+					if(data.status==0){
+						alert("修改默认地址成功");
+					}else{
+						alert("修改默认地址出错");
+					}
+				}
+			});
+		}
+	</script>
+	<!--偏好设置OVER-->
+</body>
+</html>
+

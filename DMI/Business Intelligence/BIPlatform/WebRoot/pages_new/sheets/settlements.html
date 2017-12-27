@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>结算单</title>
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/base.css">
+	<style>
+		table {
+			width: 100%;
+			
+		}
+		table tr td,table tr th {
+			font-size: 12px;
+			line-height: 20px;
+			padding: 5px;
+			vertical-align:middle!important;
+		}
+		table tr th {
+			width: 10%;
+		}
+		table tr td {
+			width: 15%;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h4 class="text-center" style="border: 1px solid #fff;border-top-left-radius: 4px;border-top-right-radius: 4px;font-family: '微软雅黑';padding: 15px; color: #fff;background: #81BCF8;margin-bottom: 0;">开封市职工医保结算单 <a id="lookup" href="#" class="pull-right" style="font-size: 12px;font-weight: normal;font-family: 宋体;color: #fff;">查看详情>></a></h4>
+		<table class="table table-bordered" id="tt" style="border-radius: 0;">
+			<tr>
+				<th>就诊机构:</th>
+				<td colspan="3">河南大学淮河医院</td>
+				<th>单据号:</th>
+				<td colspan="3" id="DJH"></td>
+			</tr>
+			<tr>
+				<th>患者姓名:</th>
+				<td id="CXM"></td>
+				<th>患者性别:</th>
+				<td id="CXB"></td>
+				<th>患者年龄:</th>
+				<td id="CNL"></td>
+				<th>出生日期:</th>
+				<td id="CSRQ"></td>
+			</tr>
+			<tr>
+				<th>诊断:</th>
+				<td id="zd"></td>
+				<th>结算日期:</th>
+				<td id="JSRQ"></td>
+				<th>住院天数:</th>
+				<td id="ZYTS"></td>
+				<th>医疗总费用:</th>
+				<td id="YLFZ"></td>
+			</tr>
+			<tr>
+				<th>本次统筹补偿费用:</th>
+				<td id="TCZF"></td>
+				<th>个人自付费用:</th>
+				<td id="ZFFY"></td>
+				<th>个人账户支付费用:</th>
+				<td id="GRZH"></td>
+				<th>乙类药品个人自理:</th>
+				<td id="YLYP"></td>
+			</tr>
+			<tr>
+				<th>经办人:</th>
+				<td colspan="3" id="JBR"></td>
+				<th>经办日期:</th>
+				<td colspan="3" id="JBRQ"></td>
+			</tr>
+		</table>
+	</div>
+	<script>
+	
+	$(document).ready(function(){
+		var cardno=getvalue("cardno");
+
+		var ids=decodeURIComponent(getvalue("id"));
+
+		var zd=decodeURIComponent(getvalue("zd"));
+
+		var hos_id=getvalue("hos_id");
+		$("#zd").text(zd);
+
+
+		var lsh=ids.split("@")[0];
+		var pjh=ids.split("@")[1];
+
+		$("#zd").text(zd);
+		$("#DJH").text(pjh);
+
+		$.ajax({
+    		url:"tian/findSettlement.action",
+    		dataType:"json",
+    		type:"post",
+    		data:{cardno:cardno,bdate:lsh,edate:pjh,ttype:hos_id},
+    	    async:false,
+    	    success:function(data){
+    	    	$("#tt").find("td").each(function(s,b){
+    	    		$(b).text(data[$(b).attr("id")]);
+    	    	});
+    	    	$("#CSRQ").text(data["CSRQ"].substring(0,10));
+    	    	$("#lookup").attr("href","jsd.html?lsh="+lsh+"&pjh="+pjh+"&hos_id="+hos_id+"&cardno="+cardno);
+    	    }
+    	});
+	});
+	</script>
+</body>
+</html>

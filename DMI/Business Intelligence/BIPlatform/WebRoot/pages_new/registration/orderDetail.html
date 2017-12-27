@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>订单详情</title>
+<link rel="stylesheet" href="../../css/base.css">
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="../../css/commond.css" rel="stylesheet" type="text/css">
+	<link href="../../css/but.css" rel="stylesheet" type="text/css">
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".truecolor tr:odd ").addClass("color1");
+			$(".truecolor tr:odd >td:odd").addClass("color1-1");
+			$(".truecolor tr:even").addClass("color2");
+			$(".truecolor tr:even >td:even").addClass("color2-2");
+			$(".truecolor tr").hover(function() {
+				$(this).children("td").addClass("color3")
+			}, function() {
+				$(this).children("td").removeClass("color3")
+			});
+		});
+	</script>
+</head>
+<body>
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include> 
+	
+	<!--大框子-->
+	<div class="block" style="padding: 0 0 30px;">
+		<h1 class="h1big">
+			<span class="tapbig">订单详情<span class="tap2">// ORDER DETAILS</span></span>
+		</h1>
+		<!--院方信息-->
+		<div class="block">
+			<h1>
+				<span class="tap">院方信息<span class="tap2">// HOSPITAL INFORMATION</span></span>
+				<span class="tap3" style="cursor: pointer;">收起</span>
+			</h1>
+			<div class="content">
+				<table class="truecolor" width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr>
+							<td>医院</td>
+							<td><span id="HOS_NAME"></span></td>
+							<td>医生</td>
+							<td><span id="STAFF_NAME"></span></td>
+						</tr>
+						<tr>
+							<td>科室</td>
+							<td><span id="DEP_NAME"></span></td>
+							<td>时间</td>
+							<td><span id="WORK_DATE"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!--院方信息OVER-->
+		<!--挂号信息-->
+		<div class="block">
+			<h1>
+				<span class="tap">挂号信息<span class="tap2">// PATIENT INFORMATION</span></span>
+				<span class="tap3" style="cursor: pointer;">收起</span>
+			</h1>
+			<div class="content">
+				<table class="truecolor" width="100%" border="0" cellspacing="0"
+					cellpadding="0">
+					<tbody>
+						<tr>
+							<td>患者姓名</td>
+							<td><span id="PATIENT_NAME"></span></td>
+							<td>患者身份证号</td>
+							<td><span id="CARD_NO"></span></td>
+						</tr>
+						<tr>
+							<td>总共金额</td>
+							<td>￥<span id="ZG_AMOUNT"></span>元</td>
+							<td>统账金额</td>
+							<td>￥<span id="TZ_AMOUNT"></span>元</td>
+						</tr>
+						<tr>
+							<td>实付金额</td>
+							<td class="red">￥<span id="SF_AMOUNT"></span>元</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!--挂号信息息OVER-->
+		<!--支付方式，支付后去掉-->
+		<!-- 
+		<div class="block">
+			<h1>
+				<span class="tap">支付方式<span class="tap2">// PAYMENT METHOD</span></span><span class="tap3">收起</span>
+			</h1>
+			<div class="content">
+				<span class="pay"><a href="#"><img src="../../img/p1.png" width="58" height="60" alt="" /></a></span>
+				<span class="pay"><a href="#"><img src="../../img/p2.png" width="58" height="60" alt="" /></a>
+				</span><span class="pay"><a href="#"><img src="../../img/p3.png" width="58" height="60" alt="" /></a></span>
+				<div class="button button-highlight" style="margin: 0 500px;">支付完成</div>
+			</div>
+		</div>
+		 -->
+		<!--支付方式，OVER>
+		<!--乘车路线支付时隐藏，支付完成后显示-->
+		<div class="block">
+			<h1>
+				<span class="tap">乘车路线<span class="tap2">// BUS LINE</span></span>
+				<span class="tap3" style="cursor: pointer;">收起</span>
+			</h1>
+			<div class="content">
+				<p><span id="TRAFFIC"></span></p>
+				<p><span id="ADDRESS"></span></p>
+			</div>
+		</div>
+		<!--乘车路线OVER-->
+		<!--按钮灰了-->
+		<div class="button disabled" style="margin: 0 550px; width: 170px; text-align: center;">订单已完成</div>
+	</div>
+	<!--大框子收队-->
+	
+	<script type="text/javascript">
+		$(function(){
+			var q_order_id = getvalue("q_order_id");
+			if (q_order_id.length>0) {
+		    	initOrder(q_order_id);
+			} else {
+				alert("无效的订单号");
+			}
+				
+	    });
+		
+		function initOrder(q_order_id) {
+			$.ajax({
+				url:"queryOrderDetail.action", 
+				data:"q_order_id="+q_order_id,
+				async:false,
+				dataType:"json", 
+				type:"post",
+				success:function (mm) {
+					$("#TZ_AMOUNT").html(mm.orderInfo.TZ_AMOUNT);
+					$("#ZG_AMOUNT").html(mm.orderInfo.ZG_AMOUNT);
+					$("#SF_AMOUNT").html(mm.orderInfo.SF_AMOUNT);
+					$("#CARD_NO").html(mm.orderInfo.CARD_NO);
+					$("#PATIENT_NAME").html(mm.orderInfo.PATIENT_NAME);
+					$("#DEP_NAME").html(mm.hospInfo.DEP_NAME);
+					$("#STAFF_NAME").html(mm.hospInfo.STAFF_NAME);
+					$("#HOS_NAME").html(mm.hospInfo.HOS_NAME);
+					$("#WORK_DATE").html(mm.hospInfo.WORK_DATE);
+					$("#ADDRESS").html(mm.wayInfo.ADDRESS);
+					$("#TRAFFIC").html(mm.wayInfo.TRAFFIC);
+				}, 
+				error:function (error) {
+					top.my_alert("查询挂号订单信息失败！" + error.status);
+				}
+			});
+		}
+	</script>
+</body>
+</html>

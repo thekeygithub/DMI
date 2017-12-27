@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>我的订单</title>
+<link rel="stylesheet" href="../../css/base.css">
+	<link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="../../css/commond.css" rel="stylesheet" type="text/css">
+	<link href="../../css/but.css" rel="stylesheet" type="text/css">
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/jquery-1.12.4.js"></script>
+	<link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+	<style type="text/css">
+		.font_size_color{font:13px/120% "微软雅黑";color:#12A5B9;padding-right: 15px;padding-left: 10px;}
+	</style>
+</head>
+<body>
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include> 
+	<!--大框子-->
+	<div class="block">
+		<h1>
+			<span class="tap">我的订单<span class="tap2">// MY ORDER</span></span>
+			<span style="float: right; padding-right: 120px; color: #12A5B9; padding-right: 15px;">
+				<a href="javascript:reloadTable('');"><span class="font_size_color">全部订单</span></a>&nbsp;<i style="font: 13px '宋体';">|</i>
+				<a href="javascript:reloadTable('1');"><span class="font_size_color">已完成订单</span></a>&nbsp;<i style="font: 13px '宋体';">|</i>
+				<a href="javascript:reloadTable('0');"><span class="font_size_color">未完成订单</span></a></span>
+		</h1>
+		<div class="content">
+			<div class="jqGrid_wrapper"  style="border:none">
+                <table id="table_list_1"></table>
+                <div id="pager_list_1"></div>
+            </div>
+		</div>
+	</div>
+	<!--大框子收队-->
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js"></script>
+    <script src="../../js/platform.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			//var q_order_id = getvalue("q_order_id");
+			initOrderList();
+		});
+		
+		function fmatterOrderNo(cellvalue, options, rowObject){
+			var val = cellvalue.length > 20? cellvalue.substr(0, 20)+"...":cellvalue;
+        	var str = "<label title='"+cellvalue+"'>"+val+"</label>"
+        	return str;
+        }
+		
+		function fmatterStatus(cellvalue, options, rowObject){
+        	var str = rowObject.STATUS;
+        	if(0==str) str = "待支付";
+        	if(1==str) str = "已支付";
+        	return str;
+        }
+		
+		function fmatterOpt(cellvalue, options, rowObject){
+        	var str = "<a href='alert(123);'>删除</a>"
+        	return str;
+        }
+		
+		
+		
+		function initOrderList() {
+			var h = $(window).height()-250;
+        	$.jgrid.defaults.styleUI="Bootstrap";
+        	$(".blackBox2").fadeIn(50);
+        	$("#table_list_1").jqGrid({
+        		url:"queryHistoryOrders.action",
+				//postData:{q_order_status: q_order_status},
+        		mtype:"POST",
+				datatype: "json",
+				loadtext:"",
+        		height:h,
+        		autowidth:true,
+        		shrinkToFit:true,
+        		rownumbers:true,
+        		rowNum:30,
+        		rownumWidth:70,
+        		onPaging:function(){$(".blackBox2").fadeIn(50);},
+        		
+        		rowList:[10,20,30,50,100],
+        		colNames:["", "订单号","医院","医生","患者姓名","时间","状态"/* ,"操作" */],
+        		colModel:[
+					//{name:"id",index:"id",width:80,sorttype:"int",align:"center"},
+					{name:"STATUS",index:"STATUS",width:60,align:"center", hidden: true},
+					{name:"ORDER_ID",index:"ORDER_ID",width:80,align:"left"/* , formatter: fmatterOrderNo */},
+					{name:"HOS_NAME",index:"HOS_NAME",width:160,align:"left"},
+					{name:"STAFF_NAME",index:"STAFF_NAME",width:50,align:"left"},
+					{name:"PATIENT_NAME",index:"PATIENT_NAME",width:50,align:"left"},
+					{name:"CREATE_DATE",index:"CREATE_DATE",width:100,align:"left"},
+					{name:"STATUS_NAME",index:"STATUS_NAME",width:60,align:"left", formatter: fmatterStatus }/*,
+					{name:"OPT",index:"OPT",width:100,align:"center", formatter: fmatterOpt }*/
+        		],
+        		jsonReader: {
+					root: "list", //数据对象
+					total: "totalPage", //总页数
+					page: "currentPage", //第几页
+					records: "totalRecord", //总条数
+					repeatitems: false
+				},
+				viewrecords : true,
+        		multiselect:false,
+        		onSelectRow:function(rowid,stauts){
+        			var str = jQuery("#table_list_1").jqGrid('getRowData', rowid);
+        			//console.info(str);
+        			var page = str.STATUS == 0?"orderPay.html":"orderDetail.html";
+        			//alert(page+"?card_no="+str.ORDER_ID);
+        			window.location.href=page+"?q_order_id="+str.ORDER_ID;
+        		},
+        		pager:"#pager_list_1",
+        		rows: 30,//初始化每页多少条
+				page: 1,//初始化第几页
+        		viewrecords:true,
+        		hidegrid:false,
+        		gridComplete:function(){
+        			var uiInfo = $(".ui-paging-info").text().replace(/条/,"单");
+                	$(".ui-paging-info").text(uiInfo);
+                	$(".blackBox2").fadeOut(100);
+                }
+        	});
+        	$(window).bind("resize",function(){var width=$(".jqGrid_wrapper").width();
+        	$("#table_list_1").setGridWidth(width);});
+		}
+		
+		function reloadTable(q_order_status){
+			$(".blackBox2").fadeIn(50);
+			setTimeout(function(){
+			$("#table_list_1").jqGrid('setGridParam',{ 	    			 		
+				url:"queryHistoryOrders.action",
+				postData:{q_order_status: q_order_status},
+        		mtype:"POST",
+				datatype: "json",
+                page:1,
+                gridComplete:function(){
+                	var uiInfo = $(".ui-paging-info").text().replace(/条/,"单");
+                	$(".ui-paging-info").text(uiInfo);
+                	$(".blackBox2").fadeOut(100);
+                }
+            }).trigger("reloadGrid"); //重新载入 
+			//$(".blackBox2").fadeOut(100);
+			},100)
+		}
+	</script>
+</body>
+</html>

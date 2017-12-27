@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>智能挂号</title>
+	<link rel="stylesheet" href="../../css/base.css">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css" rel="stylesheet">   
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css" rel="stylesheet">
+ 	<link rel="stylesheet" href="../../css/style.css">
+ 	<link href="../../css/but.css" rel="stylesheet" type="text/css">
+    <style>
+        /* Additional style to fix warning dialog position */
+		body {
+			padding:56px 0;
+			font-size:12px;
+			padding-bottom:0;
+		}
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .wrapper-content {
+		    padding: 0; 
+		}
+		.wrapper {
+		    padding: 0;
+		    height:100%;
+		}
+		.content {
+			height:100%;
+		}
+		.list-group {
+			margin:0;
+		}
+		.list-group-item:hover{
+		   background-color:#eee;-moz-transition: all 0.3s ease 0s;
+-webkit-transition: all 0.3s ease 0s;
+		}
+        .mappop_main{ width:968px; height:580px; padding:20px;padding-left:0px; background:#fff;}
+.mappop_main .docinfo{ position:relative; width:100%; height:196px; margin:0 auto; overflow:auto; border-bottom:1px solid #999;}
+.mappop_main .docinfo .img{ position:absolute; top:15px; left:30px; width:115px; height:151px; background:url(../../img/female.png) center no-repeat;}
+.mappop_main .docinfo .cont{ position:absolute; top:0; left:177px; background:; width:750px; height:172px;}
+.mappop_main .docinfo .cont h1{ display:block; position:relative; margin:0; padding:0; font:bold 24px/180% "微软雅黑"; color:#5D5E5F;}
+.mappop_main .docinfo .cont h1 .tip{ position:relative; margin-left:50px; font:12px "微软雅黑"; color:#bbb; }
+.mappop_main .docinfo .cont p{ position:relative; padding:0; margin:0; font:15px/180% "微软雅黑"; color:#5D5E5F;}
+.mappop_main .dateover{ position:relative; height:278px; padding:0; margin:0 12px;  padding-top:5px; }
+.mappop_main .dateover ul{ padding:0; margin:0;}
+ .mappop_main .dateover ul li{ list-style:none; padding:0; float:left; font:15px/15px "微软雅黑"; width:225px; margin-right:1px;}
+.mappop_main .dateover ul li h1{ width:185px; height:24px; font:15px/24px "微软雅黑"; color:#fff; padding:0 20px; margin:0; background:#506070; -webkit-margin-before:0px; -webkit-margin-after:0px;}
+.mappop_main .dateover ul li .datbk{ display:block; margin-top:1px; height:120px; text-align:center; padding-top:20px;}
+.mappop_main .dateover ul li .datbk p{ padding:0; margin:0;  color:#5D5E5F; }
+.mappop_main .dateover ul li .datbk .red{ color:#f00;}.mappop_main .dateover ul li .datbk .blue{ color:#26C0F2;}
+.mappop_main .dateover ul li .datbk .button{ width:120px; height:30px; margin:10px auto; font:15px/30px "微软雅黑"; color:#fff;}
+.colorbrow1{ background:#E8E8E8;}.colorbrow2{ background:#eee;}.colorbrow3{ background:#f1f1f1;}.colorbrow4{ background:#f8f8f8;}
+.mappop_main .mess{position:relative; height:110px;  margin:0 12px;  padding-top:5px; }
+.mappop_main .mess .button{ margin-top:25px; margin-left:350px;}
+.mappop_main .mess p{ font:12px/12px "微软雅黑"; color:#5D5E5F; text-align:center;}
+ .foot{display: none;}
+   
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    <input type="hidden" id="doctor_id">
+    <input type="hidden" id="hos_id">
+    <input type="hidden" id="dtfw" value="">
+    <div id="myModal2" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true"  style="display: none;">
+<div class="modal-dialog" style="width:1000px; height:600px;">
+	        <div class="modal-content animated bounceInRight">
+	       
+	        <div class="modal-body">
+	        <button style="margin-top:10px;" type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	       <div class="mappop_main">
+<!--简历部分-->
+<div class="docinfo">
+<div class="img"></div>
+<div class="cont">
+
+</div>
+</div>
+<!--简历部分END-->
+<!--日期部分-->
+<div class="dateover">
+<ul id="ghList">
+
+</ul>
+
+<i class="glyphicon glyphicon-triangle-left " aria-hidden="true" style="font-size:40px;position:absolute;top: 132px;left:-15px;cursor: pointer;" onclick="searchDuty(-1)" id="lastday"></i>
+<i class="glyphicon glyphicon-triangle-right " aria-hidden="true" style="font-size:40px;position:absolute;top: 132px;right:10px;cursor: pointer;" onclick="searchDuty(1)" id="nextday"></i>
+</div>
+<!--日期部分END-->
+<!--预约按钮与信息反馈-->
+<div class="mess"><p id="ghresult"></p><div class="button  button-highlight-flat" onclick="goGh()">确认预约</div>
+
+<input type="hidden" id="duty_id" value="">
+<input type="hidden" id="gh_date">
+</div>
+</div>
+           </div>
+         
+            </div>
+            </div>
+	        
+	        </div>
+    <dfv class="wrapper wrapper-content animated fadeInRight">
+    	<div class="search-select">
+    			<div class="col-xs-3">
+    				<div class="input-group">
+                         <input type="text" placeholder="输入医院或位置找医生" class="input-sm form-control" id="hos_name"> 
+                         <span class="input-group-btn"><button type="button" class="btn btn-sm btn-info" onclick="searchHospital()"><i class="fa fa-search"></i></button></span>
+                     </div>
+    			</div>
+    			<div class="col-xs-1">
+    			 	<select class="input-sm form-control input-s-sm inline" id="service_type">
+                         <option value="">服务类别</option>
+                         <option value="0">可挂号</option>
+                         <option value="">全部</option>
+                     </select>
+    			</div>
+    			<div class="col-xs-1">
+    			 	<select class="input-sm form-control input-s-sm inline" id="is_yibao">
+    			 	     <option value="">全部</option>
+                         <option value="0">医保定点</option>
+                         <option value="1">非医保</option>
+                     </select>
+    			</div>
+    			<div class="col-xs-1">
+    			 	<select class="input-sm form-control input-s-sm inline" id="hosp_level">
+                         <option value="">医院级别</option>
+                         <option value="01">三甲</option>
+                         <option value="03">二甲</option>
+                     </select>
+    			</div>
+    			<div class="col-xs-1">
+    			 	<select class="input-sm form-control input-s-sm inline" id="plan_type">
+                         <option value="">号源类型</option>
+                         <option value="2">专家号源</option>
+                         <option value="1">特需问诊</option>
+                         <option value="0">普通门诊</option>
+                     </select>
+    			</div>
+    			<div class="col-xs-1">
+    			 	<select class="input-sm form-control input-s-sm inline" id="hosp_type">
+                         <option value="">医院类别</option>
+                         <option value="0">综合</option>
+                         <option value="1">专科</option>
+                     </select>
+    			</div>
+    			<div class="col-xs-1">
+    			 	<select class="input-sm form-control input-s-sm inline" id="doctor_title">
+                         <option value="">医生职称</option>
+                         <option value="03">主任医生</option>
+                         <option value="02">副主任医生</option>
+                     </select>
+    			</div>
+    			<div class="col-xs-2" onclick="cleanSearch()">
+    				<span class="empty"><img src="../../img/rubber.png" > 清空全部条件</span>	
+    			</div>
+    	</div>
+    	<div class="content clearfix">
+    		<div class="isopen-left" onclick="openAndCloseLeft(this)">
+    			<img src="../../img/left.png" >
+    		</div>
+	    	<div class="left-part">	    		
+	    		<div class="result">本次查询到<span class="quantity" id="quantity"></span>条结果</div>
+	    		<div class="gh-info">
+	    			<div class="row" style="margin:0">
+	    				<div class="col-xs-6">挂号信息：<span id="user_name"></span></div>
+	    				<div class="col-xs-6">电话：<span id="mobile"></span></div>
+	    				<div class="col-xs-12">家庭地址：<span id="address"></span></div>
+	    			</div>
+	    		</div>
+	    		<div class="filter clearfix">
+	    			<a href="javascript:void(0);" data-type="" class="active">默认</a>
+	    			<a href="javascript:void(0);" data-type="0">距离 <i class="fa fa-angle-down"></i></a>
+	    			<a href="javascript:void(0);" data-type="1">有号 <i class="fa fa-angle-up"></i></a>
+	    			<a href="javascript:void(0);" data-type="2">医院 <i class="fa fa-angle-down"></i></a>
+	    			<a href="javascript:void(0);" data-type="3">医生 <i class="fa fa-angle-down"></i></a>
+	    			<a href="javascript:void(0);" data-type="4">全国 </a>
+	    		</div>
+	    		<ul class="list-group" >
+	    			
+	    		</ul>
+	    	</div>
+	        <div class="right-part" id="allmap"><div>
+    	</div>
+        
+    </div>
+     </div></div>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=v6jXjQ4qj94gSIb1NzaFk8BYwlWeQCtD"></script>
+    <script src="../../js/platform.js"></script>
+    <script>
+    var page=1;
+    var markers = [];
+	    var map = new BMap.Map("allmap");
+	    var jd=getvalue("jd");
+	    var wd=getvalue("wd");
+	    map.enableScrollWheelZoom(true);
+		             // 将标注添加到地图中
+		// 编写自定义函数,创建标注
+	    
+		var point = new BMap.Point(jd,wd);
+	     map.centerAndZoom(point, 15);
+	     var myIcon = new BMap.Icon("../../img/myself.png", new BMap.Size(30,44),{ anchor: new BMap.Size(15, 44),infoWindowAnchor:new BMap.Size(15, 10)});
+     	 var marker = new BMap.Marker(point,{icon:myIcon});  // 创建标注
+     	 marker.disableMassClear();
+     	var r_cnt=selData();
+    	if(r_cnt==0){
+    		location.href="consultation.html";
+    	}
+     	 var ttl = {title : "<span style=\"font-size:14px;color:#0A8021\">"+$("#user_name").text()+"</span>"};
+		 var uinfo="<div style=\"font-size:12px;\">地址:"+$("#address").text()+"</div>";
+		 var infoWindow1 =new BMap.InfoWindow(uinfo, ttl);
+			
+		  //鼠标显示窗口
+		  marker.addEventListener("mouseover", function(){
+		      this.openInfoWindow(infoWindow1);
+		  });
+		  //鼠标移出关闭窗口
+		 marker.addEventListener("mouseout", function(){
+			this.closeInfoWindow();
+	     });
+		 map.addOverlay(marker); 
+	     map.addEventListener("zoomend", function(){ 
+	    	 map.clearOverlays();
+	    	 var bounds=map.getBounds();
+	    	 var wp=bounds.getSouthWest();
+	    	 var ne=bounds.getNorthEast();
+	    	
+	    	 $("#dtfw").val(wp.lng+"@#"+wp.lat+"@#"+ne.lng+"@#"+ne.lat);
+	    	 page=1;
+	    	 $(".list-group").html("");
+	    	 $(".blackBox2").show();
+	    	 setTimeout(function(){
+	    		 selData();
+		    	 selMap();
+		    	 $(".blackBox2").hide();
+	    	 },100);
+	    	 
+	     });
+	     function addLocalPoint(){
+	    	 var point = new BMap.Point(jd,wd);
+	     	 var myIcon = new BMap.Icon("../../img/myself.png", new BMap.Size(30,44),{ anchor: new BMap.Size(15, 44),infoWindowAnchor:new BMap.Size(15, 10)});
+	     	 var marker2 = new BMap.Marker(point,{icon:myIcon});  // 创建标注
+	     	 var ttl = {title : "<span style=\"font-size:14px;color:#0A8021\">"+$("#user_name").text()+"</span>"};
+			 var uinfo="<div style=\"font-size:12px;\">地址:"+$("#address").text()+"</div>";
+			 var infoWindow1 =new BMap.InfoWindow(uinfo, ttl);
+				
+			  //鼠标显示窗口
+			  marker2.addEventListener("mouseover", function(){
+			      this.openInfoWindow(infoWindow1);
+			  });
+			  //鼠标移出关闭窗口
+			  marker2.addEventListener("mouseout", function(){
+				this.closeInfoWindow();
+		      });
+	     	 map.addOverlay(marker2);  
+	     }
+         map.addEventListener("dragend", function(){ 
+        	 map.clearOverlays();
+	    	 var bounds=map.getBounds();
+	    	 var wp=bounds.getSouthWest();
+	    	 var ne=bounds.getNorthEast();
+	    	 $("#dtfw").val(wp.lng+"@#"+wp.lat+"@#"+ne.lng+"@#"+ne.lat);
+	    	 page=1;
+	    	 $(".list-group").html("");
+	    	 //addLocalPoint();
+	    	 $(".blackBox2").show();
+	    	 setTimeout(function(){
+	    		 selData();
+		    	 selMap();
+		    	 $(".blackBox2").hide();
+	    	 },100);
+	     });
+         
+     	  
+		function addMarker(point){
+		  var myIcon = new BMap.Icon("../../img/hosp.png", new BMap.Size(30,44),{ anchor: new BMap.Size(15, 44)});
+		  var marker2 = new BMap.Marker(point,{icon:myIcon});  // 创建标注
+		  map.addOverlay(marker2); 
+		}
+		// 随机向地图添加25个标注
+		var bounds = map.getBounds();
+		var sw = bounds.getSouthWest();
+		var ne = bounds.getNorthEast();
+		var lngSpan = Math.abs(sw.lng - ne.lng);
+		var latSpan = Math.abs(ne.lat - sw.lat);
+		/* for (var i = 0; i < 25; i ++) {
+			var point = new BMap.Point(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+			addMarker(point);
+		} */
+        $(document).ready(function(){
+        	$(".list-group").scroll(function(){
+        		var $this =$(this),viewH =$(this).height(),//可见高度 
+        		contentH =$(this).get(0).scrollHeight,//内容高度
+        		scrollTop =$(this).scrollTop();//滚动高度
+        		
+        		if(contentH - viewH - scrollTop==0){
+        			page++;
+        			var hos_id=$("#hos_id").val();
+        			
+        			selData(hos_id);
+        		}
+        	});
+        	$(".search-select").find("select").change(function(){
+        		
+        		page=1;
+        		$(".list-group").html("");
+        		
+        		map.clearOverlays();
+        		$(".blackBox2").show();
+   	    	 setTimeout(function(){
+   	    		 selData();
+   		    	 selMap();
+   		    	 $(".blackBox2").hide();
+   	    	 },100);
+        	});
+        	var h = $(".left-part").height()-175;
+        	$(".list-group").height(h);
+        	$(".filter a").click(function(){
+        		
+        		$(this).addClass("active").siblings().removeClass("active");
+        		$(this).children().show(); 
+        		$(this).siblings().children().hide();
+        		page=1;
+        		$(".list-group").html("");
+        		if($(this).attr("data-type")=="4"){
+        			map.clearOverlays();
+            		map.centerAndZoom(point, 6);
+        			
+        		}else{
+        			map.clearOverlays();
+            		map.centerAndZoom(point, 15);
+        			
+        		}
+        		$(".blackBox2").show();
+        		setTimeout(function(){
+        			selData();
+        			selMap();
+        			$(".blackBox2").hide();
+        		},100);
+        		
+        		
+        		
+  	    		
+        	}); 
+        	$(".filter a i").click(function(e){
+        		if($(this).hasClass("fa-angle-down")){
+    				$(this).removeClass("fa-angle-down").addClass("fa-angle-up");
+    			}else{
+    				$(this).removeClass("fa-angle-up").addClass("fa-angle-down");	
+    			}
+        		page=1;
+        		$(".list-group").html("");
+        		$(".blackBox2").show();
+        		setTimeout(function(){
+      	    		 selData();
+      		    	 selMap();
+      		    	 $(".blackBox2").hide();
+      	    	 },100);
+        		
+        	});
+        	
+        	
+        	selMap();
+        });
+		
+		//左侧查询数据
+        function selData(hos_id){
+			var ccnt=0;
+        	var h_id="",wl="",wg="",nl="",ng="";
+        	if(typeof(hos_id)!="undefined"&&hos_id!=""){
+        		h_id=hos_id;
+        	}
+        	var dtfw=$("#dtfw").val();
+        	if(dtfw!=""){
+        		var dtfws=dtfw.split("@#");
+        		wl=dtfws[1];
+        		wg=dtfws[0];
+        		nl=dtfws[3];
+        		ng=dtfws[2];
+        	}
+        	var period=getvalue("q_period");
+        	var addr_id=getvalue("q_addr_id");
+        	var q_date=decodeURIComponent(getvalue("q_date"));
+        	var prefer=getvalue("q_need_prefer");
+        	var disease=decodeURIComponent(getvalue("q_disease"));
+        	var q_sort_field=$(".filter a.active").attr("data-type");
+        	var q_sort_type="";
+        	if($(".filter a.active i").hasClass("fa-angle-down")){
+        		q_sort_type="desc";
+        	}
+            var q_hospital_name=$("#hos_name").val().trim();
+            var q_service_type=$("#service_type").val();
+            var q_is_yibao=$("#is_yibao").val();
+            var q_hosp_level=$("#hosp_level").val();
+            var q_plan_type=$("#plan_type").val();
+            var q_hosp_type=$("#hosp_type").val();
+            var q_doctor_title=$("#doctor_title").val();
+
+        	$.ajax({
+          		url:"queryDoctorPlans.action",
+          		dataType:"json",
+          		data:{ws_lng:wg,ws_lat:wl,ne_lng:ng,ne_lat:nl,page:page,q_hospital_id:h_id,q_doctor_title:q_doctor_title,q_hosp_type:q_hosp_type,q_plan_type:q_plan_type,q_hosp_level:q_hosp_level,q_is_yibao:q_is_yibao,q_service_type:q_service_type,q_hospital_name:q_hospital_name,q_sort_field:q_sort_field,q_sort_type:q_sort_type,q_period:period,q_addr_id:addr_id,q_date:q_date,q_need_prefer:prefer,q_disease:disease},
+          		type:"post",
+          		async:false,
+          		success:function(data){
+          			ccnt=data.result_cnt;
+          			
+          			var h="";
+          			$("#quantity").text(data.result_cnt);
+          			$("#user_name").text(data.USER_NAME);
+          			$("#mobile").text(data.MOBILE);
+          			$("#address").text(data.ADDRESS.split("@#")[2]);
+          			var dataList=data.result_list;
+          			for(var i in dataList){
+          				var d=dataList[i];
+          				var distance=d.DISTANCE/1000;
+          				var zbs=d.HOSP_COORDINATE.split(",");
+          				var lng=zbs[0];
+          				var lat=zbs[1];
+          				h+="<li class=\"list-group-item\" onclick=\"showyy('"+d.DOCTOR_ID+"')\" data-hosid='"+d.HOSID+"'>"
+	    				+"<div class=\"row\">"
+    					+"<div class=\"col-xs-3\"><span class=\"";
+    					if(d.P_NUM>0){
+    						h+="able-gh\">可挂号";
+    					}else{
+    						h+="disable-gh\">不可挂号";
+    					}
+    					
+    					h+="</span><img src=\"../../img/";
+    					if(d.DOCTOR_SEX==1){
+    						h+="male.png";
+    					}else{
+    						h+="female.png";
+    					}
+    					
+    					h+="\" width=\"100%\" ></div>"
+    					+"<div class=\"col-xs-9\">"
+    					+"<h3><span id=\"doctorname\">"+d.DOCTOR_NAME+"</span> <small class=\"pull-right\">"+d.DOCTOR_LVL+"</small></h3>"
+    					+"<p class=\"ellipsis\">所属医院：<span>"+d.HOSP_NAME+"</span></p>"
+    					+"<p>医院等级：<span>"+d.HOSP_LVL+"</span><small class=\"pull-right\">距离：<span>"+distance.toFixed(1)+"KM</span></small></p>"
+    					+"<p>科室：<span id=\"doctordept\">"+d.HOSP_DEPT+"</span></p>"
+    					+"</div>"
+    					+"</div>"
+    					+"</li>";
+    					
+          			}
+          			$(".list-group").append(h);
+          		}
+        	});
+        	return ccnt;
+        }
+		
+		//显示医生个人信息
+		function showyy(q_doctor_id){
+			$("#doctor_id").val(q_doctor_id);
+			$.ajax({
+          		url:"queryDoctorInfo.action",
+          		dataType:"json",
+          		data:{q_doctor_id:q_doctor_id},
+          		type:"post",
+          		async:false,
+          		success:function(data){
+          			var sex=data.SEX=="1"?"male.png":"female.png";
+          			$(".mappop_main .docinfo .img").css("background","url(../../img/"+sex+") center no-repeat");
+          			var skill_lvl=data.DOCTOR_LVL=="01"?"主治医师":data.DOCTOR_LVE=="02"?"副主任医师":"主任医师";
+          			var h="<h1>"+data.DOCTOR_NAME+"<span class=\"tip\">"+skill_lvl+"</span></h1>"
+          				+"<p>医院："+data.HOSP_NAME+"<span style=\"margin-left:70px;\">科室："+data.DEP_NAME+"</span></p>"
+          				+"<p>医院等级："+data.HOSP_LVL+"</p>"
+          				+"<p>医院地址："+data.HOSP_ADDR+"</p>"
+          				+"<p>擅长："+data.DOCTOR_EXPERT+"</p>";
+          			$(".cont").html(h);
+          		}
+			});
+			
+			searchDuty('0');
+			$("#myModal2").modal("show");
+		}
+		//查询排班
+		function searchDuty(flag){
+			var q_doctor_id=$("#doctor_id").val();
+			var q_date="";
+			
+			if(flag==0){//点击医生进入
+				q_date=decodeURIComponent(getvalue("q_date"));
+				
+			}else{//前后一天
+				q_date=$(".rq").eq(1).text();
+				
+				q_date=new Date(q_date);
+				if(flag>0){
+					q_date=+q_date+1000*60*60*24;
+				}else{
+					q_date=+q_date-1000*60*60*24;
+				}
+				
+				q_date=new Date(q_date);
+				q_date=q_date.getFullYear()+"-"+(q_date.getMonth()+1)+"-"+q_date.getDate();
+				
+			}
+			var dd=new Date();
+			var d1=+dd+1000*60*60*24*28;
+			d1=new Date(d1);
+			var d2=+dd+1000*60*60*24;
+			d2=new Date(d2);
+			d1=d1.getFullYear()+"-"+(d1.getMonth()+1)+"-"+d1.getDate();
+			d2=d2.getFullYear()+"-"+(d2.getMonth()+1)+"-"+d2.getDate();
+			if(d2>=q_date){
+				$("#lastday").hide();
+				
+			}else{
+				$("#lastday").show();
+				
+			}
+			if(d1==q_date){
+				$("#nextday").hide();
+				
+			}else{
+				$("#nextday").show();
+				
+			}
+			
+			$.ajax({
+          		url:"queryDetailPlans.action",
+          		dataType:"json",
+          		data:{q_doctor_id:q_doctor_id,q_date:q_date},
+          		type:"post",
+          		async:false,
+          		success:function(data){
+          			console.info(data);
+          			var gh="";
+          			for(var i in data){
+          				var wgh=data[i];
+          				var index=parseInt(i)+1;
+          				var hlx="";
+          				
+          				gh+="<li><h1 style=\"width: 100%\"><span style=\"float:left\">"+data[i].xq+"</span> <span style=\"float:right\" class=\"rq\">"+data[i].rq+"</span></h1>"
+          				+"<span class=\"datbk colorbrow"+index+"\"><p>上午号源</p>";
+          				//如果上午不出诊
+          				if(wgh["1"]==""){
+          					gh+="<p class=\"red\">不出诊</p><p class=\"button disabled\">选择</p></span>";
+          				}else{
+          					hlx=wgh["1"].WORK_TYPE==0?"普通门诊":wgh["1"].WORK_TYPE==1?"特需门诊":"专家门诊";
+          					
+          					//没号了
+          					if(wgh.PLAN_NUM==0){
+          						gh+="<p class=\"red\">约满</p><p class=\"button disabled\">选择</p></span>";
+          					}else{
+          						gh+="<p style=\"font-size:12px;margin-top:5px;margin-bottom:5px;\">"+hlx+"    挂号费："+wgh["1"].WORK_FEE+"元</p><p class=\"blue\">  有号    </p><p class=\"button button-primary\" onclick=\"selduty('"+wgh["1"].DUTY_ID+"','"+data[i].rq+"','"+data[i].xq+"',this)\">选择</p></span>";
+          					}
+          				}
+          				gh+="<span class=\"datbk colorbrow"+index+"\"><p>下午号源</p>";
+          				if(wgh["2"]==""){
+          					gh+="<p class=\"red\">不出诊</p><p class=\"button disabled\">选择</p></span>";
+          				}else{
+          					hlx=wgh["2"].WORK_TYPE==0?"普通门诊":wgh["2"].WORK_TYPE==1?"特需门诊":"专家门诊";
+          					//没号了
+          					if(wgh.PLAN_NUM==0){
+          						gh+="<p class=\"red\">约满</p><p class=\"button disabled\">选择</p></span>";
+          					}else{
+          						gh+="<p style=\"font-size:12px;margin-top:5px;margin-bottom:5px;\">"+hlx+"    挂号费："+wgh["2"].WORK_FEE+"元</p><p class=\"blue\">有号 </p><p class=\"button button-primary\" onclick=\"selduty('"+wgh["2"].DUTY_ID+"','"+data[i].rq+"','"+data[i].xq+"',this)\">选择</p></span>";
+          					}
+          				}
+          				gh+="</li>";
+          			}
+          		   
+          			$("#ghList").html(gh);
+          		}
+			});
+		}
+		//点击预约
+		function selduty(duty_id,rq,xq,obj){
+			if($(obj).hasClass("button-primary")){
+				$("#ghresult").text("当前已选择挂号："+xq+"  "+rq+"  "+$("#doctordept").text()+"  "+$("#doctorname").text());
+				$("#duty_id").val(duty_id);
+				$("#gh_date").val(rq);
+				$("#ghList").find(".button-highlight-flat").removeClass("button-highlight-flat").addClass("button-primary");
+				$("#ghList").find(".button-highlight-flat").prev("p").removeClass("red").addClass("blue").text("有号");
+				$("#ghList").find(".button-highlight-flat").text("选择");
+				$(obj).removeClass("button-primary").addClass("button-highlight-flat");
+				$(obj).text("取消");
+				$(obj).prev("p").removeClass("blue").addClass("red").text("已选");
+				
+			}else{
+				$("#ghresult").text("");
+				$("#duty_id").val("");
+				$("#gh_date").val("");
+				$(obj).removeClass("button-highlight-flat").addClass("button-primary");
+				$(obj).text("选择");
+				$(obj).prev("p").removeClass("red").addClass("blue").text("有号");
+			}
+			
+		}
+		//确认挂号
+		function goGh(){
+			var addr_id=getvalue("q_addr_id");
+			var duty_id=$("#duty_id").val();
+			var gh_date=$("#gh_date").val();
+			if(duty_id==""){
+				alertShow("请先选择预约时间！");
+				return false;
+			}
+			$.ajax({
+          		url:"orderDoctorPlan.action",
+          		dataType:"json",
+          		data:{o_addr_id:addr_id,o_duty_id:duty_id,o_work_date:gh_date},
+          		type:"post",
+          		async:false,
+          		success:function(data){
+          			if(data.code==0){
+          				alertShow("预约失败");
+          			}else{
+          				location.href="orderPay.html?q_order_id="+data.orderId;
+          			}
+          		}
+			});
+		}
+        //搜索框医院名称
+        function searchHospital(){
+        	var hn=$("#hos_name").val();
+        	if(hn.trim()==""){
+        		alertShow("请输入医院名称");
+        		return false;
+        	}
+        	page=1;
+        	$(".list-group").html("");
+        	$(".blackBox2").show();
+    		setTimeout(function(){
+  	    		 selData();
+  		    	
+  		    	 $(".blackBox2").hide();
+  	    	 },100);
+        }
+        //地图数据
+        function selMap(){
+        	var q_addr_id=getvalue("q_addr_id");
+        	var q_service_type=$("#service_type").val();
+            var q_is_yibao=$("#is_yibao").val();
+            var q_hospital_name=$("#hos_name").val().trim();
+            var q_hosp_level=$("#hosp_level").val();
+            var q_plan_type=$("#plan_type").val();
+            var q_hosp_type=$("#hosp_type").val();
+            var q_doctor_title=$("#doctor_title").val();
+            var q_date=decodeURIComponent(getvalue("q_date"));
+        	var q_disease=decodeURIComponent(getvalue("q_disease"));
+        	var q_period=getvalue("q_period");
+        	var q_sort_field=$(".filter a.active").attr("data-type");
+        	var wl="",wg="",nl="",ng="";
+        	
+        	var dtfw=$("#dtfw").val();
+        	if(dtfw!=""){
+        		var dtfws=dtfw.split("@#");
+        		wl=dtfws[1];
+        		wg=dtfws[0];
+        		nl=dtfws[3];
+        		ng=dtfws[2];
+        	}
+        	var zoom_lvl=15;
+        	//map.getZoom();
+        	$.ajax({
+          		url:"queryHospitalPlans.action",
+          		dataType:"json",
+          		data:{zoom_lvl:zoom_lvl,ws_lng:wg,ws_lat:wl,ne_lng:ng,ne_lat:nl,q_hospital_name:q_hospital_name,q_sort_field:q_sort_field,q_date:q_date, q_period:q_period, q_disease:q_disease, q_service_type:q_service_type, q_is_yibao:q_is_yibao, q_hosp_level:q_hosp_level, q_plan_type:q_plan_type, q_hosp_type:q_hosp_type, q_addr_id:q_addr_id, q_doctor_title:q_doctor_title},
+          		type:"post",
+          		async:false,
+          		success:function(data){
+          	        if(zoom_lvl>11){
+          	        	for(var i in data){
+                			  var opts = {title : "<span style=\"font-size:14px;color:#0A8021\">"+data[i].HOSP_NAME+"</span>"};
+                			  
+                			  var yibao=data[i].IS_YIBAO=="1"?"医保定点医院":"";
+                			  var yytype=data[i].HOS_TYPE=="0"?"综合医院":"专科医院";
+                			  var info="医院信息:<span  style=\"font:10px '微软雅黑';color:#1B9AF7\">"+data[i].HOSP_LVL+","+yytype+","+yibao+"</span></div><div style=\"font-size:12px;\">可选医生:"+data[i].CNT+"人</div>";
+                			  
+                			  map.addOverlay(createMark(data[i].LONGITUDE,data[i].LATITUDE,info,opts,data[i].HOS_ID)); 
+                				
+                			}
+          	        }else{
+          	        	for(var i in data){
+          	        		var bdary = new BMap.Boundary();
+          	      		    bdary.get(data[i].CITY, function(rs){       //获取行政区域
+          	      			
+          	      			var count = rs.boundaries.length; //行政区域的点有多少个
+          	      			if (count === 0) {
+          	      				alert('未能获取当前输入行政区域');
+          	      				return ;
+          	      			}
+          	                var pointArray = [];
+          	      			for (var i = 0; i < count; i++) {
+          	      				var ply = new BMap.Polygon(rs.boundaries[i], {strokeWeight: 2, strokeColor: "#ff0000"}); //建立多边形覆盖物
+          	      				map.addOverlay(ply);  //添加覆盖物
+          	      				pointArray = pointArray.concat(ply.getPath());
+          	      			}    
+          	      			map.setViewport(pointArray);
+          	      		});
+                			  /* var opts = {title : "<span style=\"font-size:14px;color:#0A8021\">"+data[i].HOSP_NAME+"</span>"};
+                			  
+                			  var yibao=data[i].IS_YIBAO=="1"?"医保定点医院":"";
+                			  var yytype=data[i].HOS_TYPE=="0"?"综合医院":"专科医院";
+                			  var info="医院信息:<span  style=\"font:10px '微软雅黑';color:#1B9AF7\">"+data[i].HOSP_LVL+","+yytype+","+yibao+"</span></div><div style=\"font-size:12px;\">可选医生:"+data[i].CNT+"人</div>";
+                			  
+                			  map.addOverlay(createMark(data[i].LONGITUDE,data[i].LATITUDE,info,opts,data[i].HOS_ID));  */
+                				
+                		}
+          	        }
+          			
+          		}
+        	});
+        }
+        var createMark=function(lng,lat,info,opts,hosid){
+        	
+			  var myIcon = new BMap.Icon("../../img/hosp.png", new BMap.Size(30,44),{ anchor: new BMap.Size(15, 44),infoWindowAnchor:new BMap.Size(15, 10)});
+			  
+			  var marker2 = new BMap.Marker(new BMap.Point(lng,lat),{icon:myIcon});  // 创建标注
+			  var infoWindow =new BMap.InfoWindow(info, opts);
+			
+			  //鼠标显示窗口
+			  marker2.addEventListener("mouseover", function(){
+			      this.openInfoWindow(infoWindow);
+			  });
+			  //鼠标移出关闭窗口
+			  marker2.addEventListener("mouseout", function(){
+				this.closeInfoWindow();
+		      });
+			  //点击查询
+			  marker2.addEventListener("click", function(){
+				  page=1;
+				  $(".list-group").html("");
+				  $("#hos_id").val(hosid);
+				  $(".blackBox2").show();
+				  setTimeout(function(){
+		  	    		 selData(hosid);
+		  		    	 
+		  		    	 $(".blackBox2").hide();
+		  	    	 },100);
+		     });
+			 $("body").on("mouseover",".list-group-item[data-hosid='"+hosid+"']",function(){
+				 
+		         marker2.setAnimation(BMAP_ANIMATION_BOUNCE);
+			 });
+			 $("body").on("mouseout",".list-group-item[data-hosid='"+hosid+"']",function(){
+		         marker2.setAnimation(null);
+			 });
+			 return marker2;
+        };
+        function cleanSearch(){
+        
+            $("#hos_name").val("");
+            $("#service_type").val("");
+            $("#is_yibao").val("");
+            $("#hosp_level").val("");
+            $("#plan_type").val("");
+            $("#hosp_type").val("");
+            $("#doctor_title").val("");
+            
+            page=1;
+            $(".list-group").html("");
+            $(".blackBox2").show();
+    		setTimeout(function(){
+  	    		 selData();
+  		    	 selMap();
+  		    	 $(".blackBox2").hide();
+  	    	 },100);
+        }
+       	function openAndCloseLeft(t){
+       		var src = $(t).children().attr("src");
+       		var w = $(".right-part").width();
+       		if(src=="../../img/left.png"){
+       			$(".left-part").animate({"margin-left":"-341px"},100);
+       			$(t).animate({"left":0},100);
+       			$(".right-part").animate({"width":(w+341)+"px"},100);      			
+       			$(t).children().attr("src","../../img/right.png");
+       		}else {
+       			$(".left-part").animate({"margin-left":0},100);
+       			$(t).animate({"left":"339px"},100);
+       			$(".right-part").animate({"width":(w-341)+"px"},100);      			
+       			$(t).children().attr("src","../../img/left.png");
+       		}
+       	}
+       	
+    </script>
+</body>
+</html>

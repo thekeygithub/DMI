@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>TheKey</title>
+	<script src="../js/jquery-1.12.4.js"></script>
+	<link rel="stylesheet" href="../css/base.css">
+	<style type="text/css">
+		/*@media screen and (min-width: 1800px) {
+			.frame {
+				-webkit-transform:scale(1.5) ; 
+				-moz-transform:scale(1.5) ; 
+				-o-transform:scale(1.5) ; 
+			}
+		}*/
+
+		 .frame{ margin:0; padding:0; background: url(../img/index/leadbg.jpg) top left #08308F; background-size:cover;}
+		.content{ position:relative; margin:0 auto; width:100%; max-width:1368px; min-width:1200px;  min-height:542px; }
+		.content .text{ position:absolute; left:65%; top:70%; width:345px; font:15px/180% "微软雅黑"; color:#4D80F7;}
+		.content .text span{ display:none; } 		
+		.filp{position:absolute; top:0; left:0; width:208px; height:180px; transition: all 600ms ease; transform-style: preserve-3d;   backface-visibility: hidden;}
+		.ab{ }
+		.kd{ position:absolute; width:208px; height:180px; }
+		.kd1{top:95px; left:500px; opacity:0;}
+		.d1{  background:url(../img/index/dh1.png) center no-repeat;}
+		.kd2{top:0px; left:247px; }
+		.d2{ background:url(../img/index/dh2.png) center no-repeat;}
+		.kd3{top:400px; left:247px; }
+		.d3{ background:url(../img/index/dh3.png) center no-repeat; }
+		.kd4{top:195px; left:0px;}
+		.d4{background:url(../img/index/dh4.png) center no-repeat;}
+		.kd5{top:402px; left:717px; }
+		.d5{background:url(../img/index/dh5.png) center no-repeat;}
+		.kd6{top:0px; left:593px; }
+		.d6{background:url(../img/index/dh6.png) center no-repeat;}
+		.kd7{top:42px; left:0px; }
+		.d7{background:url(../img/index/dh7.png) center no-repeat;}
+		.d1:after,.d2:after,.d3:after,.d4:after,.d5:after,.d6:after,.d7:after{ background-position:center; background-repeat:no-repeat; content:''; left:0px; top:0px; position:absolute; width:100%; height:180px; 
+		 transform: rotateY(180deg); transform-origin:center;  background-image:url(../img/index/dhal.png);}
+		/*.d1:after{ background-image:url(../img/index/dh11.png); }
+		.d2:after{background-image:url(../img/index/dh22.png) ;}
+		.d3:after{background-image:url(../img/index/dh33.png); }
+		.d4:after{background-image:url(../img/index/dh44.png) ; }
+		.d5:after{background-image:url(../img/index/dh55.png) ; }
+		.d6:after{background-image:url(../img/index/dh66.png);}*/
+
+		.hover { width:240px; height:200px;  background-position:left;
+/*	反转样式		-webkit-transform: rotateY(180deg);
+			-moz-transform: rotateY(180deg);
+			-o-transform: rotateY(180deg);
+			-ms-transform: rotateY(180deg);
+			transform: rotateY(180deg);*/
+			
+		}
+	</style>
+</head>
+
+<body class="frame">
+	<jsp:include flush="true" page="topAndFooter.html"></jsp:include>
+	<div class="content">
+		<a href="/MDEPlatform/pages_new/ipdData/ipdDataIntegrationServices.html"><div class="kd kd1"><div class="filp d1"></div></div></a>
+		<a href="/MDEPlatform/pages_new/mts/jgbzMTS.html"><div class="kd kd2"><div class="filp d2"></div></div></a>
+		<a href="/MDEPlatform/pages_new/library/bookServiceSearch.html"><div class="kd kd3"><div class="filp d3"></div></div></a>
+		<a href="/MDEPlatform/pages_new/registration/search.html"><div class="kd kd4"><div class="filp d4"></div></div></a>
+		<a href="/MDEPlatform/pages_new/biNew/BIIndex.html"><div class="kd kd5"><div class="filp d5"></div></div></a>
+		<a href="/MDEPlatform/pages_new/cpa/cpaPayCheck.html"><div class="kd kd6"><div class="filp d6"></div></div></a>
+		<a href="/MDEPlatform/pages_new/on-to-many/cpaSearch.html"><div class="kd kd7"><div class="filp d7"></div></div></a>
+
+		<div class="text">
+			<span id="kd1text">以个人为中心整合医保、医院、药店、使用行为、可穿戴设备、健康档案六大类数据资源。</span>
+			<span id="kd2text">不仅能实现不同医学术语标准的快速映射转化,还可以实现对医学结构化和非结构化数据依据指定术语标准的识别和清洗。</span>
+			<span id="kd3text">以MTS技术为依托,将病历、教科书、百科知识、期刊文献、影视资料数据整合到一起,提供一站式的医学图书情报服务。</span>
+			<span id="kd4text">基于数据与MTS的优势,对已知自己疾病的人群进行智能号源推送。对不知道自己疾病的人群进行人工咨询服务</span>
+			<span id="kd5text">以MTS技术为依托,对人社、卫计委和两定机构进行BI服务。</span>
+			<span id="kd6text">以MTS技术为依托,为医疗就诊结算单进行事前、事中、事后的审核服务。</span>
+			<span id="kd7text">只需导入一种单据，即可实现多种格式全覆盖输出。</span>
+		</div>
+		<script type="text/javascript">
+			$('div.kd1').hover( function(){$("#kd1text").show()},function(){ $("#kd1text").hide()})
+			$('div.kd2').hover( function(){$("#kd2text").show()}, function(){ $("#kd2text").hide() })
+			$('div.kd3').hover( function(){$("#kd3text").show()},function(){ $("#kd3text").hide()})
+			$('div.kd4').hover( function(){$("#kd4text").show()}, function(){ $("#kd4text").hide() })
+			$('div.kd5').hover( function(){$("#kd5text").show()},function(){ $("#kd5text").hide()})
+			$('div.kd6').hover( function(){$("#kd6text").show()}, function(){ $("#kd6text").hide() })
+			$('div.kd7').hover( function(){$("#kd7text").show()}, function(){ $("#kd7text").hide() })
+	
+			$('div.kd').hover(
+			    function(){
+			     $(this).children().addClass('hover')
+			    },
+			    function(){
+			     $(this).children().removeClass('hover')
+			    }
+			)
+			$(document).ready(function (){
+				$("div.kd1").animate({'top':'175px','left':'74px','opacity':'1'});
+				$("div.kd2").animate({'top':'78px','left':'247px',});
+				$("div.kd3").animate({'top':'279px','left':'247px',});
+				$("div.kd4").animate({'top':'175px','left':'417px',});
+				$("div.kd5").animate({'top':'382px','left':'417px',});
+				$("div.kd6").animate({'top':'279px','left':'593px',});
+				$("div.kd7").animate({'top':'382px','left':'74px',});
+			});
+			$(document).ready(function() {
+				$(".goback").css("display","none");
+				$(".gotop").css("display","none");
+				var h = $(window).height()-$("header").height()-$("footer").height()-$(".page-part").height();
+				//console.log(h)
+				$(".page-part").css("margin-top",h/2-25);
+			});
+		</script>
+	</div>
+</body>
+</html>

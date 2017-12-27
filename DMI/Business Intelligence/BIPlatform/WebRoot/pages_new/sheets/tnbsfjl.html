@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人健康档2型糖尿病患者随访记录</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+		h3 {
+			font-family: "微软雅黑";
+			padding: 15px;
+			margin: 0;
+			border:1px solid #fff;
+			border-bottom: none;
+			color: #FFFFFF;
+		}
+		table {
+			width: 100%;
+			padding: 0;
+			margin: 0;
+			text-align: center;
+		}
+		td {
+			vertical-align: middle!important;
+			line-height: 24px!important;
+		}
+		.other {
+			padding: 0 5px;
+			border-bottom: 1px solid #333;
+			margin: 0!important;
+		}
+		.box {
+			font-size:24px;
+			font-weight: 100;
+			color: #333;
+			margin-top: 15px;
+		}
+		.selectedBox {
+			display: inline-block;
+			width: 16px;
+			height: 16px;
+			border: 1px solid #333;
+			text-align: center;
+			line-height: 16px;
+			font-size: 12px;
+			color: #333;
+			vertical-align: middle;
+			margin-right: 0!important;
+			margin-top: 4px;
+		}
+		.xz span{
+			margin-right:10px;
+		}
+		b {
+			margin:0 3px;
+			font-size: 20px;
+			color: #333;
+			font-weight: 100;
+		}
+		.sz {
+			width:100px;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.sz tr:first-child {
+			border-bottom: 1px solid #333;
+		}
+		.sz tr td:first-child {
+			border-right: 1px solid #333;
+		}
+		.sz tr td {
+			width: 50px;
+			text-align: center;
+			color: #333;
+			height: 16px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center" style="background: #81BCF8;">2型糖尿病患者随访服务记录表</h3>
+		<div class="col-sm-12" style="background: #81BCF8;border:1px solid #fff;
+			border-top: none;padding: 5px 0;color: #FFFFFF;">
+			<div class="col-sm-6">姓名：<span class="xm" id="USER_NAME"></span></div>
+			<div class="col-sm-6 text-right">编号：<span class="bh" id="DOC_NO"></span></div>
+		</div>
+		<table class="table table-bordered">
+			<tr>
+				<td colspan="2">随访日期</td>
+				<td colspan="2" id="sfrq"></td>
+				<td colspan="2" id="sfrq"></td>
+				<td colspan="2" id="sfrq"></td>
+				<td colspan="2" id="sfrq"></td>					
+			</tr>
+			<tr>
+				<td colspan="2">随访方式</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 门诊</span>
+					<span>2 家庭</span>
+					<span>3 电话</span>
+					<span class="pull-right selectedBox" id="R2" dd="123"></span>
+				</td>	
+				<td colspan="2" align="left" class="xz">
+					<span>1 门诊</span>
+					<span>2 家庭</span>
+					<span>3 电话</span>
+					<span class="pull-right selectedBox" id="R2" dd="456"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 门诊</span>
+					<span>2 家庭</span>
+					<span>3 电话</span>
+					<span class="pull-right selectedBox" id="R2" dd="789"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 门诊</span>
+					<span>2 家庭</span>
+					<span>3 电话</span>
+					<span class="pull-right selectedBox" id="R2"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2">
+					症<br />状
+				</td>
+				<td rowspan="2" align="left">
+					1 无症状<br />
+					2 多饮<br />
+					3 多食<br />
+					4 多尿<br />
+					5 视力模糊<br />
+					6 感染<br />
+					7 手脚麻木<br />
+					8 下肢水肿<br />
+					9 体重明显下降
+				</td>
+				<td colspan="2" height="41px" id="R3">
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>
+				</td>
+				<td colspan="2" id="R3">
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>
+				</td>
+				<td colspan="2" id="R3">
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>
+				</td>
+				<td colspan="2" id="R3">
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>  
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span> 
+					<span class="selectedBox"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" rowspan="1" align="left" style="vertical-align: top!important;">
+					其他<br />
+					<span></span>
+				</td>
+				<td colspan="2" rowspan="1" align="left" style="vertical-align: top!important;">
+					其他<br />
+					<span></span>
+				</td>
+				<td colspan="2" rowspan="1" align="left" style="vertical-align: top!important;">
+					其他<br />
+					<span></span>
+				</td>
+				<td colspan="2" rowspan="1" align="left" style="vertical-align: top!important;">
+					其他<br />
+					<span></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="5">体<br />征</td>
+				<td>血压（mmHg）</td>
+				<td colspan="2" id="R4_1"></td>
+				<td colspan="2" id="R4_1"></td>
+				<td colspan="2" id="R4_1"></td>
+				<td colspan="2" id="R4_1"></td>
+			</tr>
+			<tr>
+				<td>体重（kg）</td>
+				<td colspan="2" align="center" id="R4_2"></td>
+				<td colspan="2" align="center" id="R4_2"></td>
+				<td colspan="2" align="center" id="R4_2"></td>
+				<td colspan="2" align="center" id="R4_2"></td>
+			</tr>
+			<tr>
+				<td>体质指数</td>
+				<td colspan="2" align="center" id="R4_3"></td>
+				<td colspan="2" align="center" id="R4_3"></td>
+				<td colspan="2" align="center" id="R4_3"></td>
+				<td colspan="2" align="center" id="R4_3"></td>
+			</tr>
+			<tr>
+				<td>足背动脉搏动</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 未触及</span>
+					<span>2 触及</span>
+					<span class="pull-right selectedBox" id="R4_4"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 未触及</span>
+					<span>2 触及</span>
+					<span class="pull-right selectedBox" id="R4_4"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 未触及</span>
+					<span>2 触及</span>
+					<span class="pull-right selectedBox" id="R4_4"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 未触及</span>
+					<span>2 触及</span>
+					<span class="pull-right selectedBox" id="R4_4"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>其他</td>
+				<td colspan="2" id="R4_5"></td>
+				<td colspan="2" id="R4_5"></td>
+				<td colspan="2" id="R4_5"></td>
+				<td colspan="2" id="R4_5"></td>
+			</tr>
+			<tr>
+				<td rowspan="7">生<br />活<br />方<br />式<br />指<br />导</td>
+				<td>日吸烟量（支）</td>
+				<td colspan="2" align="center" id="R5_1"></td>
+				<td colspan="2" align="center" id="R5_1"></td>
+				<td colspan="2" align="center" id="R5_1"></td>
+				<td colspan="2" align="center" id="R5_1"></td>
+			</tr>
+			<tr>
+				<td>日饮酒量（两）</td>
+				<td colspan="2" align="center" id="R5_2"></td>
+				<td colspan="2" align="center" id="R5_2"></td>
+				<td colspan="2" align="center" id="R5_2"></td>
+				<td colspan="2" align="center" id="R5_2"></td>
+			</tr>
+			<tr>
+				<td >运动</td>
+				<td colspan="2" id="R5_3"><span class="other"></span>次/周 <span class="other"></span>分钟/次</td>
+				<td colspan="2" id="R5_3"><span class="other"></span>次/周 <span class="other"></span>分钟/次</td>
+				<td colspan="2" id="R5_3"><span class="other"></span>次/周 <span class="other"></span>分钟/次</td>
+				<td colspan="2" id="R5_3"><span class="other"></span>次/周 <span class="other"></span>分钟/次</td>
+			</tr>
+			
+			<tr>
+				<td>主食（克/天）</td>
+				<td colspan="2" align="center" id="R5_4"><span></span>/<span></span></td>
+				<td colspan="2" align="center" id="R5_4"><span></span>/<span></span></td>
+				<td colspan="2" align="center" id="R5_4"><span></span>/<span></span></td>
+				<td colspan="2" align="center" id="R5_4"><span></span>/<span></span></td>
+			</tr>
+			<tr>
+				<td>心理调整</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_5"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_5"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_5"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_5"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>遵医行为</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_6"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_6"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_6"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 良好</span>
+					<span>2 一般</span>
+					<span>3 差</span>
+					<span class="pull-right selectedBox" id="R5_6"></span>
+				</td>
+			</tr>
+			
+			<tr>
+				<td rowspan="2">辅<br />助<br />检<br />查</td>
+				<td>空腹血糖值</td>
+				<td colspan="2"><span class="other" id="R6_1"></span>mol/L</td>
+				<td colspan="2"><span class="other" id="R6_1"></span>mol/L</td>
+				<td colspan="2"><span class="other" id="R6_1"></span>mol/L</td>
+				<td colspan="2"><span class="other" id="R6_1"></span>mol/L</td>
+			</tr>
+			<tr>
+				<td>其他检查*</td>
+				<td colspan="2">
+					糖化血红蛋白<span class="other" id="R6_2_1"></span>% <br />
+					检查日期：<span class="other" id="jcrq"></span><br />
+					<span class="other"></span>
+				</td>
+				<td colspan="2">
+					糖化血红蛋白<span class="other" id="R6_2_1"></span>% <br />
+					检查日期：<span class="other" id="jcrq"></span><br />
+					<span class="other"></span>
+				</td>
+				<td colspan="2">
+					糖化血红蛋白<span class="other" id="R6_2_1"></span>% <br />
+					检查日期：<span class="other" id="jcrq"></span><br />
+					<span class="other"></span>
+				</td>
+				<td colspan="2">
+					糖化血红蛋白<span class="other" id="R6_2_1"></span>% <br />
+					检查日期：<span class="other" id="jcrq"></span><br />
+					<span class="other"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">服药依从性</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 规律</span>
+					<span>2 间断</span>
+					<span>3 不服药</span>
+					<span class="pull-right selectedBox" id="R7"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 规律</span>
+					<span>2 间断</span>
+					<span>3 不服药</span>
+					<span class="pull-right selectedBox" id="R7"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 规律</span>
+					<span>2 间断</span>
+					<span>3 不服药</span>
+					<span class="pull-right selectedBox" id="R7"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 规律</span>
+					<span>2 间断</span>
+					<span>3 不服药</span>
+					<span class="pull-right selectedBox" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">药物不良反应</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 有</span>
+					<span class="pull-right selectedBox" id="R8"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 有</span>
+					<span class="pull-right selectedBox" id="R8"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 有</span>
+					<span class="pull-right selectedBox" id="R8"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 有</span>
+					<span class="pull-right selectedBox" id="R8"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">低血糖反应</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 偶尔</span>
+					<span>3 频繁</span>
+					<span class="pull-right selectedBox" id="R9"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 偶尔</span>
+					<span>3 频繁</span>
+					<span class="pull-right selectedBox" id="R9"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 偶尔</span>
+					<span>3 频繁</span>
+					<span class="pull-right selectedBox" id="R9"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 无</span>
+					<span>2 偶尔</span>
+					<span>3 频繁</span>
+					<span class="pull-right selectedBox" id="R9"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">此次随访分类</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 控制满意</span>
+					<span>2 控制不满意</span><br />
+					<span>3 不良反应</span>
+					<span>4 并发症</span>
+					<span class="pull-right selectedBox" id="R10"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 控制满意</span>
+					<span>2 控制不满意</span><br />
+					<span>3 不良反应</span>
+					<span>4 并发症</span>
+					<span class="pull-right selectedBox" id="R10"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 控制满意</span>
+					<span>2 控制不满意</span><br />
+					<span>3 不良反应</span>
+					<span>4 并发症</span>
+					<span class="pull-right selectedBox" id="R10"></span>
+				</td>
+				<td colspan="2" align="left" class="xz">
+					<span>1 控制满意</span>
+					<span>2 控制不满意</span><br />
+					<span>3 不良反应</span>
+					<span>4 并发症</span>
+					<span class="pull-right selectedBox" id="R10"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="8">用<br />药<br />情<br />况</td>
+				<td>药物名称1</td>
+				<td colspan="2" id="drugNameA"></td>
+				<td colspan="2" id="drugNameA"></td>
+				<td colspan="2" id="drugNameA"></td>
+				<td colspan="2" id="drugNameA"></td>
+			</tr>
+			<tr>
+				<td>用法用量</td>
+				<td align="left">每日<span class="other" id="drugmrA"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcA"></span>mg</td>
+				<td align="left">每日<span class="other" id="drugmrA"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcA"></span>mg</td>
+				<td align="left">每日<span class="other" id="drugmrA"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcA"></span>mg</td>
+				<td align="left">每日<span class="other" id="drugmrA"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcA"></span>mg</td>
+			</tr>
+			<tr>
+				<td>药物名称2</td>
+				<td colspan="2" id="drugNameB"></td>
+				<td colspan="2" id="drugNameB"></td>
+				<td colspan="2" id="drugNameB"></td>
+				<td colspan="2" id="drugNameB"></td>
+			</tr>
+			<tr>
+				<td>用法用量</td>
+				<td align="left">每日<span class="other" id="drugmrB"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcB"></span>mg</td>
+				<td align="left">每日<span class="other" id="drugmrB"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcB"></span>mg</td>
+				<td align="left">每日<span class="other" id="drugmrB"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcB"></span>mg</td>
+				<td align="left">每日<span class="other" id="drugmrB"></span>次</td>
+				<td align="left">每次<span class="other" id="drugmcB"></span>mg</td>
+			</tr>
+			<tr>
+				<td>药物名称3</td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td>用法用量</td>
+				<td align="left">每日<span class="other"></span>次</td>
+				<td align="left">每次<span class="other"></span>mg</td>
+				<td align="left">每日<span class="other"></span>次</td>
+				<td align="left">每次<span class="other"></span>mg</td>
+				<td align="left">每日<span class="other"></span>次</td>
+				<td align="left">每次<span class="other"></span>mg</td>
+				<td align="left">每日<span class="other"></span>次</td>
+				<td align="left">每次<span class="other"></span>mg</td>
+			</tr>
+			<tr>
+				<td rowspan="2">胰岛素</td>
+				<td align="left" colspan="2">种类：</td>
+				<td align="left" colspan="2">种类：</td>
+				<td align="left" colspan="2">种类：</td>
+				<td align="left" colspan="2">种类：</td>
+			</tr>
+			<tr>
+				<td align="left" colspan="2">用法和用量：</td>
+				<td align="left" colspan="2">用法和用量：</td>
+				<td align="left" colspan="2">用法和用量：</td>
+				<td align="left" colspan="2">用法和用量：</td>
+			</tr>
+			<tr>
+				<td rowspan="2">转<br />诊</td>
+				<td>原因</td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td>机构及科别</td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td colspan="2">下次随访日期</td>
+				<td colspan="2" id="xcsfrq"></td>
+				<td colspan="2" id="xcsfrq"></td>
+				<td colspan="2" id="xcsfrq"></td>
+				<td colspan="2" id="xcsfrq"></td>
+			</tr>
+			<tr>
+				<td colspan="2">随访医生签名</td>
+				<td colspan="2" id="R14"></td>
+				<td colspan="2" id="R14"></td>
+				<td colspan="2" id="R14"></td>
+				<td colspan="2" id="R14"></td>
+			</tr>
+		</table>
+	</div>
+    <script type="text/javascript">
+    function formatDate(d,f){
+    	if(f=="y"){
+    		return d.substring(0,4);
+    	}else if(f=="m"){
+    		if(d.charAt(5)=="0"){
+    			return d.charAt(6);
+    		}
+    		return d.substring(5,7);	
+    	}else{
+    		if(d.charAt(8)=="0"){
+    			return d.charAt(9);
+    		}
+    		return d.substring(8,10);	
+    	}
+
+    }
+	    $(function(){
+	    	var id=getvalue("id");
+	    	$.ajax({
+        		url:"tian/findHealthFollowing.action",
+        		dataType:"json",
+        		type:"post",
+        		data:{cardno:id,flag:"1"},
+        	    async:false,
+        	    success:function(data){
+        	    	var d="";
+        	    	for(var i in data){
+        	    		
+        	    		d=data[i];
+        	    		var druga=d["R11_A"].split("|");        	    		
+        	    		var drugb=d["R11_B"].split("|");
+        	    		$("[id='drugNameA']").eq(i).text(druga[0]);
+        	    		$("[id='drugNameB']").eq(i).text(drugb[0]);
+        	    		$("[id='drugmrA']").eq(i).text(druga[1]);
+        	    		$("[id='drugmrB']").eq(i).text(drugb[1]);
+        	    		$("[id='drugmcA']").eq(i).text(druga[2]);
+        	    		$("[id='drugmcB']").eq(i).text(drugb[2]);
+        	    		$("[id='sfrq']").eq(i).html("<span class=\"other\">"+formatDate(d["R1"],"y")+"</span>年<span class=\"other\">"+formatDate(d["R1"],"m")+"</span>月<span class=\"other\">"+formatDate(d["R1"],"d")+"</span>日");
+        	    		$("[id='xcsfrq']").eq(i).html("<span class=\"other\">"+formatDate(d["R13"],"y")+"</span>年<span class=\"other\">"+formatDate(d["R13"],"m")+"</span>月<span class=\"other\">"+formatDate(d["R13"],"d")+"</span>日");
+
+        	    		$("[id='jcrq']").eq(i).html("<span class=\"other\">"+formatDate(d["R6_2_2"],"m")+"</span>月<span class=\"other\">"+formatDate(d["R6_2_2"],"d")+"</span>日");
+        	    		for(var j in d){
+        	    			
+        	    			if($("[id='"+j+"']").eq(i).find("span").length>0){
+        	    				var ds=d[j].split("|");
+        	    				$("[id='"+j+"']").eq(i).find("span").each(function(s,b){
+        	    					$(b).text(ds[s]);
+        	    				});
+        	    			}else{
+        	    				$("[id='"+j+"']").eq(i).text(d[j]);
+        	    				
+        	    			}
+        	    			
+        	    		}
+                        
+        	    	}
+        	    }
+        	})
+	    });
+	</script>
+</body>
+</html>

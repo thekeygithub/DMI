@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>检查结果</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		
+	</div>
+    <script type="text/javascript">
+	    $(function(){
+	    	var exam_id = queryMzcfModel();
+	    	//console.log(queryMzcfModel())
+	    	$.ajax({
+	    		url:"/MDEPlatform/yyxg/getExamReport.action?exam_id="+exam_id,
+	    		dataType:"json",
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	$(".page-part").html("<img src='"+data.list[0].report_image+"' width='100%' />")
+			    }
+	    	})
+	    });
+	    function queryMzcfModel(){
+	    	var url = location.search; //获取url中"?"符后的字串 
+	    	var str = url.split("=");
+	    	var corpid = str[1];
+	    	return corpid;
+	    }
+	</script>
+</body>
+</html>

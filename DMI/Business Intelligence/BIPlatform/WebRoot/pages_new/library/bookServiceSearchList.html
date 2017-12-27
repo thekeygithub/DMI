@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <title>基于MTS的图书情报服务</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+     <link rel="stylesheet" type="text/css" href="../../css/plugins/pagination/pagination.css"  rel="stylesheet">
+
+    <style>
+		 /* Additional style to fix warning dialog position */
+		.nav{
+            
+            width:100%;
+            height:130px;
+            font-family: "微软雅黑";
+			font-size: 13px !important;
+			
+        }
+        .nav1{
+            width:100%;
+            height:3px;
+            font-family: "微软雅黑";
+			font-size: 13px !important;
+			background-color:#e6e6f0;
+        }
+        
+        .search-box-wrap{
+        	margin-left:47px;
+            margin-top:30px;
+        	width:929px;
+        	height:130px;
+        	border:1px;
+			position: absolute;  
+        }
+        .search-box-wrap-menu{
+        	padding-left:10px;
+        }
+        .search-box-wrap-menu ul{
+            display: block;
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+       
+        }
+        .search-box-wrap-menu li{
+            list-style: none;
+             cursor:pointer;
+		    float: left;
+		    height: 43px;
+		    line-height: 43px;
+		    text-align:center;
+		    display: inline-block;
+		    margin: 0 5px; 
+		    border:1px;
+        }
+        .lwh-active{
+        	 background:#12a7bb;
+        	 color:#fff;
+        }
+        .search-box-wrap-menu li:hover{
+        	background:#12a7bb;
+        	color:#fff;
+        }
+        .search-box-wrap-menu span{
+		    height: 32px;
+		    line-height: 32px;
+		    padding: 10px 15px;
+        }
+        .search-box-wrap-menu i{
+        	border-left: 9px solid transparent;
+		    border-right: 9px solid transparent;
+		    position: absolute;
+		    top: 33px;
+		    left: 15px;
+		    border-bottom: 10px solid #fff;
+		    z-index: 9;
+        }
+        .search-box-wrap-text{
+        	
+        	background:#fff;
+        	
+        }
+        .search-box-wrap-i{
+        	 width:100%;
+        	 height:38px;
+        	 font-size:24px !important;
+        	 text-align:right;
+        	 border-bottom:1px solid #C4C4DD;
+        }
+        .search-box-wrap-text-input{
+        	 width: 728px;
+		    border: 1px solid #e5e6e7;
+		    height: 46px;
+		    line-height: 46px;
+		    border-radius: 2px;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+		    float:left;
+		    padding-left: 10px;
+		   	text-align:left;
+			margin-top:10px;
+			color: #666;
+        }
+         
+        .search-box-wrap-text-btndiv{
+        	
+        }
+        .search-box-wrap-text-btn{
+        	border-radius: 0!important;
+		    background-color: #12a7bb!important;
+		    outline: none!important;
+		    border-color: #12a7bb!important;
+		    font-size: 16px;
+		    color: #fff;
+		    height: 46px;
+		    width: 187px;
+		    float:right;
+		    border: 0;
+		    display: block;
+		    border-radius: 0 2px 2px 0;
+		    position: absolute;
+		    right: -1px;
+		    cursor: pointer;
+		    margin-right:15px;
+		    margin-top:10px;
+		    border-radius: 4px;
+		    border: 1px solid transparent;
+		    text-align:left;
+		    margin-top:53px;
+        }
+        .search-box-wrap-i img{
+        	background-image: url("../../img/fangdajing2.png");
+        	width:20px;
+        	height:20px;
+        }
+        .content-top-left{
+        	margin-left:47px;
+        	margin-top:10px;
+        	font-size:13px;
+        	color:#999;
+        	width:328px;
+        	float:left;
+        }
+         .content-top-right{
+        	margin-left:47px;
+        	margin-top:10px;
+        	font-size:13px;
+        	color:#999;
+        	width:600px;
+        	float:right;
+        }
+         .content-top-right span{
+         	cursor:pointer;
+        	padding-left:20px;
+        }
+        .content-center{
+        	float:left;
+        	width:100%;
+        	margin-left:47px;
+        	margin-bottom:30px;
+        }
+        .content-error{
+        	float:left;
+        	width:100%;
+        	margin-left:47px;
+        	margin-top:100px;
+        	text-align:center;
+        	font-size:22px;
+        }
+        .content-center-t{
+        	margin-bottom: 1px;
+        	margin-top:34px;
+        }
+        .content-center-t a{
+        	font-size:16px;
+        	font-weight: 400;
+        	text-decoration:underline;
+        	color:#0000D9;
+        }
+        .content-center-p{
+        	font-size:12px;
+        	color:#999;
+        	 height: 18px;
+    		 line-height: 32px;
+        }
+        .content-center-c{
+        	width:927px;
+        	font-size:13px;
+        	color:#666;
+        	line-height: 150%;
+        }
+        .content-center-c-p{
+        	font-size:12px;
+        	color: #999;
+        	margin-left:30px;
+        }
+        .content-center-left{
+        	width:70%;
+        	float:left;
+        }
+        .content-center-right{
+        	margin-top:34px;
+        	margin-right:110px;
+        	float:right;
+        	width:250px;
+        	
+        	border:1px solid #dcdcdc;
+        	background:#f6f7fb;
+        }
+        .content-center-right-header{
+        	color:#444444 !important;
+        	margin:20px 10px 0px 15px;
+        	float:left;
+        }
+        .content-center-right-header-w{
+        	width:35%;
+        	float:left;
+        }
+        .content-center-right-header-t{
+        	width:60%;
+        	margin-left:5px;
+        	float:left;
+        }
+        .content-center-right-bottom{
+        	line-height: 30px;
+        }
+        .content-center-right-bottom li{
+        	cursor:pointer;
+        }
+        .content-center-right-bottom-w{
+        	margin-left:20px;
+        	color:#999999;
+        	float:left;
+        	display:inline;
+        }.content-center-right-up{
+        	float:right;
+        	margin-right:20px;
+        	font-size:16px !important;
+        }
+        .content-center-right-up i{
+        	float:right;
+        	margin-right:20px;
+        	font-size:16px !important;
+        	cursor:pointer;
+        }
+        .search-searchkeyword{
+        	font-size:13px;
+        	font-family: "微软雅黑";
+        	float:left;
+        	margin-top:8px;
+        	margin-left:40px;
+        	z-index: 99;
+    		position: absolute;
+        }
+        .search-searchkeyword span{
+        	margin-left:12px;
+        	cursor:pointer;
+        	display: inline-block;
+    		border: 1px solid #ccc;
+    		padding:0 10px 0 5px;
+    		line-height:22px;
+    		height:22px;
+    		background:url("../../img/bookService/honx.png") no-repeat;
+    		background-position:center right;
+        }
+        .foot{display: none;}
+	</style>
+
+</head>
+
+<body class="gray-bg">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    <div class="nav">
+    	<div class="search-box-wrap">
+    		<input type="hidden"  id="searchMenu" value="0"  />
+    		<div class="search-box-wrap-menu">
+    			<ul id="ul">
+    			<li actdata=0  ><span>全部</span></li>
+    			<li actdata=3  ><span>中文文献</span></li>
+    			<li actdata=4 ><span>外文文献</span></li>
+    			<li actdata=5 ><span>循证医学</span></li>
+    			<li actdata=2 ><span>教科书</span></li>
+    			<li actdata=1 ><span>医学百科</span></li>
+    			<li actdata=6 ><span>医学影像</span></li>
+    			</ul>
+    			 
+    		</div>
+    		<div class="search-box-wrap-text" >
+    			<input class="search-box-wrap-text-input" id="searchText" placeholder="请输入检索信息">
+    			<div class="search-box-wrap-text-btndiv">
+    			
+    			<button  class="search-box-wrap-text-btn"  type="button"  >
+    			<span   style="padding:0 20px 0 40px;"><img   src="../../img/bookService/fangdajing.png"></span>搜&nbsp;&nbsp;&nbsp;&nbsp;索
+    			</button>
+    			</div>
+    		</div>
+    		
+    		 
+    	</div>
+    		
+    </div>
+    <div class="search-box-wrap-i">
+    <div class="search-searchkeyword"></div>
+     
+    <i class="fa fa-angle-up" style="margin:0 30px 0 0;cursor:pointer">
+    
+    </i>
+     <i class="imgico-down" style="margin:0 30px 0 0;cursor:pointer;display:none">
+    <img src='../../img/bookService/fangdajing2.png' />
+    </i>
+    </div>
+    <div class="nav1">
+    		
+    </div>
+    <div class="content">
+    	<div class="content-top-left">
+    		
+    	</div>
+    	
+    	<div class="content-top-right">
+    	
+    		<span orderByData="0" orderBy="0" >时间排序<i class="fa" style="margin-left:10px;cursor:pointer;"></i></span>
+    		<span orderByData="1" orderBy="0" style="margin-right:10px;">匹配程度<i class="fa" style="margin-left:10px;cursor:pointer;"></i></span>
+    	</div>
+    	<div class="content-center">
+    		<div class="content-center-left">
+	    		 
+    		</div>
+    		<div class="content-center-right">
+    	
+    		</div>
+    	</div>
+    	<div class="M-box"></div>
+    	<div style="height: 30px;"></div>
+    		
+    </div>
+    <div  class="content-error">
+     <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+   <script src="../../js/ajaxfileupload.js"></script>
+   <script src="../../js/plugins/pagination/jquery.pagination.js"></script>
+    <script>
+    $(document).ready(function(){
+    	
+    	var searchMenu=decodeURIComponent(getvalue("searchMenu"));
+    	var searchText=decodeURIComponent(getvalue("searchText"));
+    	var sortFields=decodeURIComponent(getvalue("sortFields"));
+    	var keyWords=decodeURIComponent(getvalue("keyWord"));
+    	var pageNos = decodeURIComponent(getvalue("pageNo"));
+    	var sortStr = "";
+    	var keyWord = "";
+    	var pageNo = 1;
+    	if (sortFields !== '' && sortFields !== null && sortFields !== 'undefined') {
+    		sortStr = sortFields;
+    	}
+    	if (keyWords !== '' && keyWords !== null && keyWords !== 'undefined') {
+    		keyWord = keyWords;
+    	}
+    	if (pageNos !== '' && pageNos !== null && pageNos !== 'undefined') {
+    		pageNo = pageNos;
+    	}
+    	$("[actdata="+searchMenu+"]").addClass("lwh-active");
+    	$("#searchMenu").val(searchMenu);
+    	$("#searchText").val(searchText);
+    	$("#ul li").click(function(){
+    		$('#ul li').removeClass('lwh-active');
+    		$(this).addClass('lwh-active');
+    		$("#searchMenu").val($(this).attr("actdata"));
+    		location.href="bookServiceSearchList.html?searchMenu="+$("#searchMenu").val()+"&searchText="+$("#searchText").val();
+    	});
+    	$(".search-box-wrap-i .fa-angle-up").click(function(){
+    		$(this).hide();
+    		$(".search-box-wrap-i .imgico-down").show();
+    		$(".nav").hide();
+    	});
+    	$(".search-box-wrap-i .imgico-down").click(function(){
+    		$(this).hide();
+    		$(".search-box-wrap-i .fa-angle-up").show();
+    		$(".nav").show();
+    	});
+    	$(".search-box-wrap-text-btn").click(function(){
+    		location.href="bookServiceSearchList.html?searchMenu="+$("#searchMenu").val()+"&searchText="+$("#searchText").val()+"&keyWord="+keyWord;
+    	});
+    	$(".content-top-right span").click(function(){
+    		//if($(this).find("i").hasClass("fa-angle-down")){
+    		//	$(this).find("i").removeClass("fa-angle-down").addClass("fa-angle-up");
+			//}else{
+			//	$(this).find("i").removeClass("fa-angle-up").addClass("fa-angle-down");	
+			//}
+    		var orderByCol = $(this).attr("orderByData")==0?"publication_year,"+$(this).attr("orderBy"):"title_chs,"+$(this).attr("orderBy")+"@title_en,"+$(this).attr("orderBy");
+    		location.href="bookServiceSearchList.html?searchMenu="+$("#searchMenu").val()+"&searchText="+$("#searchText").val()+"&sortFields="+orderByCol+"&keyWord="+keyWord;
+    	});
+    	if(sortStr.split(",")[0]=="publication_year"){
+    		if(sortStr.split(",")[1] =="0"){
+    			$("[orderByData=0] i").addClass("fa-angle-up");
+    			$("[orderByData=0]").attr("orderBy",1);
+    		}else{
+    			$("[orderByData=0] i").addClass("fa-angle-down");
+    			$("[orderByData=0]").attr("orderBy",0);
+    		}
+    	}else if(sortStr.split("@")[0].split(",")[0]=="title_chs"){
+    		if(sortStr.split("@")[0].split(",")[1] =="0"){
+    			$("[orderByData=1] i").addClass("fa-angle-up");
+    			$("[orderByData=1]").attr("orderBy",1);
+    		}else{
+    			$("[orderByData=1] i").addClass("fa-angle-down");
+    			$("[orderByData=1]").attr("orderBy",0);
+    		}
+    	}
+   		var pageSize = 10;
+   		var count = findBookServiceMTS(searchMenu,searchText,keyWord,sortStr,1,pageNo,pageSize);
+   		if(count>0){
+   			$(".content-top-left").html("<span>找到相关资料"+count+"篇</span>");
+   			if(count>10){
+   				$('.M-box').pagination({
+   	    			/* totalData:count,
+   	    			showData:pageSize,
+   	    			current:pageNo,
+   	    			coping:true, */
+   	    			totalData:count,
+   	    			current:pageNo,
+   	    			showData:pageSize,
+   	    			jump: true,
+   	    			coping: true,
+   	    			homePage: '首页',
+   	    			endPage: '末页',
+   	   	    	    callback:function(index){
+   	   	    	  		location.href="bookServiceSearchList.html?searchMenu="+searchMenu+"&searchText="+searchText+"&keyWord="+keyWord+"&sortStr="+sortStr+"&pageNo="+index.getCurrent();
+   	   	    	    }
+   	   	    	});
+   			}
+   			$(".content-center-right-bottom li").click(function(){
+   				var keyWordpar = $(this).attr("searchkeyword");
+   				var bol = 0;
+   				if (keyWord !== '' && keyWord !== null && keyWord !== 'undefined') {
+   					$.each(keyWord.split("@"), function(i,val){
+   						if($("[searchkeyword='"+val+"']").attr("type")==$("[searchkeyword='"+keyWordpar+"']").attr("type")){
+   							keyWord = keyWord.replace(val,keyWordpar);
+   							bol=1;
+   						}
+   						 
+   						
+   					});
+   					if(bol!=1){
+   						keyWordpar+="@"+keyWord;
+   					}else{
+   						keyWordpar=keyWord;
+   					}
+   				}
+   	    		location.href="bookServiceSearchList.html?searchMenu="+$("#searchMenu").val()+"&searchText="+$("#searchText").val()+"&keyWord="+keyWordpar;
+   	    	});
+   			var searchkeywordHTML = "";
+   	   		if(keyWord!=""){
+   	   			$.each(keyWord.split("@"), function(i,val){    
+   	   	   			$("[searchkeyword='"+val+"']").css("color","#00f");
+   	   	   			var keyWordStr = val.split(",")[1];
+   	   	   			var viewKeyWord = val.split(",")[1]; 
+   	   	   			if(val.split(",")[0]=="resource_type"){
+   	   						switch(keyWordStr)
+   	   						{
+   	   	   					case "0":
+   	   	   						viewKeyWord="全部";
+   	   	   					 	break;
+   	   	   					case "1":
+   	   	   						viewKeyWord="医学百科";
+   	   	   					 	break;
+   	   	   					case "2":
+   	   	   						viewKeyWord="教科书";
+   	   	   					 	break;
+   	   	   					case "3":
+   	   	   						viewKeyWord="中文文献";
+   	   	   					 	break;
+   	   	   					case "4":
+   	   	   						viewKeyWord="外文文献";
+   	   	   					 	break;
+   	   	   					case "5":
+   	   	   						viewKeyWord="循证医学";
+   	   	   					 	break;
+   	   	   					case "6":
+   	   	   						viewKeyWord="医学影像";
+   	   	   					 	break;
+   	   						}
+   	   					}
+   	   	   			searchkeywordHTML+="<span delKeyWord=\""+val+"\">"+$("[searchkeyword='"+val+"']").attr("type")+"："+viewKeyWord+"&nbsp;</span>";
+   	   	   		});
+   	   		}
+   	   		
+   	   		$(".search-searchkeyword").html(searchkeywordHTML);
+   	   		$(".search-searchkeyword span").click(function(){
+   	   			console.info(keyWord);
+   	   			console.info($(this).attr("delKeyWord"));
+   	   			keyWord = keyWord.replace(new RegExp("@"+$(this).attr("delKeyWord"),'g'),"");
+   	   			keyWord = keyWord.replace(new RegExp($(this).attr("delKeyWord")+"@",'g'),"");
+   	   			keyWord = keyWord.replace(new RegExp($(this).attr("delKeyWord"),'g'),"");
+   	   			//console.info(keyWord);
+   				location.href="bookServiceSearchList.html?searchMenu="+$("#searchMenu").val()+"&searchText="+$("#searchText").val()+"&keyWord="+keyWord;
+   			});
+   		}
+   		
+    });
+    function findBookServiceMTS(searchMenu,searchText,keyWord,sortFields,ispage,pageNo,pageSize){
+    	var count = 0;
+    	$.ajax({
+       		url:"findBookServiceMTS.action",
+       		dataType:"json",
+       		type:"post",
+       		data:{searchMenu:searchMenu,searchText:searchText,keyWord:keyWord,sortFields:sortFields,ispage:ispage,pageNo:pageNo,pageSize:pageSize},
+       	    async:false,
+       	    success:function(data){
+       	    	count = data.numFound;
+       	    	if(data.status==1&&count>0){
+       	    		var leftHtml = "";
+       	    		var resourceTypeHTML="";
+       	    		var htmlurl = "detail.html";
+           	    	$.each(data.data, function(i, item) {
+           	    		var titleStr = item.title_chs || item.title_en; 
+           	    		var sourceStr = item.source_chs || item.source_en; 
+           	    		var authorStr = item.author_chs || item.author_en; 
+           	    		var abstractStr = item.abstract_chs || item.abstract_en; 
+           	    		var resourceTypeStr = item.resource_type || item.aresource_type;            	    		
+           	    		if(abstractStr.length>150){
+           	    			abstractStr = abstractStr.substring(0,150)+"......";
+           	    		}
+           	    		if(sourceStr!=""){
+           	    			sourceStr = "来源："+sourceStr+"&nbsp;&nbsp;";
+           	    		}
+           	    		if(authorStr!=""){
+           	    			authorStr = "作者："+authorStr.replace(/,/g,"&nbsp;&nbsp;");
+           	    			
+           	    		}
+           	    		if(resourceTypeStr=="6"){
+           	    			htmlurl = "video.html";
+           	    		}
+           	    		switch(resourceTypeStr)
+	    					{
+   	    					case "0":
+   	    						resourceTypeHTML="[全部]&nbsp;&nbsp;";
+   	    					 	break;
+   	    					case "1":
+   	    						resourceTypeHTML="[医学百科]&nbsp;&nbsp;&nbsp;&nbsp;";
+   	    					 	break;
+   	    					case "2":
+   	    						resourceTypeHTML="[教科书]&nbsp;&nbsp;&nbsp;&nbsp;";
+   	    					 	break;
+   	    					case "3":
+   	    						resourceTypeHTML="[中文文献]&nbsp;&nbsp;&nbsp;&nbsp;";
+   	    					 	break;
+   	    					case "4":
+   	    						resourceTypeHTML="[外文文献]&nbsp;&nbsp;&nbsp;&nbsp;";
+   	    					 	break;
+   	    					case "5":
+   	    						resourceTypeHTML="[循证医学]&nbsp;&nbsp;&nbsp;&nbsp;";
+   	    					 	break;
+   	    					case "6":
+   	    						resourceTypeHTML="[医学影像]&nbsp;&nbsp;&nbsp;&nbsp;";
+   	    					 	break;
+	    					}
+           	    		leftHtml +=("<h3 class=\"content-center-t\"><a target=\"_blank\" href=\""+htmlurl+"?qlbi_id="+item.qlbi_id+"\">"+titleStr+"</a></h3>");
+           	    		leftHtml +=("<p class=\"content-center-p\">"+resourceTypeHTML+sourceStr+authorStr+"</p>");
+           	    		leftHtml +=("<div class=\"content-center-c\">"+abstractStr+"</div>");
+           	    		if(i==pageSize-1){
+           	    			return false;
+           	    		}
+           	    	});
+           	    	var rightHtml = "";
+           	    	$(".content-center-left").html(leftHtml);
+           	    	$.each(data.groupData, function(key, value) {
+           	    		var datai = "";
+           	    		rightHtml +="<div class=\"content-center-right-header\">";
+             			rightHtml +="<div class=\"content-center-right-header-w\">"+key+"</div>";
+           	    		rightHtml +="<div class=\"content-center-right-header-t\"><img width=\"100%\"  src=\"../../img/bookService/fenge.png\" /></div>";
+           	    		rightHtml +="<ul class=\"content-center-right-bottom\">";
+           	    		$.each(value,function(i1,item1){
+           	    			datai += i1+",";
+           	    			$(item1).each(function(i2,item2){ 
+           	    				var item2view = item2;
+           	    				if(i1=="resource_type"){
+           	    					switch(item2)
+           	    					{
+	           	    					case "0":
+	           	    						item2view="全部";
+	           	    					 	break;
+	           	    					case "1":
+	           	    						item2view="医学百科";
+	           	    					 	break;
+	           	    					case "2":
+	           	    						item2view="教科书";
+	           	    					 	break;
+	           	    					case "3":
+	           	    						item2view="中文文献";
+	           	    					 	break;
+	           	    					case "4":
+	           	    						item2view="外文文献";
+	           	    					 	break;
+	           	    					case "5":
+	           	    						item2view="循证医学";
+	           	    					 	break;
+	           	    					case "6":
+	           	    						item2view="医学影像";
+	           	    					 	break;
+           	    					}
+           	    				}
+               	    			if(i2>=3){
+               	    				rightHtml +="<li type=\""+key+"\" displayli=\"none\" searchKeyWord=\""+i1+","+item2+"\" datali=\""+i1+"\" class=\"content-center-right-bottom-w\">"+item2+"</li>";
+               	    			}else{
+               	    				rightHtml +="<li type=\""+key+"\" searchKeyWord=\""+i1+","+item2+"\" class=\"content-center-right-bottom-w\">"+item2view+"</li>";
+               	    			}
+           	    			});
+           	    		});
+           	    		rightHtml +="</ul>";
+           	    		rightHtml +="</div>";
+           	    		rightHtml +="<div class=\"content-center-right-up\"><i datai=\""+datai+"\" class=\"fa fa-angle-down\" ></i></div>";
+          	    	});
+           	    	$(".content-center-right").html(rightHtml);
+           	    	$("[displayli='none']").each(function(){
+           	    		$(this).hide();
+           	    	});
+           	    	
+					$(".content-center-right-up i").click(function(){ 
+           	    		if($(this).hasClass("fa-angle-down")){
+           	    			$("[datali='"+$(this).attr("datai").split(",")[0]+"']").each(function(){
+                       	    	$(this).show();
+                   	    	});
+           	    			$("[datali='"+$(this).attr("datai").split(",")[1]+"']").each(function(){
+                       	    	$(this).show();
+                   	    	});
+           	    			$(this).removeClass("fa-angle-down").addClass("fa-angle-up");
+           				}else{
+           					$("[datali='"+$(this).attr("datai").split(",")[0]+"']").each(function(){
+                       	    	$(this).hide();
+                   	    	});
+           	    			$("[datali='"+$(this).attr("datai").split(",")[1]+"']").each(function(){
+                       	    	$(this).hide();
+                   	    	});
+           					$(this).removeClass("fa-angle-up").addClass("fa-angle-down");	
+           				}
+           	    	});
+       	    	}else{
+       	    		$(".content").hide();
+       	    		$(".content-center").hide();
+       	    		$(".content-error").html("很抱歉，没有找到与“"+searchText+"”相关的资料。");
+       	    	}
+       	    }
+       		,error:function (error) {
+       	    	$(".content").hide();
+   	    		$(".content-center").hide();
+   	    		$(".content-error").html("很抱歉，系统异常请联系管理员。");
+			}
+       	})
+       	return count;
+    }
+     
+    </script>
+</body>
+</html>

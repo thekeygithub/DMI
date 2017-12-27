@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>结算单</title>
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/base.css">
+	<style>
+		table {
+			width: 100%;
+		}
+		table tr td,table tr th {
+			font-size: 12px;
+			line-height: 20px;
+			padding: 5px;
+			width:11%;
+			vertical-align: middle!important;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h2 class="text-center" style="font-family: '微软雅黑';">开封市职工医保结算单明细</h2>
+		<div class="row" id="tt">
+			<div class="col-sm-4"><strong>姓名：</strong><span id="CXM"></span></div>
+			<div class="col-sm-4 text-center"><strong>性别：</strong><span id="CXB"></span></div>
+			<div class="col-sm-4 text-right"><strong>年龄：</strong><span id="CNL"></span></div>
+		</div>
+		<table class="table table-bordered" >
+		<thead>
+			<tr>
+			    <th>收费类别</th>
+			    <th>医院收费项目代码</th>
+			    <th>医保中心收费项目代码</th>
+			    <th>医院收费项目名称</th>
+			    <th>医保中心收费项目名称</th>
+			    <th>单价</th>
+			    <th>数量</th>
+			    <th>金额</th>
+			    <th>报销类型</th>
+			    
+			</tr>
+			</thead>
+			<tbody id="dataList">
+			
+			</tbody>
+		</table>
+	</div>
+	<script>
+	$(document).ready(function(){
+		
+        var cardno=getvalue("cardno");
+        var lsh=getvalue("lsh");
+        var pjh=getvalue("pjh");
+        var hos_id=getvalue("hos_id");
+        
+		$.ajax({
+    		url:"tian/findSettlementDetail.action",
+    		dataType:"json",
+    		type:"post",
+    		data:{cardno:cardno,bdate:lsh,edate:pjh,ttype:hos_id},
+    	    async:false,
+    	    success:function(data){
+    	    	for(var i in data){
+    	    		$("#tt").find("#"+i).text(data[i]);
+    	    	}
+    	    	var h="";
+    	    	var jList=data["jList"];
+    	    	$(jList).each(function(s,b){
+    	    		h+="<tr><td>"+b.SFXM+"</td><td>"+b.YYBM+"</td><td>"+b.ZXBM+"</td><td>"+b.YYMC+"</td><td>"+b.ZXMC+"</td><td>"+b.DJ+"</td><td>"+b.SL+"</td><td>"+b.JN+"</td><td>"+b.BXLB+"</td></tr>";
+    	    	});
+    	    	$("#dataList").html(h);
+    	    }
+    	});
+	});
+	</script>
+</body>
+</html>

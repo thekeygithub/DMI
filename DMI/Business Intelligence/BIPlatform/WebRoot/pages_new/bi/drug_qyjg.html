@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>按疾病分类统计</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+   
+    <style>
+    .btn-success.btn1 {
+			border:none!important;
+			border-bottom-left-radius:0!important;
+			border-bottom-right-radius:0!important;
+			outline: none!important;
+			margin-right: 1px!important;
+			display: block;
+			float: left;
+			margin-bottom: 20px;
+			font-size: 14px;
+			font-family: '微软雅黑';
+			font-weight: normal;
+			text-align:center;
+			background-color: #12a7bb!important;
+			width:138px;
+			height:36px;
+		}
+		.btn-success.btn2{
+			width:138px;
+			height:36px;
+			border:none!important;
+			border-bottom-left-radius:0!important;
+			border-bottom-right-radius:0!important;
+			outline: none!important;
+			margin-right: 1px!important;
+			display: block;
+			float: left;
+			margin-left:10px;
+			margin-bottom: 20px;
+			font-size: 14px;
+			font-family: '微软雅黑';
+			font-weight: normal;
+			text-align:center;
+			background-color: #e8e8e8!important;
+			color: #12a7bb;
+		}
+	   	  .content-top{
+	   	  	height:60px;
+	   	  }
+		 .content-top-left{
+		 	float:left;
+		 	width:70%;
+		 	 
+		 }
+		 .content-top-left-span1{
+		 	margin-top:5px;
+		 	float:left;
+		 	width:100px;
+		 }
+		 .content-top-left-span3{
+		 	margin:5px 15px 0 15px;
+		 	float:left;
+		 	 
+		 }
+		  .content-top-left-span2{
+		 	float:left;
+		 	width:200px;
+		 }
+		   .content-top-right{
+		 	width:20%;
+		 	float:right;
+		 	text-align: right;
+		 	padding-right:30px;
+		 }
+		 
+		 .content-bottom{
+		 	
+		 	
+		 	height:400px;
+		 }
+		 .content-center{
+		 	height:400px;
+		 }
+		  .content-bottom-left{
+		 	float:left;
+		 	width:45%;
+		 	 
+		 }
+		 .content-bottom-right{
+		 	margin-top:30px;
+		 	float:left;
+		 	width:53%;
+		 }
+		 .bi-button{  border-radius:5px; padding:2px 20px; display:inline-block; color:#fff; text-align:center; line-height:28px; margin-left:10px; cursor:pointer;}
+		.bi-button :hover{ background:#666;}
+		 .foot{display: none;}
+		 #table_list_1 tr{cursor: default;}
+		 #table_list_1 tr:hover td{ background:#FFF0C4 !important;}
+		 .ui-jqgrid .loading{
+		    visibility: hidden;
+		 }
+	</style>
+
+</head>
+
+<body >
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    <div class="block">
+    
+		<h1>
+			<span class="tap">区域内机构用药费用统计<span class="tap2">// INFORMATION</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content" >
+		
+			<div class="content-top"  >
+		 		    
+				 <div class="content-top-left">
+				
+				<!--日历控件-->
+					  <span class="content-top-left-span1">选择时间范围：</span>
+					<span class="content-top-left-span2" >
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy-mm" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm" style="margin-top:0px;">
+							<input id="startDate" class="form-control" style="background-color:#fff;" size="16" type="text"
+								value="" readonly> <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" /><br />
+					 </span>
+					  <span class="content-top-left-span3">—</span>
+					 <span class="content-top-left-span2" >
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy-mm" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm" style="margin-top:0px;">
+							<input id="endDate" class="form-control" style="background-color:#fff;" size="16" type="text"
+								value="" readonly> <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" /><br />
+					 </span>
+				  <span style="float:left;width:150px;margin-left:40px;margin-top:1px;">
+				 	 <span class="bi-button" id="button" style="background:#12A7BB; ">重新统计</span>
+				 </span>
+				 </div>
+				 <div class="content-top-right">
+				 
+				 单位：十万元
+				 </div>
+				  
+			</div>
+			
+			<div  class="content-bottom" style="height:550px">
+				
+				 <div class="jqGrid_wrapper"  style="border:none;margin-bottom: 20px;width:95%">
+                <table id="table_list_3"></table>
+                <div id="pager_list_3"></div>
+           		 </div>
+				
+			</div>
+			
+		</div>
+	</div>
+    
+   
+    <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+   <script src="../../js/ajaxfileupload.js"></script>
+    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+	<script src="../../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script src="../../js/plugins/highcharts/highcharts.js"></script>
+  	<script type="text/javascript">
+  	$('.form_date').datetimepicker({
+		language:  'zh-CN',
+        format: 'yyyy-mm',
+        autoclose: true,
+        todayBtn: true,
+        startView: 'year',
+        minView:'year',
+        maxView:'decade',
+		pickerPosition: "bottom-left"
+    });
+	 
+	function zero (obj) {
+		if (obj < 10) return "0" + obj; else return obj;
+	}
+	var beginDate=decodeURIComponent(getvalue("beginDate"));
+	var endDate=decodeURIComponent(getvalue("endDate"));
+	if (beginDate == '' || beginDate == null || beginDate == 'undefined' || endDate == '' || endDate == null || endDate == 'undefined' ) {
+		var today = new Date();
+		var h=today.getFullYear(); 
+		var m=today.getMonth()+1; 
+		//$("#endDate").val(h+"-"+zero(m));
+		var sm=m-6;
+		if(sm<=0){
+			h=h-1;
+			sm=12+sm;
+		}
+		//$("#startDate").val(h+"-"+zero(sm));
+		$("#startDate").val("2016-01");
+		$("#endDate").val("2016-12");
+	}else{
+		$("#startDate").val(beginDate);
+		$("#endDate").val(endDate);
+	}
+	
+
+		$("#button").click(function(){
+			reloadTable();
+		});
+		$.jgrid.defaults.styleUI="Bootstrap";
+     	
+     	$(".blackBox2").fadeIn(50);
+		$("#table_list_3").jqGrid({
+     		
+			loadtext:"",
+     		height:370,
+     		autowidth:true,
+     		sortable:true,
+     		sortorder:"desc",
+            
+     		shrinkToFit:true,
+     		rownumbers:true,
+     		rowNum:10,
+     		rownumWidth:70,
+     		onPaging:function(){$(".blackBox2").fadeIn(50);},
+     		
+     		rowList:[10,20,30,50,100],
+     		colNames:["","医疗机构","总金额","统账金额","个人自费金额"],
+     		colModel:[
+                {name:"AKB020",index:"AKB020",hidden:true},
+                {name:"HOS_NAME",index:"HOS_NAME",width:40,align:"left",sortable:false},
+				{name:"ZE",index:"ZE",width:40,align:"left"},
+				{name:"TC",index:"TC",width:40,align:"left"},
+				{name:"ZF",index:"ZF",width:40,align:"left"}
+     		],
+     		jsonReader: {
+					root: "list", //数据对象
+					total: "totalPage", //总页数
+					page: "currentPage", //第几页
+					records: "totalRecord", //总条数
+					repeatitems: false
+				},
+				viewrecords : true,
+     		multiselect:false,
+     		onSelectRow:function(rowid,stauts){ 
+     			var str = jQuery("#table_list_3").jqGrid('getRowData', rowid);
+     			var beginDate=$("#startDate").val();
+     			var endDate=$("#endDate").val();
+     			location.href="drug_qyjgxz.html?1=1&drug="+str.HOS_NAME+"&beginDate="+beginDate+"&endDate="+endDate+"&code="+str.AKB020;
+     		},
+     		pager:"#pager_list_3",
+     		rows: 10,//初始化每页多少条
+			page: 1,//初始化第几页
+     		viewrecords:true,
+     		hidegrid:false,
+     		gridComplete:function(xhr){
+     			
+     			 $(".blackBox2").fadeOut(100);
+             },
+             onSortCol: function (index, iCol, sortorder) {
+            	 $(".blackBox2").fadeIn(100);
+             }
+     	});
+		$(window).bind("resize",function(){
+			var width=$(".jqGrid_wrapper").width();
+			
+     	    $("#table_list_3").setGridWidth(width);
+     	});
+		function reloadTable(){
+			$(".blackBox2").fadeIn(50);
+			var beginDate=$("#startDate").val();
+			var endDate=$("#endDate").val();
+			setTimeout(function(){
+			
+	     		    $("#table_list_3").jqGrid("setGridParam", { url:"findDrugHospfy.action",datatype: "json",mtype:"POST",postData:{beginDate:beginDate,endDate:endDate}}).trigger("reloadGrid");
+			},100);
+		}
+		$(document).ready(function(){
+			reloadTable();
+		});
+     	
+     
+    
+	</script>    
+</body>
+</html>

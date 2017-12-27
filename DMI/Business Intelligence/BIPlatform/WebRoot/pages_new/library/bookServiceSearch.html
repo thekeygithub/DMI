@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>基于MTS的图书情报服务</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+    
+    <style>
+		/* Additional style to fix warning dialog position */
+		body{
+			 background: #161616 url(../../img/bookService/tuq.jpg) top center no-repeat fixed;
+			  background-size: cover;
+		}
+		.nav{
+           
+           
+            width:100%;
+            height:100%;
+            
+        }
+        .search-box-wrap{
+        	margin:0 auto;
+        	width:858px;
+        	height:150px;
+        	border:1px;
+			margin: auto;  
+			position: absolute;  
+			top: 0; left: 0; bottom: 0; right: 0;   
+        }
+        .search-box-wrap-menu{
+        	padding-left:10px;
+        }
+        .search-box-wrap-menu ul{
+            display: block;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+			color:#fff;
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+       
+        }
+        .search-box-wrap-menu li{
+            list-style: none;
+             cursor:pointer;
+		    margin: 0;
+		    padding: 0;
+		    float: left;
+		    height: 43px;
+        }
+        .search-box-wrap-menu li:hover{
+               opacity: .7;
+        }
+        .search-box-wrap-menu span{
+        	padding: 0 20px 0 0;
+		    height: 32px;
+		    line-height: 32px;
+        }
+        .search-box-wrap-menu i{
+        	border-left: 9px solid transparent;
+		    border-right: 9px solid transparent;
+		    position: absolute;
+		    top: 33px;
+		    left: 15px;
+		    border-bottom: 10px solid #fff;
+		    z-index: 9;
+        }
+        .search-box-wrap-text{
+        	background:#fff;
+        }
+        .search-box-wrap-text-input{
+        	width: 709px;
+		    border: 0;
+		    height: 60px;
+		    line-height: 55px;
+		    border-radius: 2px;
+		    font-family: "微软雅黑";
+			font-size: 15px;
+		    float:left;
+		    padding-left: 10px;
+		    outline: none
+        }
+         
+        .search-box-wrap-text-btndiv{
+        	float:right;
+        }
+        .search-box-wrap-text-btn{
+        	border-radius: 0!important;
+		    background-color: #12a7bb!important;
+		    outline: none!important;
+		    border-color: #12a7bb!important;
+		    font-size: 24px;
+		    color: #fff;
+		    height: 60px;
+		    width: 149px;
+		    float:right;
+		    border: 0;
+		    display: block;
+		    border-radius: 0 2px 2px 0;
+		    position: absolute;
+		    right: -1px;
+		    cursor: pointer;
+		    text-align: center;
+		    margin-right:3px;
+        }
+        .foot{display: none;}
+	</style>
+
+</head>
+
+<body class="gray-bg">
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    
+    <div class="nav">
+    	<div class="search-box-wrap">
+    		<input type="hidden"  id="searchMenu" value="0"  />
+    		<div class="search-box-wrap-menu">
+    			<ul id="ul">
+    			<li class="tab2" actdata=0 ><span>全部</span></li>
+    			<li class="tab4" actdata=3 ><span>中文文献</span></li>
+    			<li class="tab4" actdata=4 ><span>外文文献</span></li>
+    			<li class="tab4" actdata=5 ><span>循证医学</span></li>
+    			<li class="tab3" actdata=2 ><span>教科书</span></li>
+    			<li class="tab4" actdata=1 ><span>医学百科</span></li>
+    			<li class="tab4" actdata=6 ><span>医学影像</span></li>
+    			
+    			</ul>
+    			<i style="left: 15px;"></i>
+    		</div>
+    		<div class="search-box-wrap-text" >
+    			<input class="search-box-wrap-text-input" id="searchText"  placeholder="请输入检索信息">
+    			<div class="search-box-wrap-text-btndiv">
+    			<button  class="search-box-wrap-text-btn"  type="button" onclick="searchBookService()"  >开始搜索</button>
+    			 
+    		</div>
+    	</div>
+    </div>
+   
+    <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+   <script src="../../js/ajaxfileupload.js"></script>
+    <script>
+    $(document).ready(function(){
+    	$(".tab4 ").click(function(){
+    		$("i").animate({left:$(this).position().left+20});
+    		$("#searchMenu").val($(this).attr("actdata"));
+    	});
+    	$(".tab3 ").click(function(){
+    		$("i").animate({left:$(this).position().left+13});
+    		$("#searchMenu").val($(this).attr("actdata"));
+    	});
+    	$(".tab2 ").click(function(){
+    		$("i").animate({left:$(this).position().left+5});
+    		$("#searchMenu").val($(this).attr("actdata"));
+    	});
+    });
+    function searchBookService(){
+    	location.href="bookServiceSearchList.html?searchMenu="+$("#searchMenu").val()+"&searchText="+$("#searchText").val();
+    }
+    </script>
+</body>
+</html>

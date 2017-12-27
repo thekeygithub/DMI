@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>可穿戴设备数据血压详情</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+		table th {
+			width: 20%;
+			background: #81bcf8;
+			text-indent: 10px;
+			text-align:left;
+		}
+		table tr {
+			width: 80%;
+		}
+		h3 {
+			background: #81BCF8;
+			padding: 15px 0;
+			color: #FFFFFF;
+			font-family: "微软雅黑";
+			border:1px solid #fff;
+			margin: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center">可穿戴设备数据血糖详情</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>姓名：</th>
+				<td id="xm"></td>
+			</tr>
+			<tr>
+				<th>设备ID：</th>
+				<td id="device_id"></td>
+			</tr>
+			<tr>
+				<th>品牌：</th>
+				<td id="brand"></td>
+			</tr>
+			<tr>
+				<th>测量时间：</th>
+				<td id="m_time"></td>
+			</tr>
+			<!-- <tr>
+				<th>心率：</th>
+				<td id="heart_rate"></td>
+			</tr> -->
+			<tr>
+				<th>血糖：</th>
+				<td id="bg"></td>
+			</tr>
+			
+			
+			<tr>
+				<th>参考值：</th>
+				<td>3.9～6.1 mmol/L</td>
+			</tr>
+			<tr>
+				<th>测量地点：</th>
+				<td id="position"></td>
+			</tr>
+			<tr>
+				<th>测试地点GPS：</th>
+				<td id="gps"></td>
+			</tr>
+		</table>
+	</div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+        var id=getvalue("id");
+        var xm=decodeURIComponent(getvalue("xm"));
+        $("#xm").text(xm);
+	    $.ajax({
+			url:"tian/findDevice.action",
+			dataType:"json",
+			data:{cardno:id},
+			type:"post",
+		    async:false,
+		    success:function(data){
+		    	$("#device_id").text(data.DEVICE_ID);
+		    	$("#brand").text(data.BRAND);
+		        $("#position").text(data.POSITION);
+		    	$("#m_time").text(data.SJ);
+		    	$("#heart_rate").text(data.HEART_RATE);
+		    	$("#bg").text(data.BG.substring(0,4)+" mmol/L");
+		    	
+		    	$("#gps").text(data.LONGITUDE+","+data.LATITUDE);
+		    }
+	    });
+    });
+	</script>
+</body>
+</html>

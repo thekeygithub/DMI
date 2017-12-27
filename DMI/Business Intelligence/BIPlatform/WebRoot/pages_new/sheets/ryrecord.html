@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>入院记录</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+	 h3 {
+	 	font-weight: bold;
+	 }
+	 h2 {
+		font-family: "微软雅黑";
+	 }
+	 span {
+	 	line-height: 30px;
+	 }
+	 p {
+	 	line-height: 24px;
+	 }
+	 .page-part {
+	 	padding: 30px 0;
+	 	width: 800px;
+	 	margin: 0 auto;
+	 }
+	 .content {
+	 	border-top: 2px solid #333;
+	 	border-bottom: 1px solid #333;
+	 }
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center" id="YYMC"></h3>
+		<h2 class="text-center">住院记录</h2>
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-4"><strong>姓名：</strong><span id="CXM"></span></div>
+			<div class="col-sm-4"><strong>入院科室：</strong><span id="RYKS"></span></div>
+			<div class="col-sm-4" style="text-align: right;"><strong>病案号：</strong><span id="ZYX_1"></span></div>
+		</div>
+		<div class="content">
+		    <div class="row">
+		        <span class="col-sm-2">姓名：<span id="CXM"></span></span>
+		        <span class="col-sm-2">性别：<span id="CXB"></span></span>
+		        <span class="col-sm-3">出生：<span id="DCSNY"></span></span>
+		        <span class="col-sm-2">年龄：<span id="CBRNL"></span></span>
+		        <span class="col-sm-3">婚姻状况：<span id="JBX_7"></span></span>
+		        <span class="col-sm-3">出生地：<span id="JBX_5"></span></span>
+		        <span class="col-sm-2">民族：<span id="JBX_8"></span></span>
+		        <span class="col-sm-3">国籍：<span>中国</span></span>
+		        <span class="col-sm-4">身份证号：<span id="CSFZH"></span></span>
+		        <span class="col-sm-6">工作单位及地址：<span id="JBX_17"></span></span>
+		        <span class="col-sm-3">电话：<span id="LXRDH"></span></span>
+		        <span class="col-sm-3">邮政编码：<span id="YZBM"></span></span>
+		        <span class="col-sm-9">户口地址：<span id="JBX_16"></span></span>
+		        <span class="col-sm-3">户口编码：<span></span> </span>
+		        <span class="col-sm-4">供史者：<span id="RYJ_3"></span></span>
+		        <span class="col-sm-4">在本院第<span id="RYCS"></span>次住院</span>
+		        <span class="col-sm-4">入院时情况：<span id="RYQK"></span></span>
+		        <span class="col-sm-6">入院日期：<span id="ZYX_42"></span></span>
+		        <span class="col-sm-6">记录日期：<span id="RYJ_16"></span> </span>
+		        <div class="col-sm-12">
+		        <p id="ZSX"></p>
+		        <p id="JWS"></p>
+		        <p id="GRS"></p>
+		        <p id="HYS"></p>
+		        <p id="JZS"></p>
+		        <p id="XBS"></p>
+		        </div>
+		        <div class="col-sm-12">
+		        <h3>体格检查</h3>
+		        <p id="TGJ"></p>
+		        </div>
+		        <div class="col-sm-12">
+		        <h3>辅助检查</h3>
+		        <p id="FZJC"></p>
+		        </div>
+		        <div class="col-sm-12">
+		        <h3>病历小结</h3>
+		        
+		        <p id="CBZD">
+		        
+		        </p>
+		        </div>
+		        <div class="col-sm-12 text-right">
+		        	<span id="YS"></span>
+		        </div>
+		    </div>
+		</div>
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-12 text-right" style="text-align: right;">医疗表格统一编号  4-01-04</div>
+		</div>
+	</div>
+	<script>
+		$(function(){
+			$(".blackBox2").fadeIn(50);
+			var id=getvalue("id");
+			var corp_id=getvalue("corp_id");
+			$.ajax({
+				url:"tian/findInHospital.action",
+				dataType:"json",
+				data:{cardno:id,bname:corp_id},
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	var d=data[""];
+			    	$("#RYCS").html(d[0]);
+			    	$("#RYQK").html(d[1]);
+			    	$("#YS").html(d[4]);
+			    	$("#YYMC").html(data["YYMC"]);
+			    	
+			    	//$("#FZJC").text(data["辅助检查"]);
+			    	//$("#HYS").text(data["婚姻史"]);
+			    	//$("#LXRDH").text(data["联系人电话"]);
+			    	$("#CBZD").html("临床初步诊断: "+d[2]);
+			    	$("span,p").each(function(){
+			    		$(this).html(data[$(this).attr("id")]);
+			    	});
+			    	$(".blackBox2").fadeOut(100);
+			    }
+			});
+		})
+	</script>
+</body>
+</html>

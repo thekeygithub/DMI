@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>APP使用行为</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+		table th {
+			width: 20%;
+			background: #81bcf8;
+			text-indent: 10px;
+			text-align:left;
+		}
+		table tr {
+			width: 80%;
+		}
+		h3 {
+			background: #81BCF8;
+			padding: 15px 0;
+			color: #FFFFFF;
+			font-family: "微软雅黑";
+			border:1px solid #fff;
+			margin: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center">APP使用行为</h3>
+		<table class="table table-bordered" style="border-radius: 0;">
+			<tr>
+				<th>姓名：</th>
+				<td id="xm"></td>
+			</tr>
+			<tr>
+				<th>设备ID：</th>
+				<td id="deviceid"></td>
+			</tr>
+			<tr>
+				<th>品牌：</th>
+				<td id="brand"></td>
+			</tr>
+			<tr>
+				<th>类型：</th>
+				<td id="type"></td>
+			</tr>
+			<tr>
+				<th>APP ID：</th>
+				<td id="appid"></td>
+			</tr>
+			<tr>
+				<th>APP名称：</th>
+				<td id="appname"></td>
+			</tr>
+			<tr>
+				<th>功能模块入口：</th>
+				<td id="funentry"></td>
+			</tr>
+			<tr>
+				<th>查询内容：</th>
+				<td><span id="content"></span></td>
+			</tr>
+			<tr>
+				<th>GPS：</th>
+				<td id="gps"></td>
+			</tr>
+		</table>
+	</div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+        var id=getvalue("id");
+        var xm=decodeURIComponent(getvalue("xm"));
+        $("#xm").text(xm);
+	    $.ajax({
+			url:"tian/findBehavior.action",
+			dataType:"json",
+			data:{cardno:id},
+			type:"post",
+		    async:false,
+		    success:function(data){
+		    	$("#deviceid").text(data.DEVICE_ID);
+		    	$("#brand").text(data.BRAND);
+		    	$("#type").text(data.TYPE==1?"安卓":"IOS");
+		    	$("#appid").text(data.APP_ID);
+		    	$("#appname").text(data.APP_NAME);
+		    	$("#funentry").text(data.FUN_ENTRY);
+		    	$("#content").html(data.CONTENT);
+		    	$("#gps").text(data.LONGITUDE+","+data.LATITUDE);
+		    }
+	    });
+    });
+	</script>
+</body>
+</html>

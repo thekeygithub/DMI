@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>购药</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+		table th {
+			width: 20%;
+			background: #81bcf8;
+			text-indent: 10px;
+			text-align:left;
+		}
+		table tr {
+			width: 80%;
+		}
+		h3 {
+			background: #81BCF8;
+			padding: 15px 0;
+			color: #FFFFFF;
+			font-family: "微软雅黑";
+			border:1px solid #fff;
+			margin: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center">个人购药数据</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>购药人姓名：</th>
+				<td><span id="name"></span></td>
+			</tr>
+			<!-- <tr>
+				<th>医保编号：</th>
+				<td><span id="ybbh"></span></td>
+			</tr> -->
+			<tr>
+				<th>已购药品：</th>
+				<td><span id="ygyp"></span></td>
+			</tr>
+			<tr>
+				<th>药店名称：</th>
+				<td><span id="ydmc"></span></td>
+			</tr>
+			<tr>
+				<th>GPS：</th>
+				<td><span id="gps"></span></td>
+			</tr>
+			<tr>
+				<th>购药时间：</th>
+				<td><span id="gysj"></span></td>
+			</tr>
+			<tr>
+				<th>药师名称：</th>
+				<td><span id="ysmc"></span></td>
+			</tr>
+		</table>
+	</div>
+    <script type="text/javascript">
+	    $(document).ready(function(){
+	    	
+	        var id=getvalue("id");
+	        var xm=decodeURIComponent(getvalue("xm"));
+	        $("#name").text(xm);
+		    $.ajax({
+				url:"queryPharmacyDrug.action",
+				dataType:"json",
+				data:{cardno:id},
+				type:"post",
+			    async:false,
+			    success:function(data){
+			    	//console.info(data);
+			    	$("#ygyp").html(data.DRUG);
+			    	$("#gysj").html(data.SJ);
+			    	$("#ydmc").html(data.DRUG_STORE);
+			    	$("#gps").html(data.GPS);
+			    	$("#ysmc").html(data.PH_NAME);
+			    }
+		    });
+	    });
+	</script>
+</body>
+</html>

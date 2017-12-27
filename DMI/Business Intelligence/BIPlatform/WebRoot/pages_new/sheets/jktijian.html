@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>个人健康档案体检</title>
+	<link rel="stylesheet" href="../../css/old/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+		h3 {
+			font-family: "微软雅黑";
+			padding: 15px;
+			margin-bottom: 0;
+			border:1px solid #fff;
+			border-bottom: none;
+			color: #FFFFFF;
+		}
+		table {
+			width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+		td {
+			vertical-align: middle!important;
+			line-height: 24px!important;
+		}
+		.other {
+			padding: 0 5px;
+			border-bottom: 1px solid #333;
+			margin: 0!important;
+		}
+		.box {
+			font-size:24px;
+			font-weight: 100;
+			color: #333;
+			margin-top: 15px;
+		}
+		.selectedBox {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border: 1px solid #333;
+			text-align: center;
+			line-height: 20px;
+			font-size: 12px;
+			color: #333;
+			vertical-align: middle;
+			margin-right: 0!important;
+		}
+		.xz span{
+			margin-right:10px;
+		}
+		b {
+			margin:0 3px;
+			font-size: 24px;
+			color: #333;
+			font-weight: 100;
+		}
+		.sz {
+			width:100px;
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.sz tr:first-child {
+			border-bottom: 1px solid #333;
+		}
+		.sz tr td:first-child {
+			border-right: 1px solid #333;
+		}
+		.sz tr td {
+			width: 50px;
+			text-align: center;
+			color: #333;
+			height: 16px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center" style="background: #81BCF8;">健康体检表</h3>
+		<div class="col-sm-12" style="background: #81BCF8;border:1px solid #fff;
+			border-top: none;padding: 5px 0;color: #FFFFFF;">
+			<div class="col-sm-6">姓名：<span class="xm" id="USER_NAME"></span></div>
+			<div class="col-sm-6 text-right">编号：<span class="bh" id="DOC_NO"></span></div>
+		</div>
+		<table class="table table-bordered text-center">
+			<tr>
+				<td colspan="2">体检日期</td>
+				<td id="tjsj"></td>
+				<td>责任医生</td>
+				<td colspan="2" id="DOCTOR"></td>	
+			</tr>
+			<tr>
+				<td>内 容</td>
+				<td colspan="5">检查项目</td>
+			</tr>
+			<tr>
+				<td>症<br />状</td>
+				<td colspan="5" align="left">
+					1 无症状 2 头痛 3 头晕 4 心悸 5 胸闷 6 胸痛 7 慢性咳嗽 8 咳痰 9 呼吸困难 10 多饮 11 多尿 12 体重下降 13 乏力 14 关节肿痛 
+					15 视力模糊  <br />16 手脚麻木 17 尿急 18 尿痛 19 便秘 20 腹泻 21 恶心呕吐 22 眼花 23 耳鸣 24 乳房胀痛 25 其他:<span class="other"></span>
+					<div class="text-right box">
+						<span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span> / <span class="selectedBox" id="R1"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="9" align="center" valign="middle">一<br />般<br />状<br />况</td>
+				<td>体 温</td>
+				<td align="right"><span id="R2_1"></span>℃</td>
+				<td>脉 率</td>
+				<td colspan="2" align="right"><span id="R2_1_1"></span>次/分钟</td>
+			</tr>
+			<tr>
+				<td rowspan="2">呼吸频率</td>
+				<td rowspan="2" align="right"><span  id="R2_2"></span>次/分钟</td>
+				<td rowspan="2">血 压</td>
+				<td>左侧</td>
+				<td align="right" ><span id="R2_2_1_1"></span> / <span id="R2_2_1_1"></span>mmHg</td>
+			</tr>
+			<tr>
+				<td>右侧</td>
+				<td align="right"><span id="R2_2_1_2"></span> / <span id="R2_2_1_2"></span>mmHg</td>
+			</tr>
+			<tr>
+				<td>身 高</td>
+				<td align="right"><span id="R2_3"></span>cm</td>
+				<td>体重</td>
+				<td colspan="2" align="right"><span id="R2_3_1"></span>kg</td>
+			</tr>
+			<tr>
+				<td>腰 围</td>
+				<td align="right"><span id="R2_4"></span>cm</td>
+				<td>体质指数<br />(BMI)</td>
+				<td colspan="2" align="right"><span id="R2_4_1"></span>Kg/m²</td>
+			</tr>
+			<tr>
+				<td>老年人健康状态<br />自我评估*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 满意</span> <span>2 基本满意</span> <span>3 说不清楚</span> <span>4 不太满意</span> <span>5 不满意</span>
+					<span class="selectedBox pull-right" id="R2_5"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>老年人生活自理<br />能力自我评估*</td>
+				<td colspan="4" align="left" class="xz"><span>1 可自理(0~3分)</span> <span>2 轻度依赖(4~8分)</span> <span>3 中度依赖(9~18分)</span> <span>4 不能自理(≥19分)</span>
+					<span class="selectedBox pull-right" id="R2_6"></span></td>
+			</tr>
+			<tr>
+				<td>老年人<br />认知功能*</td>
+				<td colspan="4" align="left">
+					<span class="pull-left">1 粗筛阴性<br />
+						2 粗筛阳性, 简易智力状态检查， 总分<span class="other"></span>
+					</span>
+					<span class="selectedBox pull-right" id="R2_7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>老年人<br />情感状态*</td>
+				<td colspan="4" align="left">
+					<span class="pull-left">1 粗筛阴性<br />
+						2 粗筛阳性, 老年人抑郁评分检查， 总分<span class="other"></span>
+					</span>
+					<span class="selectedBox pull-right" id="R2_8"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="13">生<br />活<br />方<br />式</td>
+				<td rowspan="3">体育锻炼</td>
+				<td>锻炼频率</td>
+				<td colspan="3" class="xz" align="left">
+					<span>1 每天</span> <span>2 每周一次以上</span> <span>3 偶尔</span> <span>4 不锻炼</span>
+					<span class="selectedBox pull-right" id="R3_1_1"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>每次锻炼时间</td>
+				<td align="right"><span id="R3_1_2"></span>分钟</td>
+				<td>坚持锻炼时间</td>
+				<td align="right"><span id="R3_1_2_1"></span>年</td>
+			</tr> 
+			<tr>
+				<td>锻炼方式</td>
+				<td colspan="3" id="R3_1_3"></td>
+			</tr>
+			<tr>
+				<td>饮食习惯</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 荤素均匀</span> <span>2 荤食为主</span> <span>3 素食为主</span> <span>4 嗜盐</span><span>5 嗜油</span><span>6 嗜糖</span>
+					<span class="selectedBox pull-right" id="R3_2"></span> <b class="pull-right"> / </b> <span class="selectedBox pull-right" id="R3_2"></span> <b class="pull-right"> / </b> <span class="selectedBox pull-right" id="R3_2"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="3">吸烟情况</td>
+				<td>吸烟状况</td>
+				<td colspan="3" align="left" class="xz">
+					<span>1 从不吸烟</span> <span>2 已戒烟</span> <span>3 吸烟</span>
+					<span class="selectedBox pull-right" id="R3_3_1"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>日吸烟量</td>
+				<td colspan="3" align="left">平均 <span id="R3_3_2"></span> 支</td>
+			</tr>
+			<tr>
+				<td>开始吸烟年龄</td>
+				<td align="right"><span id="R3_3_3"></span>岁</td>
+				<td>戒烟年龄</td>
+				<td align="right"><span id="R3_3_3_1"></span>岁</td>
+			</tr> 
+			<tr>
+				<td rowspan="5">饮酒状况</td>
+				<td>饮酒频率</td>
+				<td colspan="3" align="left" class="xz">
+					<span>1 从不</span> <span>2 偶尔</span> <span>3 经常</span><span>4 每天</span>
+					<span class="selectedBox pull-right" id="R3_4_1"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>日饮酒量</td>
+				<td colspan="3" align="left">平均 <span id="R3_4_2"></span> 两</td>
+			</tr>
+			<tr>
+				<td>是否戒酒</td>
+				<td colspan="3" align="left" class="xz">
+					<span>1 未戒酒</span> <span>2 已戒酒，戒酒年龄：<span></span>岁</span>
+					<span class="selectedBox pull-right" id="R3_4_3"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>开始饮酒年龄</td>
+				<td align="right"><span id="R3_4_4"></span>岁</td>
+				<td>近一年内是否曾醉酒</td>
+				<td align="left" class="xz">
+					<span>1 是</span> <span>2 否</span>
+					<span class="selectedBox pull-right" id="R3_4_4_1"></span>
+				</td>
+			</tr> 
+			<tr>
+				<td>饮酒种类</td>
+				<td colspan="3" align="left" class="xz">
+					<span>1 白酒</span> <span>2 啤酒</span> <span>3 红酒</span> <span>4 黄酒</span><span>5 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R3_4_5"></span> <b class="pull-right"> / </b><span class="selectedBox pull-right" id="R3_4_5"></span> <b class="pull-right"> / </b> <span class="selectedBox pull-right" id="R3_4_5"></span> <b class="pull-right"> / </b> <span class="selectedBox pull-right" id="R3_4_5"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>职业病危害因<br />素接触史</td>
+				<td colspan="4" align="left">
+					<div >
+						1 无 2有（工种<span class="other"></span>从业时间<span class="other"></span>年）
+						<span class="selectedBox pull-right" id="R3_5"></span>
+					</div>
+					<div>
+						粉尘<span class="other"></span>防护措施 1 无 2有<span class="other"></span>
+						<span class="selectedBox pull-right"></span>
+					</div>
+					<div>
+						放射物质<span class="other"></span>防护措施 1 无 2有<span class="other"></span>
+						<span class="selectedBox pull-right"></span>
+					</div>
+					<div>
+						物理因素<span class="other"></span>防护措施 1 无 2有<span class="other"></span>
+						<span class="selectedBox pull-right"></span>
+					</div>
+					<div>
+						化学物质<span class="other"></span>防护措施 1 无 2有<span class="other"></span>
+						<span class="selectedBox pull-right"></span>
+					</div>
+					<div>
+						其他<span class="other"></span>防护措施 1 无 2有<span class="other"></span>
+						<span class="selectedBox pull-right"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="4">脏<br />器<br />功<br />能</td>
+				<td>口 腔</td>
+				<td colspan="4" align="left" class="xz">
+					<div>
+						口唇 <span>1 红润</span><span>2 苍白</span> <span>3 发绀</span> <span>4 皲裂</span><span>5 疱疹</span>
+						<span class="selectedBox pull-right" id="R4_1"></span>
+					</div>
+					<div>
+						齿列 <span>1 正常</span>
+						<span>2 缺齿 
+							<table class="sz">
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+							</table>
+						</span><span>3 龋齿 <table class="sz">
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+							</table></span><span>4 义齿(假牙) <table class="sz">
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+								</tr>
+							</table></span>
+						<span class="selectedBox pull-right" style="margin-top: 5px;" id="R4_1"></span>
+					</div>
+					<div>
+						咽部 <span>1 无充血</span><span>2 充血</span> <span>3 淋巴滤泡增生</span>
+						<span class="selectedBox pull-right" id="R4_1"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>视 力</td>
+				<td colspan="4" align="left">左眼<span class="other" id="R4_2"></span>右眼<span class="other" id="R4_2"></span>(矫正视力：左眼<span class="other"></span>右眼<span class="other"></span>)</td>
+			</tr>
+			<tr>
+				<td>听 力</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 听见</span><span>2 听不清或无法听见</span>
+					<span class="selectedBox pull-right" id="R4_3"></span></td>
+			</tr>
+			<tr>
+				<td>运动功能</td>
+				<td colspan="4" align="left" class="xz">
+				<span>1 可顺利完成</span><span>2 无法独立完成其中任何一个动作</span>
+				<span class="selectedBox pull-right" id="R4_4"></span></td>
+			</tr>
+			<tr>
+				<td rowspan="19">查<br />体</td>
+				<td>眼 底*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 正常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_1"></span>
+				</td>
+			</tr>	
+			<tr>
+				<td>皮 肤</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 正常</span><span>2 潮红</span><span>3 苍白</span><span>4 发绀</span><span>5 黄染</span><span>6 色素沉着</span><span>7 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_2"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>巩 膜</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 正常</span><span>2 黄染</span><span>3 充血</span><span>4 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_3"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>淋巴结</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未触及</span><span>2 锁骨上</span><span>3 腋窝</span><span>4 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_4"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="3">肺</td>
+				<td colspan="4" align="left" class="xz" >
+					桶状胸：<span>1 否</span><span>2 是</span>
+					<span class="selectedBox pull-right" id="R5_5_1"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left" class="xz">
+					呼吸音：<span>1 正常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_5_2"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left" class="xz">
+					罗音：<span>1 无</span><span>2 干罗音</span><span>3 湿罗音</span><span>4 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>心 脏</td>
+				<td colspan="4" align="left" class="xz" >
+					<div>
+						心率：<span><span class="other" id="R5_6_1"></span>次/分钟</span>  心律：<span>1 齐</span><span>2 不齐</span><span>3 绝对不齐</span>
+						<span class="selectedBox pull-right" id="R5_6_2"></span>
+					</div>
+					<div>
+						杂音：<span>1 无</span><span>2 有<span class="other"></span></span>
+						<span class="selectedBox pull-right" id="R5_6_3"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>腹 部</td>
+				<td colspan="4" align="left" class="xz">
+					<div>
+						压痛：<span>1 无</span><span>2 有<span class="other"></span>
+						<span class="selectedBox pull-right" id="R5_7"></span>
+					</div>
+					<div>
+						包块：<span>1 无</span><span>2 有<span class="other"></span></span>
+						<span class="selectedBox pull-right" id="R5_7"></span>
+					</div>
+					<div>
+						肝大：<span>1 无</span><span>2 有<span class="other"></span></span>
+						<span class="selectedBox pull-right" id="R5_7"></span>
+					</div>
+					<div>
+						脾大：<span>1 无</span><span>2 有<span class="other"></span></span>
+						<span class="selectedBox pull-right" id="R5_7"></span>
+					</div>
+					<div>
+						移动性浊音：<span>1 无</span><span>2 有<span class="other"></span></span>
+						<span class="selectedBox pull-right" id="R5_7"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>下肢水肿</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 无</span><span>2 单侧</span><span>3 双侧不对称</span><span>4 双侧对称</span>
+					<span class="selectedBox pull-right" id="R5_8"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>足背动脉搏动</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未触及</span><span>2 触及双侧对称</span><span>3 触及左侧弱或消失</span><span>4 触及右侧弱或消失</span>
+					<span class="selectedBox pull-right" id="R5_9"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>肛门指诊*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未见异常</span><span>2 触痛</span><span>3 包块</span><span>4 前列腺异常</span><span>5 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_10"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>乳 腺*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未见异常</span><span>2 乳房切除</span><span>3 异常泌乳</span><span>4 乳腺包块</span><span>5 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_11"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R5_11"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R5_11"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="5">妇 科*</td>
+				<td colspan="4" align="left" class="xz">
+					外阴：<span>1 未见异常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_12_1"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left" class="xz">
+					阴道：<span>1 未见异常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_12_2"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left" class="xz" >
+					宫颈：<span>1 未见异常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_12_3"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left" class="xz">
+					宫本：<span>1 未见异常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_12_4"></span>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="left" class="xz" >
+					附件：<span>1 未见异常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R5_12_5"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>其 他*</td>
+				<td colspan="4" align="left" id="R5_13">
+					
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="15">辅<br />助<br />检<br />查</td>
+				<td>血常规*</td>
+				<td colspan="4" align="left"  >
+					血红蛋白<span class="other" id="R6_1"></span> g/L 白细胞<span class="other" id="R6_1"></span> * 10^9/L 血小板<span class="other" id="R6_1"></span> * 10^9/L
+					<br />其他<span class="other"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>尿常规*</td>
+				<td colspan="4" align="left" >
+					尿蛋白<span class="other" id="R6_2"></span> 尿糖<span class="other" id="R6_2"></span> 尿酮体<span class="other" id="R6_2"></span> 尿潜血<span class="other" id="R6_2"></span>
+					<br />其他<span class="other"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>空腹血糖*</td>
+				<td colspan="4" align="left" >
+					<span class="other" id="R6_3"></span>mmol/L 或 <span class="other"></span>mg/dL
+				</td>
+			</tr>
+			<tr>
+				<td>心电图*</td>
+				<td colspan="4" align="left" class="xz" >
+					<span>1 正常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R6_4"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>尿微量白蛋白*</td>
+				<td colspan="4" align="left" >
+					<span class="other" id="R6_5"></span>mg/dL
+				</td>
+			</tr>
+			<tr>
+				<td>大便潜血*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 阴性</span><span>2 阳性</span>
+					<span class="selectedBox pull-right" id="R6_6"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>糖化血红蛋白*</td>
+				<td colspan="4" align="left" class="xz">
+					<span class="other" id="R6_7"></span>%
+				</td>
+			</tr>
+			<tr>
+				<td>乙型肝炎<br />表面抗原*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 阴性</span><span>2 阳性</span>
+					<span class="selectedBox pull-right" id="R6_8"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>肝功能*</td>
+				<td colspan="4" align="left" class="xz" >
+					<span>血清谷丙转氨酶<span class="other" id="R6_9"></span>U/L</span>
+					<span>血清谷草转氨酶<span class="other" id="R6_9"></span>U/L</span><br />
+					<span>白蛋白<span class="other" id="R6_9"></span>g/L</span>
+					<span>总胆红素<span class="other" id="R6_9"></span>μmol/L</span>
+					<span>结合胆红素<span class="other" id="R6_9"></span>μmol/L</span>
+				</td>
+			</tr>
+			<tr>
+				<td>肾功能*</td>
+				<td colspan="4" align="left" class="xz" >
+					<span>血清肌酐<span class="other" id="R6_10"></span>μmol/L</span>
+					<span>血尿素氮<span class="other" id="R6_10"></span>mmol/L</span><br />
+					<span>血钾浓度<span class="other" id="R6_10"></span>mmol/L</span>
+					<span>血钠浓度<span class="other" id="R6_10"></span>mmol/L</span>
+				</td>
+			</tr>
+			<tr>
+				<td>血 脂*</td>
+				<td colspan="4" align="left" class="xz" >
+					<span>总胆固醇<span class="other" id="R6_11"></span>mmol/L</span>
+					<span>甘油三酯<span class="other" id="R6_11"></span>mmol/L</span><br />
+					<span>血清低密度脂蛋白胆固醇<span class="other" id="R6_11"></span>mmol/L</span><br />
+					<span>血清高密度脂蛋白胆固醇<span class="other" id="R6_11"></span>mmol/L</span>
+				</td>
+			</tr>
+			<tr>
+				<td>胸部X线片*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 正常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R6_12"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>B 超*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 正常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R6_13"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>宫颈涂片*</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 正常</span><span>2 异常<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R6_14"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>其 他*</td>
+				<td colspan="4" align="left" class="xz" id="R6_15">
+					
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="9">中<br />医<br />体<br />质<br />辨<br />识*</td>
+				<td>平和质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 基本是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>气虚质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>阳虚质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>阴虚质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>痰湿质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>湿热虚质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>血瘀质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>气郁质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>特秉质</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 是</span><span>2 倾向是</span>
+					<span class="selectedBox pull-right" id="R7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="7">现<br />存<br />主<br />要<br />健<br />康<br />问<br />题</td>
+				<td>脑血管疾病</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未发现</span><span>2 缺血性卒中</span><span>3 脑出血</span><span>4 蛛网膜下腔出血</span><span>5 短暂性脑缺血发作</span><br /><span>6 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_1"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_1"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_1"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_1"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_1"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>肾脏疾病</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未发现</span><span>2 糖尿病肾病</span><span>3 肾功能衰竭</span><span>4 急性肾炎</span><span>5 慢性肾炎</span><br /><span>6 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_2"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_2"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_2"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_2"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_2"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>心脏疾病</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未发现</span><span>2 心肌梗死</span><span>3 心绞痛</span><span>4 冠状动脉血运重建</span><span>5 充血性心力衰竭</span><br /><span>6 心前区疼痛</span><span>7 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_3"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_3"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_3"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_3"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_3"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>血管疾病</td>
+				<td colspan="4" align="left" class="xz" >
+					<span>1 未发现</span><span>2 夹层动脉瘤</span><span>3 运动闭塞性疾病</span><span>4  其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_4"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_4"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_4"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>眼部疾病</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未发现</span><span>2 视网膜出血或渗出</span><span>3 视乳头水肿</span><span>4 白内障</span><span>5 其他<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_5"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_5"></span><b class="pull-right"> / </b><span class="selectedBox pull-right" id="R8_5"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>神经系统疾病</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未发现</span><span>2 有<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_6"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>其他系统疾病</td>
+				<td colspan="4" align="left" class="xz">
+					<span>1 未发现</span><span>2 有<span class="other"></span></span>
+					<span class="selectedBox pull-right" id="R8_7"></span>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="6">住<br />院<br />治<br />疗<br />情<br />况</td>
+				<td rowspan="3">住院史</td>
+				<td>入/出院日期</td>
+				<td>原因</td>
+				<td>医疗机构名称</td>
+				<td>病案号</td>
+			</tr>
+			<tr>
+				<td><span></span>/<span></span></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr">
+				<td><span></span>/<span></span></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td rowspan="3">家庭病床史</td>
+				<td>建/撤床日期</td>
+				<td>原因</td>
+				<td>医疗机构名称</td>
+				<td>病案号</td>
+			</tr>
+			<tr>
+				<td><span></span>/<span></span></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><span></span>/<span></span></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td rowspan="7">主<br />要<br />用<br />药<br />情<br />况</td>
+				<td>药物名称</td>
+				<td>用法</td>
+				<td>用量</td>
+				<td>用药时间</td>
+				<td>服药依从性<br />1 规律  2 间断  3不服药</td>
+			</tr>
+			<tr>
+				<td align="left">1</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td align="left">2</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td align="left">3</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td align="left">4</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td align="left">5</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td align="left">6</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td rowspan="4">非免<br />疫规<br />划预<br />防接<br />种史</td>
+				<td>名称</td>
+				<td>接种日期</td>
+				<td colspan="3">接种结构</td>
+			</tr>
+			<tr>
+				<td align="left">1</td>
+				<td></td>
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<td align="left">2</td>
+				<td></td>
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<td align="left">3</td>
+				<td></td>
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<td>健<br />康<br />评<br />价</td>
+				<td colspan="5" align="left" class="xz" >
+					1 体检无异常
+					<span class="selectedBox pull-right" id="R12"></span><br />
+					2 有异常<br />
+					异常1 <span class="other"></span><br />
+					异常2 <span class="other"></span><br />
+					异常3 <span class="other"></span><br />
+					异常4 <span class="other"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>健<br />康<br />指<br />导</td>
+				<td colspan="2" align="left" class="xz" >
+					1 纳入慢性病患者健康管理<br />
+					2 建议复查<br />
+					3 建议转诊<br />
+					<span class="selectedBox pull-right" id="R13_1"></span><b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1"></span><b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1"></span>
+				</td>
+				<td colspan="3" align="left" class="xz">
+					危险因素控制：<span class="selectedBox pull-right" id="R13_1_1"></span><b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1_1"></span><b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1_1"></span>
+					<b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1_1"></span><b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1_1"></span><b class="pull-right">/</b><span class="selectedBox pull-right" id="R13_1_1"></span>
+					<br />	
+					<span>1 戒烟</span><span>2 健康饮酒</span><span>3 饮食</span><span>4 锻炼</span><br />
+					5 减体重（目标<span class="other"></span>）<br />
+					6 建议接种疫苗<span class="other"></span><br />
+					7 其他<span class="other"></span>
+				</td>
+			</tr>
+		</table>
+	</div>
+    <script type="text/javascript">
+    function formatDate(d,f){
+    	if(f=="y"){
+    		return d.substring(0,4);
+    	}else if(f=="m"){
+    		if(d.charAt(5)=="0"){
+    			return d.charAt(6);
+    		}
+    		return d.substring(5,7);	
+    	}else{
+    		if(d.charAt(8)=="0"){
+    			return d.charAt(9);
+    		}
+    		return d.substring(8,10);	
+    	}
+
+    }
+	$(document).ready(function(){
+		var cardno=getvalue("cardno");
+		$.ajax({
+    		url:"tian/findHealthEx.action",
+    		dataType:"json",
+    		type:"post",
+    		data:{cardno:cardno},
+    	    async:false,
+    	    success:function(data){
+    	    	$("#tjsj").html("<span class=\"other\">"+formatDate(data["EX_DATE"], "y")+"</span>年<span class=\"other\">"+formatDate(data["EX_DATE"], "m")+"</span>月<span class=\"other\">"+formatDate(data["EX_DATE"], "d")+"</span>日");
+    	        for(var i in data){
+    	        	if($("[id='"+i+"']").length==1){
+    	        		$("#"+i).text(data[i]);
+    	        	}else if($("[id='"+i+"']").length>1){
+    	        		var d=data[i].split("|");
+    	        		$("[id='"+i+"']").each(function(s,b){
+    	        			if($(b).hasClass("pull-right")){
+    	        				
+    	        				$(b).text(d[$("[id='"+i+"']").length-s-1]);	
+    	        			}else{ 
+    	        				$(b).text(d[s]);
+    	        			}
+    	        			
+    	        		});
+    	        	}
+    	        }
+    	    }
+		});
+	});
+	</script>
+</body>
+</html>

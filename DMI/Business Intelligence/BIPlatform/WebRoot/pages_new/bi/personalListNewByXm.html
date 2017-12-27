@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+    <title>总费用支出</title>
+    <link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet" >
+    <link href="../../css/commond.css" rel="stylesheet" type="text/css">
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+	<link rel="stylesheet" href="../../css/style.css">
+   
+    <style>
+ 		.content-top{
+	   	  	height:60px;
+	   	  }
+		 .content-top-left{
+		 	float:left;
+		 	width:70%;
+		 	 
+		 }
+		 .content-top-left-span1{
+		 	margin-top:5px;
+		 	float:left;
+		 	width:100px;
+		 }
+		 .content-top-left-span3{
+		 	margin:5px 15px 0 15px;
+		 	float:left;
+		 	 
+		 }
+		  .content-top-left-span2{
+		 	float:left;
+		 	width:200px;
+		 }
+		 .content-top-right{
+		 	width:20%;
+		 	float:right;
+		 	text-align: right;
+		 	padding-right:30px;
+		 }
+		 .content-center{
+		 	height:350px;
+		 }
+		 .content-center-left{
+		 	float:left;
+		 	width:45%;
+		 	 
+		 }
+		 .content-center-right{
+		 	float:left;
+		 	width:53%;
+		 	 
+		 }
+		 .content-bottom{
+		 	background:url("../../img/bi/listfist.gif") no-repeat 0px 5px ;
+		 	height:400px;
+		 }
+		  .content-bottom-left{
+		 	float:left;
+		 	width:45%;
+		 	 
+		 }
+		 .content-bottom-right{
+		 	margin-top:30px;
+		 	float:left;
+		 	width:53%;
+		 }
+		 .bi-button{  border-radius:5px; padding:2px 20px; display:inline-block; color:#fff; text-align:center; line-height:28px; margin-left:10px; cursor:pointer;}
+		.bi-button :hover{ background:#666;}
+		 .foot{display: none;}
+		 #table_list_1 tr{cursor: default;}
+		 #table_list_1 tr:hover td{ background:#FFF0C4 !important;}
+	</style>
+
+</head>
+
+<body >
+    <jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+    <div class="block">
+		<h1>
+			<span class="tap">按医院统计项目类别费用支出<span class="tap2">// PERSONAL INFORMATION</span></span><span class="tap3">收起</span>
+		</h1>
+		<div class="content" >
+			<div class="content-top"  >
+				 <div class="content-top-left">
+				
+				<!--日历控件-->
+					  <span class="content-top-left-span1">选择时间范围：</span>
+					<span class="content-top-left-span2" >
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy-mm" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm" style="margin-top:0px;">
+							<input id="startDate" class="form-control" style="background-color:#fff;" size="16" type="text"
+								value="2016-01" readonly> <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" />
+					 </span>
+					  <span class="content-top-left-span3">—</span>
+					 <span class="content-top-left-span2" >
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy-mm" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm" style="margin-top:0px;">
+							<input id="endDate" class="form-control" style="background-color:#fff;" size="16" type="text"
+								value="2016-06" readonly > <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" />
+					 </span>
+					  <span style="float:left;width:150px;margin-left:40px;margin-top:1px;" onclick="findBottomData()">
+					 	 <span class="bi-button" style="background:#12A7BB; ">重新统计</span>
+					 </span>
+					 <div style="clear:both;"></div>
+				 </div>
+				 
+				 <div class="content-top-right">
+				 单位：十万元
+				 </div>
+			</div>
+			<div  class="content-center" >
+				  <div class="jqGrid_wrapper"  style="border:none;margin-bottom: 20px;">
+                <table id="table_list_1"></table>
+                <div id="pager_list_1"></div>
+			</div>
+			 
+				<input type="hidden" value="0" id="costFlag">
+			</div>
+		</div>
+	</div>
+    
+   
+    <script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+    <script src="../../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../../js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../../js/plugins/iCheck/icheck.min.js"></script>
+   <script src="../../js/ajaxfileupload.js"></script>
+    <link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+	<script src="../../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script src="../../js/plugins/highcharts/highcharts.js"></script>
+  	<script type="text/javascript">
+  	$('.form_date').datetimepicker({
+		language:  'zh-CN',
+        format: 'yyyy-mm',
+        autoclose: true,
+        todayBtn: true,
+        startView: 'year',
+        minView:'year',
+        maxView:'decade',
+		pickerPosition: "bottom-left"
+    });
+	 
+	function zero (obj) {
+		if (obj < 10) return "0" + obj; else return obj;
+	}
+	var beginDate=decodeURIComponent(getvalue("beginDate"));
+	var endDate=decodeURIComponent(getvalue("endDate"));
+	if (beginDate == '' || beginDate == null || beginDate == 'undefined' || endDate == '' || endDate == null || endDate == 'undefined' ) {
+		var today = new Date();
+		var h=today.getFullYear(); 
+		var m=today.getMonth()+1; 
+		//$("#endDate").val(h+"-"+zero(m));
+		var sm=m-6;
+		if(sm<=0){
+			h=h-1;
+			sm=12+sm;
+		}
+		//$("#startDate").val(h+"-"+zero(sm));
+		$("#startDate").val("2016-01");
+		$("#endDate").val("2016-12");
+	}else{
+		$("#startDate").val(beginDate);
+		$("#endDate").val(endDate);
+	}
+	 
+	$(function () {
+		$(".blackBox2").fadeIn(50);
+		setTimeout(function(){
+		$.jgrid.defaults.styleUI="Bootstrap";
+     	$(".blackBox2").fadeIn(50);
+
+     	$("#table_list_1").jqGrid({
+     		url:"findCostByXmTypeNew.action",
+			postData:{flag:0,beginDate:$("#startDate").val(),endDate:$("#endDate").val()},
+     		mtype:"POST",
+			datatype: "json",
+			loadtext:"",
+     		height:278,
+     		autowidth:true,
+     		shrinkToFit:true,
+     		sortable:true,
+     		sortorder:"desc",
+     		rownumbers:false,
+     		rowNum:10,
+     		rownumWidth:70,
+     		onPaging:function(){$(".blackBox2").fadeIn(50);},
+     		
+     		rowList:[10,20,30,50,100],
+     		colNames:["医院编码","医院","西药","中成药","中草药","常规检查","CT","核磁","B超","治疗费","化验费","手术费","输氧费","放射费","输血费","注射费","透析","化疗","材料费","护理费","特殊检查费","特殊治疗费","床位费","其他费用","挂号费"],
+     		colModel:[
+				{name:"HOS_CODE",index:"HOS_CODE",width:75,align:"left",sortable:false,hidden:true},
+				{name:"HOS_NAME",index:"HOS_NAME",width:80,align:"left",sortable:false},
+				{name:"A1",index:"A1",width:50,align:"left"},
+				{name:"A2",index:"A2",width:50,align:"left"},
+				{name:"A3",index:"A3",width:50,align:"left"},
+				{name:"A4",index:"A4",width:50,align:"left"},
+				{name:"A5",index:"A5",width:50,align:"left"},
+				{name:"A6",index:"A6",width:50,align:"left"},
+				{name:"A7",index:"A7",width:50,align:"left"},
+				{name:"A8",index:"A8",width:50,align:"left"},
+				{name:"A9",index:"A9",width:50,align:"left"},
+				{name:"A10",index:"A10",width:50,align:"left"},
+				{name:"A11",index:"A11",width:50,align:"left"},
+				{name:"A12",index:"A12",width:50,align:"left"},
+				{name:"A13",index:"A13",width:50,align:"left"},
+				{name:"A14",index:"A14",width:50,align:"left"},
+				{name:"A15",index:"A15",width:50,align:"left"},
+				{name:"A16",index:"A16",width:50,align:"left"},
+				{name:"A17",index:"A17",width:50,align:"left"},
+				{name:"A18",index:"A18",width:50,align:"left"},
+				{name:"A19",index:"A19",width:50,align:"left"},
+				{name:"A20",index:"A20",width:50,align:"left"},
+				{name:"A21",index:"A21",width:50,align:"left"},
+				{name:"A22",index:"A22",width:50,align:"left"},
+				{name:"A23",index:"A23",width:50,align:"left"}
+				 
+     		],
+     		jsonReader: {
+					root: "list", //数据对象
+					total: "totalPage", //总页数
+					page: "currentPage", //第几页
+					records: "totalRecord", //总条数
+					repeatitems: false
+				},
+				viewrecords : true,
+     		multiselect:false,
+     		onSelectRow:function(rowid,stauts){ 
+     			var str = jQuery("#table_list_1").jqGrid('getRowData', rowid);
+     			location.href="personalListNewByXmXz.html?hos_name="+str.HOS_NAME+"&hos_code="+str.HOS_CODE+"&beginDate="+$("#startDate").val()+"&endDate="+$("#endDate").val();
+     		},
+     		pager:"#pager_list_1",
+     		rows: 10,//初始化每页多少条
+			page: 1,//初始化第几页
+     		viewrecords:true,
+     		hidegrid:false,
+     		loadComplete:function(xhr){
+     
+             	$(".blackBox2").fadeOut(100);
+            },
+     		onSortCol: function (index, iCol, sortorder) {
+              	 $(".blackBox2").fadeIn(100);
+               }
+     	});
+     	$(window).bind("resize",function(){var width=$(".jqGrid_wrapper").width();
+     	$("#table_list_1").setGridWidth(width);})
+     	$(".blackBox2").fadeOut(100);
+		},100);
+	});
+	
+	function findBottomData(flag){
+		$("#costFlag").val(flag);
+		$(".blackBox2").fadeIn(50);
+		setTimeout(function(){
+    	var beginDate=$("#startDate").val();
+		var endDate=$("#endDate").val();
+    	$("#table_list_1").jqGrid("setGridParam", { postData:{beginDate:beginDate,endDate:endDate,flag:flag}  }).trigger("reloadGrid");
+    	$(".blackBox2").fadeOut(100);
+		},100);
+	}
+    
+	
+	</script>    
+</body>
+</html>

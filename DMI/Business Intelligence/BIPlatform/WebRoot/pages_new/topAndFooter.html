@@ -1,0 +1,122 @@
+<header class="header">
+    <div class="logo" onclick="openIndex()"><img src="/MDEPlatform/img/logo.png" alt=""> 医疗数据交换平台</div>
+    <div class="personal">
+        <div class="loginName"><img src="/MDEPlatform/img/xren.png" alt=""> <span id="username"></span></div>
+         <ul class="sub-order">
+        	<!--<li><a href="#">修改密码</a></li>-->
+            <li><a onclick="alertShow('您确定要退出登录吗？','confirm')">注销</a></li>
+        </ul> 
+    </div>
+    <div class="main-nav" style="float: right;margin-right: 30px;">
+    	<span>
+    		<a class="active nav-btn"><img src="/MDEPlatform/img/daohang.png" alt=""> 导航</a>
+    		<ul class="sub-nav">
+				<li>
+					<a><i class="fa fa-plus-square-o"></i> 医疗个案数据（IPD）整合服务</a>
+					<ol>
+						<li><a href="/MDEPlatform/pages_new/ipdData/ipdDataIntegrationServices.html"><i class="fa fa-angle-double-right"></i> IPD检索</a></li>
+						<li><a href="/MDEPlatform/pages_new/ipdData/ipdSearch.html"><i class="fa fa-angle-double-right"></i> IPD高级检索</a></li>
+					</ol>
+				</li>
+				<li>
+					<a><i class="fa fa-plus-square-o"></i> 医学数据标准化（MTS）服务</a>
+					<ol>
+						<li><a href="/MDEPlatform/pages_new/mts/jgbzMTS.html"><i class="fa fa-angle-double-right"></i> 标准规范间映射转化MTS</a></li>
+						<li><a href="/MDEPlatform/pages_new/mts/yljghDataMTS.html"><i class="fa fa-angle-double-right"></i> 医疗数据标准化清洗服务MTS</a></li>
+						<li><a href="/MDEPlatform/pages_new/mts/ylfjghDataMTS.html"><i class="fa fa-angle-double-right"></i> 医疗非结构化数据标准MTS</a></li>
+					</ol>
+				</li>
+				<li>
+					<a><i class="fa fa-plus-square-o"></i> 智能医疗服务</a>
+					<ol>
+						<li><a href="/MDEPlatform/pages_new/registration/search.html"><i class="fa fa-angle-double-right"></i> 智能挂号</a></li>
+						<li><a href="/MDEPlatform/pages_new/registration/orderCenter.html"><i class="fa fa-angle-double-right"></i> 订单服务</a></li>
+						<li><a href="/MDEPlatform/pages_new/registration/personalCenter.html?q_user_id=1"><i class="fa fa-angle-double-right"></i> 个人中心</a></li>
+						<li><a href="/MDEPlatform/pages_new/registration/consultation.html"><i class="fa fa-angle-double-right"></i> 人工服务</a></li>
+					</ol>
+				</li>
+				<li><a href="/MDEPlatform/pages_new/library/bookServiceSearch.html">基于MTS的图书情报服务</a></li>
+				<li><a href="/MDEPlatform/pages_new/biNew/BIIndex.html"> 基于MTS的BI服务</a></li>
+				<li><a href="/MDEPlatform/pages_new/cpa/cpaPayCheck.html">就诊结算单审核服务</a></li>
+				<li><a href="/MDEPlatform/pages_new/on-to-many/cpaSearch.html">一次录入多次输出</a></li>
+			</ul>
+    	</span>
+    	<div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</header>
+<div class="goback" title="返回上一页" onclick="window.history.go(-1);"><i class="fa fa-angle-left"></i></div>
+<div class="gotop" style="display:none" title="返回顶部" onclick="goTop()"><i class="fa fa-angle-up"></i><span style="display:block;line-height:16px;">TOP</span></div>
+<div class="blackBox" onclick="closeAlert()">
+	<div class="alertComfirm">
+		<div class="alertHead"><img src="/MDEPlatform/img/caution_72px_1180489_easyicon.net.png" alt="" /><strong></strong></div>
+		<div class="alertFoot">
+			<a  onclick="userSignOut()" class="ok">确认</a>
+			<a href="#" class="cancel">取消</a>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="blackBox2" style="display: block">
+	<div class="sk-spinner sk-spinner-fading-circle" style="margin-top:20%;">
+        <div class="sk-circle1 sk-circle"></div>
+        <div class="sk-circle2 sk-circle"></div>
+        <div class="sk-circle3 sk-circle"></div>
+        <div class="sk-circle4 sk-circle"></div>
+        <div class="sk-circle5 sk-circle"></div>
+        <div class="sk-circle6 sk-circle"></div>
+        <div class="sk-circle7 sk-circle"></div>
+        <div class="sk-circle8 sk-circle"></div>
+        <div class="sk-circle9 sk-circle"></div>
+        <div class="sk-circle10 sk-circle"></div>
+        <div class="sk-circle11 sk-circle"></div>
+        <div class="sk-circle12 sk-circle"></div>
+    </div>     
+</div>
+<!--<div class="whiteBg"></div>-->
+<!-- <footer class="foot">
+黑龙江特士信息技术有限公司
+</footer> -->
+<link rel="stylesheet" type="text/css" href="/MDEPlatform/css/font-awesome.min93e3.css"/>
+<script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/MDEPlatform/js/platform.js"></script>
+<script>
+	function goTop(){
+		$("body,html").animate({scrollTop:"0"},300);		
+	};
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			var scrollTop = $(this).scrollTop();
+			if(scrollTop>0){
+				$(".gotop").fadeIn()
+			}else{
+				$(".gotop").fadeOut();
+			}
+		})
+		$(".blackBox2").hide();
+		$(".sub-nav>li>a").bind("click",openSubNav);
+//		var isOver = ture;
+//		$(".sub-nav").mouseleave(function(){
+//			$(".sub-nav").stop(true,true).hide();
+//			setTimeout(initSubNav,400);
+//		})
+//		$(".whiteBg").click(function(){
+//			$(".sub-nav").stop(true,true).hide();
+//			$(".whiteBg").hide();
+//			setTimeout(initSubNav,400);
+//		})
+		$.ajax({
+			//url:"queryMzcfListModel.action?mzh="+bname,
+			url:"/MDEPlatform/queryLoginName.action",
+			dataType:"json",
+			type:"post",
+		    async:false,
+		    success:function(data){
+		    	//console.info(data);
+		    	//alert(data.name);
+		    	$("#username").html(data.name);
+		    }
+		});
+	});
+	
+</script>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>视频</title>
+<link rel="stylesheet" href="../../css/base.css">
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome.min93e3.css" rel="stylesheet">   
+    <link href="../../css/animate.min.css" rel="stylesheet">
+    <link href="../../css/style.min862f.css" rel="stylesheet">
+ 	<link rel="stylesheet" href="../../css/style.css">
+ 	<style type="text/css">
+ 		.foot{display: none;}
+ 		.goback{display: none;}
+ 		.gotop{display: none !important;}
+ 	</style>
+</head>
+
+<body class="gray-bg">
+<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <div class="ibox" >
+      <div class="ibox-title">
+      <span style="display:inline-block; font:bold 24px/200% '微软雅黑'; text-align:center; width:100%;" id="title">
+      </span>
+      </div>
+      <div class="ibox-content" style="height:100%">
+      <span id="doc_type"></span>
+        <div id="a1"></div>
+      
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="../../ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+    	var ht=$("body").height();
+    	ht=ht*0.8;
+    	var qlbi_id=getvalue("qlbi_id");
+    	var flashvars={
+    	        f:'findLibVideo.action?searchMenu='+qlbi_id,
+    	        s:0,
+    	        c:0,
+    	        wh:'16:9'
+    	    };
+    	    var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+    	    CKobject.embedSWF('../../ckplayer/ckplayer.swf','a1','ckplayer_a1','100%',ht,flashvars,params);
+    	$.ajax({
+    		url:"findLibDetails.action",
+    		dataType:"json",
+    		type:"post",
+    		data:{searchMenu:qlbi_id},
+    	    async:false,
+    	    success:function(data){
+    	    	var title=data.title_chs==""?data.title_en:data.title_chs;
+    	    	$("#title").text(title);
+    	    	$("#doc_type").text(data.document_type.replace(/,/g,">>"));
+    	    }
+    	})
+    });
+</script>
+</body>
+</html>

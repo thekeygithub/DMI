@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0，charset=utf-8">
+<title>详情</title>
+<link rel="stylesheet" href="../../css/base.css">
+<link href="../../css/commond.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+.h2{ display:inline-block; font:bold 24px/200% "微软雅黑"; text-align:center; width:100%;}
+.i{display:inline-block;  font:12px/200% "微软雅黑" ;text-align:center; color:#999; width:100%;}
+.i i{ padding:0 15px; font-style:normal;}
+.p{display:inline-block;font:16px/200% "微软雅黑"; text-align: justify; padding:10px 20px;word-wrap: break-word; text-indent:2em}
+.foot{display: none;}
+.goback{display: none;}
+.gotop{display: none !important;}
+</style>
+</head>
+
+<body>
+<!--大框子-->
+<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+<div class="block">
+<div class="content">
+  <p><span class="h2" id="title"></span>
+    <span class="i"><i id="source"></i>   <i id="author"></i></span>
+    </p>
+    
+
+</div>
+</div>
+<!--大框子收队-->
+<script type="text/javascript" src="/MDEPlatform/include/jQuery/jquery-1.9.1.js"></script>
+<script>
+//html取值
+function getvalue(name){
+    var str=window.location.search;  
+    		
+    if (str.indexOf("&")==-1){        
+        var pos_start=str.indexOf(name)+name.length+1;
+        return str.substring(pos_start);
+        
+    }else{
+    	var ss=str.split("&");
+    	for(var i in ss){
+    		if(ss[i].indexOf(name)!=-1){
+    			 var start=ss[i].indexOf(name)+name.length+1;
+    			 return ss[i].substring(start);
+    		}
+    	}
+    }
+}
+$(document).ready(function(){
+	var qlbi_id=getvalue("qlbi_id");
+	$.ajax({
+		url:"findLibDetails.action",
+		dataType:"json",
+		type:"post",
+		data:{searchMenu:qlbi_id},
+	    async:false,
+	    success:function(data){
+	    	
+	    	var title=data.title_chs==""?data.title_en:data.title_chs;
+	    	var source=data.source_chs==""?data.source_en:data.source_chs;
+	    	var authors=data.author_chs==""?data.author_en:data.author_chs;
+	    	var h="";
+	    	$("#title").text(title);
+	    	if(""!=source&&null!=source){
+	    		$("#source").text("来源:"+source);
+	    	}
+	    	if(""!=authors&&null!=authors){
+	    		var author=authors.split(",");
+	    		var aut="";
+		    	for(var i in author){
+		    		aut+=author[i]+" ";
+		    	}
+		    	$("#author").text("作者:"+aut.substring(0,aut.length-1));
+	    	}
+	    	
+	    	if(data.detailes!=""){
+	    		var detail=data.detailes.split("@#&");
+	    		for(var i in detail){
+	    			h+= "<p><span class=\"p\">"+detail[i]+"</span></p>";
+	    		}
+	    	}
+	    	$(".content").append(h);
+	    }
+	})
+});
+</script>
+</body>
+</html>

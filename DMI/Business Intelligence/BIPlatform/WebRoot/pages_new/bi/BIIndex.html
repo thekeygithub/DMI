@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BI</title>
+<style type="text/css">
+body{background:url(../../img/index/purebg.jpg); background-size:cover; font-family: "微软雅黑"; font-size:17px;color:#fff; }
+.main_block{ margin:50px auto; width:1340px; height:489px; position:relative;}
+.cilid{ position:relative; width:426px; float:left; margin-left:8px; }.cilid:first-child{ margin-left:0;}
+.cilid h1{ background-image:url(../../img/index/zfzc.png); background-position:12px center; background-repeat: no-repeat; padding-left:50px; font-size:22px; }
+.bi_block{ width:205px; height:196px; background:-webkit-linear-gradient(top,#4899EB,#4899EB); border-radius:10px; position:absolute; left:8px; top:60px;cursor:pointer;}
+.bi_block .img{ padding:0; margin:0; display:block; width:100%; height:140px; background-image:url(../../img/index/allover.png); background-position:center; background-repeat:no-repeat;}
+.bi_block p{ padding:0 16px; margin:0; text-align:left;}
+.hover {  cursor:pointer;}
+</style>
+<script src="../../include/jQuery/jquery-1.9.1.js"></script>
+    <link href="../../css/base.css" rel="stylesheet" >
+</head>
+
+<body >
+<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+<div class="main_block">
+<div class="cilid"><h1>医保总费用支出统计</h1> 
+<div class="bi_block l1" data-url="personalListNew.html" style="left:-120px"><p class="img" style="background-image:url(../../img/index/bing.png)"></p><p>按医院医保费用统计</p></div>
+<div class="bi_block l2" data-url="personalXmListNew.html" style=" background:-webkit-linear-gradient(top,#81BF7D,#52A14E); left:-420px;"><p class="img" ></p><p>按项目类别费用统计</p></div>
+<div class="bi_block l3" data-url="personalBzListNew.html" style="background:#7E3C72; left:-620px; top:262px;"><p class="img" style="background-image:url(../../img/index/bing2.png)"></p><p>按医保报销类别统计</p></div>
+<div class="bi_block l4" data-url="personalListNewByXm.html" style=" left:420px; top:-262px;"><p class="img"></p><p>按医院统计项目类别费用支出</p></div>
+</div>
+<div class="cilid"><h1 style="background-image:url(../../img/index/fltj.png);">疾病费用分类统计</h1>
+<div class="bi_block" data-url="disease_jz.html" style="height:400px;background:-webkit-linear-gradient(top,#499DF1,#0C50AC);"><p class="img" style=" background-image:url(../../img/index/spz1.png); height:335px;"></p><p>按门诊、住院分别统计疾病统计费用</p></div>
+<div class="bi_block" data-url="disease_jb.html" style="background:-webkit-linear-gradient(top,#E08872,#D04928); left:220px;"><p class="img" style="background-image:url(../../img/index/bing3.png);"></p><p>按疾病分类统计费用</p></div>
+<div class="bi_block" data-url="disease_yb.html" style="left:220px; top:262px; "><p class="img"></p><p>按照医保疾病分类统计</p></div>
+</div>
+
+<div class="cilid"><h1 style="background-image:url(../../img/index/ypgy.png)">药品的区域供应关系</h1>
+<div class="bi_block r1" data-url="drug_qyfy.html" style="background:#9DB5CD; height:144px; left:500px;"><p class="img" style="height:100px;"></p><p>区域内药品费用统计</p></div>
+<div class="bi_block r2" data-url="drug_qyxtjg.html" style="left:-220px;"><p class="img" style="background-image:url(../../img/index/bing5.png); "></p><p>按药品分类统计医院费用</p></div>
+
+<div class="bi_block r3" data-url="drug_qyxtfy.html" style="background:-webkit-linear-gradient(top,#E33E67,#AD193D); height:250px; top:-210px;"><p class="img" style="background-image:url(../../img/index/bing4.png);"></p><p>区域内药品系统费用统计</p></div>
+
+
+<div class="bi_block r4" data-url="drug_qyjg.html" style="background:#75999E; top:-262px; left:-220px;"><p class="img"></p><p>区域内医疗机构费用统计</p></div>
+</div>
+</div>
+	<script type="text/javascript">
+        $(document).ready(function (){
+			/*$('div.bi_block').mouseover(function() {
+		        $(this).siblings().stop().fadeTo(500,0.4);
+		    });
+			$('div.bi_block').mouseout(function() {
+		        $(this).siblings().stop().fadeTo(500,1);
+		    });
+			*/
+			$("div.l1").animate({'top':'60px','left':'8px',});
+			$("div.l2").animate({'top':'60px','left':'220px',});
+			$("div.l3").animate({'top':'262px','left':'8px',});
+			$("div.l4").animate({'top':'262px','left':'220px',});
+			$("div.r1").animate({'top':'60px','left':'8px',});
+			$("div.r2").animate({'top':'60px','left':'220px',});
+			$("div.r3").animate({'top':'210px','left':'8px',});
+			$("div.r4").animate({'top':'262px','left':'220px',});
+			setTimeout(function(){
+				$('div.bi_block').hover(
+				    function(){
+				         $(this).siblings().stop().fadeTo(500,0.4);
+				    },
+				    function(){
+				        $(this).siblings().stop().fadeTo(500,1);
+				    }
+				)
+			},500)
+			$(".bi_block").click(function(){
+				location.href=$(this).attr("data-url");
+			});
+		});
+	</script>
+</body>
+</html>

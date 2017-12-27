@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>慢性病健康管理档案</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		.page-part {
+			padding: 30px 0;
+		}
+		table th {
+			width: 20%;
+			background: #81bcf8;
+			text-indent: 10px;
+			text-align:left;
+		}
+		table tr {
+			width: 80%;
+		}
+		h3 {
+			background: #81BCF8;
+			padding: 15px 0;
+			color: #FFFFFF;
+			font-family: "微软雅黑";
+			border:1px solid #fff;
+			margin: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+		}
+	</style>
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center">健康管理档案</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>编号：</th>
+				<td id="DOC_NO"></td>
+			</tr>
+			<tr>
+				<th>姓名：</th>
+				<td id="USER_NAME"></td>
+			</tr>
+			<tr>
+				<th>现住址：</th>
+				<td id="PRESENT_ADDR"></td>
+			</tr>
+			<tr>
+				<th>户籍地址：</th>
+				<td id="PERMANENT_ADDR"></td>
+			</tr>
+			<tr>
+				<th>联系电话：</th>
+				<td id="PHONE"></td>
+			</tr>
+			<tr>
+				<th>乡镇(街道)名称：</th>
+				<td id="SUBDISTRICT"></td>
+			</tr>
+			<tr>
+				<th>村(居)委会名称：</th>
+				<td id="COMMITTEE"></td>
+			</tr>
+			<tr>
+				<th>建档单位：</th>
+				<td id="DEPARTMENT"></td>
+			</tr>
+			<tr>
+				<th>建档人：</th>
+				<td id="CREATOR"></td>
+			</tr>
+			<tr>
+				<th>责任医生：</th>
+				<td id="DOCTOR"></td>
+			</tr>
+			<tr>
+				<th>建档日期：</th>
+				<td id="CREATE_DATE"></td>
+			</tr>
+		</table>
+	</div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	
+        var id=getvalue("id");
+        var cardno=id.split("@")[0];
+        var docno=id.split("@")[1];
+      
+	    $.ajax({
+			url:"tian/findHealthCover.action",
+			dataType:"json",
+			data:{cardno:cardno,bname:docno},
+			type:"post",
+		    async:false,
+		    success:function(data){
+		    	$("td").each(function(){
+		    		$(this).text(data[$(this).attr("id")]);
+		    		
+		    	});
+		    	$("#CREATE_DATE").text(data["CREATE_DATE"].substring(0,10));
+		    }
+	    });
+    });
+	</script>
+</body>
+</html>

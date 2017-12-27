@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>搜索页</title>
+<link rel="stylesheet" href="../../css/base.css">
+<link href="../../css/commond2.css" rel="stylesheet" type="text/css">
+<link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../../css//but.css" rel="stylesheet" type="text/css">
+<script src="../../js/bootstrap.min.js"></script>
+
+<style >
+/*地址搜索框样式*/
+.txtshow{ border:none; width:345px; height:40px; overflow:hidden; padding:0 35px 0 10px; line-height:36px; resize:none;}
+
+/*地址搜索框样式OVER*/
+/*地址弹窗样式*/
+.dres{ display:none; position:absolute; top:170px; left:30px; width:960px; background:#fff; padding:20px 10px; border:1px solid #DBDBEA; border-radius:5px;}
+.dres table.list{ font:13px/120% "微软雅黑"; width:100%; border-collapse:collapse; text-align:left; text-indent:20px; color:#333;}
+.dres table.list td,.dres table.list th{ height:36px; border-bottom:1px solid #86837E; font-weight:normal; }
+.dres table.list tr:hover{ background:#FFF0C4;}
+.dres table.list td{ border-bottom:1px solid #DADADA;}
+.dres .button{ display:block; width:235px; height:42px; background:#5AC2E7; margin:0 auto; clear:both; font:bold 20px/40px "宋体"; text-align:center; color:#FFF;cursor: pointer; margin:15px auto 0 auto;}
+.dres .button:hover{background:#06F; color:#CCC;}
+.dres .y,.dres .z{position:absolute;left:130px;}
+.dres .y{color:#fff;top:-10px; left:500px;}/*模拟小三角*/
+.dres .z{color:#DBDBEA;top:-11px;left:501px;}/*模拟小三角*/
+/*地址弹窗样式OVER*/
+/*早午晚样式*/
+*{list-style: none;}
+.form {
+	width: 100px;
+	padding: 0;
+	background: #78BB53;
+	display: block;
+	margin: 0px auto;
+	border-radius: 3px;
+	color: #fff;
+}
+.form fieldset {
+	margin:  0;
+}
+.form-control[readonly]{ cursor:pointer;}
+.select_wrapper {
+	background: #78BB53 url(../../img/arrow.png) no-repeat top 15px right 12px;
+	line-height: 40px;
+	border-radius: 3px;
+	cursor: pointer;
+	position: relative;
+}
+.select_wrapper:hover {
+	background: #5F9B3E url(../../img/arrow.png) no-repeat top 15px right 12px;
+}
+.select_wrapper span {
+	display: block;
+	margin: 0 30px 0 15px;
+}
+.select_wrapper .select_inner {
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+	color: #687278;
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 100%;
+	width: 100%;
+	z-index: 3;
+}
+.select_wrapper .select_inner li {
+	font:13px/40px "微软雅黑"; 
+	 color:#333;
+	border-bottom: 1px solid #eee;
+	padding-left:30px;
+}
+.select_wrapper .select_inner li:hover {
+	background: #eee;
+}
+.select_wrapper .select_inner li:last-child {
+	border: none;
+	border-radius: 0 0 5px 5px;
+}
+.select_wrapper .select_inner li:first-child {
+	border-radius: 5px 5px 0 0;
+}
+.btn{font-size: 24px!important;}
+/*早午晚样式 OVER*/
+.input-group-addon,.form-control[readonly]{height:40px; border:none; background:#78BB53; color:#fff;}
+/*日历定位*/
+.datetimepicker{ margin-left:-120px ;}
+.foot{display: none;}
+</style>
+</head>
+
+<body class="sc">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+
+	<script src="../../js/jquery-1.12.4.js"></script>
+	<link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+	<script src="../../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+	<script src="../../js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<div class=" login-body" style="margin-top: 130px">
+		<div class="box">
+			<div class="form-item">
+				<input style="width: 774px;" type="text" placeholder="请输入您所患的病症" id="disease">
+				<button type="button" class="btn btn-blue block btn-login" onclick="startSearch()">开始搜索</button>
+			</div>
+			<div style="float: left; margin-top: 24px; width: 700px; height: 40px;">
+				<!--日历控件-->
+				<span style="float: left; background: #78BB53; width: 163px; height: 40px; margin-right: 16px;">
+					<div class="form-group">
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy- mm- dd" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm-dd">
+							<input id="today" class="form-control" size="16" type="text"
+								value="" readonly> <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" /><br />
+					</div> <script type="text/javascript">
+				function today(){ 
+					function zero (obj) {
+			  			if (obj < 10) return "0" + obj; else return obj;
+					}
+				    var today=new Date(); 
+				    var h=today.getFullYear(); 
+				    var m=today.getMonth()+1; 
+				    var d=today.getDate()+1;      
+					return h+"- "+zero(m)+"- "+zero(d); 
+				} 
+				function thirtyAfterToday(){ 
+					function zero (obj) {
+			  			if (obj < 10) return "0" + obj; else return obj;
+					}
+				    var today=new Date(); 
+				    today=+today+1000*60*60*24*30;
+				    today=new Date(today);
+				    var h=today.getFullYear(); 
+				    
+				    var m=today.getMonth()+1; 
+				    var d=today.getDate();    
+				    
+					return h+"-"+zero(m)+"-"+zero(d); 
+				} 
+				$("#today").val(today())
+				$('.form_date').datetimepicker({
+			        language:  'zh-CN',
+			        weekStart: 1,
+			        todayBtn:  0,
+					autoclose: 1,
+					todayHighlight: 1,
+					startView: 2,
+					minView: 2,
+					forceParse: 0,
+					startDate:today().trim(),
+					endDate:thirtyAfterToday()
+			    });
+				$('.dropdown-menu').css('left','20px')
+			</script>
+
+				</span>
+				<!--日历控件结束-->
+				<!--中午下拉-->
+				<span
+					style="float: left; margin-right: 16px; width: 100px; height: 40px; border: none;">
+					<form class="form" action='#' method='post'>
+						<fieldset>
+							<select class="selectbox" id="period" name="">
+								<option value="">全天</option>
+								<option value="1">上午</option>
+								<option value="2">下午</option>
+							</select>
+						</fieldset>
+					</form>
+				</span>
+				<script type="text/javascript">
+					$(document).ready(function (){
+						$(document).on("click",function(){
+							if(!$('div.dres').is(":hidden")){
+								$('div.dres').slideToggle('fast');
+							}
+							if(!$(".select_inner").is(":hidden")){
+								$(".select_inner").slideToggle('fast');
+							}
+						});
+						$('.selectbox').wrap('<div class="select_wrapper"></div>')
+						$('.selectbox').parent().prepend('<span>'+ $(this).find(':selected').text() +'</span>');
+						$('.selectbox').parent().children('span').width($('.selectbox').width());	
+						$('.selectbox').css('display', 'none');					
+						$('.selectbox').parent().append('<ul class="select_inner"></ul>');
+						$('.selectbox').children().each(function(){
+							var opttext = $(this).text();
+							var optval = $(this).val();
+							$('.selectbox').parent().children('.select_inner').append('<li id="' + optval + '">' + opttext + '</li>');
+						});
+					
+						$('.selectbox').parent().find('li').on('click', function (){
+							var cur = $(this).attr('id');
+							$('.selectbox').parent().children('span').text($(this).text());
+							$('.selectbox').children().removeAttr('selected');
+							$('.selectbox').children('[value="'+cur+'"]').attr('selected','selected');
+							/*alert($('.selectbox').children('[value="'+cur+'"]').text());				
+							console.log($('.selectbox').children('[value="'+cur+'"]').text());*/
+						});
+						
+						$('.selectbox').parent().on('click', function (event){
+							event.stopImmediatePropagation();
+							$(this).find('ul').slideToggle('fast');
+							if(!$('div.dres').is(":hidden")){
+								$('div.dres').slideToggle('fast');
+							}
+						});
+					});
+				</script>
+				<!--中午下拉结束-->
+				<!--选择地址-->
+				<span style="float: left; margin-right: 16px; background: #78BB53; width: 345px; height: 40px; border: none;">
+					<input id="txtShow" value="" class="select_wrapper txtshow">
+					<script>
+					    var q_user_id=1
+			            $(function() { 
+			            	 $.ajax({
+			          			url:"queryUserInfoList.action?q_user_id="+q_user_id,
+			          			dataType:"json",
+			          			type:"post",
+			          		    async:false,
+			          		    success:function(data){
+			          		    	
+			          		    	var h="";
+			          		        for(var i in data){
+			          		        	var sex=data[i].GENDER==1?"男":"女";
+			          		        	var index=parseInt(i)+1;
+			          		        	h+="<tr ";
+			          		        	if(data[i].IS_DEFAULT==1){
+			          		        		h+="class=\"idt\"";
+			          		        	}
+			          		        	h+="><td>"+index+"</td><td class=\"name\">"+data[i].USER_NAME+"</td><td>"+sex+"</td><td>"+data[i].AGE+"</td><td>"+data[i].MOBILE+"</td><td class=\"place\">"+data[i].ADDRESS.replace("@#","").replace("@#","")+"</td><td><a class=\"addr_id\" data-jd=\""+data[i].LONGITUDE+"\" data-wd=\""+data[i].LATITUDE+"\" data-addrid=\""+data[i].ADDR_ID+"\" href=\"#\"></a></td></tr>";
+			          		        }
+			          		        $("#addrList").html(h);
+			          		    }
+			            	});
+							$("#txtShow").val($('tr.idt td.name').html()+","+$('tr.idt td.place').html());		
+							$("#addr_id").val($("tr.idt").find("a.addr_id").attr("data-addrid"));
+							$("#longitude").val($("tr.idt").find("a.addr_id").attr("data-jd"));
+	                        $("#latitude").val($("tr.idt").find("a.addr_id").attr("data-wd"));
+							$('#txtShow').on('click', function (event){
+								event.stopImmediatePropagation();
+								$('div.dres').slideToggle('fast'); 
+								if(!$(".select_inner").is(":hidden")){
+									$(".select_inner").slideToggle('fast');
+								}
+							});	    
+			                $(".ttbb > tr").click(function(event){  
+			                	event.stopImmediatePropagation();
+								$('div.dres').slideToggle('fast'); 
+			                    if ($(this).find('td').length > 0){
+			                        $("#txtShow").val($(this).children('td.name').html()+","+$(this).children('td.place').html());
+			                        $("#longitude").val($(this).find("a.addr_id").attr("data-jd"));
+			                        $("#latitude").val($(this).find("a.addr_id").attr("data-wd"));
+			                        $("#addr_id").val($(this).find("a.addr_id").attr("data-addrid"));
+			                    }else{                
+			                        $("#txtShow").val($(this).html());
+			                    }
+			                })
+			            })
+			            function startSearch(){
+			            	var addr_id=$("#addr_id").val();
+			            	var q_date=$("#today").val();
+			            	var prefer="";
+			            	if($("#save_login").prop("checked")){
+			            		prefer=0;
+			            	}
+			            	var disease=$("#disease").val();
+			            	var period=$("#period").val();
+			            	var jd=$("#longitude").val();
+			            	var wd=$("#latitude").val();
+			            	
+			            	//alert(addr_id+"---"+q_date+"---"+prefer+"---"+disease+"---"+jd+"---"+wd);
+			            	/* $.ajax({
+			              		url:"queryDoctorPlans.action",
+			              		dataType:"json",
+			              		data:{q_period:period,q_addr_id:addr_id,q_date:q_date,q_need_prefer:prefer,q_disease:disease},
+			              		type:"post",
+			              		async:false,
+			              		success:function(data){
+			              			alert(data);
+			              			console.info(data);
+			              		}
+			            	}); */
+			            	location.href="registration.html?jd="+jd+"&wd="+wd+"&q_period="+period+"&q_addr_id="+addr_id+"&q_date="+q_date+"&q_need_prefer="+prefer+"&q_disease="+disease;
+			            	 
+			            }
+					    function selUserInfo(){
+					    	location.href="personalCenter.html?q_user_id="+q_user_id;
+					    }
+			        </script>
+                    <input type="hidden" id="addr_id">
+                    <input type="hidden" id="longitude">
+                    <input type="hidden" id="latitude">
+					<div id="dres" class="dres">
+						<div class="z">◆</div>
+						<div class="y">◆</div>
+						<table class="list">
+							
+								<tr>
+									<th>序号</th>
+									<th>姓名</th>
+									<th>性别</th>
+									<th>年龄</th>
+									<th>电话</th>
+									<th>地址</th>
+									<th></th>
+								</tr>
+							<tbody id="addrList" class="ttbb">	
+							</tbody>
+						</table>
+
+						<div class="button" onclick="selUserInfo()">修改或添加信息</div>
+					</div>
+				</span>
+				<!--选择地址OVER-->
+			</div>
+			<div class="checkbox-group" style="float: left; margin-top: 24px;">
+				<input style="float: left;" type="checkbox" checked="checked"
+					id="save_login"> <label style="float: left;"
+					for="save_login" class="checkbox"> 使用我的偏好 </label> <!-- <span
+					style="float: left; margin-left: 20px;"> <a href="#"
+					class="btn btn-link"> 查看偏好设置 </a></span> -->
+			</div>
+		</div>
+	</div>
+</body>
+</html>

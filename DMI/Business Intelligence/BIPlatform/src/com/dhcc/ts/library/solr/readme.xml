@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------
+group_concat函数默认的长度是1024  
+需要根据文本内容的大小修改
+现在是102400
+Mysql中执行以下语句后重新打开数据库
+SET GLOBAL group_concat_max_len=102400;
+SET SESSION group_concat_max_len=102400;
+longtext：4294967295
+-------------------------------------------------------------------------
+Facet 参数
+facet.prefix  –   限制constaints的前缀
+facet.mincount=0 –  限制constants count的最小返回值，默认为0
+facet.sort=count –  排序的方式，根据count或者index
+facet.offset=0  –   表示在当前排序情况下的偏移，可以做分页
+facet.limit=100 –  constraints返回的数目
+facet.missing=false –  是否返回没有值的field
+facet.date –  Deprecated, use facet.range
+facet.query
+指定一个查询字符串作为Facet Constraint
+-------------------------------------------------------------------------

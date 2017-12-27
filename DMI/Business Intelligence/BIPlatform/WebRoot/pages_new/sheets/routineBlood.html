@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>检验报告单</title>
+	<link rel="stylesheet" href="../../css/base.css">	
+	
+	<link href="../../css/animate.min.css" rel="stylesheet">
+	<link href="../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<style>
+		h3 {
+			font-family: "微软雅黑";
+			margin-bottom: 20px;
+		}
+		.row {
+			font-size: 12px;
+			line-height: 24px;
+		}
+		table {
+			width: 100%;
+		}
+		.tables {
+			margin-top: 10px;
+			border-top:2px solid #333;
+			border-bottom:2px solid #333;
+		}
+		.tables .col-sm-6 {
+			padding: 0;
+			height: 386px;
+		}
+		.tables .col-sm-6 thead {
+			border-bottom: 2px solid #333;
+		}
+		table tr th,table tr td {
+			width: 15%;
+		}
+		table tr th:first-child,table tr td:first-child {
+			width: 10%;
+		}
+		table tr th:nth-child(3),table tr td:nth-child(3)  {
+			width: 30%;
+		}
+	</style>
+	
+</head>
+<body class="gray-bg">
+	<jsp:include flush="true" page="../topAndFooter.html"></jsp:include>
+	<div class="page-part wrapper wrapper-content animated fadeInRight">
+		<h3 class="text-center" id="bt"></h3>
+		<div class="row">
+			<div class="col-sm-3"><strong>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</strong><span id="CXM"></span></div>
+			<div class="col-sm-3"><strong>病&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;案：</strong><span id="CBAH"></span></div>
+			<div class="col-sm-3"><strong>费&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</strong><span id="CSFZL"></span></div>
+			<div class="col-sm-3"><strong>标本编号：</strong><span id="bh"></span></div>
+			<div class="col-sm-3"><strong>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</strong><span id="CXB"></span></div>
+			<div class="col-sm-3"><strong>申请科室：</strong><span id="CKDKS"></span></div>
+			<div class="col-sm-3"><strong>送检医师：</strong><span id="CKDYS"></span></div>
+			<div class="col-sm-3"><strong>条码编号：</strong><span id="tm"></span></div>
+			<div class="col-sm-3"><strong>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</strong><span id="INL"></span></div>
+			<div class="col-sm-3"><strong>床&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</strong><span id="CCWH"></span></div>
+			<div class="col-sm-3"><strong>标本种类：</strong><span id="CYBLX"></span></div>
+			<div class="col-sm-3"><strong>临床诊断：</strong><span id="CMZZDMC"></span></div>
+		</div>
+		<div class="row tables">
+			<div class="col-sm-6" style="border-right: 1px solid #333;">
+				<table>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>代码</th>
+							<th>项目名称</th>
+							<th>结果</th>
+							<th>单位</th>
+							<th>参考值</th>
+						</tr>
+					</thead>
+					<tbody id="detailList">
+						
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-6" style="border-left: 1px solid #333;">
+				<table>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>代码</th>
+							<th>项目名称</th>
+							<th>结果</th>
+							<th>单位</th>
+							<th>参考值</th>
+						</tr>
+					</thead>
+					<tbody id="detailList1">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4"><strong>核收时间：</strong><span id="hssj"></span></div>
+			<div class="col-sm-4"><strong>报告时间：</strong><span id="bgsj"></span></div>
+			<div class="col-sm-2"><strong>检验者：</strong><span id="jyz"></span></div>
+			<div class="col-sm-2"><strong>审核者：</strong><span id="shz"></span></div>
+		</div>
+		<div class="row">
+			<div class="col-sm-10"><strong>备注：</strong><span></span></div>
+			<div class="col-sm-2 text-right"><strong>此结果仅对本样本负责!</strong></div>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function(){
+		var cardno=getvalue("cardno");
+		var bname=getvalue("bname");
+		var ttype=getvalue("ttype");
+	    var ran1=Math.random()*Math.pow(10,6);//随机条码
+	    var ran2=Math.random()*Math.pow(10,2);//随机编号
+	   
+	    var jyzs=["陈迪","肖东菁","汪佳丽","傅双育","王聪","李璇","马舒滟","许青云","张奕","田野","彭亚光","殷夏 "];
+	    var shzs=["樊周依","武文嘉","徐珺","盛珺","刘嵩","梁艳","于敏","韩婧","黄彩萍","王伟鹏","曹兵","李贞"];
+	    var index=parseInt(Math.random()*11);
+	    var jyz=jyzs[index];
+	    var shz=shzs[index];
+	    $("#jyz").text(jyz);
+	    $("#shz").text(shz);  
+	    $("#tm").text("0300"+ran1.toString().split(".")[0]);
+	    $("#bh").text(ran2.toString().substring(0,2));
+		$.ajax({
+			url:"tian/findTestDataDetail.action",
+			dataType:"json",
+			type:"post",
+			data:{cardno:cardno,bname:bname,ttype:ttype},
+		    async:false,
+		    success:function(data){
+		    	var bgsj=data["DRYSJ"].substring(0,10);
+		    	$("#hssj").text(bgsj);
+		    	$("#bgsj").text(bgsj);
+		    	$("#bt").text(data["HOS_NAME"]+data["CBGMC"]+"报告单");
+		        $("span").each(function(){
+		        	if($(this).attr("id")!="detailList"){
+		        	    $(this).text(data[$(this).attr("id")]);
+		            }
+		        });
+		        var d=data["detailList"];
+		        var h="";
+		        var h1="";
+		        for(var i in d){
+		        	var index=parseInt(i)+1;
+		        	if(i<15){
+			        	h+="<tr><td>"+index+"</td><td>"+d[i].CALIAS+"</td><td>"+d[i].CJYSJXMMC+"</td><td>"+d[i].CXMJG+"</td><td>"+d[i].CDW+"</td><td>"+d[i].CCKZ+"</td></tr>"
+
+		        	}else{
+		        		h1+="<tr><td>"+index+"</td><td>"+d[i].CALIAS+"</td><td>"+d[i].CJYSJXMMC+"</td><td>"+d[i].CXMJG+"</td><td>"+d[i].CDW+"</td><td>"+d[i].CCKZ+"</td></tr>";
+		        	}
+		        	if(i==25){
+		    	    	break;
+		    	    }
+		        }
+		        $("#detailList").html(h);
+		        $("#detailList1").html(h1);
+		    }
+		})
+	});
+	
+	</script>
+</body>
+</html>
