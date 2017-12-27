@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+<!-- 	<context:property-placeholder location="classpath:jdbc.properties" /> -->
+	<context:property-placeholder location="classpath:*.properties" />
+	
+	<context:component-scan base-package="com.aghit" />
+	
+	<!-- Spring容器管理类-->
+	<bean id="springBeanUtil" class="com.aghit.utils.SpringBeanUtil" init-method="fetchSpringContext"/>
+	
+	<!--<jee:jndi-lookup id="dataSource" jndi-name="${jdbc.jndiname}"/>-->
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
+	p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}"
+	p:maxActive="${jdbc.maxActive}" p:maxIdle="${jdbc.maxIdle}" p:maxWait="${jdbc.maxWait}"
+	p:defaultAutoCommit="${jdbc.defaultAutoCommit}" />
+	
+	<bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy" p:targetDataSource-ref="dataSource"/>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" p:dataSource-ref="dataSourceProxy"/>
+	
+	<bean id="jdbcTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSourceProxy"/>
+    
+    <bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" lazy-init="true" />
+	
+	<bean id="oracleLobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" lazy-init="true">
+		<property name="nativeJdbcExtractor" ref="nativeJdbcExtractor" />
+	</bean>
+    
+    <bean id="jdbcService" class="com.framework.db.jdbc.JdbcOracleService">
+        <property name="jdbcTemplate">
+            <ref bean="jdbcTemplate"/>
+        </property>
+        <property name="lobHandler">
+            <ref bean="oracleLobHandler"/>
+        </property>
+    </bean>
+    
+    <tx:advice id="txAdvice" transaction-manager="jdbcTransactionManager">
+		<tx:attributes>
+			<tx:method name="execute*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="qry*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="noTrans*" propagation="NOT_SUPPORTED"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config expose-proxy="true" proxy-target-class="true">
+		<aop:pointcut id="txPointcut" expression="execution(public * com.aghit.task..*.service.impl..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+	
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>ApplicationResources</value>
+			</list>
+		</property>
+	</bean>
+	
+    <!-- 运行时接口 -->
+<!-- 	<bean id="kldataService" class="com.aghit.task.runtime.OntologyKLData" init-method="init" /> -->
+	<bean id="kldataService" class="com.aghit.task.runtime.RunTimeKLData" init-method="init" />
+	
+	<!-- 初始化患者单例-->
+	<bean id="patientMgr" class="com.aghit.task.manager.PatientMgr" factory-method="getInstance"/>
+
+	<!-- 初始化缓存信息-->
+	<bean id="cacheService" class="com.aghit.task.common.service.impl.CacheServiceImpl" init-method="initCache" />
+	
+<!-- 	启动引擎 -->
+	<bean id="commonService" class="com.aghit.task.common.service.impl.CommonServiceImpl" init-method="startCPA" />
+    
+    <!-- 知识库 -->
+    <bean id="knowledgeDataService" class="com.aghit.task.common.service.impl.KlDataServiceImpl" />
+    
+<!--     <bean id = "test" class="com.aghit.task.common.service.impl.KlDataServiceImpl" init-method = "test" /> -->
+<!-- 	<bean id="taskExecutor" class="java.util.concurrent.ThreadPoolExecutor"> -->
+<!-- 		<constructor-arg value="${maxThread}" />	 -->
+<!-- 	</bean> -->
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数  -->
+		<property name="corePoolSize" value="${thread.corePoolSize}" />
+		<!-- 最大线程数 -->
+		<property name="maxPoolSize" value="${maxThread}" />
+		<!-- 队列最大长度 >=mainExecutor.maxSize -->
+		<property name="queueCapacity" value="${thread.queueCapacity}" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="${thread.keepAliveSeconds}" />
+		<!-- 线程池对拒绝任务(无线程可用)的处理策略 -->
+		<property name="rejectedExecutionHandler">
+			 <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+		</property>
+	</bean>
+
+
+</beans>

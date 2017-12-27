@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="deployUat" name="aghit">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+
+    <path id="aghit.classpath">
+        <pathelement location="WebRoot/WEB-INF/classes"/>
+        <fileset dir="WebRoot/WEB-INF/lib" includes="**/*.jar"></fileset>
+    </path>
+    <target name="clean">
+    	<echo message="删除之前的class、war文件"/>
+    	<delete file="cpa.war" />
+        <delete dir="WebRoot/WEB-INF/classes"/>
+    </target>
+    <target depends="clean" name="init">
+        <mkdir dir="WebRoot/WEB-INF/classes"/>
+        <copy includeemptydirs="false" todir="WebRoot/WEB-INF/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+
+
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" encoding="UTF-8" debuglevel="${debuglevel}" destdir="WebRoot/WEB-INF/classes" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="aghit.classpath"/>
+        </javac>
+    </target>
+    
+    <target name="makeWas">
+    	<war destfile="cpa.war" webxml="./WebRoot/WEB-INF/web.xml">
+			<fileset dir="./WebRoot">
+				<include name="**/*.*"/>
+			</fileset>
+		</war>
+    </target>
+    
+    
+    <target name="copyUatConf">
+    	<echo message="复制测试环境的配置文件"/>
+    	<copy todir="WebRoot/WEB-INF/classes" file="deployConf/uat/jdbc.properties" overwrite="true"/>
+      <copy todir="WebRoot/WEB-INF/classes" file="deployConf/uat/scheduler-config.properties" overwrite="true"/>
+    	<copy todir="WebRoot/WEB-INF" file="deployConf/uat/log4j.properties" overwrite="true"/>
+    </target>
+    <target name="copyDevConf">
+    	<echo message="复制开发环境的配置文件"/>
+    	<copy todir="WebRoot/WEB-INF/classes" file="deployConf/dev/jdbc.properties" overwrite="true"/>
+      <copy todir="WebRoot/WEB-INF/classes" file="deployConf/dev/scheduler-config.properties" overwrite="true"/>
+    	<copy todir="WebRoot/WEB-INF" file="deployConf/dev/log4j.properties" overwrite="true"/>
+    </target>
+    <target name="copyPuyangConf">
+    	<echo message="复制濮阳环境的配置文件"/>
+    	<copy todir="WebRoot/WEB-INF/classes" file="deployConf/puyang/jdbc.properties" overwrite="true"/>
+      <copy todir="WebRoot/WEB-INF/classes" file="deployConf/puyang/scheduler-config.properties" overwrite="true"/>
+    	<copy todir="WebRoot/WEB-INF" file="deployConf/puyang/log4j.properties" overwrite="true"/>
+    </target>
+    <target name="copyChengduConf">
+    	<echo message="复制成都环境的配置文件"/>
+    	<copy todir="WebRoot/WEB-INF/classes" file="deployConf/chengdu/jdbc.properties" overwrite="true"/>
+      <copy todir="WebRoot/WEB-INF/classes" file="deployConf/chengdu/scheduler-config.properties" overwrite="true"/>
+    	<copy todir="WebRoot/WEB-INF" file="deployConf/chengdu/log4j.properties" overwrite="true"/>
+    </target>
+
+    <!-- 生成测试环境的war文件  -->
+    <target depends="build-project,copyUatConf,makeWas" name="deployUat"/>
+    <!-- 生成开发环境的war文件 -->
+    <target depends="build-project,copyDevConf,makeWas" name="deployDev"/>
+    <!-- 生成濮阳环境的war文件 -->
+    <target depends="build-project,copyPuyangConf,makeWas" name="deployPuyang"/>
+    <!-- 生成成都环境的war文件 -->
+    <target depends="build-project,copyChengduConf,makeWas" name="deployChengdu"/>
+    
+</project>
