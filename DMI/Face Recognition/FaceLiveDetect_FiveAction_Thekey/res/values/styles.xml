@@ -1,0 +1,39 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+   <style name="AnimActivityTheme">
+        <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <style name="FeelyouWindowAnimTheme" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/htjc_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/htjc_out_from_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/htjc_in_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/htjc_out_from_right</item>
+    </style>
+    
+    <!-- 下载进度条样式 -->
+	<style name="progressBarHorizontal" parent="android:Widget.ProgressBar.Horizontal">
+		<item name="android:indeterminateOnly">false</item>
+		<item name="android:progressDrawable">@drawable/htjc_progress_horizontal</item>
+		<item name="android:minHeight">5dp</item>
+		<item name="android:maxHeight">60dp</item>
+	</style>
+    
+</resources>

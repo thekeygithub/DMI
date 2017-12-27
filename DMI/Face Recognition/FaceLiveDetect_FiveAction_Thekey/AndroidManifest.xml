@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hisign.facelivedetection"
+    android:versionCode="1"
+    android:versionName="1.2.5" >
+
+    <uses-sdk
+        android:minSdkVersion="12"
+        android:targetSdkVersion="16" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+    
+    
+    
+    <application
+        android:name="com.livedetect.application.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/htjc_slog"
+        android:label="@string/htjc_app_name"
+        android:persistent="true"
+        android:largeHeap="true"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name="com.livedetect.MainActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:label="@string/htjc_app_name"
+            android:screenOrientation="portrait"  android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.livedetect.LiveDetectActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.livedetect.SuccessActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:label="@string/htjc_app_name"
+            android:screenOrientation="portrait" android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name="com.livedetect.FailActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:label="@string/htjc_app_name"
+            android:screenOrientation="portrait" android:launchMode="singleTask">
+        </activity>
+    </application>
+
+</manifest>

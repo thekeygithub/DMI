@@ -1,0 +1,419 @@
+com.hisign.FaceSDK.FaceLiveDetect:
+    public static final int THID_METHOD_NUM
+    public static final int THID_METHOD_GAZE_EXTEND
+    public static final int THID_METHOD_SHAKE
+    public static final int THID_METHOD_NOD
+    public static final int THID_METHOD_LeftHead
+    public static final int THID_METHOD_RightHead
+    5:5:public FaceLiveDetect()
+    56:72:public static int InitLiveDetect(int,int)
+    public static synchronized native int THIDUninitLiveDetectChannel(int)
+    public synchronized native int THIDSetLiveParam(int,int[])
+    public synchronized native int THIDGetLiveParam(int,int[])
+    public static synchronized native int THIDSetNextObjPositionEx(int,int,int)
+    226:241:public static java.lang.String THIDGetHardwardInfo()
+    public static synchronized native int jniGetHardwardInfo(byte[])
+    public static synchronized native java.lang.String jniGetSDKVersionInfo(long[])
+    265:276:public static java.lang.String GetSDKVersionInfo(long[])
+    288:290:public static byte[] RGBtoYUV(byte[],int,int)
+    public static native int jniRGBtoYUV(byte[],byte[],int,int)
+com.hisign.facedetectv1small.BlurDetect
+com.hisign.facedetectv1small.EyeLocate
+com.hisign.facedetectv1small.EyeLocate$THIDEyePointF
+com.hisign.facedetectv1small.FaceDetect:
+    private static final java.lang.String TAG
+    private native int jniSetFaceDetectLibPath(java.lang.String)
+    private native int jniUninitFaceDetect()
+    private native int jniRGB565toGray(byte[],byte[],int,int)
+    95:107:public int THIDSetFaceDetectLibPath(java.lang.String)
+    135:143:public int THIDUninitFaceDetect()
+    162:165:public int THIDFaceDetectEx(byte[],int,int,android.graphics.Rect,int,int,com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[],int[])
+    276:277:public int THIDFaceDetect(byte[],int,int,android.graphics.Rect,int,int,com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[],int[])
+    399:409:public int THIDGetFaceQuality(byte[],int[],com.hisign.facedetectv1small.FaceDetect$THIDFaceQualityScore,int,int)
+    471:480:public int RGB565toGray(byte[],byte[],int,int)
+com.hisign.facedetectv1small.IllumineDetect
+com.hisign.facedetectv1small.IllumineDetect$THIDEyePoint
+com.hisign.facedetectv1small.IllumineDetect$THIDMouthPoint
+com.hisign.facedetectv1small.LiveDetect:
+    private static final java.lang.String TAG
+    private static final int IMAGE_FORMAT_BGR
+    private static final int IMAGE_FORMAT_RGB
+    private native int jniInitLiveDetectSDK(int,int,int,int)
+    private native int jniSelectFaceTracking(byte[],int[],int[])
+    private native int jniLiveDetectProcess(byte[],int[],int,int,float[],int[])
+    private native int jniLive3DDetectProcess(byte[],int,int[],int,int,float[],int[])
+    private native int jniSkinColorDetectProcess(byte[],int,int[],int,float[],int[])
+    private native int jniUnInitLiveDetectSDK()
+    149:162:public int THIDInitLiveDetectSDK(int,int)
+    177:189:public static int THIDEnd3dWorking()
+    207:229:public int THIDSelectFaceTracking(byte[],com.hisign.facedetectv1small.LiveDetect$THIDFaceTrackData[],int[])
+    249:280:public int THIDLiveDetectProcess(byte[],com.hisign.facedetectv1small.LiveDetect$THIDFaceTrackData[],int,com.hisign.facedetectv1small.LiveDetect$THIDMovementType,float[],com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState[])
+    302:331:public int THIDSkinColorDetectProcess(byte[],com.hisign.facedetectv1small.LiveDetect$THIDFaceTrackData[],int,float[],com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState[])
+    352:387:public int THIDLive3DDetectProcess(byte[],com.hisign.facedetectv1small.LiveDetect$THIDFaceTrackData[],int,com.hisign.facedetectv1small.LiveDetect$THIDMovementType,float[],com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState[])
+    407:417:public int THIDUnInitLiveDetectSDK()
+com.hisign.facedetectv1small.SkinColorDetect
+com.hisign.facelivedetection.BuildConfig
+com.hisign.facelivedetection.R
+com.hisign.facelivedetection.R$anim
+com.hisign.facelivedetection.R$attr
+com.hisign.facelivedetection.R$color
+com.hisign.facelivedetection.R$dimen
+com.hisign.facelivedetection.R$drawable
+com.hisign.facelivedetection.R$id
+com.hisign.facelivedetection.R$integer
+com.hisign.facelivedetection.R$layout
+com.hisign.facelivedetection.R$raw
+com.hisign.facelivedetection.R$string
+com.hisign.facelivedetection.R$style
+com.hisign.facelivedetection.api.FaceLiveDetectWrapper:
+    208:208:public java.lang.String showStatusTextInfo(int)
+com.hisign.facelivedetection.api.LiveDetectHelper:
+    private static com.hisign.facedetectv1small.IllumineDetect mIllumineDetect
+    private static int faceNum
+    public static final int ACTION_GAZE
+    public static final int ACTION_SHAKE
+    public static final int ACTION_NOD
+    public static final int ACTION_LEFT
+    public static final int ACTION_RIGHT
+    public static final int ACTION_3DDECT_IN_MOVE
+    public static final int ACTION_IDLE
+    public static final int ACTION_OPENMOUTH
+    public static final int ACTION_BLINK
+    126:126:public static int getFaceNum()
+    254:254:public static void unInitSdk()
+    365:365:public static com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[] getRect()
+    380:542:public static void qualityCheckForGuide(byte[],com.hisign.facedetectv1small.FaceDetect$THIDFaceRect,com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckCallback)
+    678:754:public static int qualityCheck(com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckCallback)
+    758:796:public static android.graphics.Bitmap getCuttedBitmap(java.lang.String)
+    959:959:public static boolean isHasSetMethod()
+    1323:1323:public static boolean isGazeSucceed()
+com.hisign.facelivedetection.api.LiveDetectHelper$1:
+    939:939:public void onResult()
+com.hisign.facelivedetection.api.LiveDetectHelper$LiveDetectHelperNewCallback:
+    public abstract void onResult(int)
+    public abstract void onResult(int,java.lang.Object)
+com.hisign.facelivedetection.api.LiveDetectHelper$NotLiveCallback:
+    public abstract void onNotLiveCallback()
+com.hisign.facelivedetection.api.LiveDetectHelper$OverExposureCallback:
+    public abstract void onOverExposure()
+com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckCallback
+com.hisign.facelivedetection.db.SharedPreferencesUtils
+com.hisign.facelivedetection.db.SharedPreferencesUtils$SharedPreferencesCompat
+com.hisign.facelivedetection.debug.DrawRectRange:
+    public static boolean isDrawRect
+    private com.livedetect.view.SurfaceDraw mSurfaceDraw
+    private com.hisign.facelivedetection.debug.DrawRectRange mInstance
+    public static final int RECT_LEFT
+    public static final int RECT_TOP
+    public static final int RECT_RIGHT
+    public static final int RECT_BOTTOM
+    133:134:public void setSurfaceDraw(com.livedetect.view.SurfaceDraw)
+    165:170:public com.hisign.facedetectv1small.FaceDetect$THIDFaceRect getFaceRectShowSize(int,int,int,int)
+    244:248:public void drawGuidRange(boolean)
+    256:259:public void drawRectRange()
+com.hisign.matching.UvcInputAPI:
+    5:5:public UvcInputAPI()
+    public static synchronized native int UVCInit(android.content.Context,java.lang.String)
+    public static synchronized native int UVCStop()
+    public static synchronized native int UVCRun()
+    public static synchronized native int UVCCmd()
+    public static synchronized native int UVCGetFrame(byte[])
+    public static synchronized native int RGB565toGray(byte[],byte[],int,int)
+    public static synchronized native int UVCYuvtoBGR(int,int,byte[],byte[])
+    public static synchronized native int FFmpeg(java.lang.String,int)
+    71:83:public static void pictureToVideo(java.lang.String,java.lang.String,java.lang.String)
+com.livedetect.LiveDetectActivity:
+    private java.lang.String currTime
+    474:482:private void openLog()
+    999:1006:private void updateUIOnOverExposure()
+    1825:1833:private java.lang.String addNodPicInfo(java.io.FileInputStream,java.io.InputStream)
+    1837:1846:private java.lang.String addShakePicInfo(java.io.FileInputStream,java.io.InputStream)
+    1869:1886:private boolean processPic5ik(boolean)
+    2403:2406:private void hideToast()
+    997:997:static synthetic void access$46(com.livedetect.LiveDetectActivity)
+com.livedetect.LiveDetectActivity$14:
+    588:596:public void onNotLiveCallback()
+com.livedetect.LiveDetectActivity$18:
+    670:671:public void onOverExposure()
+com.livedetect.LiveDetectActivity$MyTimeCount:
+    2717:2718:public void cancel()
+com.livedetect.SuccessActivity:
+    72:90:public void writeFile(byte[],java.lang.String)
+    92:110:public static java.io.File getFileFromBytes(byte[],java.lang.String)
+    113:131:public static void writeFile(java.lang.String,java.lang.String)
+com.livedetect.application.MainApplication:
+    23:23:public static com.livedetect.application.MainApplication getMainApplication()
+    26:26:public static android.media.AudioManager getAudioManager()
+    29:29:public static android.content.res.Resources getResourcesNew()
+com.livedetect.data.ConstantValues
+com.livedetect.data.ConstantValues$BAD_REASON
+com.livedetect.data.LiveCheckResultModel
+com.livedetect.data.ValueUtils:
+    private static boolean isCheckSuccess
+    private static java.lang.String idNum
+    private static java.lang.String name
+    private static byte[] imageArrForWater
+    private static byte[] imageArrForCut
+    private static byte[] imageArrForThumb
+    private static java.lang.String reasonForFail
+    private static java.lang.String version
+    private static java.lang.String versionForSdk
+    private static java.lang.String dateForRelease
+    public static final boolean SOUND_BREAKABLE
+    public static final boolean OPEN_LOG
+    public static final boolean isCheckNoFace
+    public static final boolean isCheckMoreFace
+    public static final boolean isCheckBad3DStructure
+    public static final boolean isCheckBadColor
+    public static final boolean isCheckBadContinuity
+    public static final boolean isCheckBadMovement
+    public static final boolean is5ik
+    280:281:public static void setAnctionNumber(java.lang.String)
+    354:354:public static boolean isDebug()
+    361:361:public static boolean isAction_single()
+    364:365:public static void setAction_single(boolean)
+    370:371:public void setNeedGuide(boolean)
+    376:377:public void setNeedCheck(boolean)
+    379:379:public static boolean isLiveTimeSettable()
+    382:383:public void setLiveTimeSettable(boolean)
+    388:389:public void setNoFaceInterrupted(boolean)
+    394:395:public void setMultiFaceInterrupted(boolean)
+    409:409:public static java.lang.String getTypes()
+    412:413:public void setTypes(java.lang.String)
+    418:419:public void setCurProcessMaxNum(int)
+    424:425:public void setFrameScale(int)
+    430:431:public void setActiveMovementScale(int)
+    436:437:public void setUnActiveMovementScale(int)
+    442:443:public void setProcessMaxFrames(int)
+    448:449:public void setMaxEyeDis(int)
+    451:451:public int getLongestTimeForLook()
+    454:455:public void setLongestTimeForLook(int)
+    460:461:public void setNoFaceNum(int)
+    466:467:public void setMultiFaceNum(int)
+    469:469:public static int getLiveTimeCount()
+    472:473:public void setLiveTimeCount(int)
+    484:485:public void setWaterTitle(java.lang.String)
+    490:491:public void setWaterPositions(java.lang.String)
+    496:497:public void setAddRectable(boolean)
+    499:499:public boolean isSizeSetable()
+    502:503:public void setSizeSetable(boolean)
+    505:505:public boolean isThumbSavable()
+    508:509:public void setThumbSavable(boolean)
+    511:511:public static boolean isCuttable()
+    514:515:public void setCuttable(boolean)
+    517:517:public static boolean isSaveSdcard()
+    520:521:public static void setSaveSdcard(boolean)
+    526:527:public void setPgpSaveSdcard(boolean)
+    532:533:public static void setMaxImgNum(int)
+    535:535:public static int getIntervalImgNum()
+    538:539:public void setIntervalImgNum(int)
+    541:541:public int getSelectImgNum()
+    544:545:public void setSelectImgNum(int)
+    550:551:public void setSavePicMax(int)
+    553:553:public int getMaxEyeDistance()
+    556:557:public void setMaxEyeDistance(int)
+    559:559:public int getMinEyeDistance()
+    562:563:public void setMinEyeDistance(int)
+    565:565:public int getMaxLight()
+    568:569:public void setMaxLight(int)
+    571:571:public int getMinLight()
+    574:575:public void setMinLight(int)
+    577:577:public int getMaxEulerAngle()
+    580:581:public void setMaxEulerAngle(int)
+    583:583:public int getMinEulerAngle()
+    586:587:public void setMinEulerAngle(int)
+    589:589:public int getMaxMouthClose()
+    592:593:public void setMaxMouthClose(int)
+    595:595:public int getMinMouthClose()
+    598:599:public void setMinMouthClose(int)
+    601:601:public int getMaxFuzzyDegree()
+    604:605:public void setMaxFuzzyDegree(int)
+    607:607:public int getMinFuzzyDegree()
+    610:611:public void setMinFuzzyDegree(int)
+    613:613:public boolean isCheckSuccess()
+    616:617:public void setCheckSuccess(boolean)
+    619:619:public java.lang.String getIdNum()
+    622:623:public void setIdNum(java.lang.String)
+    625:625:public java.lang.String getName()
+    628:629:public void setName(java.lang.String)
+    631:631:public byte[] getImageArrForWater()
+    634:635:public void setImageArrForWater(byte[])
+    637:637:public byte[] getImageArrForCut()
+    640:641:public void setImageArrForCut(byte[])
+    643:643:public byte[] getImageArrForThumb()
+    646:647:public void setImageArrForThumb(byte[])
+    649:649:public java.lang.String getReasonForFail()
+    652:653:public void setReasonForFail(java.lang.String)
+    655:655:public java.lang.String getVersion()
+    658:659:public void setVersion(java.lang.String)
+    661:661:public java.lang.String getVersionForSdk()
+    664:665:public void setVersionForSdk(java.lang.String)
+    667:667:public java.lang.String getDateForRelease()
+    670:671:public void setDateForRelease(java.lang.String)
+    673:673:public static float getThresholdBrightMeanMax()
+    676:677:public static void setThresholdBrightMeanMax(float)
+    679:679:public static float getThresholdBrightMeanMin()
+    682:683:public static void setThresholdBrightMeanMin(float)
+    685:685:public static float getThresholdUnderExposure()
+    688:689:public static void setThresholdUnderExposure(float)
+    691:691:public static float getThresholdOverExposure()
+    694:695:public static void setThresholdOverExposure(float)
+    700:701:public static void setThresholdFacesNum(int)
+com.livedetect.utils.DensityUtils:
+    15:17:private DensityUtils()
+    49:49:public static int sp2px(android.content.Context,float)
+    65:66:public static float px2dp(android.content.Context,float)
+    82:82:public static float px2sp(android.content.Context,float)
+com.livedetect.utils.FileUtils:
+    private static java.lang.String copressPicPath
+    private static java.lang.String encryptPicPath
+    private static byte[] bestPicData
+    private static byte[] encryptBestPicData
+    private static android.graphics.Bitmap savedBitmap
+    83:90:public static java.io.File createFile(java.lang.String,java.lang.String)
+    98:103:public static void deleteFilesByDirectory(java.io.File)
+    142:152:public static boolean dirIsExists(java.lang.String,boolean)
+    217:222:public static void renameTo(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+    240:257:public static void copyFile(java.lang.String,java.lang.String)
+    273:277:public static boolean isFileExist(java.lang.String)
+    298:329:public static java.io.File inputStream2File(java.lang.String,java.lang.String,java.io.InputStream)
+    444:474:public static java.lang.String encodeBase64File(java.lang.String,java.lang.String)
+    527:563:public static void savePicByPriority(byte[],float)
+    613:627:public static synchronized void savePicFromYuvData(byte[],java.lang.String)
+    691:699:public static java.lang.String getBestBlurPicPath()
+    715:741:public static void selectPicByMouthAngle()
+    755:772:public static void copySdkFiles()
+    885:907:public static android.graphics.Bitmap getBitmapByPathAndScale(java.lang.String,int)
+    1046:1115:public static android.graphics.Bitmap getCutImage(java.lang.String,com.hisign.facedetectv1small.FaceDetect$THIDFaceRect)
+    1208:1208:public static java.io.InputStream byte2Inputstream(byte[])
+    1212:1224:public static byte[] inputstream2Byte(java.io.InputStream)
+    1228:1230:public static byte[] bitmap2Bytes(android.graphics.Bitmap)
+    1239:1240:public static void setSdcardPath(java.lang.String)
+    1247:1248:public static void setCachePath(java.lang.String)
+    1251:1251:public static java.lang.String getCopressPicPath()
+    1255:1255:public static java.lang.String getEncryptPicPath()
+    1259:1259:public static byte[] getBestPicData()
+    1263:1263:public static byte[] getEncryptBestPicData()
+    1271:1271:public static int getmSaveBitmapIndex()
+    1279:1279:public static java.lang.String getSdkPath()
+    1283:1283:public static java.lang.String getBestPicPathForSdcard()
+    1287:1287:public static java.lang.String getBestPicPathForCache()
+    1291:1291:public static java.lang.String getVideoPathForCache()
+    1295:1295:public static java.lang.String getBestPicPathForCacheSuo()
+    1303:1303:public static int getTmpIndex()
+    1370:1376:public static java.lang.String analyzeMemory(android.content.Context)
+    1387:1387:public static byte[] convertUVCToJPG(byte[])
+com.livedetect.utils.FileUtils$FileCallback:
+    public abstract void onResult()
+com.livedetect.utils.HomeWatcher
+com.livedetect.utils.HomeWatcher$InnerRecevier
+com.livedetect.utils.HomeWatcher$OnHomePressedListener
+com.livedetect.utils.HttpUtils
+com.livedetect.utils.HttpUtils$HttpUtilsCallBack
+com.livedetect.utils.KeyBoardUtils
+com.livedetect.utils.LogUtil:
+    7:7:public LogUtil()
+    44:47:public static void w(java.lang.String,java.lang.String)
+com.livedetect.utils.LogcatFileManager:
+    private static java.lang.String PATH_LOGCAT
+    private int mPId
+    private android.app.Activity mActvity
+    private java.text.SimpleDateFormat simpleDateFormat1
+    private java.text.SimpleDateFormat simpleDateFormat2
+    33:36:public static com.livedetect.utils.LogcatFileManager getInstance()
+    46:51:public void start(java.lang.String)
+    66:70:public void setActivity(android.app.Activity)
+    72:74:private LogcatFileManager()
+com.livedetect.utils.LogcatFileManager$LogDumper:
+    private java.lang.String mPID
+    final synthetic com.livedetect.utils.LogcatFileManager this$0
+    84:99:public LogcatFileManager$LogDumper(com.livedetect.utils.LogcatFileManager,java.lang.String,java.lang.String)
+com.livedetect.utils.MediaScanner:
+    45:49:public void scanFile(java.lang.String[],java.lang.String)
+    52:52:public java.lang.String getFilePath()
+    56:57:public void setFilePath(java.lang.String)
+    60:60:public java.lang.String getFileType()
+    64:65:public void setFileType(java.lang.String)
+com.livedetect.utils.PgpUtil:
+    private static final java.lang.String TAG
+    30:30:public PgpUtil()
+    43:45:public static void buildPGPFile(java.lang.String,java.lang.String,java.lang.String)
+    74:90:public static void buildPGPFile_jni(java.lang.String,java.lang.String,java.lang.String)
+    99:114:public static java.lang.String readPublicKeyString(java.io.InputStream)
+    119:121:public static byte[] getSHA(byte[])
+    125:132:public static java.lang.String EncHardwareInfo(java.lang.String,java.lang.String)
+    176:212:public static int decodePhotoInfo(java.io.InputStream,java.io.OutputStream,java.io.OutputStream)
+com.livedetect.utils.PowerWatcher
+com.livedetect.utils.PowerWatcher$InnerRecevier
+com.livedetect.utils.PowerWatcher$OnPowerPressedListener
+com.livedetect.utils.ProcessPicUtil
+com.livedetect.utils.SdUtils:
+    17:19:private SdUtils()
+    48:48:public static java.lang.String getSDCardPath()
+    62:70:public static long getSDCardAllSize()
+    86:93:public static long getFreeBytes(java.lang.String)
+    107:107:public static java.lang.String getRootDirectoryPath()
+com.livedetect.utils.SerializableObjectForData:
+    private static final long serialVersionUID
+    private java.lang.String hisign
+    19:19:public java.lang.String gethisign()
+    23:24:public void sethisign(java.lang.String)
+com.livedetect.utils.StringUtils:
+    9:9:public StringUtils()
+com.livedetect.utils.SysLogService
+com.livedetect.utils.TimeUtils:
+    16:16:public TimeUtils()
+com.livedetect.utils.VersionUtils:
+    26:26:public VersionUtils()
+com.livedetect.view.BaseSurfaceView:
+    public static final int STATE_INIT
+    public static final int STATE_PREPARED
+    public static final int STATE_PLAY
+    public static final int STATE_PAUSE
+    public static final int STATE_BUFFER
+    public static final int STATE_ERROR
+    public static final int STATE_STOP
+    public static final int STATE_OVER
+    private static final int PLAYER_MSG_START
+    private static final int PLAYER_MSG_STOP
+    public static final int AUDIO_SHAKE
+    public static final int AUDIO_NOD
+    public static final int AUDIO_GAZE
+    public static final int AUDIO_PASS
+    public static final int AUDIO_FAIL
+    public static final int AUDIO_TIME_OUT
+    public static final int AUDIO_LEFT
+    public static final int AUDIO_RIGHT
+    public static final int AUDIO_READY
+    public static final int AUDIO_NEXT_ONE
+    public static final int AUDIO_FACE_IN
+    public static final int AUDIO_BLINK
+    public static final int AUDIO_OPENMOUTCH
+    static final int ISERR
+    static final int ISSTOP
+    static final int ISCOMPLETE
+com.livedetect.view.BaseSurfaceView$BaseSurfaceViewCallback:
+    public abstract void onResult(int)
+com.livedetect.view.CountDownDialog
+com.livedetect.view.CountDownDialog$1
+com.livedetect.view.CountDownDialog$CountDownDialogInterface
+com.livedetect.view.FriendlyTipDialog
+com.livedetect.view.FriendlyTipDialog$1
+com.livedetect.view.FriendlyTipDialog$FriendlyTipDialogInterface
+com.livedetect.view.MyActionBar
+com.livedetect.view.MyProgressDialog
+com.livedetect.view.MyProgressDialog$1
+com.livedetect.view.MyProgressDialog$MyProgressDialogInterface
+com.livedetect.view.MyTimeCount
+com.livedetect.view.MyTimeCount$1
+com.livedetect.view.RoundProgressBar:
+    public static final int STROKE
+    public static final int FILL
+com.livedetect.view.SurfaceDraw
+com.livedetect.view.TimerDialog
+com.livedetect.view.TimerDialog$1
+com.livedetect.view.TimerDialog$2
+com.livedetect.view.TimerDialog$3
+com.livedetect.view.TimerDialog$BtnListener
+com.livedetect.view.WeakReferenceHandler:
+    11:13:public WeakReferenceHandler(java.lang.Object)

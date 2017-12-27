@@ -1,0 +1,1111 @@
+com.hisign.FaceSDK.CompareScoreInterface -> com.hisign.FaceSDK.a:
+    float[] getCompareScore() -> a
+com.hisign.FaceSDK.FaceLiveDetect -> com.hisign.FaceSDK.FaceLiveDetect:
+    java.lang.String[] noteInfos_CN -> a
+    java.lang.String[] noteInfos_EN -> b
+    boolean isSoLoaded -> c
+    boolean isInited -> d
+    int jniInitLiveDetect(int[]) -> jniInitLiveDetect
+    int jniUninitLiveDetect() -> jniUninitLiveDetect
+    int jniLiveDetectProcess(byte[],int[]) -> jniLiveDetectProcess
+    int THIDLiveDetectProcess(byte[],int[]) -> a
+    int THIDInitLiveDetect(int,int,int[]) -> a
+    int THIDUninitLiveDetect() -> a
+    int THIDInitLiveDetectChannel(int,int[]) -> THIDInitLiveDetectChannel
+    int THIDSetMethod(int,int[],int) -> THIDSetMethod
+    int EncData(byte[],int,byte[],byte[]) -> EncData
+com.hisign.FaceSDK.FaceQualityScoreCompare -> com.hisign.FaceSDK.b:
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceQualityScore qualityScore -> a
+    float[] getCompareScore() -> a
+com.hisign.FaceSDK.QueuePicturePool -> com.hisign.FaceSDK.c:
+    java.util.List pictruePool -> a
+    int poolSize -> b
+    void updatePicturePool(byte[]) -> a
+    java.util.List getPictruePool() -> a
+    void clear() -> b
+com.hisign.FaceSDK.SortedPicturePool -> com.hisign.FaceSDK.d:
+    java.util.TreeMap pictruePool -> a
+    int poolSize -> b
+    void updatePicturePool(com.hisign.FaceSDK.CompareScoreInterface,byte[]) -> a
+    java.util.TreeMap getPictruePool() -> a
+    void clear() -> b
+com.hisign.FaceSDK.SortedPicturePool$1 -> com.hisign.FaceSDK.e:
+    com.hisign.FaceSDK.SortedPicturePool this$0 -> a
+    int compare(com.hisign.FaceSDK.CompareScoreInterface,com.hisign.FaceSDK.CompareScoreInterface) -> a
+    int compare(java.lang.Object,java.lang.Object) -> compare
+com.hisign.facedetectv1small.FaceDetect -> com.hisign.facedetectv1small.FaceDetect:
+    boolean isSoLoaded -> a
+    int[] faceJNIRet -> b
+    java.lang.Object THIDFaceDetectVer_lock -> c
+    int jniInitFaceDetect() -> jniInitFaceDetect
+    int jniGetFaceDetectSDKVersion(long[]) -> jniGetFaceDetectSDKVersion
+    int jniFaceDetect(byte[],int[],int,int) -> jniFaceDetect
+    int jniARGBtoGray(byte[],byte[],int,int) -> jniARGBtoGray
+    int jniGetFaceQuality(byte[],byte[],int,int,int[],float[],byte[]) -> jniGetFaceQuality
+    int THIDInitFaceDetect() -> a
+    int THIDFaceDetectVer(int,byte[],int,int,android.graphics.Rect,int,int,com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[],int[]) -> a
+    int THIDGetFaceDetectSDKVersion(long[]) -> a
+    int THIDGetFaceQuality(byte[],int[],float[],int,int) -> a
+    int float2QualityScore(float[],com.hisign.facedetectv1small.FaceDetect$THIDFaceQualityScore) -> a
+    int THIDGetFaceQualityFast(byte[],int[],com.hisign.facedetectv1small.FaceDetect$THIDFaceQualityScore,int,int) -> a
+    int ARGBtoGray(byte[],byte[],int,int) -> a
+com.hisign.facedetectv1small.FaceDetect$THIDFaceQualityScore -> com.hisign.facedetectv1small.a:
+    float finalQualityScore -> a
+    float symmetryScore -> b
+    float brightMean -> c
+    float brightStd -> d
+    float overExposure -> e
+    float underExposure -> f
+    float contrast -> g
+    float sharpness -> h
+    float homogeneity -> i
+    float blur -> j
+    byte facePosition -> k
+    byte eyeClosed -> l
+    short grayDynRange -> m
+    byte wearGlasses -> n
+    float eyeDistance -> o
+    float yawAngle -> p
+    float pitchAngle -> q
+    float frontality -> r
+    float height -> s
+    byte faceType -> t
+    int mouthClosed -> u
+com.hisign.facedetectv1small.FaceDetect$THIDFaceRect -> com.hisign.facedetectv1small.b:
+    int left -> a
+    int top -> b
+    int right -> c
+    int bottom -> d
+    float confidence -> e
+com.hisign.facedetectv1small.LiveDetect -> com.hisign.facedetectv1small.LiveDetect:
+    boolean isSoLoaded -> c
+    com.hisign.facedetectv1small.LiveDetect$Face3DDetectThread face3DWorkingThread -> d
+    java.util.concurrent.Semaphore semp -> e
+    java.lang.String[] methodInfos_CN -> a
+    java.lang.String[] StateInfos_CN -> b
+    int jniLive3DDetectWorking(int) -> jniLive3DDetectWorking
+    int THIDStart3DWorking() -> a
+    int THIDWeakUp3DWorking() -> b
+    int THIDLive3DDetectProcess_Working(com.hisign.facedetectv1small.LiveDetect$THIDMovementType) -> a
+    java.util.concurrent.Semaphore access$0() -> c
+com.hisign.facedetectv1small.LiveDetect$Face3DDetectThread -> com.hisign.facedetectv1small.c:
+    boolean m_isProcess -> a
+    void setProcType(boolean) -> a
+    void run() -> run
+com.hisign.facedetectv1small.LiveDetect$THIDFaceTrackData -> com.hisign.facedetectv1small.d:
+    int left -> a
+    int top -> b
+    int right -> c
+    int bottom -> d
+    int trackID -> e
+    int confidence -> f
+com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState -> com.hisign.facedetectv1small.e:
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState NoError -> a
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState IsLive -> b
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState NotLive -> c
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState NoFace -> d
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState NotSingleFace -> e
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState MoveCloser -> f
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState MoveFarther -> g
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState FaceDetectError -> h
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState LiveDetectError -> i
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState BadMovementType -> j
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState BadColor -> k
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState Bad3DStructure -> l
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState BadContinuity -> m
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState[] ENUM$VALUES -> n
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState[] values() -> values
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState valueOf(java.lang.String) -> valueOf
+com.hisign.facedetectv1small.LiveDetect$THIDMovementType -> com.hisign.facedetectv1small.f:
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType KeepStill -> a
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType ShakeHead -> b
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType NodHead -> c
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType LeftShakeHead -> d
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType RightShakeHead -> e
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType Movement3D -> f
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType Idle -> g
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType OpenMouth -> h
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType MovePhone -> i
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType BlinkEye -> j
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType[] ENUM$VALUES -> k
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType[] values() -> values
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType valueOf(java.lang.String) -> valueOf
+com.hisign.facelivedetection.anim.Rotate3dAnimation -> com.hisign.a.a.a:
+    float mFromDegrees -> a
+    float mToDegrees -> b
+    float mCenterX -> c
+    float mCenterY -> d
+    float mDepthZ -> e
+    boolean mReverse -> f
+    android.graphics.Camera mCamera -> g
+    void initialize(int,int,int,int) -> initialize
+    void applyTransformation(float,android.view.animation.Transformation) -> applyTransformation
+com.hisign.facelivedetection.api.FaceLiveDetectWrapper -> com.hisign.a.b.a:
+    java.lang.String TAG -> q
+    int prevLastWidth_ -> r
+    int prevLastHeight_ -> s
+    byte[] grayBuff_1 -> t
+    byte[] grayBuff_2 -> u
+    int bufflen_ -> v
+    boolean isThreadWorking_ -> a
+    com.hisign.facelivedetection.api.FaceLiveDetectWrapper$FaceDetectThread[] detectThread_ -> w
+    int ndetectCount -> x
+    int nThreadNum -> b
+    android.content.Context per_context -> c
+    com.hisign.facedetectv1small.LiveDetect liveDetectSmall -> d
+    int nFaceNum -> e
+    com.hisign.facedetectv1small.LiveDetect$THIDFaceTrackData[] faceTrackData -> f
+    float[] fConfidence -> g
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementType movementType -> h
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState[] HIDMovementliveState -> i
+    java.lang.String[] noteInfos_CN -> j
+    int[] nRealfaceNum -> y
+    float lastGazeSign -> k
+    int lastStatus -> l
+    int nFlashToGazeObject -> m
+    int nStatusColor -> n
+    int nStatusMoveMent -> o
+    int nStatusSign -> p
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState szStatusSign3D -> z
+    int MAX_FACE -> A
+    android.graphics.PointF[] facePointDist -> B
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[] faceDetcRect -> C
+    boolean mIsLiveCheckPassed -> D
+    int eyeMoveHint -> E
+    int nNeed3DPreperCnt -> F
+    int liveDetectInit(android.content.Context,com.hisign.facelivedetection.api.FaceLiveDetectWrapper$LiveDetectParamStruct,int[]) -> a
+    int liveDetectSetMethod(int[]) -> a
+    int liveDetectResetMethod(int[]) -> b
+    int liveDetectUninit() -> a
+    void liveDetecting(byte[],com.hisign.facelivedetection.api.FaceLiveDetectWrapper$RetValueFromAlgo,com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[],android.graphics.PointF[]) -> a
+    void waitThreadDone() -> b
+    int access$0(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> a
+    void access$1(com.hisign.facelivedetection.api.FaceLiveDetectWrapper,com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState) -> a
+    int access$2(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> b
+    void access$3(com.hisign.facelivedetection.api.FaceLiveDetectWrapper,int) -> a
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState access$4(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> c
+    int access$5(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> d
+    int access$6(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> e
+    int[] access$7(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> f
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[] access$8(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> g
+    android.graphics.PointF[] access$9(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> h
+    void access$10(com.hisign.facelivedetection.api.FaceLiveDetectWrapper,int) -> b
+    void access$11(com.hisign.facelivedetection.api.FaceLiveDetectWrapper,boolean) -> a
+com.hisign.facelivedetection.api.FaceLiveDetectWrapper$FaceDetectThread -> com.hisign.a.b.b:
+    int procType -> c
+    byte[] mYuv420spBuff_ -> d
+    int[] LD_result -> a
+    com.hisign.facelivedetection.api.FaceLiveDetectWrapper this$0 -> b
+    void setBuffer(byte[],int) -> a
+    int FaceCheckfromSDK(byte[],int,int,int,int[],com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[],android.graphics.PointF[]) -> a
+    void run() -> run
+com.hisign.facelivedetection.api.FaceLiveDetectWrapper$LiveDetectParamStruct -> com.hisign.a.b.c:
+    int imageWidth -> a
+    int imageHeight -> b
+    int MaxEyeDis -> c
+    int ProcessMaxFrames -> d
+com.hisign.facelivedetection.api.FaceLiveDetectWrapper$RetValueFromAlgo -> com.hisign.a.b.d:
+    boolean isLiveCheckPassed -> a
+    int statusSign -> b
+    int faceNum -> c
+    com.hisign.facedetectv1small.LiveDetect$THIDMovementLiveState movementLiveState -> d
+    int statusSign3D -> e
+    int statusSkinColor -> f
+com.hisign.facelivedetection.api.LiveDetectHelper -> com.hisign.a.b.e:
+    int fps -> b
+    int noFaceNum -> c
+    int multiFaceNum -> d
+    boolean isActioned -> e
+    boolean hasSetMethod -> f
+    int[] positions -> g
+    int curActionIndex -> h
+    com.hisign.facedetectv1small.FaceDetect mFaceDetect -> i
+    com.hisign.facelivedetection.api.FaceLiveDetectWrapper mFaceLiveDetectWrapper -> j
+    int guidePassNum -> k
+    com.hisign.facelivedetection.api.LiveDetectHelper$BadMovementCallback badMovementCallback -> l
+    com.hisign.facelivedetection.api.LiveDetectHelper$NotSingleFaceCallback notSingleFaceCallback -> m
+    com.hisign.facelivedetection.api.LiveDetectHelper$NoFaceCallBack noFaceCallback -> n
+    com.hisign.facelivedetection.api.LiveDetectHelper$BadColorCallback badColorCallback -> o
+    com.hisign.facelivedetection.api.LiveDetectHelper$Bad3DStructureCallback bad3dStructureCallback -> p
+    com.hisign.facelivedetection.api.LiveDetectHelper$BadContinuityCallback badContinuityCallback -> q
+    com.hisign.facelivedetection.api.LiveDetectHelper$NotLiveCallback notLiveCallback -> r
+    com.hisign.facelivedetection.api.LiveDetectHelper$LiveDetectPassCallback liveDetectPassCallback -> s
+    com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckValidCallback qualityCheckValidCallback -> t
+    com.hisign.facelivedetection.api.LiveDetectHelper$UnderExposureCallback underExposureCallback -> u
+    com.hisign.facelivedetection.api.LiveDetectHelper$OverExposureCallback overExposureCallback -> v
+    com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckFailCallback qualityCheckFailCallback -> w
+    com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckSucessCallback qualityCheckSucessCallback -> x
+    android.graphics.PointF[] point -> y
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect[] rect -> z
+    boolean gazeSucceed -> A
+    java.lang.String TAG -> B
+    com.livedetect.utils.FileUtils$FileCallback mFileCallback -> a
+    int initSdk(android.content.Context,int[]) -> a
+    void startLiveDetect(byte[],com.hisign.facelivedetection.api.LiveDetectHelper$LiveDetectHelperNewCallback) -> a
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceQualityScore qualityCheckForGuide(com.hisign.facedetectv1small.FaceDetect$THIDFaceRect,byte[],boolean) -> a
+    int liveDetectForCheck(android.graphics.Bitmap) -> a
+    byte[] bitmapToGrayByteArray(android.graphics.Bitmap,int,int) -> a
+    void liveDetectSetMethod(int[]) -> a
+    int getFps() -> a
+    void setFps(int) -> a
+    int getCurActionIndex() -> b
+    void setCurActionIndex(int) -> b
+    void setHasSetMethod(boolean) -> a
+    com.hisign.facelivedetection.api.FaceLiveDetectWrapper getmFaceLiveDetectWrapper() -> c
+    void setmFaceLiveDetectWrapper(com.hisign.facelivedetection.api.FaceLiveDetectWrapper) -> a
+    void setNoFaceCallback(com.hisign.facelivedetection.api.LiveDetectHelper$NoFaceCallBack) -> a
+    void setNotSingleFaceCallback(com.hisign.facelivedetection.api.LiveDetectHelper$NotSingleFaceCallback) -> a
+    void setBadMovementCallback(com.hisign.facelivedetection.api.LiveDetectHelper$BadMovementCallback) -> a
+    void setBadColorCallback(com.hisign.facelivedetection.api.LiveDetectHelper$BadColorCallback) -> a
+    void setBad3dStructureCallback(com.hisign.facelivedetection.api.LiveDetectHelper$Bad3DStructureCallback) -> a
+    void setBadContinuityCallback(com.hisign.facelivedetection.api.LiveDetectHelper$BadContinuityCallback) -> a
+    void setNotLiveCallback(com.hisign.facelivedetection.api.LiveDetectHelper$NotLiveCallback) -> a
+    void setLiveDetectPassCallback(com.hisign.facelivedetection.api.LiveDetectHelper$LiveDetectPassCallback) -> a
+    void setUnderExposureCallback(com.hisign.facelivedetection.api.LiveDetectHelper$UnderExposureCallback) -> a
+    void setOverExposureCallback(com.hisign.facelivedetection.api.LiveDetectHelper$OverExposureCallback) -> a
+    void setQualityCheckFailCallback(com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckFailCallback) -> a
+    void setQualityCheckSucessCallback(com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckSucessCallback) -> a
+    void setQualityCheckValidCallback(com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckValidCallback) -> a
+    android.graphics.Bitmap getFaceCutImage(android.graphics.Bitmap,com.hisign.facedetectv1small.FaceDetect$THIDFaceRect) -> a
+    boolean faceClipping(android.graphics.Bitmap,java.lang.String) -> a
+    void setGazeSucceed(boolean) -> b
+    void resetGuilderCount() -> d
+com.hisign.facelivedetection.api.LiveDetectHelper$1 -> com.hisign.a.b.f:
+com.hisign.facelivedetection.api.LiveDetectHelper$Bad3DStructureCallback -> com.hisign.a.b.g:
+    void onBad3DStructureResult() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$BadColorCallback -> com.hisign.a.b.h:
+    void onBadColorResult() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$BadContinuityCallback -> com.hisign.a.b.i:
+    void onBadContinuityResult() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$BadMovementCallback -> com.hisign.a.b.j:
+    void onBadMovementTypeResult() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$LiveDetectHelperNewCallback -> com.hisign.a.b.k:
+com.hisign.facelivedetection.api.LiveDetectHelper$LiveDetectPassCallback -> com.hisign.a.b.l:
+    void onLiveDetectPass() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$NoFaceCallBack -> com.hisign.a.b.m:
+    void onNoFaceResult() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$NotLiveCallback -> com.hisign.a.b.n:
+com.hisign.facelivedetection.api.LiveDetectHelper$NotSingleFaceCallback -> com.hisign.a.b.o:
+    void onNotSingleFaceResult() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$OverExposureCallback -> com.hisign.a.b.p:
+com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckFailCallback -> com.hisign.a.b.q:
+    void onQualityCheckFail() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckSucessCallback -> com.hisign.a.b.r:
+    void onQualityCheckSucess() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$QualityCheckValidCallback -> com.hisign.a.b.s:
+    void onQualityCheckValid() -> a
+com.hisign.facelivedetection.api.LiveDetectHelper$UnderExposureCallback -> com.hisign.a.b.t:
+    void onUnderExposure() -> a
+com.hisign.facelivedetection.debug.DrawRectRange -> com.hisign.a.c.a:
+    java.lang.String TAG -> a
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect mRect -> b
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect mGuidRect -> c
+    int widthPixels -> d
+    float xRatio -> e
+    int navigationBarHeight -> f
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect getGuidRect() -> a
+    void initRect(android.content.Context) -> c
+    int getNavigationBarHeight(android.content.Context) -> a
+    boolean checkDeviceHasNavigationBar(android.content.Context) -> b
+com.hisign.matching.UvcInputAPI -> com.hisign.matching.UvcInputAPI:
+    boolean isSoLoaded -> a
+    boolean isFFmpegLoaded -> b
+    int UVCYuvtoRgb(int,int,byte[],byte[]) -> UVCYuvtoRgb
+    int UVCYuvFlip(int,int,byte[]) -> UVCYuvFlip
+    int UVCYuvSPMirror(int,int,byte[],int,int) -> UVCYuvSPMirror
+com.livedetect.FailActivity -> com.livedetect.FailActivity:
+    java.lang.String TAG -> a
+    android.widget.ImageView mReturnImg -> b
+    android.widget.ImageView mAgainImg -> c
+    android.widget.TextView mRezionTv -> d
+    android.widget.ImageView returnImg -> e
+    void onCreate(android.os.Bundle) -> onCreate
+    void initView() -> a
+    void onPause() -> onPause
+com.livedetect.FailActivity$1 -> com.livedetect.a:
+    com.livedetect.FailActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.livedetect.FailActivity$2 -> com.livedetect.b:
+    com.livedetect.FailActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.livedetect.LiveDetectActivity -> com.livedetect.LiveDetectActivity:
+    boolean isPause -> h
+    boolean isGuidePassed -> i
+    boolean isLivePassed -> j
+    boolean isGuiVoiceOver -> k
+    boolean isFirstPlay -> l
+    boolean isPalyOver -> m
+    boolean isProgressOver -> n
+    boolean isOnly -> o
+    boolean isFailOnly -> p
+    boolean isFinished -> q
+    boolean isLiveDetectstart -> r
+    boolean isProgressRun -> s
+    boolean notSkipBack -> t
+    boolean hasFinishStart -> u
+    boolean isSuccessPlaying -> v
+    boolean isFailPlaying -> w
+    boolean hasToastShowed -> x
+    boolean hasXmlParsed -> y
+    boolean hasActionSuccess -> z
+    int nSuccessCnt -> A
+    int ntimes -> B
+    int sleepTime -> C
+    int mCount -> D
+    int widthPixels -> E
+    int heightPixels -> F
+    int[] positions -> G
+    byte[] picbyte -> H
+    java.lang.String mMove -> I
+    java.lang.String mRezion -> J
+    android.view.SurfaceHolder mSurfaceHolder -> K
+    android.os.Handler mHandler -> L
+    android.widget.Toast mToast -> M
+    android.widget.ImageView imgShake -> N
+    android.widget.ImageView imgNod -> O
+    android.widget.ImageView imgleft -> P
+    android.widget.ImageView imgright -> Q
+    android.widget.ImageView imgblink -> R
+    android.widget.ImageView imgopenmoutch -> S
+    android.widget.ImageView ivFaceRect -> T
+    android.widget.ImageView ivGuider -> U
+    android.widget.ImageView ivStart -> V
+    android.widget.ImageView ivReturn -> W
+    android.widget.TextView tvGaze -> X
+    android.widget.TextView txtMessage -> Y
+    android.widget.TextView tvTip -> Z
+    android.widget.LinearLayout llStart -> aa
+    android.widget.LinearLayout llShake -> ab
+    android.widget.LinearLayout llGaze -> ac
+    android.widget.LinearLayout llLeft -> ad
+    android.widget.LinearLayout llRight -> ae
+    android.widget.LinearLayout llNod -> af
+    android.widget.LinearLayout ll_Blink -> ag
+    android.widget.LinearLayout ll_Openmouth -> ah
+    android.widget.RelativeLayout rlForTip -> ai
+    android.view.animation.Animation animationForR2LOut -> aj
+    android.graphics.drawable.AnimationDrawable adShake -> ak
+    android.graphics.drawable.AnimationDrawable adLeft -> al
+    android.graphics.drawable.AnimationDrawable adRight -> am
+    android.graphics.drawable.AnimationDrawable adNod -> an
+    android.graphics.drawable.AnimationDrawable adBlink -> ao
+    android.graphics.drawable.AnimationDrawable adOpenMouth -> ap
+    android.view.SurfaceView mSurfaceView -> aq
+    com.livedetect.view.BaseSurfaceView mBaseSurfaceView -> ar
+    com.livedetect.view.RoundProgressBar mRoundProgressBar -> as
+    com.hisign.facedetectv1small.FaceDetect$THIDFaceRect guideTHIDFaceRect -> at
+    java.lang.Thread threadForProgress -> au
+    com.livedetect.utils.MediaScanner mMediaScanner -> av
+    java.lang.String TAG -> aw
+    com.hisign.FaceSDK.SortedPicturePool frontPool -> ax
+    com.hisign.FaceSDK.QueuePicturePool shakePool -> ay
+    com.hisign.FaceSDK.QueuePicturePool nodPool -> az
+    com.hisign.FaceSDK.QueuePicturePool blinkPool -> aA
+    com.hisign.FaceSDK.QueuePicturePool openMouthPool -> aB
+    com.hisign.FaceSDK.QueuePicturePool gazePool -> aC
+    int currentAction -> aD
+    boolean isSaveSd -> aE
+    java.lang.String dirPicSave -> aF
+    java.lang.String dirPicSave1 -> aG
+    java.lang.String dirPicSave2 -> aH
+    java.lang.String dirPicSave3 -> aI
+    java.lang.String sdcardPath -> aJ
+    java.lang.String sdcardPath1 -> aK
+    java.lang.String sdcardPath2 -> aL
+    java.lang.String shakePath -> aM
+    java.lang.String nodPath -> aN
+    java.lang.String GazePath -> aO
+    java.lang.String blinkPath -> aP
+    java.lang.String openMouthPath -> aQ
+    boolean flickerable -> aR
+    android.widget.ImageView imgGuider -> aS
+    android.graphics.drawable.AnimationDrawable backgroundAnim -> a
+    android.widget.ImageView imgSucceed -> aT
+    android.graphics.drawable.AnimationDrawable succeedAnim -> b
+    com.livedetect.utils.LogcatFileManager log -> aU
+    boolean ignorBadContinuity -> aV
+    boolean isGuidVoiceStart -> aW
+    boolean firstActionPlayCount -> aX
+    boolean isUnderExposure -> aY
+    java.lang.String actionHint -> aZ
+    java.lang.String mNexus6 -> c
+    java.lang.String mHuaWei -> d
+    java.lang.String oppoModel -> e
+    java.lang.String phoneModel -> f
+    java.lang.String oppoN2 -> g
+    boolean mUpsideDown2 -> ba
+    boolean mUpsideDown4 -> bb
+    java.lang.Runnable startFaceInRunnable -> bc
+    android.view.animation.Animation$AnimationListener animationListenerGaze -> bd
+    android.view.animation.Animation$AnimationListener animationListenerNod -> be
+    android.view.animation.Animation$AnimationListener animationListenerShake -> bf
+    android.view.animation.Animation$AnimationListener animationListenerLeft -> bg
+    android.view.animation.Animation$AnimationListener animationListenerRight -> bh
+    android.view.animation.Animation$AnimationListener animationListenerBlink -> bi
+    android.view.animation.Animation$AnimationListener animationListenerOpenMouth -> bj
+    com.livedetect.LiveDetectActivity$MyTimeCount mMyTimeCount -> bk
+    void onCreate(android.os.Bundle) -> onCreate
+    void initLiveDectCallback() -> c
+    void onPause() -> onPause
+    void onDestroy() -> onDestroy
+    void onPreviewFrame(byte[],android.hardware.Camera) -> onPreviewFrame
+    void surfaceChanged(android.view.SurfaceHolder,int,int,int) -> surfaceChanged
+    void surfaceCreated(android.view.SurfaceHolder) -> surfaceCreated
+    void surfaceDestroyed(android.view.SurfaceHolder) -> surfaceDestroyed
+    void onAutoFocus(boolean,android.hardware.Camera) -> onAutoFocus
+    boolean handleMessage(android.os.Message) -> handleMessage
+    void updateUIOnQualityCheckFail() -> d
+    void updateUIOnQualityCheckSucess() -> e
+    void updateUIOnUnderExposure() -> f
+    void processLiveDetectResult() -> g
+    void stopProgressBar(boolean) -> a
+    void onClick(android.view.View) -> onClick
+    void initForCreate() -> h
+    void initPositions() -> i
+    void changePosition() -> j
+    void exchange(int,int) -> a
+    void initBaseSurfaceView() -> k
+    void initView() -> l
+    void initAnim() -> m
+    void setExtraForIntentV1_2(boolean) -> b
+    boolean processPic(boolean) -> c
+    void saveSucessPic() -> n
+    java.lang.String addShakePicInfo(java.io.FileInputStream,java.io.InputStream,byte,java.lang.String) -> a
+    void updateTxtMessage() -> o
+    void sendFailMsg(boolean) -> d
+    void failResult() -> p
+    boolean waterAndPgpV1_2(java.lang.String,boolean) -> a
+    void showPromptMessageForOut(int) -> a
+    void showPromptMessage(int) -> b
+    void postDelayGazeSucceed() -> q
+    void stopAnimation(int) -> c
+    void showProgressbar() -> r
+    void releaseThreadForProgress() -> s
+    void liveStart() -> t
+    void releaseForCommon() -> u
+    void dealResult() -> v
+    void toSuccess() -> w
+    void toFail() -> x
+    void addedByPgpV1_2(byte[],java.lang.String) -> a
+    void showToast(java.lang.CharSequence) -> a
+    void onResume() -> onResume
+    int getSleepTime() -> y
+    void startSucceedAnim() -> z
+    void stopSucceedAnim() -> a
+    void preLiveDetectStart() -> A
+    void startLiveDectAfterGuide() -> B
+    void resetGuide() -> C
+    void clearrecommend() -> b
+    java.lang.String getSavePicPath(java.io.FileInputStream,java.io.InputStream,byte,java.lang.String,java.io.InputStream,byte[],java.lang.String) -> a
+    boolean access$0(com.livedetect.LiveDetectActivity) -> a
+    boolean access$1(com.livedetect.LiveDetectActivity) -> b
+    boolean access$2(com.livedetect.LiveDetectActivity) -> c
+    boolean access$3(com.livedetect.LiveDetectActivity) -> d
+    void access$4(com.livedetect.LiveDetectActivity,boolean) -> a
+    void access$5(com.livedetect.LiveDetectActivity,boolean) -> b
+    void access$6(com.livedetect.LiveDetectActivity,boolean) -> c
+    com.livedetect.view.BaseSurfaceView access$7(com.livedetect.LiveDetectActivity) -> e
+    android.os.Handler access$8(com.livedetect.LiveDetectActivity) -> f
+    java.lang.Runnable access$9(com.livedetect.LiveDetectActivity) -> g
+    android.widget.LinearLayout access$10(com.livedetect.LiveDetectActivity) -> h
+    android.widget.TextView access$11(com.livedetect.LiveDetectActivity) -> i
+    int access$12(com.livedetect.LiveDetectActivity) -> j
+    void access$13(com.livedetect.LiveDetectActivity,int) -> a
+    android.widget.LinearLayout access$14(com.livedetect.LiveDetectActivity) -> k
+    android.widget.LinearLayout access$15(com.livedetect.LiveDetectActivity) -> l
+    android.widget.LinearLayout access$16(com.livedetect.LiveDetectActivity) -> m
+    android.widget.LinearLayout access$17(com.livedetect.LiveDetectActivity) -> n
+    android.widget.LinearLayout access$18(com.livedetect.LiveDetectActivity) -> o
+    android.widget.LinearLayout access$19(com.livedetect.LiveDetectActivity) -> p
+    java.lang.String access$20(com.livedetect.LiveDetectActivity) -> q
+    java.lang.String access$21(com.livedetect.LiveDetectActivity) -> r
+    java.lang.String access$22(com.livedetect.LiveDetectActivity) -> s
+    boolean access$23(com.livedetect.LiveDetectActivity) -> t
+    boolean access$24(com.livedetect.LiveDetectActivity) -> u
+    void access$25(com.livedetect.LiveDetectActivity,boolean) -> d
+    void access$26(com.livedetect.LiveDetectActivity,boolean) -> e
+    void access$27(com.livedetect.LiveDetectActivity,java.lang.String) -> a
+    boolean access$28(com.livedetect.LiveDetectActivity) -> v
+    boolean access$29(com.livedetect.LiveDetectActivity) -> w
+    void access$30(com.livedetect.LiveDetectActivity) -> x
+    void access$31(com.livedetect.LiveDetectActivity,boolean) -> f
+    void access$32(com.livedetect.LiveDetectActivity,boolean) -> g
+    void access$33(com.livedetect.LiveDetectActivity,boolean) -> h
+    void access$34(com.livedetect.LiveDetectActivity,boolean) -> i
+    int access$35(com.livedetect.LiveDetectActivity) -> y
+    void access$36(com.livedetect.LiveDetectActivity,int) -> b
+    int[] access$37(com.livedetect.LiveDetectActivity) -> z
+    com.hisign.FaceSDK.SortedPicturePool access$38(com.livedetect.LiveDetectActivity) -> A
+    void access$39(com.livedetect.LiveDetectActivity,boolean) -> j
+    boolean access$40(com.livedetect.LiveDetectActivity) -> B
+    void access$41(com.livedetect.LiveDetectActivity,boolean) -> k
+    void access$42(com.livedetect.LiveDetectActivity) -> C
+    void access$43(com.livedetect.LiveDetectActivity,int) -> c
+    void access$44(com.livedetect.LiveDetectActivity,boolean) -> l
+    void access$45(com.livedetect.LiveDetectActivity) -> D
+    boolean access$47(com.livedetect.LiveDetectActivity) -> E
+    void access$48(com.livedetect.LiveDetectActivity) -> F
+    boolean access$49(com.livedetect.LiveDetectActivity) -> G
+    void access$50(com.livedetect.LiveDetectActivity) -> H
+    android.widget.RelativeLayout access$51(com.livedetect.LiveDetectActivity) -> I
+    void access$52(com.livedetect.LiveDetectActivity,boolean) -> m
+    boolean access$53(com.livedetect.LiveDetectActivity) -> J
+    void access$54(com.livedetect.LiveDetectActivity,boolean) -> n
+    void access$55(com.livedetect.LiveDetectActivity) -> K
+    void access$56(com.livedetect.LiveDetectActivity,int) -> d
+    void access$57(com.livedetect.LiveDetectActivity) -> L
+    void access$58(com.livedetect.LiveDetectActivity,int) -> e
+    void access$59(com.livedetect.LiveDetectActivity) -> M
+    void access$60(com.livedetect.LiveDetectActivity,boolean) -> o
+    int access$61(com.livedetect.LiveDetectActivity) -> N
+    void access$62(com.livedetect.LiveDetectActivity) -> O
+    boolean access$63(com.livedetect.LiveDetectActivity) -> P
+    int access$64(com.livedetect.LiveDetectActivity) -> Q
+    void access$65(com.livedetect.LiveDetectActivity,int) -> f
+    com.livedetect.view.RoundProgressBar access$66(com.livedetect.LiveDetectActivity) -> R
+    java.lang.Thread access$67(com.livedetect.LiveDetectActivity) -> S
+    int access$68(com.livedetect.LiveDetectActivity) -> T
+    boolean access$69(com.livedetect.LiveDetectActivity) -> U
+    boolean access$70(com.livedetect.LiveDetectActivity) -> V
+    void access$71(com.livedetect.LiveDetectActivity,boolean) -> p
+    void access$72(com.livedetect.LiveDetectActivity) -> W
+    android.widget.ImageView access$73(com.livedetect.LiveDetectActivity) -> X
+com.livedetect.LiveDetectActivity$1 -> com.livedetect.c:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$10 -> com.livedetect.d:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onBadColorResult() -> a
+com.livedetect.LiveDetectActivity$11 -> com.livedetect.e:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onBadContinuityResult() -> a
+com.livedetect.LiveDetectActivity$12 -> com.livedetect.f:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onBadMovementTypeResult() -> a
+com.livedetect.LiveDetectActivity$13 -> com.livedetect.g:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onNoFaceResult() -> a
+com.livedetect.LiveDetectActivity$14 -> com.livedetect.h:
+    com.livedetect.LiveDetectActivity this$0 -> a
+com.livedetect.LiveDetectActivity$15 -> com.livedetect.i:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onNotSingleFaceResult() -> a
+com.livedetect.LiveDetectActivity$16 -> com.livedetect.j:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onLiveDetectPass() -> a
+com.livedetect.LiveDetectActivity$17 -> com.livedetect.k:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onUnderExposure() -> a
+com.livedetect.LiveDetectActivity$18 -> com.livedetect.l:
+    com.livedetect.LiveDetectActivity this$0 -> a
+com.livedetect.LiveDetectActivity$19 -> com.livedetect.m:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onQualityCheckFail() -> a
+com.livedetect.LiveDetectActivity$2 -> com.livedetect.n:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$20 -> com.livedetect.o:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onQualityCheckSucess() -> a
+com.livedetect.LiveDetectActivity$21 -> com.livedetect.p:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onQualityCheckValid() -> a
+com.livedetect.LiveDetectActivity$22 -> com.livedetect.q:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$23 -> com.livedetect.r:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onActionCompletion() -> a
+    com.livedetect.LiveDetectActivity access$0(com.livedetect.LiveDetectActivity$23) -> a
+com.livedetect.LiveDetectActivity$23$1 -> com.livedetect.s:
+    com.livedetect.LiveDetectActivity$23 this$1 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$24 -> com.livedetect.t:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onFaceInCompletion() -> a
+com.livedetect.LiveDetectActivity$25 -> com.livedetect.u:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onFailCompletionCallback() -> a
+    com.livedetect.LiveDetectActivity access$0(com.livedetect.LiveDetectActivity$25) -> a
+com.livedetect.LiveDetectActivity$25$1 -> com.livedetect.v:
+    com.livedetect.LiveDetectActivity$25 this$1 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$26 -> com.livedetect.w:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onNextOneCompletion() -> a
+    com.livedetect.LiveDetectActivity access$0(com.livedetect.LiveDetectActivity$26) -> a
+com.livedetect.LiveDetectActivity$26$1 -> com.livedetect.x:
+    com.livedetect.LiveDetectActivity$26 this$1 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$26$2 -> com.livedetect.y:
+    com.livedetect.LiveDetectActivity$26 this$1 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$27 -> com.livedetect.z:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onPassCompletionCallback() -> a
+    com.livedetect.LiveDetectActivity access$0(com.livedetect.LiveDetectActivity$27) -> a
+com.livedetect.LiveDetectActivity$27$1 -> com.livedetect.aa:
+    com.livedetect.LiveDetectActivity$27 this$1 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$27$2 -> com.livedetect.ab:
+    com.livedetect.LiveDetectActivity$27 this$1 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$28 -> com.livedetect.ac:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$29 -> com.livedetect.ad:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$3 -> com.livedetect.ae:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$30 -> com.livedetect.af:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$31 -> com.livedetect.ag:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$32 -> com.livedetect.ah:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void run() -> run
+com.livedetect.LiveDetectActivity$4 -> com.livedetect.ai:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$5 -> com.livedetect.aj:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$6 -> com.livedetect.ak:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$7 -> com.livedetect.al:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$8 -> com.livedetect.am:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+com.livedetect.LiveDetectActivity$9 -> com.livedetect.an:
+    com.livedetect.LiveDetectActivity this$0 -> a
+    void onBad3DStructureResult() -> a
+com.livedetect.LiveDetectActivity$MyTimeCount -> com.livedetect.ao:
+    int timeSize -> c
+    int time -> d
+    int unFinished -> a
+    java.util.Timer mTimer -> e
+    java.util.TimerTask mTimerTask -> f
+    com.livedetect.LiveDetectActivity this$0 -> b
+    void startTimer() -> a
+    void stopTimer() -> b
+    void start() -> c
+    int access$0(com.livedetect.LiveDetectActivity$MyTimeCount) -> a
+    com.livedetect.LiveDetectActivity access$1(com.livedetect.LiveDetectActivity$MyTimeCount) -> b
+com.livedetect.LiveDetectActivity$MyTimeCount$1 -> com.livedetect.ap:
+    com.livedetect.LiveDetectActivity$MyTimeCount this$1 -> a
+    void run() -> run
+    com.livedetect.LiveDetectActivity$MyTimeCount access$0(com.livedetect.LiveDetectActivity$MyTimeCount$1) -> a
+com.livedetect.LiveDetectActivity$MyTimeCount$1$1 -> com.livedetect.aq:
+    com.livedetect.LiveDetectActivity$MyTimeCount$1 this$2 -> a
+    void run() -> run
+com.livedetect.MainActivity -> com.livedetect.MainActivity:
+    android.widget.ImageView startImg -> b
+    android.os.Handler mHandler -> c
+    int START_LIVEDETECT -> d
+    java.lang.String TAG -> e
+    com.livedetect.utils.SerializableObjectForData mSerializableObjectForData -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    void initView() -> a
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void onDestroy() -> onDestroy
+    boolean handleMessage(android.os.Message) -> handleMessage
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+com.livedetect.MainActivity$1 -> com.livedetect.ar:
+    com.livedetect.MainActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.livedetect.SuccessActivity -> com.livedetect.SuccessActivity:
+    java.lang.String TAG -> a
+    android.widget.ImageView mReturnBtn -> b
+    android.widget.ImageView success_img -> c
+    android.widget.ImageView returnImg -> d
+    android.widget.ImageView mAgainImg -> e
+    java.lang.String dirPicSave -> f
+    void onCreate(android.os.Bundle) -> onCreate
+    void initView() -> a
+    void onPause() -> onPause
+com.livedetect.SuccessActivity$1 -> com.livedetect.as:
+    com.livedetect.SuccessActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.livedetect.SuccessActivity$2 -> com.livedetect.at:
+    com.livedetect.SuccessActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.livedetect.application.CrashHandler -> com.livedetect.application.a:
+    android.content.Context mContext -> a
+    com.livedetect.application.CrashHandler mCrashHandler -> b
+    java.lang.Thread$UncaughtExceptionHandler mDefaultHandler -> c
+    java.util.Map infos -> d
+    java.lang.String TAG -> e
+    com.livedetect.application.CrashHandler getInstance() -> a
+    void init(android.content.Context) -> a
+    void uncaughtException(java.lang.Thread,java.lang.Throwable) -> uncaughtException
+    boolean handleException(java.lang.Throwable) -> a
+    void collectDeviceInfo(android.content.Context) -> b
+    java.lang.String saveCrashInfo2File(java.lang.Throwable) -> b
+    android.content.Context access$0(com.livedetect.application.CrashHandler) -> a
+com.livedetect.application.CrashHandler$1 -> com.livedetect.application.b:
+    com.livedetect.application.CrashHandler this$0 -> a
+    void run() -> run
+com.livedetect.application.MainApplication -> com.livedetect.application.MainApplication:
+    com.livedetect.application.MainApplication mMainApplication -> a
+    android.media.AudioManager mAudioManager -> b
+    android.content.res.Resources mResources -> c
+    android.content.Context mContext -> d
+    void onCreate() -> onCreate
+com.livedetect.data.ValueUtils -> com.livedetect.a.a:
+    boolean isDebug -> b
+    boolean needGuide -> c
+    boolean needCheck -> d
+    int thresholdFacesNum -> e
+    float thresholdBrightMeanMax -> f
+    float thresholdBrightMeanMin -> g
+    float thresholdUnderExposure -> h
+    float thresholdOverExposure -> i
+    boolean isLiveTimeSettable -> j
+    boolean isNoFaceInterrupted -> k
+    boolean isMultiFaceInterrupted -> l
+    boolean isRandomable -> m
+    java.lang.String actions -> n
+    java.lang.String selectActionsNum -> o
+    int singleActionDectTime -> p
+    java.lang.String types -> q
+    int curProcessMaxNum -> r
+    int frameScale -> s
+    int activeMovementScale -> t
+    int unActiveMovementScale -> u
+    int processMaxFrames -> v
+    int maxEyeDis -> w
+    int longestTimeForLook -> x
+    int noFaceNum -> y
+    int multiFaceNum -> z
+    int liveTimeCount -> A
+    boolean isWaterable -> B
+    java.lang.String waterTitle -> C
+    java.lang.String waterPositions -> D
+    boolean isAddRectable -> E
+    boolean isSizeSetable -> F
+    boolean isThumbSavable -> G
+    boolean isCuttable -> H
+    boolean isSaveSdcard -> I
+    boolean isPgpSaveSdcard -> J
+    int maxImgNum -> K
+    int intervalImgNum -> L
+    int selectImgNum -> M
+    int savePicMax -> N
+    int maxEyeDistance -> O
+    int minEyeDistance -> P
+    int maxLight -> Q
+    int minLight -> R
+    int maxEulerAngle -> S
+    int minEulerAngle -> T
+    int maxMouthClose -> U
+    int minMouthClose -> V
+    int maxFuzzyDegree -> W
+    int minFuzzyDegree -> X
+    java.lang.String anctionNumber -> Y
+    boolean distingguishReason -> Z
+    boolean openSound -> aa
+    boolean action_single -> a
+    java.lang.String getAnctionNumber() -> a
+    void setDebug(boolean) -> a
+    boolean isNeedGuide() -> b
+    boolean isNeedCheck() -> c
+    boolean isNoFaceInterrupted() -> d
+    boolean isMultiFaceInterrupted() -> e
+    boolean isRandomable() -> f
+    void setRandomable(boolean) -> b
+    java.lang.String getActions() -> g
+    void setActions(java.lang.String) -> a
+    int getCurProcessMaxNum() -> h
+    int getFrameScale() -> i
+    int getActiveMovementScale() -> j
+    int getUnActiveMovementScale() -> k
+    int getProcessMaxFrames() -> l
+    int getMaxEyeDis() -> m
+    int getNoFaceNum() -> n
+    int getMultiFaceNum() -> o
+    boolean isWaterable() -> p
+    void setWaterable(boolean) -> c
+    java.lang.String getWaterTitle() -> q
+    java.lang.String getWaterPositions() -> r
+    boolean isAddRectable() -> s
+    boolean isPgpSaveSdcard() -> t
+    int getMaxImgNum() -> u
+    int getSavePicMax() -> v
+    int getThresholdFacesNum() -> w
+    boolean isDistingguishReason() -> x
+    void setSingleActionDectTime(int) -> a
+    int getSingleActionDectTime() -> y
+    boolean isOpenSound() -> z
+    void setOpenSound(boolean) -> d
+    java.lang.String getSelectActionsNum() -> A
+    void setSelectActionsNum(java.lang.String) -> b
+com.livedetect.data.XmlParserHelper -> com.livedetect.a.b:
+    com.livedetect.data.XmlParserHelper$XmlParserHelperCallback mXmlParserHelperCallback -> a
+    com.livedetect.data.XmlParserHelper mXmlParserHelper -> b
+    java.lang.String TAG -> c
+    com.livedetect.data.XmlParserHelper getInstance() -> a
+    void getConfigData(android.content.Context,com.livedetect.data.XmlParserHelper$XmlParserHelperCallback) -> a
+    void xmlAnalysis(java.io.InputStream) -> a
+com.livedetect.data.XmlParserHelper$XmlParserHelperCallback -> com.livedetect.a.c:
+    void onResult() -> a
+com.livedetect.utils.CameraUtils -> com.livedetect.b.a:
+    java.lang.String TAG -> a
+    java.lang.String mHuaWei -> b
+    android.hardware.Camera mCamera -> c
+    int previewWidth -> d
+    int previewHeight -> e
+    boolean hasForbidden -> f
+    boolean checkCameraHardware(android.content.Context) -> a
+    void setCameraParameters(int) -> a
+    void getSuitableWidth(java.lang.String,int,int) -> a
+    boolean openCamera(android.content.Context,android.view.SurfaceHolder) -> a
+    void startPreView(android.hardware.Camera$PreviewCallback,android.hardware.Camera$AutoFocusCallback,android.os.Handler) -> a
+    void stopCamera() -> a
+    boolean isHasForbidden() -> b
+    void setHasForbidden(boolean) -> a
+    android.hardware.Camera access$0() -> c
+com.livedetect.utils.CameraUtils$1 -> com.livedetect.b.b:
+    android.hardware.Camera$AutoFocusCallback val$autoFocusCallback -> a
+    void run() -> run
+com.livedetect.utils.CameraUtils$ResultData -> com.livedetect.b.c:
+    int targetWidth -> a
+    int targetHeight -> b
+com.livedetect.utils.DensityUtils -> com.livedetect.b.d:
+    int dp2px(android.content.Context,float) -> a
+com.livedetect.utils.FileUtils -> com.livedetect.b.e:
+    android.content.Context mContext -> a
+    java.lang.String sdcardPath -> b
+    java.lang.String sdkPath -> c
+    java.lang.String cachePath -> d
+    java.util.List picPath -> e
+    int mSaveBitmapIndex -> f
+    int tmpIndex -> g
+    float[] priorityArray -> h
+    int[] mouthAngleArray -> i
+    float[] blurArray -> j
+    float[] faceNumArray -> k
+    java.lang.String bestPicPathForSdcard -> l
+    java.lang.String bestPicPathForCache -> m
+    java.lang.String videoPathForCache -> n
+    java.lang.String bestPicPathForCacheSuo -> o
+    java.lang.String crashLogPath -> p
+    com.livedetect.utils.FileUtils$FileCallback mFileCallback -> q
+    java.lang.String TAG -> r
+    void init(android.content.Context) -> a
+    java.io.File createDir(java.lang.String) -> a
+    void deleteFile(java.lang.String,java.lang.String) -> a
+    void savePicByRawAndIndex(byte[],int,int,int,int) -> a
+    byte[] imageToByte(java.lang.String) -> b
+    void saveImageByByteAndPath(byte[],java.lang.String) -> a
+    void savePicByBlur(byte[],com.livedetect.utils.FileUtils$FileCallback) -> a
+    void saveActionPic(byte[]) -> a
+    void bitmapToJpeg(android.graphics.Bitmap,java.lang.String) -> a
+    void savePicBySizeAndPath(android.graphics.Bitmap,int,java.lang.String) -> a
+    android.graphics.Bitmap getBitmapByPath(java.lang.String) -> c
+    android.graphics.Bitmap getBitmapByBytesAndScale(byte[],int) -> a
+    void addWatermark(java.lang.String,java.lang.String,java.lang.String,int[]) -> a
+    int getResIdByTypeAndName(java.lang.String,java.lang.String) -> b
+    byte[] getByteForUVCYuvtoRgb() -> a
+    java.lang.String getSdcardPath() -> b
+    java.lang.String getCachePath() -> c
+    java.util.List getPicPath() -> d
+    void setmSaveBitmapIndex(int) -> a
+    java.lang.String getCrashLogPath() -> e
+    void setTmpIndex(int) -> b
+    void setmContext(android.content.Context) -> b
+    android.content.Context getmContext() -> f
+com.livedetect.utils.FileUtils$FileCallback -> com.livedetect.b.f:
+com.livedetect.utils.LogUtil -> com.livedetect.b.g:
+    boolean openLog -> a
+    void i(java.lang.String,java.lang.String) -> a
+    void e(java.lang.String,java.lang.String) -> b
+com.livedetect.utils.LogcatFileManager -> com.livedetect.b.h:
+    com.livedetect.utils.LogcatFileManager INSTANCE -> a
+    com.livedetect.utils.LogcatFileManager$LogDumper mLogDumper -> b
+    void stop() -> a
+    void access$0(com.livedetect.utils.LogcatFileManager) -> a
+com.livedetect.utils.LogcatFileManager$LogDumper -> com.livedetect.b.i:
+    java.lang.Process logcatProc -> b
+    java.io.BufferedReader mReader -> c
+    boolean mRunning -> d
+    java.lang.String cmds -> a
+    java.io.FileOutputStream out -> e
+    void stopLogs() -> a
+    void run() -> run
+com.livedetect.utils.MediaScanner -> com.livedetect.b.j:
+    android.media.MediaScannerConnection mMediaScannerConnection -> a
+    com.livedetect.utils.MediaScanner$MusicSannerClient client -> b
+    java.lang.String filePath -> c
+    java.lang.String fileType -> d
+    java.lang.String[] filePaths -> e
+    void scanFile(java.lang.String,java.lang.String) -> a
+    java.lang.String access$0(com.livedetect.utils.MediaScanner) -> a
+    android.media.MediaScannerConnection access$1(com.livedetect.utils.MediaScanner) -> b
+    java.lang.String access$2(com.livedetect.utils.MediaScanner) -> c
+    java.lang.String[] access$3(com.livedetect.utils.MediaScanner) -> d
+    void access$4(com.livedetect.utils.MediaScanner,java.lang.String) -> a
+    void access$5(com.livedetect.utils.MediaScanner,java.lang.String) -> b
+    void access$6(com.livedetect.utils.MediaScanner,java.lang.String[]) -> a
+com.livedetect.utils.MediaScanner$MusicSannerClient -> com.livedetect.b.k:
+    com.livedetect.utils.MediaScanner this$0 -> a
+    void onMediaScannerConnected() -> onMediaScannerConnected
+    void onScanCompleted(java.lang.String,android.net.Uri) -> onScanCompleted
+com.livedetect.utils.PgpUtil -> com.livedetect.b.l:
+    void buildPGPFromStream(java.io.InputStream,java.io.OutputStream,int,java.lang.String) -> a
+    void buildPGPFromStream_jni(java.io.InputStream,java.io.OutputStream,int,java.lang.String) -> b
+    void encPhotoInfo(java.io.InputStream,byte[],java.lang.String) -> a
+com.livedetect.utils.SdUtils -> com.livedetect.b.m:
+    boolean isSDCardEnable() -> a
+com.livedetect.utils.SerializableObjectForData -> com.livedetect.b.n:
+com.livedetect.utils.StringUtils -> com.livedetect.b.o:
+    boolean isNotNull(java.lang.String) -> a
+    boolean isStrEqual(java.lang.String,java.lang.String) -> a
+    boolean isArrayContainInteger(int[],int) -> a
+    int[] stringToInts(java.lang.String) -> b
+com.livedetect.utils.TimeUtils -> com.livedetect.b.p:
+    java.lang.String getDateFormat(int) -> a
+com.livedetect.utils.ToolUtils -> com.livedetect.b.q:
+    com.livedetect.utils.ToolUtils INSTANCE -> a
+    com.livedetect.utils.ToolUtils getInstance() -> a
+    void setAnctionNom(int) -> a
+    boolean checkCameraFacing(int) -> b
+    boolean hasBackFacingCamera() -> b
+    boolean hasFrontFacingCamera() -> c
+    int getSdkVersion() -> d
+com.livedetect.utils.VersionUtils -> com.livedetect.b.r:
+    java.lang.String getApplicationVersion(android.content.Context) -> a
+    java.lang.String getFaceDetectSDKVersion() -> a
+com.livedetect.view.BaseSurfaceView -> com.livedetect.view.a:
+    int playState -> i
+    android.media.MediaPlayer mMediaPlayer -> j
+    android.content.Context mContext -> k
+    int mSeekPlayPosition -> a
+    int currentPosition -> b
+    int mBufferCount -> c
+    int[] playAbleArray -> l
+    int[] stopAbleArray -> m
+    int[] actionArray -> n
+    com.livedetect.view.BaseSurfaceView$PlayerHandler mPlayerHandler -> o
+    java.lang.Thread mThread -> p
+    java.util.HashMap map -> d
+    int curIndex -> q
+    java.lang.String TAG -> r
+    com.livedetect.view.BaseSurfaceView$ActionCompletionCallback actionCompletionCallback -> s
+    com.livedetect.view.BaseSurfaceView$FaceInCompletionCallback faceInCompletionCallback -> t
+    com.livedetect.view.BaseSurfaceView$FailCompletionCallback failCompletionCallback -> u
+    com.livedetect.view.BaseSurfaceView$NextOneCompletionCallback nextOneCompletionCallback -> v
+    com.livedetect.view.BaseSurfaceView$PassCompletionCallback passCompletionCallback -> w
+    android.media.AudioManager mAudioManager -> e
+    boolean hasFinished -> f
+    boolean hasCompleted -> g
+    boolean isCompleteding -> h
+    java.util.concurrent.Semaphore semp -> x
+    void initRes() -> c
+    void play(int,int) -> a
+    void acquireSemp() -> d
+    void processEvent(int) -> a
+    void handlePlay(int) -> b
+    void stop() -> a
+    void handleStop() -> e
+    int getStatus() -> b
+    void releaseResource() -> f
+    void onCompletion(android.media.MediaPlayer) -> onCompletion
+    void processSoundCompletion() -> g
+    void releaseSemp() -> h
+    boolean onError(android.media.MediaPlayer,int,int) -> onError
+    void handlePrepared() -> i
+    void onPrepared(android.media.MediaPlayer) -> onPrepared
+    void setActionCompletionCallback(com.livedetect.view.BaseSurfaceView$ActionCompletionCallback) -> a
+    void setFaceInCompletionCallback(com.livedetect.view.BaseSurfaceView$FaceInCompletionCallback) -> a
+    void setFailCompletionCallback(com.livedetect.view.BaseSurfaceView$FailCompletionCallback) -> a
+    void setNextOneCompletionCallback(com.livedetect.view.BaseSurfaceView$NextOneCompletionCallback) -> a
+    void setPassCompletionCallback(com.livedetect.view.BaseSurfaceView$PassCompletionCallback) -> a
+    int access$0(com.livedetect.view.BaseSurfaceView) -> a
+    void access$1(com.livedetect.view.BaseSurfaceView,int) -> a
+    void access$2(com.livedetect.view.BaseSurfaceView) -> b
+    void access$3(com.livedetect.view.BaseSurfaceView) -> c
+com.livedetect.view.BaseSurfaceView$1 -> com.livedetect.view.b:
+    com.livedetect.view.BaseSurfaceView this$0 -> a
+    void run() -> run
+com.livedetect.view.BaseSurfaceView$ActionCompletionCallback -> com.livedetect.view.c:
+    void onActionCompletion() -> a
+com.livedetect.view.BaseSurfaceView$BaseSurfaceViewCallback -> com.livedetect.view.d:
+com.livedetect.view.BaseSurfaceView$FaceInCompletionCallback -> com.livedetect.view.e:
+    void onFaceInCompletion() -> a
+com.livedetect.view.BaseSurfaceView$FailCompletionCallback -> com.livedetect.view.f:
+    void onFailCompletionCallback() -> a
+com.livedetect.view.BaseSurfaceView$NextOneCompletionCallback -> com.livedetect.view.g:
+    void onNextOneCompletion() -> a
+com.livedetect.view.BaseSurfaceView$PassCompletionCallback -> com.livedetect.view.h:
+    void onPassCompletionCallback() -> a
+com.livedetect.view.BaseSurfaceView$PlayerHandler -> com.livedetect.view.i:
+    com.livedetect.view.BaseSurfaceView this$0 -> a
+    void handleMessage(com.livedetect.view.BaseSurfaceView,android.os.Message) -> a
+    void handleMessage(java.lang.Object,android.os.Message) -> a
+com.livedetect.view.RoundProgressBar -> com.livedetect.view.RoundProgressBar:
+    boolean isProgressRunnable -> a
+    android.graphics.Paint paintOut -> b
+    android.graphics.Paint paintProgress -> c
+    int colorForBg -> d
+    int roundColor -> e
+    int roundProgressColor -> f
+    float roundWidth -> g
+    int max -> h
+    int progress -> i
+    int centre -> j
+    int radius -> k
+    android.graphics.RectF rect -> l
+    android.view.SurfaceHolder mSurfaceHolder -> m
+    void surfaceChanged(android.view.SurfaceHolder,int,int,int) -> surfaceChanged
+    void surfaceCreated(android.view.SurfaceHolder) -> surfaceCreated
+    void surfaceDestroyed(android.view.SurfaceHolder) -> surfaceDestroyed
+    void onDraw(android.graphics.Canvas) -> onDraw
+    int getMax() -> getMax
+    void setMax(int) -> setMax
+    int getProgress() -> getProgress
+    void setProgress(int) -> setProgress
+    int getCricleColor() -> getCricleColor
+    void setCricleColor(int) -> setCricleColor
+    int getCricleProgressColor() -> getCricleProgressColor
+    void setCricleProgressColor(int) -> setCricleProgressColor
+    float getRoundWidth() -> getRoundWidth
+    void setRoundWidth(float) -> setRoundWidth
+    boolean isProgressRunnable() -> a
+    void setProgressRunnable(boolean) -> setProgressRunnable
+    android.view.SurfaceHolder access$0(com.livedetect.view.RoundProgressBar) -> a
+    int access$1(com.livedetect.view.RoundProgressBar) -> b
+    int access$2(com.livedetect.view.RoundProgressBar) -> c
+    int access$3(com.livedetect.view.RoundProgressBar) -> d
+    android.graphics.Paint access$4(com.livedetect.view.RoundProgressBar) -> e
+    android.graphics.RectF access$5(com.livedetect.view.RoundProgressBar) -> f
+    int access$6(com.livedetect.view.RoundProgressBar) -> g
+    int access$7(com.livedetect.view.RoundProgressBar) -> h
+    android.graphics.Paint access$8(com.livedetect.view.RoundProgressBar) -> i
+com.livedetect.view.RoundProgressBar$DrawLoop -> com.livedetect.view.j:
+    com.livedetect.view.RoundProgressBar this$0 -> a
+    void run() -> run
+com.livedetect.view.WeakReferenceHandler -> com.livedetect.view.k:
+    java.lang.ref.WeakReference mReference -> a
+    void handleMessage(android.os.Message) -> handleMessage
+    void handleMessage(java.lang.Object,android.os.Message) -> a
