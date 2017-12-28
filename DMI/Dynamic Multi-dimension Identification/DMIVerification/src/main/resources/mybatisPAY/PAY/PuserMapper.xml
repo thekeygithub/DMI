@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PuserMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_USER
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		ID,
+   		API_TYPE,
+   		REQ_NO,
+   		TIME_STAMP,
+   		ID_CARD,
+   		CARD_NO,
+   		IC_CARD,
+   		NAME,
+   		CARD_STAT,
+   		CREATE_DATE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID   ,jdbcType=VARCHAR},
+		#{API_TYPE ,jdbcType=VARCHAR},
+		#{REQ_NO ,jdbcType=VARCHAR},
+		#{TIME_STAMP ,jdbcType=VARCHAR},
+		#{ID_CARD ,jdbcType=VARCHAR},
+		#{CARD_NO ,jdbcType=VARCHAR},
+		#{IC_CARD ,jdbcType=VARCHAR},
+		#{NAME ,jdbcType=VARCHAR},
+		#{CARD_STAT  ,jdbcType=NUMERIC},
+		#{CREATE_DATE ,jdbcType=DATE}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pus">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+			(<include refid="FieldValue"></include>)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				API_TYPE = #{API_TYPE},
+				REQ_NO = #{REQ_NO},
+				TIME_STAMP = #{TIME_STAMP},
+				ID_CARD = #{ID_CARD},
+				CARD_NO = #{CARD_NO},
+				IC_CARD = #{IC_CARD},
+				NAME = #{NAME},
+				CARD_STAT = #{CARD_STAT}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过序列获取表唯一ID -->
+	<select id="findUserID" resultType="java.lang.Integer">
+		select seq_p_user.nextval as id from dual
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pus">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID_CARD = #{ID_CARD}
+		and
+			CARD_NO = #{CARD_NO}
+		and
+		    ic_card = #{ic_card}
+	</select>
+
+	<select id="searchUserId" parameterType="pd" resultType="pd">
+		<!--
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		-->
+		
+		select distinct a.ID, a.API_TYPE, a.REQ_NO, a.TIME_STAMP, a.ID_CARD, a.CARD_NO, a.IC_CARD, a.NAME, a.CARD_STAT,
+			   dict1.D_VALUE as card_stat_name, a.CREATE_DATE
+		from P_USER a left join 
+			 (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id where e.name = 'card_state' and d.is_disable = '0') dict1 
+			 on dict1.D_KEY = a.CARD_STAT 
+		where a.ID = #{ID}
+	</select>
+
+</mapper>

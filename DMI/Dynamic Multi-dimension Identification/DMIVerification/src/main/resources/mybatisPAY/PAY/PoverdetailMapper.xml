@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PoverdetailMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		P_OVER_DETAIL
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		IN_ID,	
+		TYPE,	
+		CODE,	
+		NUM,	
+		SELF_FEE,	
+		TOTAL_FEE,	
+		REA_CODE,	
+		REA_DESC	
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID  ,jdbcType=VARCHAR},	
+		#{IN_ID  ,jdbcType=VARCHAR},	
+		#{TYPE ,jdbcType=VARCHAR},	
+		#{CODE ,jdbcType=VARCHAR},	
+		#{NUM  ,jdbcType=NUMERIC},	
+		#{SELF_FEE  ,jdbcType=NUMERIC},	
+		#{TOTAL_FEE  ,jdbcType=NUMERIC},	
+		#{REA_CODE  ,jdbcType=NUMERIC},	
+		#{REA_DESC ,jdbcType=VARCHAR}	
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pod">
+		insert into
+			<include refid="tableName"></include>
+		(
+			<include refid="Field"></include>
+		) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			"ID" = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				ID = #{ID},	
+				IN_ID = #{IN_ID},	
+				TYPE = #{TYPE},	
+				CODE = #{CODE},	
+				NUM = #{NUM},	
+				SELF_FEE = #{SELF_FEE},	
+				TOTAL_FEE = #{TOTAL_FEE},	
+				REA_CODE = #{REA_CODE},	
+				REA_DESC = #{REA_DESC}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT DISTINCT a.ID, a.IN_ID, a.TYPE, dict1.D_VALUE as type_name, a.CODE, b.hosp_name, a.NUM, a.SELF_FEE,
+			   a.TOTAL_FEE, a.REA_CODE, dict2.D_VALUE as rea_code_name, a.REA_DESC
+		<!-- 医院项目编码 -->
+		FROM P_OVER_DETAIL a left join p_dll_server b on a.code = b.hosp_id
+		<!-- 药品诊疗类型 -->
+  			 LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id 
+					    where e.name = 'drug_classification' and d.is_disable = '0') dict1 on dict1.D_KEY = a.TYPE 
+		<!-- 超限原因代码 -->			    
+			 LEFT JOIN (SELECT f.D_KEY, f.D_VALUE, f.ORDERS, f.IS_DISABLE from p_dict f left join p_dict_type g on f.d_id = g.id 
+					    where g.name = 'overrun_reason_code' and f.is_disable = '0') dict2 on dict2.D_KEY = a.REA_CODE
+			 where a.IN_ID = #{pd.INTERID}
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		SELECT DISTINCT a.ID, a.IN_ID, a.TYPE, dict1.D_VALUE as type_name, a.CODE, b.hosp_name, a.NUM, a.SELF_FEE,
+			   a.TOTAL_FEE, a.REA_CODE, dict2.D_VALUE as rea_code_name, a.REA_DESC
+		<!-- 医院项目编码 -->
+		FROM P_OVER_DETAIL a left join p_dll_server b on a.code = b.hosp_id
+		<!-- 药品诊疗类型 -->
+  			 LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id 
+					    where e.name = 'drug_classification' and d.is_disable = '0') dict1 on dict1.D_KEY = a.TYPE 
+		<!-- 超限原因代码 -->
+			 LEFT JOIN (SELECT f.D_KEY, f.D_VALUE, f.ORDERS, f.IS_DISABLE from p_dict f left join p_dict_type g on f.d_id = g.id 
+					    where g.name = 'overrun_reason_code' and f.is_disable = '0') dict2 on dict2.D_KEY = a.REA_CODE
+			 where a.IN_ID = #{INTERID}
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

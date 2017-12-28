@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PdrugstoredrugitemMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_DRUGSTORE_DRUG_ITEM
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		  ID,
+		  IN_ID,
+		  TYPE,
+		  CODE,
+		  NAME,
+		  CENT_CODE,
+		  CENT_NAME,
+		  UNIT_PRICE,
+		  COUNT,
+		  PRICE,
+		  FORM_NO,
+		  DOSE,
+		  FREQUENCY,
+		  DAYS 
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID,jdbcType=VARCHAR},
+		#{IN_ID ,jdbcType=VARCHAR}, 
+		#{TYPE ,jdbcType=NUMERIC}, 
+		#{CODE ,jdbcType=VARCHAR}, 
+		#{NAME ,jdbcType=VARCHAR}, 
+		#{CENT_CODE ,jdbcType=VARCHAR}, 
+		#{CENT_NAME ,jdbcType=VARCHAR},
+		#{UNIT_PRICE ,jdbcType=NUMERIC},
+		#{COUNT ,jdbcType=NUMERIC},
+		#{PRICE ,jdbcType=NUMERIC},
+		#{FORM_NO ,jdbcType=VARCHAR},
+		#{DOSE ,jdbcType=VARCHAR},
+		#{FREQUENCY ,jdbcType=VARCHAR},
+		#{DAYS,jdbcType=NUMERIC}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pdd">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				IN_ID = #{IN_ID}, 
+				TYPE = #{TYPE}, 
+				NAME = #{NAME}, 
+				CODE = #{CODE}, 
+				NAME = #{NAME}, 
+				CENT_CODE = #{CENT_CODE}, 
+				CENT_NAME = #{CENT_NAME}, 
+				UNIT_PRICE = #{UNIT_PRICE}, 
+				COUNT = #{COUNT}, 
+				PRICE = #{PRICE}, 
+				FORM_NO = #{FORM_NO}, 
+				DOSE = #{DOSE}, 
+				FREQUENCY = #{FREQUENCY}, 
+				DAYS = #{DAYS}
+			where 
+				ID = #{ID}
+	</update>
+
+	<select id="druglistPage" parameterType="page" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where IN_ID = #{pd.INTERID}
+	</select>
+	
+	<select id="druglistAll" parameterType="pd" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where IN_ID = #{INTERID}
+	</select>
+
+</mapper>

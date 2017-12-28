@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+	">
+
+	<!-- ====================数据源2 API使用==================== -->
+	
+	<bean id="sqlSessionTemplate_API" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory_API" />
+	</bean>
+	<bean id="sqlSessionFactory_API" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="dataSource_API" />
+        <property name="configLocation" value="classpath:mybatisAPI/mybatis-config.xml"></property>
+        <property name="mapperLocations" value="classpath:mybatisAPI/*/*.xml"></property>
+    </bean>
+	<bean id="dataSource_API" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">  
+         <property name="url" value="${url_API}" />  
+         <property name="username" value="${username_API}" />  
+         <property name="password" value="${password_API}" />  
+         <property name="driverClassName" value="${driverClassName_API}" />  
+         <property name="filters" value="${filters_API}" />  
+         <property name="maxActive" value="${maxActive_API}" />
+         <property name="initialSize" value="${initialSize_API}" />
+         <property name="maxWait" value="${maxWait_API}" />
+         <property name="minIdle" value="${minIdle_API}" />  
+         <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis_API}" />
+         <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis_API}" />  
+         <property name="validationQuery" value="${validationQuery_API}" />  
+         <property name="testWhileIdle" value="${testWhileIdle_API}" />  
+         <property name="testOnBorrow" value="${testOnBorrow_API}" />  
+         <property name="testOnReturn" value="${testOnReturn_API}" />  
+         <property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements_API}" />
+         <property name="removeAbandoned" value="${removeAbandoned_API}" />
+         <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout_API}" />
+         <property name="logAbandoned" value="${logAbandoned_API}" />
+	</bean>  
+	<aop:config>
+		<aop:pointcut id="pc_API" expression="execution(* com.ts.service..*(..))" />
+		<aop:advisor pointcut-ref="pc_API" advice-ref="txAdvice_API" />
+	</aop:config>
+	<tx:advice id="txAdvice_API" transaction-manager="transactionManager_API">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception"/>
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+	<bean name="transactionManager_API" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
+    	<property name="dataSource" ref="dataSource_API"></property>
+ 	</bean>
+ 	
+</beans>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PdicttypeMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_DICT_TYPE
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		ID, 
+		NAME, 
+		DESCR, 
+		UPD_DATE, 
+		UPD_USER, 
+		MEMO
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID, jdbcType=VARCHAR}, 
+		#{NAME,jdbcType=VARCHAR}, 
+		#{DESCR,jdbcType=VARCHAR}, 
+		#{UPD_DATE, jdbcType=DATE}, 
+		#{UPD_USER, jdbcType=VARCHAR}, 
+		#{MEMO, jdbcType=VARCHAR}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pd">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				NAME = #{NAME}, 
+				DESCR = #{DESCR}, 
+				UPD_DATE = #{UPD_DATE}, 
+				UPD_USER = #{UPD_USER}, 
+				MEMO = #{MEMO}
+			where 
+				ID = #{ID}
+	</update>
+
+</mapper>

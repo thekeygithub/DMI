@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FaceCompareMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		p_identify_info
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		id,
+		id_card,
+		source_photo,
+		photo,
+		source_photo_url,
+		photo_url,
+		hos_code,
+		group_id,
+		vis_no,
+		similarity,
+		result,
+		create_date
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{id   ,jdbcType=VARCHAR},
+		#{id_card ,jdbcType=VARCHAR},
+		#{query_img ,jdbcType=VARCHAR},
+		#{verify_img ,jdbcType=VARCHAR},
+		#{query_path ,jdbcType=VARCHAR},
+		#{verify_path ,jdbcType=VARCHAR},
+		#{hosp_code ,jdbcType=VARCHAR},
+		#{group_id ,jdbcType=VARCHAR},
+		#{doctor_code  ,jdbcType=VARCHAR},
+		#{similarity ,jdbcType=VARCHAR},
+		#{result ,jdbcType=NUMERIC},
+		#{create_time ,jdbcType=VARCHAR}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pfc">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+			(<include refid="FieldValue"></include>)
+	</insert>
+
+</mapper>

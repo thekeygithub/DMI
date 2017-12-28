@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PfeeMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_FEE
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		ID, 
+		IN_ID, 
+		SORT, 
+		NAME, 
+		TOTAL_FEE, 
+		SELF_FEE, 
+		NEG_FEE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID,jdbcType=VARCHAR},
+		#{IN_ID ,jdbcType=VARCHAR}, 
+		#{SORT ,jdbcType=VARCHAR}, 
+		#{NAME ,jdbcType=VARCHAR}, 
+		#{TOTAL_FEE ,jdbcType=NUMERIC}, 
+		#{SELF_FEE ,jdbcType=NUMERIC}, 
+		#{NEG_FEE ,jdbcType=NUMERIC}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pf">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				IN_ID = #{IN_ID}, 
+				SORT = #{SORT}, 
+				NAME = #{NAME}, 
+				TOTAL_FEE = #{TOTAL_FEE}, 
+				SELF_FEE = #{SELF_FEE}, 
+				NEG_FEE = #{NEG_FEE}
+			where 
+				ID = #{ID}
+	</update>
+
+	<select id="feelistPage" parameterType="page" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where IN_ID = #{pd.INTERID}
+	</select>
+
+	<select id="feelistAll" parameterType="pd" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where IN_ID = #{INTERID}
+	</select>
+
+</mapper>

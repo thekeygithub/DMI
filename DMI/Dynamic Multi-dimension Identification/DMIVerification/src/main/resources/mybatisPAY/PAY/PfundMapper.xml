@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PfundMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_FUND
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		ID,
+       	IN_ID,
+       	CODE,
+       	NAME,
+       	AMOUNT,
+       	PAY_AMOUNT,
+       	RATIO,
+       	SELF_AMOUNT,
+       	NEG_AMOUNT
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID ,jdbcType=VARCHAR},
+       	#{IN_ID ,jdbcType=VARCHAR},
+       	#{CODE ,jdbcType=VARCHAR},
+       	#{NAME ,jdbcType=VARCHAR},
+       	#{AMOUNT ,jdbcType=NUMERIC},
+       	#{PAY_AMOUNT ,jdbcType=NUMERIC},
+       	#{RATIO ,jdbcType=NUMERIC},
+       	#{SELF_AMOUNT ,jdbcType=NUMERIC},
+       	#{NEG_AMOUNT ,jdbcType=NUMERIC}
+	</sql>
+	
+	<!--新增-->
+	<insert id="save" parameterType="pfd">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				IN_ID = #{IN_ID},
+	       		CODE = #{CODE},
+	       		NAME = #{NAME},
+	       		AMOUNT = #{AMOUNT},
+	       		PAY_AMOUNT = #{PAY_AMOUNT},
+	       		RATIO = #{RATIO},
+	       		SELF_AMOUNT = #{SELF_AMOUNT},
+	       		NEG_AMOUNT = #{NEG_AMOUNT}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过INID修改 -->
+	<update id="editINID" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+	       		CODE = #{CODE},
+	       		NAME = #{NAME},
+	       		AMOUNT = #{AMOUNT},
+	       		PAY_AMOUNT = #{PAY_AMOUNT},
+	       		RATIO = #{RATIO},
+	       		SELF_AMOUNT = #{SELF_AMOUNT},
+	       		NEG_AMOUNT = #{NEG_AMOUNT}
+			where 
+				IN_ID = #{IN_ID}
+			and
+				ID = #{ID}
+	</update>
+	
+		<!-- 通过接口类型和医院交易号 获取数据 -->
+	<select id="findByfundId" parameterType="pd" resultType="pd">
+		select
+			*
+		from
+			p_fund where in_id in (
+		select 
+			i.id
+		from 
+			p_inte_info i
+		where 
+			i.API_TYPE LIKE #{API_TYPE}
+		and	
+			i.VISIT_NO = #{VISIT_NO}
+		and 
+			i.HOS_CODE = #{HOS_CODE}
+		and 
+			i.GROUP_ID = #{GROUP_ID}	
+			)
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<select id="fundlistPage" parameterType="page" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where IN_ID = #{pd.INTERID}
+	</select>
+	
+	<select id="fundlistAll" parameterType="pd" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where IN_ID = #{INTERID}
+	</select>
+	
+</mapper>

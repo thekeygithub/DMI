@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PdrugstoreinteinfoMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_DRUGSTORE_INTE_INFO
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		  ID,
+		  API_TYPE,
+		  GROUP_ID,
+		  DATA_TYPE,
+		  REQ_NO,
+		  TIME_STAMP,
+		  SERVICE_NAME,
+		  SERVICE_NO,
+		  IC_CARD,
+		  WORK_NO,
+		  PERS_NO,
+		  BUSI_TYPE,
+		  CASHIER_NO,
+		  CASHIER_NAME,
+		  BILL_DOC,
+		  MEDICAL_DEPT,
+		  MEDICAL_NAME,
+		  RECEIPT_TYPE,
+		  DEAL_STAT,
+		  DEAL_ERROR_CODE,
+		  DEAL_ERROR_INFO,
+		  SERVICE_ERROR,
+		  MEDICARE_NO,
+		  RECEIPT_NO,
+		  REFUND_NO,
+		  NEW_NO,
+		  ADD_INFO 
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	   #{ID  ,jdbcType=VARCHAR},
+       #{API_TYPE ,jdbcType=VARCHAR},
+       #{GROUP_ID ,jdbcType=VARCHAR},
+       #{DATA_TYPE ,jdbcType=NUMERIC},
+       #{REQ_NO ,jdbcType=VARCHAR},
+       #{TIME_STAMP ,jdbcType=VARCHAR},
+       #{SERVICE_NAME ,jdbcType=VARCHAR},
+       #{SERVICE_NO ,jdbcType=VARCHAR},
+       #{IC_CARD ,jdbcType=VARCHAR},
+       #{WORK_NO ,jdbcType=VARCHAR},
+       #{PERS_NO ,jdbcType=VARCHAR},
+       #{BUSI_TYPE ,jdbcType=NUMERIC},
+       #{CASHIER_NO ,jdbcType=VARCHAR},
+       #{CASHIER_NAME ,jdbcType=VARCHAR},
+       #{BILL_DOC ,jdbcType=VARCHAR},
+       #{MEDICAL_DEPT ,jdbcType=VARCHAR},
+       #{MEDICAL_NAME ,jdbcType=VARCHAR},
+       #{RECEIPT_TYPE ,jdbcType=NUMERIC},
+       #{DEAL_STAT ,jdbcType=NUMERIC},
+       #{DEAL_ERROR_CODE ,jdbcType=VARCHAR},
+       #{DEAL_ERROR_INFO ,jdbcType=VARCHAR},
+       #{SERVICE_ERROR ,jdbcType=VARCHAR},
+       #{MEDICARE_NO ,jdbcType=VARCHAR},
+       #{RECEIPT_NO  ,jdbcType=VARCHAR},
+       #{REFUND_NO ,jdbcType=VARCHAR},
+       #{NEW_NO ,jdbcType=VARCHAR},
+       #{ADD_INFO ,jdbcType=VARCHAR}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pdi">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+			(<include refid="FieldValue"></include>)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+	       	   API_TYPE = #{API_TYPE},
+	       	   GROUP_ID=#{GROUP_ID},
+	       	   DATA_TYPE = #{DATA_TYPE},
+		       REQ_NO = #{REQ_NO},
+		       TIME_STAMP = #{TIME_STAMP},
+		       SERVICE_NAME = #{SERVICE_NAME},
+		       SERVICE_NO = #{SERVICE_NO},
+		       IC_CARD = #{IC_CARD},
+		       WORK_NO = #{WORK_NO},
+		       PERS_NO = #{PERS_NO},
+		       BUSI_TYPE = #{BUSI_TYPE},
+		       CASHIER_NO = #{CASHIER_NO},
+		       CASHIER_NAME = #{CASHIER_NAME},
+		       BILL_DOC = #{BILL_DOC},
+		       MEDICAL_DEPT = #{MEDICAL_DEPT},
+		       MEDICAL_NAME = #{MEDICAL_NAME},
+		       RECEIPT_TYPE = #{RECEIPT_TYPE},
+		       DEAL_STAT = #{DEAL_STAT},
+		       DEAL_ERROR_CODE = #{DEAL_ERROR_CODE},
+		       DEAL_ERROR_INFO = #{DEAL_ERROR_INFO},
+		       SERVICE_ERROR = #{SERVICE_ERROR},
+		       MEDICARE_NO = #{MEDICARE_NO},
+		       RECEIPT_NO = #{RECEIPT_NO},
+		       REFUND_NO = #{REFUND_NO},
+		       NEW_NO = #{NEW_NO},
+		       ADD_INFO = #{ADD_INFO}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过序列获取表唯一ID -->
+	<!-- <select id="findInteID" resultType="java.lang.Integer">
+		select seq_p_inte_info.nextval as id from dual
+	</select>
+	 -->
+	 <select id="interPageAll" parameterType="pd" resultType="pd">
+		SELECT DISTINCT a.ID, a.API_TYPE, a.DATA_TYPE, dict1.D_VALUE AS data_type_name, a.REQ_NO, 
+			a.TIME_STAMP, a.SERVICE_NO HOS_CODE, a.SERVICE_NAME hosp_name, 
+			a.BUSI_TYPE, a.GROUP_ID, c.NAME AS group_name,  a.CREATE_DATE 
+		FROM P_DRUGSTORE_INTE_INFO a  
+		LEFT JOIN ts_plat.sys_app_user c ON c.USERNAME = a.group_id
+		LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE FROM p_dict d LEFT JOIN p_dict_type e ON d.d_id = e.id 
+			    WHERE e.name = 'data_type' AND d.is_disable = '0') dict1 ON dict1.D_KEY = a.DATA_TYPE     
+		WHERE  1 = 1  
+		<if test="KEYWORDS != null and KEYWORDS != ''">
+			and a.SERVICE_NAME LIKE #{KEYWORDS}
+		</if>
+		<if test="FINAL_DATE_START != null and FINAL_DATE_START != ''">
+			<![CDATA[ AND a.CREATE_DATE >= #{FINAL_DATE_START} ]]>
+		</if>
+		<if test="FINAL_DATE_END != null and FINAL_DATE_END != ''">
+			<![CDATA[ AND a.CREATE_DATE <= #{FINAL_DATE_END} ]]>
+		</if>
+		<if test="BUSINESSCODE != null and BUSINESSCODE != ''">
+			and a.API_TYPE = #{BUSINESSCODE}
+		</if>
+		<if test="groupID != null and groupID != ''">
+			and a.GROUP_ID = #{groupID}
+		</if>
+		ORDER BY a.CREATE_DATE DESC
+	</select> 
+	<select id="interlistPage" parameterType="page" resultType="pd">
+		SELECT DISTINCT a.ID, a.API_TYPE, a.DATA_TYPE, dict1.D_VALUE AS data_type_name, a.REQ_NO, 
+			a.TIME_STAMP, a.SERVICE_NO HOS_CODE, a.SERVICE_NAME hosp_name, 
+			a.BUSI_TYPE, a.GROUP_ID, c.NAME AS group_name,  a.CREATE_DATE 
+		FROM P_DRUGSTORE_INTE_INFO a  
+		LEFT JOIN ts_plat.sys_app_user c ON c.USERNAME = a.group_id
+		LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE FROM p_dict d LEFT JOIN p_dict_type e ON d.d_id = e.id 
+			    WHERE e.name = 'data_type' AND d.is_disable = '0') dict1 ON dict1.D_KEY = a.DATA_TYPE     
+		WHERE  1 = 1  
+		<if test="pd.KEYWORDS != null and pd.KEYWORDS != ''">
+			and a.SERVICE_NAME LIKE #{pd.KEYWORDS}
+		</if>
+		<if test="pd.FINAL_DATE_START != null and pd.FINAL_DATE_START != ''">
+			<![CDATA[ AND a.CREATE_DATE >= #{pd.FINAL_DATE_START} ]]>
+		</if>
+		<if test="pd.FINAL_DATE_END != null and pd.FINAL_DATE_END != ''">
+			<![CDATA[ AND a.CREATE_DATE <= #{pd.FINAL_DATE_END} ]]>
+		</if>
+		<if test="pd.businessCode_ds != null and pd.businessCode_ds != ''">
+			and a.API_TYPE = #{pd.businessCode_ds}
+		</if>
+		<if test="pd.groupID != null and pd.groupID != ''">
+			and a.GROUP_ID = #{pd.groupID}
+		</if>
+		ORDER BY a.CREATE_DATE DESC
+	</select> 
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		SELECT DISTINCT a.ID,  a.API_TYPE, a.DATA_TYPE, dict1.D_VALUE AS data_type_name,
+			   a.REQ_NO, a.TIME_STAMP,a.SERVICE_NO, a.SERVICE_NAME, a.IC_CARD,a.WORK_NO,a.PERS_NO,
+			   dict3.D_VALUE AS BUSI_TYPE_NAME,a.BUSI_TYPE,a.CASHIER_NO,a.CASHIER_NAME,a.BILL_DOC,
+			   a.MEDICAL_DEPT,a.MEDICAL_NAME,a.RECEIPT_TYPE,a.DEAL_STAT,a.DEAL_ERROR_CODE,a.DEAL_ERROR_INFO,
+			   a.SERVICE_ERROR,a.MEDICARE_NO,a.RECEIPT_NO,a.REFUND_NO,a.NEW_NO,a.CREATE_DATE,a.ADD_INFO, 
+			   a.GROUP_ID,  c.NAME AS group_name
+		FROM P_DRUGSTORE_INTE_INFO a 
+	    LEFT JOIN ts_plat.sys_app_user c ON c.USERNAME = a.GROUP_ID
+        LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE FROM p_dict d LEFT JOIN p_dict_type e ON d.d_id = e.id 
+			WHERE e.name = 'data_type' AND d.is_disable = '0') dict1 ON dict1.D_KEY = a.DATA_TYPE 
+		LEFT JOIN (SELECT f1.D_KEY, f1.D_VALUE, f1.ORDERS, f1.IS_DISABLE FROM p_dict f1 LEFT JOIN p_dict_type g1 ON f1.d_id = g1.id 
+			WHERE g1.name = 'business_type' AND f1.is_disable = '0') dict3 ON dict3.D_KEY = a.busi_type
+		where a.ID = #{ID}
+	</select>
+	<!-- 通过接口类型，机构code，医院交易号医院编码 获取数据 -->
+	<!-- <select id="findByDealId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			API_TYPE LIKE #{API_TYPE}
+		and
+			VISIT_NO = #{VISIT_NO}
+		and 
+			HOS_CODE = #{HOS_CODE}
+		and 
+			GROUP_ID = #{GROUP_ID}
+	</select> -->
+	
+	<!-- 通过数据类型，机构code，医院交易号医院编码 获取数据 -->
+	<!-- <select id="findByDataId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			DATA_TYPE LIKE #{DATA_TYPE}
+		and
+			VISIT_NO = #{VISIT_NO}
+		and 
+			HOS_CODE = #{HOS_CODE}
+		and 
+			GROUP_ID = #{GROUP_ID}
+	</select> -->
+	
+	<!-- <select id="findByVisit_no" parameterType="pif" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			HOS_CODE = #{HOS_CODE}
+			and 
+			USER_ID = #{USER_ID}
+			and 
+			FINAL_NO = #{FINAL_NO}
+			and 
+			GROUP_ID = #{GROUP_ID}
+			and 
+			data_type = 2
+		order by 
+			FINAL_DATE 
+	</select> -->
+	
+</mapper>

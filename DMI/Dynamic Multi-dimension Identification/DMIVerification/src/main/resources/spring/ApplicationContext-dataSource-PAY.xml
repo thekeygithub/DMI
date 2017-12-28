@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+	">
+
+	<!-- ====================数据源 PAY使用==================== -->
+	
+	<bean id="sqlSessionTemplate_PAY" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory_PAY" />
+	</bean>
+	<bean id="sqlSessionFactory_PAY" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="dataSource_PAY" />
+        <property name="configLocation" value="classpath:mybatisPAY/mybatis-config.xml"></property>
+        <property name="mapperLocations" value="classpath:mybatisPAY/*/*.xml"></property>
+    </bean>
+	<bean id="dataSource_PAY" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">  
+         <property name="url" value="${url_PAY}" />  
+         <property name="username" value="${username_PAY}" />  
+         <property name="password" value="${password_PAY}" />  
+         <property name="driverClassName" value="${driverClassName_PAY}" />  
+         <property name="filters" value="${filters_PAY}" />  
+         <property name="maxActive" value="${maxActive_PAY}" />
+         <property name="initialSize" value="${initialSize_PAY}" />
+         <property name="maxWait" value="${maxWait_PAY}" />
+         <property name="minIdle" value="${minIdle_PAY}" />  
+         <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis_PAY}" />
+         <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis_PAY}" />  
+         <property name="validationQuery" value="${validationQuery_PAY}" />  
+         <property name="testWhileIdle" value="${testWhileIdle_PAY}" />  
+         <property name="testOnBorrow" value="${testOnBorrow_PAY}" />  
+         <property name="testOnReturn" value="${testOnReturn_PAY}" />  
+         <property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements_PAY}" />
+         <property name="removeAbandoned" value="${removeAbandoned_PAY}" />
+         <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout_PAY}" />
+         <property name="logAbandoned" value="${logAbandoned_PAY}" />
+	</bean>  
+	<aop:config>
+		<aop:pointcut id="pc_PAY" expression="execution(* com.ts.service..*(..))" />
+		<aop:advisor pointcut-ref="pc_PAY" advice-ref="txAdvice_PAY" />
+	</aop:config>
+	<tx:advice id="txAdvice_PAY" transaction-manager="transactionManager_PAY">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception"/>
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false" 
+			           rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+	<bean name="transactionManager_PAY" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
+    	<property name="dataSource" ref="dataSource_PAY"></property>
+ 	</bean>
+ 	
+</beans>

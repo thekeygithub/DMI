@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings> 
+        <setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->   
+        <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" /> 
+    </settings>
+
+	<typeAliases>
+		<typeAlias type="com.ts.entity.P_user" alias="pus"/>
+		<typeAlias type="com.ts.entity.P_bill" alias="pb"/>
+		<typeAlias type="com.ts.entity.P_bill_item" alias="pbi"/>
+		<typeAlias type="com.ts.entity.P_fee" alias="pf"/>
+		<typeAlias type="com.ts.entity.P_fund" alias="pfd"/>
+		<typeAlias type="com.ts.entity.P_insu_info" alias="pii"/>
+		<typeAlias type="com.ts.entity.P_inte_info" alias="pif"/>
+		<typeAlias type="com.ts.entity.P_over_detail" alias="pod"/>
+		<typeAlias type="com.ts.entity.FaceComparison.P_face_compare" alias="pfc"/>
+		<typeAlias type="com.ts.entity.P_result" alias="pr"/>
+		<!--药店支付开始  -->
+		<typeAlias type="com.ts.entity.P_drugstore_drug_item" alias="pdd"/>
+		<typeAlias type="com.ts.entity.P_drugstore_inte_info" alias="pdi"/>
+		<typeAlias type="com.ts.entity.P_drugstore_result" alias="pdr"/>
+		<typeAlias type="com.ts.entity.P_drugstore_check" alias="pdc"/>
+		<typeAlias type="com.ts.entity.P_drugstore_check_add" alias="pdca"/>
+		
+		<!--药店支付结束  -->
+		<typeAlias type="com.ts.util.PageData" alias="pd"/>
+		<!-- 分页 -->
+		<typeAlias type="com.ts.entity.Page" alias="Page"/>
+	</typeAliases>
+	
+	<plugins>
+		<plugin interceptor="com.ts.plugin.PagePlugin">
+			<property name="dialect" value="mysql"/>
+			<property name="pageSqlId" value=".*listPage.*"/>
+		</plugin>
+	</plugins>
+	
+</configuration>

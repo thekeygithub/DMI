@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AppMapper">
+	
+	<!-- app 查询-->
+	<select id="json" parameterType="pd" resultType="pd">
+	${sql}
+	</select>
+	
+	<!-- app 分页查询-->
+	<select id="jsonlistPage" parameterType="page" resultType="pd">
+	${pd.sql}
+	</select>
+	
+	<!-- 获取药品总数 -->
+	<select id="getDrugCount" parameterType="String" resultType="pd">
+		select 
+			count(INS_ID) 
+		from 
+			kn_instruction
+	</select>
+	<!-- 获取导诊总数 -->
+	<select id="getGuideCount" parameterType="String" resultType="pd">
+		select 
+			count(DN_ID) 
+		from 
+			TM_DIAGNOSE
+	</select>
+	<!-- 获取医生总数 -->
+	<select id="getDoctorCount" parameterType="String" resultType="pd">
+		select 
+			count(MED_ID) 
+		from 
+			FAC_MEDICAL
+	</select>
+	<!-- 获取医院总数 -->
+	<select id="getHospitalCount" parameterType="String" resultType="pd">
+		select 
+			count(HOS_ID) 
+		from 
+			FAC_HOSPITAL
+	</select>
+	<!-- 获取科室总数 -->
+	<select id="getDepartmentCount" parameterType="String" resultType="pd">
+		select 
+			count(DEP_ID) 
+		from 
+			FAC_DEPARTMENT
+	</select>
+</mapper>

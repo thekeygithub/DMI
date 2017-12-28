@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PinsuinfoMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_INSU_INFO
+	</sql>
+	
+	<!--字段-->
+	<sql id="Field">
+	    ID,
+        USER_ID,
+        API_TYPE,
+        REQ_NO,
+        TIME_STAMP , 
+        BANK_NO , 
+        READ_TYPE , 
+        HOS_CODE , 
+        MED_CARD , 
+        INSU_NO , 
+        SEX , 
+        NATION , 
+        BIRTH , 
+        COM , 
+        NAME_ADDR , 
+        AREA_CODE , 
+        AREA_NAME , 
+        MED , 
+        HONOR , 
+        LOW , 
+        PRIV_RANK , 
+        SPEC_FLAG , 
+        SPEC_CODE , 
+        I_BALANCE,
+        O_BALANCE, 
+        OUT_TOTAL, 
+        IN_TOTAL, 
+        DIS_TOTAL, 
+        WHOLE, 
+        WHOLE_PAY, 
+        INSU_PAY, 
+        SER_PAY, 
+        COM_PAY, 
+        SPEC_PAY, 
+        IN_COUNT, 
+        PART , 
+        LITTLE_INSU , 
+        DEAL_STAT, 
+        ERROR , 
+        CARD_RES , 
+        BANK_RES , 
+        IC_DATA , 
+        MED_RES , 
+        HURT_RES , 
+        PROC_RES , 
+        CARD_NO
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	   #{ID,jdbcType=VARCHAR},
+       #{USER_ID,jdbcType=VARCHAR},
+       #{API_TYPE ,jdbcType=VARCHAR},
+       #{REQ_NO ,jdbcType=VARCHAR},
+       #{TIME_STAMP ,jdbcType=VARCHAR},
+       #{BANK_NO ,jdbcType=VARCHAR},
+       #{READ_TYPE ,jdbcType=VARCHAR},
+       #{HOS_CODE ,jdbcType=VARCHAR},
+       #{MED_CARD ,jdbcType=VARCHAR},
+       #{INSU_NO ,jdbcType=VARCHAR},
+       #{SEX ,jdbcType=VARCHAR},
+       #{NATION ,jdbcType=VARCHAR},
+       #{BIRTH ,jdbcType=VARCHAR},
+       #{COM ,jdbcType=VARCHAR},
+       #{NAME_ADDR ,jdbcType=VARCHAR},
+       #{AREA_CODE ,jdbcType=VARCHAR},
+       #{AREA_NAME ,jdbcType=VARCHAR},
+       #{MED ,jdbcType=VARCHAR},
+       #{HONOR ,jdbcType=VARCHAR},
+       #{LOW ,jdbcType=VARCHAR},
+       #{PRIV_RANK ,jdbcType=VARCHAR},
+       #{SPEC_FLAG ,jdbcType=VARCHAR},
+       #{SPEC_CODE ,jdbcType=VARCHAR},
+       #{I_BALANCE,jdbcType=NUMERIC},
+       #{O_BALANCE,jdbcType=NUMERIC},
+       #{OUT_TOTAL,jdbcType=NUMERIC},
+       #{IN_TOTAL,jdbcType=NUMERIC},
+       #{DIS_TOTAL,jdbcType=NUMERIC},
+       #{WHOLE,jdbcType=NUMERIC},
+       #{WHOLE_PAY,jdbcType=NUMERIC},
+       #{INSU_PAY,jdbcType=NUMERIC},
+       #{SER_PAY,jdbcType=NUMERIC},
+       #{COM_PAY,jdbcType=NUMERIC},
+       #{SPEC_PAY,jdbcType=NUMERIC},
+       #{IN_COUNT,jdbcType=NUMERIC},
+       #{PART ,jdbcType=VARCHAR},
+       #{LITTLE_INSU ,jdbcType=VARCHAR},
+       #{DEAL_STAT,jdbcType=NUMERIC},
+       #{ERROR ,jdbcType=VARCHAR},
+       #{CARD_RES ,jdbcType=VARCHAR},
+       #{BANK_RES ,jdbcType=VARCHAR},
+       #{IC_DATA ,jdbcType=VARCHAR},
+       #{MED_RES ,jdbcType=VARCHAR},
+       #{HURT_RES ,jdbcType=VARCHAR},
+       #{PROC_RES ,jdbcType=VARCHAR},
+       #{CARD_NO ,jdbcType=VARCHAR}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pii">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+		   <include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+			   USER_ID = #{USER_ID},
+		       API_TYPE = #{API_TYPE},
+		       REQ_NO = #{REQ_NO},
+		       TIME_STAMP = #{TIME_STAMP},
+		       BANK_NO = #{BANK_NO},
+		       READ_TYPE = #{READ_TYPE},
+		       HOS_CODE = #{HOS_CODE},
+		       MED_CARD = #{MED_CARD},
+		       INSU_NO = #{INSU_NO},
+		       SEX = #{SEX},
+		       NATION = #{NATION},
+		       BIRTH = #{BIRTH},
+		       COM = #{COM},
+		       NAME_ADDR = #{NAME_ADDR},
+		       AREA_CODE = #{AREA_CODE},
+		       AREA_NAME = #{AREA_NAME},
+		       MED = #{MED},
+		       HONOR = #{HONOR},
+		       LOW = #{LOW},
+		       PRIV_RANK = #{PRIV_RANK},
+		       SPEC_FLAG = #{SPEC_FLAG},
+		       SPEC_CODE = #{SPEC_CODE},
+		       I_BALANCE = #{I_BALANCE},
+		       O_BALANCE = #{O_BALANCE},
+		       OUT_TOTAL = #{OUT_TOTAL},
+		       IN_TOTAL = #{IN_TOTAL},
+		       DIS_TOTAL = #{DIS_TOTAL},
+		       WHOLE = #{WHOLE},
+		       WHOLE_PAY = #{WHOLE_PAY},
+		       INSU_PAY = #{INSU_PAY},
+		       SER_PAY = #{SER_PAY},
+		       COM_PAY = #{COM_PAY},
+		       SPEC_PAY = #{SPEC_PAY},
+		       IN_COUNT = #{IN_COUNT},
+		       PART = #{PART},
+		       LITTLE_INSU = #{LITTLE_INSU},
+		       DEAL_STAT = #{DEAL_STAT},
+		       ERROR = #{ERROR},
+		       CARD_RES = #{CARD_RES},
+		       BANK_RES = #{BANK_RES},
+		       IC_DATA = #{IC_DATA},
+		       MED_RES = #{MED_RES},
+		       HURT_RES = #{HURT_RES},
+		       PROC_RES = #{PROC_RES},
+		       CARD_NO = #{CARD_NO}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		<!--
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		-->
+		
+		select distinct a.ID, a.USER_ID, a.API_TYPE, a.REQ_NO, a.TIME_STAMP, a.BANK_NO, a.READ_TYPE, a.HOS_CODE, b.hosp_name,
+        	   a.MED_CARD, a.INSU_NO, a.SEX, dict6.D_VALUE as sex_name,
+        	   a.NATION, a.BIRTH, a.COM, a.NAME_ADDR, a.AREA_CODE, a.AREA_NAME, a.MED, dict1.D_VALUE as med_name,
+        	   a.HONOR, dict2.D_VALUE as honor_name, a.LOW, dict3.D_VALUE as low_name, a.PRIV_RANK, dict4.D_VALUE as priv_rank_name,
+        	   a.SPEC_FLAG, a.SPEC_CODE, a.I_BALANCE, a.O_BALANCE, a.OUT_TOTAL, a.IN_TOTAL, a.DIS_TOTAL, a.WHOLE, a.WHOLE_PAY, 
+        	   a.INSU_PAY, a.SER_PAY, a.COM_PAY, a.SPEC_PAY, a.IN_COUNT, a.PART, a.LITTLE_INSU, dict5.D_VALUE as little_insu_name,
+        	   a.DEAL_STAT, a.ERROR, a.CARD_RES, a.BANK_RES, a.IC_DATA, a.MED_RES, a.HURT_RES, a.PROC_RES, a.CARD_NO
+             <!-- 医院编码 -->
+		from P_INSU_INFO a left join p_dll_server b on a.hos_code = b.hosp_id 
+		 	 <!-- 医保待遇（政策）类别 -->
+			 LEFT JOIN (SELECT f1.D_KEY, f1.D_VALUE, f1.ORDERS, f1.IS_DISABLE from p_dict f1 left join p_dict_type g1 on f1.d_id = g1.id 
+					    where g1.name = 'medical_treatment_type' and f1.is_disable = '0') dict1 on dict1.D_KEY = a.med
+			<!-- 荣誉类别 -->
+			 LEFT JOIN (SELECT f2.D_KEY, f2.D_VALUE, f2.ORDERS, f2.IS_DISABLE from p_dict f2 left join p_dict_type g2 on f2.d_id = g2.id 
+					    where g2.name = 'honor_type' and f2.is_disable = '0') dict2 on dict2.D_KEY = a.honor
+			<!-- 低保类别 -->
+			 LEFT JOIN (SELECT f3.D_KEY, f3.D_VALUE, f3.ORDERS, f3.IS_DISABLE from p_dict f3 left join p_dict_type g3 on f3.d_id = g3.id 
+					    where g3.name = 'subsistence_allowances' and f3.is_disable = '0') dict3 on dict3.D_KEY = a.LOW		
+			<!-- 优抚类别 -->
+			 LEFT JOIN (SELECT f4.D_KEY, f4.D_VALUE, f4.ORDERS, f4.IS_DISABLE from p_dict f4 left join p_dict_type g4 on f4.d_id = g4.id 
+					    where g4.name = 'special_care_level' and f4.is_disable = '0') dict4 on dict4.D_KEY = a.PRIV_RANK	
+			<!-- 医疗小险种  -->
+			 LEFT JOIN (SELECT f5.D_KEY, f5.D_VALUE, f5.ORDERS, f5.IS_DISABLE from p_dict f5 left join p_dict_type g5 on f5.d_id = g5.id 
+					    where g5.name = 'medical_insurance_type' and f5.is_disable = '0') dict5 on dict5.D_KEY = a.little_insu	
+			<!-- 性别  -->
+			 LEFT JOIN (SELECT f6.D_KEY, f6.D_VALUE, f6.ORDERS, f6.IS_DISABLE from p_dict f6 left join p_dict_type g6 on f6.d_id = g6.id 
+					    where g6.name = 'sex' and f6.is_disable = '0') dict6 on dict6.D_KEY = a.SEX 
+		where a.ID = #{ID}
+	</select>
+	
+	<!-- 通过USER获取数据 -->
+	<select id="findByUser" parameterType="pd" resultType="pd">
+		select distinct a.ID, a.USER_ID, a.API_TYPE, a.REQ_NO, a.TIME_STAMP, a.BANK_NO, a.READ_TYPE, a.HOS_CODE, b.hosp_name,
+        	   a.MED_CARD, a.INSU_NO, a.SEX, dict6.D_VALUE as sex_name,
+        	   a.NATION, a.BIRTH, a.COM, a.NAME_ADDR, a.AREA_CODE, a.AREA_NAME, a.MED, dict1.D_VALUE as med_name,
+        	   a.HONOR, dict2.D_VALUE as honor_name, a.LOW, dict3.D_VALUE as low_name, a.PRIV_RANK, dict4.D_VALUE as priv_rank_name,
+        	   a.SPEC_FLAG, a.SPEC_CODE, a.I_BALANCE, a.O_BALANCE, a.OUT_TOTAL, a.IN_TOTAL, a.DIS_TOTAL, a.WHOLE, a.WHOLE_PAY, 
+        	   a.INSU_PAY, a.SER_PAY, a.COM_PAY, a.SPEC_PAY, a.IN_COUNT, a.PART, a.LITTLE_INSU, dict5.D_VALUE as little_insu_name,
+        	   a.DEAL_STAT, a.ERROR, a.CARD_RES, a.BANK_RES, a.IC_DATA, a.MED_RES, a.HURT_RES, a.PROC_RES, a.CARD_NO, a.create_date 
+             <!-- 医院编码 -->
+		from P_INSU_INFO a left join p_dll_server b on a.hos_code = b.hosp_id 
+		 	 <!-- 医保待遇（政策）类别 -->
+			 LEFT JOIN (SELECT f1.D_KEY, f1.D_VALUE, f1.ORDERS, f1.IS_DISABLE from p_dict f1 left join p_dict_type g1 on f1.d_id = g1.id 
+					    where g1.name = 'medical_treatment_type' and f1.is_disable = '0') dict1 on dict1.D_KEY = a.med
+			<!-- 荣誉类别 -->
+			 LEFT JOIN (SELECT f2.D_KEY, f2.D_VALUE, f2.ORDERS, f2.IS_DISABLE from p_dict f2 left join p_dict_type g2 on f2.d_id = g2.id 
+					    where g2.name = 'honor_type' and f2.is_disable = '0') dict2 on dict2.D_KEY = a.honor
+			<!-- 低保类别 -->
+			 LEFT JOIN (SELECT f3.D_KEY, f3.D_VALUE, f3.ORDERS, f3.IS_DISABLE from p_dict f3 left join p_dict_type g3 on f3.d_id = g3.id 
+					    where g3.name = 'subsistence_allowances' and f3.is_disable = '0') dict3 on dict3.D_KEY = a.LOW		
+			<!-- 优抚类别 -->
+			 LEFT JOIN (SELECT f4.D_KEY, f4.D_VALUE, f4.ORDERS, f4.IS_DISABLE from p_dict f4 left join p_dict_type g4 on f4.d_id = g4.id 
+					    where g4.name = 'special_care_level' and f4.is_disable = '0') dict4 on dict4.D_KEY = a.PRIV_RANK	
+			<!-- 医疗小险种  -->
+			 LEFT JOIN (SELECT f5.D_KEY, f5.D_VALUE, f5.ORDERS, f5.IS_DISABLE from p_dict f5 left join p_dict_type g5 on f5.d_id = g5.id 
+					    where g5.name = 'medical_insurance_type' and f5.is_disable = '0') dict5 on dict5.D_KEY = a.little_insu	
+			<!-- 性别  -->
+			 LEFT JOIN (SELECT f6.D_KEY, f6.D_VALUE, f6.ORDERS, f6.IS_DISABLE from p_dict f6 left join p_dict_type g6 on f6.d_id = g6.id 
+					    where g6.name = 'sex' and f6.is_disable = '0') dict6 on dict6.D_KEY = a.SEX 
+		where 1 = 1 and a.USER_ID = #{USERID} and a.api_type = 'I22' 
+		      and date_format(a.create_date, '%Y-%m-%d') = (SELECT date_format(z.createdate, '%Y-%m-%d') FROM p_inte_info z WHERE z.id = #{INTERID})
+		order by a.create_date desc 
+	</select>
+	
+</mapper>

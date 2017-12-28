@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PresultMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		P_RESULT
+	</sql>
+	
+	<!--字段-->
+	<sql id="Field">
+		 ID, 
+		 IN_ID, 
+	     TOTAL_FEE, 
+	     SELF_PAY, 
+	     SELF_NEG, 
+	     MED_FEE , 
+	     TRAN_FEE , 
+	     LEVEL_PAY , 
+	     SELF_CASH_PAY , 
+	     NEG_CASH_PAY , 
+	     CASH_TOTAL , 
+	     RETURN_FEE , 
+	     I_PAY , 
+	     O_PAY , 
+	     WHOLE_PAY , 
+	     ADD_PAY , 
+	     SER_PAY , 
+	     COM_PAY , 
+	     SALV_PAY , 
+	     RETIRE_PAY , 
+	     FUND_PAY , 
+	     MODEL_PAY , 
+	     CIVIL_PAY , 
+	     PRIV_PAY , 
+	     DPF_PAY , 
+	     PLAN_PAY , 
+	     HURT_PAY , 
+	     PROC_PAY , 
+	     I_BALANCE , 
+	     O_BALANCE , 
+	     INSU_PAY , 
+	     INSU_SALV_PAY , 
+	     CHARITY ,
+	     MUTUAL 
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID,jdbcType=VARCHAR},
+		#{IN_ID,jdbcType=VARCHAR},
+	    #{TOTAL_FEE,jdbcType=NUMERIC},
+	    #{SELF_PAY,jdbcType=NUMERIC},
+	    #{SELF_NEG,jdbcType=NUMERIC},
+	    #{MED_FEE ,jdbcType=NUMERIC},
+	    #{TRAN_FEE ,jdbcType=NUMERIC},
+	    #{LEVEL_PAY ,jdbcType=NUMERIC},
+	    #{SELF_CASH_PAY ,jdbcType=NUMERIC},
+	    #{NEG_CASH_PAY ,jdbcType=NUMERIC},
+	    #{CASH_TOTAL ,jdbcType=NUMERIC},
+	    #{RETURN_FEE ,jdbcType=NUMERIC},
+	    #{I_PAY ,jdbcType=NUMERIC},
+	    #{O_PAY ,jdbcType=NUMERIC},
+	    #{WHOLE_PAY ,jdbcType=NUMERIC},
+	    #{ADD_PAY ,jdbcType=NUMERIC},
+	    #{SER_PAY ,jdbcType=NUMERIC},
+	    #{COM_PAY ,jdbcType=NUMERIC},
+	    #{SALV_PAY ,jdbcType=NUMERIC},
+	    #{RETIRE_PAY ,jdbcType=NUMERIC},
+	    #{FUND_PAY ,jdbcType=NUMERIC},
+	    #{MODEL_PAY ,jdbcType=NUMERIC},
+	    #{CIVIL_PAY ,jdbcType=NUMERIC},
+	    #{PRIV_PAY ,jdbcType=NUMERIC},
+	    #{DPF_PAY ,jdbcType=NUMERIC},
+	    #{PLAN_PAY ,jdbcType=NUMERIC},
+	    #{HURT_PAY ,jdbcType=NUMERIC},
+	    #{PROC_PAY ,jdbcType=NUMERIC},
+	    #{I_BALANCE ,jdbcType=NUMERIC},
+	    #{O_BALANCE ,jdbcType=NUMERIC},
+	    #{INSU_PAY ,jdbcType=NUMERIC},
+	    #{INSU_SALV_PAY ,jdbcType=NUMERIC},
+	    #{CHARITY ,jdbcType=NUMERIC},
+	    #{MUTUAL ,jdbcType=NUMERIC}
+	</sql>
+	
+	<!--新增-->
+	<insert id="save" parameterType="pr">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				IN_ID = #{IN_ID},
+			    TOTAL_FEE = #{TOTAL_FEE},
+			    SELF_PAY = #{SELF_PAY},
+			    SELF_NEG = #{SELF_NEG},
+			    MED_FEE = #{MED_FEE},
+			    TRAN_FEE = #{TRAN_FEE},
+			    LEVEL_PAY = #{LEVEL_PAY},
+			    SELF_CASH_PAY = #{SELF_CASH_PAY},
+			    NEG_CASH_PAY = #{NEG_CASH_PAY},
+			    CASH_TOTAL = #{CASH_TOTAL},
+			    RETURN_FEE = #{RETURN_FEE},
+			    I_PAY = #{I_PAY},
+			    O_PAY = #{O_PAY},
+			    WHOLE_PAY = #{WHOLE_PAY},
+			    ADD_PAY = #{ADD_PAY},
+			    SER_PAY = #{SER_PAY},
+			    COM_PAY = #{COM_PAY},
+			    SALV_PAY = #{SALV_PAY},
+			    RETIRE_PAY = #{RETIRE_PAY},
+			    FUND_PAY = #{FUND_PAY},
+			    MODEL_PAY = #{MODEL_PAY},
+			    CIVIL_PAY = #{CIVIL_PAY},
+			    PRIV_PAY = #{PRIV_PAY},
+			    DPF_PAY = #{DPF_PAY},
+			    PLAN_PAY = #{PLAN_PAY},
+			    HURT_PAY = #{HURT_PAY},
+			    PROC_PAY = #{PROC_PAY},
+			    I_BALANCE = #{I_BALANCE},
+			    O_BALANCE = #{O_BALANCE},
+			    INSU_PAY = #{INSU_PAY},
+			    INSU_SALV_PAY = #{INSU_SALV_PAY},
+			    CHARITY = #{CHARITY},
+			    MUTUAL = #{MUTUAL}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- IN_id修改 -->
+	<update id="editINID" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				
+			    TOTAL_FEE = #{TOTAL_FEE},
+			    SELF_PAY = #{SELF_PAY},
+			    SELF_NEG = #{SELF_NEG},
+			    MED_FEE = #{MED_FEE},
+			    TRAN_FEE = #{TRAN_FEE},
+			    LEVEL_PAY = #{LEVEL_PAY},
+			    SELF_CASH_PAY = #{SELF_CASH_PAY},
+			    NEG_CASH_PAY = #{NEG_CASH_PAY},
+			    CASH_TOTAL = #{CASH_TOTAL},
+			    RETURN_FEE = #{RETURN_FEE},
+			    I_PAY = #{I_PAY},
+			    O_PAY = #{O_PAY},
+			    WHOLE_PAY = #{WHOLE_PAY},
+			    ADD_PAY = #{ADD_PAY},
+			    SER_PAY = #{SER_PAY},
+			    COM_PAY = #{COM_PAY},
+			    SALV_PAY = #{SALV_PAY},
+			    RETIRE_PAY = #{RETIRE_PAY},
+			    FUND_PAY = #{FUND_PAY},
+			    MODEL_PAY = #{MODEL_PAY},
+			    CIVIL_PAY = #{CIVIL_PAY},
+			    PRIV_PAY = #{PRIV_PAY},
+			    DPF_PAY = #{DPF_PAY},
+			    PLAN_PAY = #{PLAN_PAY},
+			    HURT_PAY = #{HURT_PAY},
+			    PROC_PAY = #{PROC_PAY},
+			    I_BALANCE = #{I_BALANCE},
+			    O_BALANCE = #{O_BALANCE},
+			    INSU_PAY = #{INSU_PAY},
+			    INSU_SALV_PAY = #{INSU_SALV_PAY},
+			    CHARITY = #{CHARITY},
+			    MUTUAL = #{MUTUAL}
+			where 
+				IN_ID = #{IN_ID}
+			and
+				ID = #{ID}
+	</update>
+	
+			<!-- 通过接口类型和医院交易号 获取数据 -->
+	<select id="findByResId" parameterType="pd" resultType="pd">
+		select
+			*
+		from
+			P_RESULT where in_id in (
+		select 
+			i.id
+		from 
+			p_inte_info i
+		where 
+			i.API_TYPE LIKE #{API_TYPE}
+		and
+			i.VISIT_NO = #{VISIT_NO}
+		and 
+			i.HOS_CODE = #{HOS_CODE}
+		and 
+			i.GROUP_ID = #{GROUP_ID}
+			)
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<select id="searchResultAll" parameterType="pd" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where 
+			IN_ID = #{INTERID}
+	</select>
+	
+</mapper>

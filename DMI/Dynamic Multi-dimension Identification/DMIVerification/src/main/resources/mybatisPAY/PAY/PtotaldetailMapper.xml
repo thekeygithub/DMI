@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PtotaldetailMapper">
+
+	<resultMap type="com.ts.entity.P_total_detail" id="BaseResultMap">
+		<result column="id" property="ID" jdbcType="VARCHAR"/>
+		<result column="data_type" property="DATA_TYPE" jdbcType="NUMERIC"/>
+		<result column="api_type" property="API_TYPE" jdbcType="VARCHAR"/>
+		<result column="req_no" property="REQ_NO" jdbcType="VARCHAR"/>
+		<result column="time_stamp" property="TIME_STAMP" jdbcType="VARCHAR"/>
+		<result column="group_id" property="GROUP_ID" jdbcType="VARCHAR"/>
+		<result column="group_name" property="GROUP_NAME" jdbcType="VARCHAR"/>
+		<result column="hos_code" property="HOS_CODE" jdbcType="VARCHAR"/>
+		<result column="hos_name" property="HOS_NAME" jdbcType="VARCHAR"/>
+		<result column="final_date" property="FINAL_DATE" jdbcType="TIMESTAMP"/>
+		<result column="pay_num" property="PAY_NUM" jdbcType="NUMERIC"/>
+		<result column="confirm_num" property="CONFIRM_NUM" jdbcType="NUMERIC"/>
+		<result column="return_num" property="RETURN_NUM" jdbcType="NUMERIC"/>
+		<result column="total_fee" property="TOTAL_FEE" jdbcType="NUMERIC"/>
+		<result column="self_pay" property="SELF_PAY" jdbcType="NUMERIC"/>
+		<result column="self_neg" property="SELF_NEG" jdbcType="NUMERIC"/>
+		<result column="med_fee" property="MED_FEE" jdbcType="NUMERIC"/>
+		<result column="return_fee" property="RETURN_FEE" jdbcType="NUMERIC"/>
+		<result column="check_type" property="CHECK_TYPE" jdbcType="NUMERIC"/>
+		<result column="visit_no" property="VISIT_NO" jdbcType="VARCHAR"/>
+		<result column="final_no" property="FINAL_NO" jdbcType="VARCHAR"/>
+		<result column="super_id" property="SUPER_ID" jdbcType="VARCHAR"/>
+		<result column="data_date" property="DATA_DATE" jdbcType="TIMESTAMP"/>
+		<result column="cash_total" property="CASH_TOTAL" jdbcType="NUMERIC"/>
+	</resultMap>
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_TOTAL_DETAIL
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		DATA_TYPE,
+		API_TYPE,
+		REQ_NO,
+		TIME_STAMP,
+		GROUP_ID,
+		GROUP_NAME,
+		HOS_CODE,
+		HOS_NAME,
+		FINAL_DATE,
+		PAY_NUM,
+		CONFIRM_NUM,
+		RETURN_NUM,
+		TOTAL_FEE,
+		SELF_PAY,
+		SELF_NEG,
+		MED_FEE,
+		RETURN_FEE,
+		CHECK_TYPE,
+		VISIT_NO,
+		FINAL_NO,
+		SUPER_ID,
+		DATA_DATE,
+		CASH_TOTAL
+	</sql>
+	
+	<sql id="FieldValue">
+		#{ID},
+		#{DATA_TYPE},
+		#{API_TYPE},
+		#{REQ_NO},
+		#{TIME_STAMP},
+		#{GROUP_ID},
+		#{GROUP_NAME},
+		#{HOS_CODE},
+		#{HOS_NAME},
+		#{FINAL_DATE},
+		#{PAY_NUM},
+		#{CONFIRM_NUM},
+		#{RETURN_NUM},
+		#{TOTAL_FEE},
+		#{SELF_PAY},
+		#{SELF_NEG},
+		#{MED_FEE},
+		#{RETURN_FEE},
+		#{CHECK_TYPE},
+		#{VISIT_NO},
+		#{FINAL_NO},
+		#{SUPER_ID},
+		#{DATA_DATE},
+		#{CASH_TOTAL}
+	</sql>
+
+	<select id="totalQuery" resultMap="BaseResultMap" parameterType="com.ts.entity.Reconciliation.S01InputTotalReconciliationBean">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where 1 = 1 
+		<if test="DATA_TYPE != null and DATA_TYPE != ''">
+			AND DATA_TYPE = #{DATA_TYPE}
+		</if>
+		
+		<if test="S01_INP_NO12 != null and S01_INP_NO12 != '' and S01_INP_NO12 != 0">
+			AND CHECK_TYPE = #{S01_INP_NO12}
+		</if>
+		
+		<if test="S01_INP_NO13 != null and S01_INP_NO13 != ''">
+			AND GROUP_ID = #{S01_INP_NO13}
+		</if>
+			
+		<if test="S01_INP_NO01 != null and S01_INP_NO01 != ''">
+			AND HOS_CODE = #{S01_INP_NO01}
+		</if>
+		
+		<if test="S01_INP_NO02 != null and S01_INP_NO02 != ''">
+			<!-- UNIX_TIMESTAMP(#{S01_INP_NO02, jdbcType=NUMERIC}) -->
+			<![CDATA[ AND FINAL_DATE >= #{S01_INP_NO02} ]]>
+		</if>
+		
+		<if test="S01_INP_NO03 != null and S01_INP_NO03 != ''">
+			<![CDATA[ AND FINAL_DATE <= #{S01_INP_NO03} ]]>
+		</if>
+		
+	</select>
+
+	<select id="detailQuery" resultMap="BaseResultMap" parameterType="com.ts.entity.Reconciliation.S02InputDetailReconciliationBean">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where GROUP_ID = #{S02_INP_NO11} and data_type = '2'
+			
+		<if test="S02_INP_NO01 != null and S02_INP_NO01 != ''">
+			AND HOS_CODE = #{S02_INP_NO01}
+		</if>
+		
+		<if test="S02_INP_NO02 != null and S02_INP_NO02 != ''">
+			AND VISIT_NO = #{S02_INP_NO02}
+		</if>
+		
+		<if test="S02_INP_NO03 != null and S02_INP_NO03 != ''">
+			AND FINAL_NO = #{S02_INP_NO03}
+		</if>
+		
+		<if test="S02_INP_NO04 != null and S02_INP_NO04 != ''">
+			<!-- AND FINAL_DATE = #{S02_INP_NO04}  -->
+			and date_format(FINAL_DATE, '%Y-%m-%d') = #{S02_INP_NO04}
+		</if>
+		
+		<if test="S02_INP_NO10 != null and S02_INP_NO10 != '' and S02_INP_NO10 != 0">
+			AND CHECK_TYPE = #{S02_INP_NO10}
+		</if>
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where ID = #{ID} and DATA_TYPE = #{DATA_TYPE}
+	</select>
+
+	<select id="totallistPage" parameterType="page" resultType="pd">
+		SELECT DISTINCT a.ID, a.DATA_TYPE, a.API_TYPE, a.REQ_NO, a.TIME_STAMP, a.GROUP_ID, a.group_name, a.HOS_CODE, b.hosp_name, 
+			   a.FINAL_DATE, a.PAY_NUM, a.CONFIRM_NUM, a.RETURN_NUM, a.TOTAL_FEE, a.SELF_PAY, a.SELF_NEG, a.MED_FEE, a.RETURN_FEE, 
+			   a.CHECK_TYPE, a.VISIT_NO, a.FINAL_NO
+		FROM
+			   P_TOTAL_DETAIL a left join p_dll_server b on a.hos_code = b.hosp_id
+		where  a.DATA_TYPE = #{pd.DATA_TYPE}
+		<if test="pd.KEYWORDS != null and pd.KEYWORDS != ''">
+			<!-- and (a.GROUP_ID = #{pd.KEYWORDS} or a.HOS_CODE = #{pd.KEYWORDS}) -->
+			and (a.group_name LIKE #{pd.KEYWORDS} or b.hosp_name LIKE #{pd.KEYWORDS})
+		</if>
+		<if test="pd.FINAL_DATE_START != null and pd.FINAL_DATE_START != ''">
+			<![CDATA[ AND a.FINAL_DATE >= #{pd.FINAL_DATE_START} ]]>
+		</if>
+		<if test="pd.FINAL_DATE_END != null and pd.FINAL_DATE_END != ''">
+			<![CDATA[ AND a.FINAL_DATE <= #{pd.FINAL_DATE_END} ]]>
+		</if>
+		<if test="pd.USERNAME != null and pd.USERNAME != ''">
+			and a.GROUP_ID = #{pd.USERNAME}
+		</if>
+		ORDER BY a.final_date desc
+	</select>
+
+	<select id="totalPageAll" parameterType="pd" resultType="pd">
+		SELECT DISTINCT a.ID, a.DATA_TYPE, a.API_TYPE, a.REQ_NO, a.TIME_STAMP, a.GROUP_ID, a.group_name, a.HOS_CODE, b.hosp_name, 
+			   a.FINAL_DATE, a.PAY_NUM, a.CONFIRM_NUM, a.RETURN_NUM, a.TOTAL_FEE, a.SELF_PAY, a.SELF_NEG, a.MED_FEE, a.RETURN_FEE, 
+			   a.CHECK_TYPE, a.VISIT_NO, a.FINAL_NO
+		FROM
+			   P_TOTAL_DETAIL a left join p_dll_server b on a.hos_code = b.hosp_id
+		where  a.DATA_TYPE = #{DATA_TYPE}
+		<if test="KEYWORDS != null and KEYWORDS != ''">
+			<!-- and (a.GROUP_ID = #{KEYWORDS} or a.HOS_CODE = #{KEYWORDS}) -->
+			and (a.group_name LIKE #{KEYWORDS} or b.hosp_name LIKE #{KEYWORDS})
+		</if>
+		<if test="FINAL_DATE_START != null and FINAL_DATE_START != ''">
+			<![CDATA[ AND a.FINAL_DATE >= #{FINAL_DATE_START} ]]>
+		</if>
+		<if test="FINAL_DATE_END != null and FINAL_DATE_END != ''">
+			<![CDATA[ AND a.FINAL_DATE <= #{FINAL_DATE_END} ]]>
+		</if>
+		<if test="USERNAME != null and USERNAME != ''">
+			and a.GROUP_ID = #{USERNAME}
+		</if>
+		ORDER BY a.final_date desc
+	</select>
+
+	<select id="totalDetaillistPage" parameterType="page" resultType="pd">
+		SELECT DISTINCT a.ID, a.DATA_TYPE, a.API_TYPE, a.REQ_NO, a.TIME_STAMP, a.GROUP_ID, a.group_name, a.HOS_CODE, b.hosp_name, 
+			   a.FINAL_DATE, a.PAY_NUM, a.CONFIRM_NUM, a.RETURN_NUM, a.TOTAL_FEE, a.SELF_PAY, a.SELF_NEG, a.MED_FEE, a.RETURN_FEE, 
+			   a.CHECK_TYPE, a.VISIT_NO, a.FINAL_NO
+		FROM
+			   P_TOTAL_DETAIL a left join p_dll_server b on a.hos_code = b.hosp_id
+		where  a.SUPER_ID = #{pd.SUPER_ID} and a.DATA_TYPE = #{pd.DATA_TYPE} 
+		<if test="pd.USERNAME != null and pd.USERNAME != ''">
+			and a.GROUP_ID = #{pd.USERNAME}
+		</if>
+		ORDER BY a.final_date desc
+	</select>
+
+	<delete id="deleteTodayTotal" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		WHERE
+		    data_date <![CDATA[>=]]> #{startDate ,jdbcType=DATE}
+		AND data_date <![CDATA[<]]> date_add(#{startDate ,jdbcType=DATE}, INTERVAL 1 day)
+		<if test="groupId != null and groupId != ''">
+			<![CDATA[ AND group_id = #{groupId} ]]>
+		</if>
+		<if test="hospCode != null and hospCode != ''">
+			<![CDATA[ AND hos_code = #{hospCode} ]]>
+		</if>
+	</delete>
+
+	<insert id="insertTodayTotal" parameterType="java.util.Date">
+		insert into
+			<include refid="tableName"></include>
+		(
+			<include refid="Field"></include>
+		)
+		SELECT
+			UUID(),
+			2,
+			NULL,
+			NULL,
+			NULL,
+			t1.GROUP_ID,
+			t3. NAME,
+			t1.hos_code,
+			t1.final_date,
+			NULL,
+			NULL,
+			NULL,
+			t2.total_fee,
+			t2.self_pay,
+			t2.self_neg,
+			t2.med_fee,
+			t2.return_fee,
+			t1.check_type,
+			t1.visit_no,
+			t1.final_no
+		FROM
+			(
+				SELECT
+					a.id,
+					a.GROUP_ID,
+					a.HOS_CODE,
+					a.visit_no,
+					a.final_no,
+					a.final_date,
+				IF (
+					a.DATA_TYPE = 2
+					OR a.DATA_TYPE = 3,
+					1,
+				IF (a.DATA_TYPE = 4, 2, 0)
+				) AS check_type
+				FROM
+					p_inte_info a
+				LEFT JOIN p_inte_info b ON a.visit_no = b.visit_no
+				WHERE
+				    a.final_date <![CDATA[>=]]> #{today ,jdbcType=DATE}
+				AND a.final_date <![CDATA[<]]> date_add(#{today ,jdbcType=DATE}, INTERVAL 1 day)
+				AND a.DEAL_STAT = 0
+				AND b.HOS_RES != ''
+				AND b.HOS_RES = 0
+				AND (
+					(a.DATA_TYPE = 2)
+					OR (
+						a.DATA_TYPE = 3
+						AND a.is_repet = 0
+					)
+				)
+			) t1
+		LEFT JOIN p_result t2 ON t1.id = t2.in_id
+		LEFT JOIN ts_plat.sys_app_user t3 ON t1.GROUP_ID = t3.USERNAME
+	</insert>
+
+	<insert id="insertTodayTotalSum" parameterType="java.util.Date">
+		insert into
+			<include refid="tableName"></include>
+		(
+			<include refid="Field"></include>
+		)
+		SELECT
+			UUID(),
+			1,
+			NULL,
+			NULL,
+			NULL,
+			t1.GROUP_ID,
+			t3. NAME,
+			t1.hos_code,
+			t1.final_date,
+			count(1) AS pay_num,
+			SUM(t1.isconfirm) AS confirm_num,
+			SUM(t1.isreturn) AS return_num,
+			SUM(t2.total_fee) AS total_fee,
+			SUM(t2.self_pay) AS self_pay,
+			SUM(t2.self_neg) AS self_neg,
+			SUM(t2.med_fee) AS med_fee,
+			SUM(t2.return_fee) AS return_fee,
+			t1.check_type,
+			NULL,
+			NULL
+		FROM
+			(
+				SELECT
+					a.id,
+					a.GROUP_ID,
+					a.HOS_CODE,
+					a.visit_no,
+					a.final_no,
+					date_format(a.final_date, '%Y/%m/%d') AS final_date,
+				IF (
+					a.DATA_TYPE = 2
+					OR a.DATA_TYPE = 3,
+					1,
+				IF (a.DATA_TYPE = 4, 2, 0)
+				) AS check_type,
+			IF (
+				(
+					a.DATA_TYPE = 2
+					OR a.DATA_TYPE = 4
+				),
+				1,
+				0
+			) AS isconfirm,
+		IF (a.DATA_TYPE = 3, 1, 0) AS isreturn
+		FROM
+			p_inte_info a
+		LEFT JOIN p_inte_info b ON a.visit_no = b.visit_no
+		WHERE
+			a.final_date <![CDATA[>=]]> #{today ,jdbcType=DATE}
+			AND a.final_date <![CDATA[<]]> date_add(#{today ,jdbcType=DATE}, INTERVAL 1 day)
+		AND a.DEAL_STAT = 0
+		AND b.HOS_RES != ''
+		AND b.HOS_RES = 0
+		AND (
+			(a.DATA_TYPE = 2)
+			OR (
+				a.DATA_TYPE = 3
+				AND a.is_repet = 0
+			)
+		)
+			) t1
+		LEFT JOIN p_result t2 ON t1.id = t2.in_id
+		LEFT JOIN ts_plat.sys_app_user t3 ON t1.GROUP_ID = t3.USERNAME
+		GROUP BY
+			t1.GROUP_ID,
+			t3. NAME,
+			t1.hos_code,
+			t1.final_date,
+			t1.check_type
+	</insert>
+	
+	<select id="i31DataByDate" parameterType="pd" resultType="pd">
+		select s.HOSP_NAME as HOS_NAME,
+			r.in_id,
+			r.total_fee,
+			r.self_pay as self_pay ,
+			r.cash_total,
+			r.self_neg ,
+			r.med_fee,
+			r.tran_fee,
+			r.level_pay,
+			r.self_cash_pay,
+			r.neg_cash_pay,
+			r.cash_total,
+			r.return_fee,
+			r.i_pay,
+			r.o_pay,
+			r.whole_pay,
+			r.add_pay,
+			r.ser_pay,
+			r.com_pay,
+			r.salv_pay,
+			r.retire_pay,
+			r.fund_pay,
+			r.model_pay,
+			r.civil_pay,
+			r.priv_pay,
+			r.dpf_pay,
+			r.plan_pay,
+			r.hurt_pay,
+			r.proc_pay,
+			r.i_balance,
+			r.o_balance,
+			r.insu_pay,
+			r.insu_salv_pay,
+			r.charity,
+			r.mutual,
+			 i.* 
+		 from p_result r INNER JOIN p_inte_info i ON i.id = r.in_id 
+		LEFT JOIN (select DISTINCT ds.hosp_id ,ds.hosp_name from  p_dll_server ds) s on s.hosp_id=i.HOS_CODE
+		where i.createdate <![CDATA[>=]]> #{startDate} and i.createdate <![CDATA[<]]> #{endDate} and i.data_type = 3 and i.deal_stat = 0 and i.is_repet=0 
+		<if test="groupId != null and groupId != ''">
+			<![CDATA[ AND i.group_id = #{groupId} ]]>
+		</if>
+		<if test="hospCode != null and hospCode != ''">
+			<![CDATA[ AND i.hos_code = #{hospCode} ]]>
+		</if>
+	</select>
+	
+	<select id="i49DataByDate" parameterType="pd" resultType="pd">
+		select s.HOSP_NAME as HOS_NAME, 
+			r.in_id,
+			r.total_fee,
+			r.self_pay as self_pay ,
+			r.cash_total,
+			r.self_neg ,
+			r.med_fee,
+			r.tran_fee,
+			r.level_pay,
+			r.self_cash_pay,
+			r.neg_cash_pay,
+			r.cash_total,
+			r.return_fee,
+			r.i_pay,
+			r.o_pay,
+			r.whole_pay,
+			r.add_pay,
+			r.ser_pay,
+			r.com_pay,
+			r.salv_pay,
+			r.retire_pay,
+			r.fund_pay,
+			r.model_pay,
+			r.civil_pay,
+			r.priv_pay,
+			r.dpf_pay,
+			r.plan_pay,
+			r.hurt_pay,
+			r.proc_pay,
+			r.i_balance,
+			r.o_balance,
+			r.insu_pay,
+			r.insu_salv_pay,
+			r.charity,
+			r.mutual, 
+			i.* 
+		from p_result r
+		INNER JOIN(
+		select  b.`id`,b.`data_type`,b.`final_no`,b.`final_date` , b.`visit_no`,b.`hos_code`,b.group_id, b.req_no, d.createDate, b.time_stamp 
+		FROM p_inte_info b 
+		INNER JOIN (SELECT t.`visit_no` ,t.`hos_code`,t.`user_id`,t.createdate,t.final_no FROM p_inte_info t WHERE t.`data_type` = '9' AND t.deal_stat = 0 AND t.hos_res = 0 and t.createdate <![CDATA[>=]]> #{startDate} and t.createdate <![CDATA[<]]> #{endDate}
+		<if test="groupId != null and groupId != ''">
+			<![CDATA[ AND t.group_id = #{groupId} ]]>
+		</if>
+		<if test="hospCode != null and hospCode != ''">
+			<![CDATA[ AND t.hos_code = #{hospCode} ]]>
+		</if>
+		) d ON 
+		d.visit_no = b.`visit_no` AND d.hos_code = b.`hos_code` AND d.user_id = b.`user_id` AND d.final_no = b.`final_no` where b.data_type=2
+		) i ON i.id = r.in_id  
+		LEFT JOIN (select DISTINCT ds.hosp_id ,ds.hosp_name from  p_dll_server ds) s on s.hosp_id=i.HOS_CODE
+	</select>
+	<!--  药店支付的结算数据-->
+	<select id="d02DataByDate" parameterType="pd" resultType="pd">
+		SELECT 
+			r.in_id,
+			r.receipt_count,
+			r.lar_pay,
+			r.plan_pay,
+			r.ser_pay,
+			r.self_account_pay,
+			r.self_cash_pay,
+			r.b_balance,
+			r.a_balance,
+			i02.* 
+		 FROM  p_drugstore_inte_info i INNER JOIN p_drugstore_result r ON i.id = r.in_id AND i.data_type = 71 AND i.deal_stat = 0 AND i.service_error IS NULL  
+		 INNER JOIN p_drugstore_inte_info i02 ON i02.medicare_no = i.medicare_no AND i02.data_type = 72 AND i02.deal_stat = 0 AND i02.service_error IS NULL  
+ 		where i02.create_date <![CDATA[>=]]> #{startDate} and i02.create_date <![CDATA[<]]> #{endDate}  
+		<if test="groupId != null and groupId != ''"><!--组织机构代码  -->
+			<![CDATA[ AND i02.group_id = #{groupId} ]]>
+		</if>
+		<if test="hospCode != null and hospCode != ''"><!--服务机构编码  -->
+			<![CDATA[ AND i02.service_no = #{hospCode} ]]>
+		</if>
+	</select>
+	<!--药店支付的退费数据  -->
+	<select id="d04DataByDate" parameterType="pd" resultType="pd">
+		SELECT 
+		r.in_id,
+		r.receipt_count,
+		r.lar_pay,
+		r.plan_pay,
+		r.ser_pay,
+		r.self_account_pay,
+		r.self_cash_pay,
+		r.b_balance,
+		r.a_balance,
+		i04.* 
+	 FROM  p_drugstore_inte_info i INNER JOIN p_drugstore_result r ON i.id = r.in_id AND i.data_type = 76 AND i.deal_stat = 0 AND i.service_error IS NULL  
+	 INNER JOIN p_drugstore_inte_info i04 ON i04.medicare_no = i.medicare_no AND i04.data_type = 74 AND i04.deal_stat = 0 AND i04.service_error IS NULL   		
+		<if test="groupId != null and groupId != ''"><!--组织机构代码  -->
+			<![CDATA[ AND i04.group_id = #{groupId} ]]>
+		</if>
+		<if test="hospCode != null and hospCode != ''"><!--服务机构编码  -->
+			<![CDATA[ AND i04.service_no = #{hospCode} ]]>
+		</if>
+	</select>
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into
+			<include refid="tableName"></include>
+		(
+			<include refid="Field"></include>
+		) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	<!-- 查询机构列表 -->
+	<select id="listDistinctGroupId" parameterType="pd" resultType="pd">
+		select distinct ts.NAME as GROUP_NAME, ts.USERNAME as GROUP_ID from ts_plat.sys_app_user ts 
+	</select>
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PdllserverMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		P_DLL_SERVER
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		HOSP_NAME,	
+		HOSP_ID,	
+		DLL_ADDRESS,	
+		CREATE_DATE,	
+		LOCAL_IP,	
+		CURRENT_STATUS
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+			#{ID},	
+			#{HOSP_NAME},	
+			#{HOSP_ID},	
+			#{DLL_ADDRESS},	
+			#{CREATE_DATE},	
+			#{LOCAL_IP},	
+			#{CURRENT_STATUS}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+			#{ID},
+			#{HOSP_NAME},	
+			#{HOSP_ID},	
+			#{DLL_ADDRESS},	
+			#{CREATE_DATE},	
+			#{LOCAL_IP},	
+			#{CURRENT_STATUS}	
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				 HOSP_NAME  = #{HOSP_NAME},	
+				 HOSP_ID  = #{HOSP_ID},	
+				 DLL_ADDRESS  = #{DLL_ADDRESS},	
+				 CREATE_DATE  = #{CREATE_DATE},	
+				 LOCAL_IP  = #{LOCAL_IP},	
+				 CURRENT_STATUS  = #{CURRENT_STATUS}	
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<!-- 列表查询配置 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					HOSP_ID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					HOSP_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					LOCAL_IP LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					 or 
+					DLL_ADDRESS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')  
+				)
+		</if>
+		order by CREATE_DATE desc
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="Map" resultType="com.ts.entity.P_dll_server">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where HOSP_ID = #{hospId} and LOCAL_IP = #{localIp} and CURRENT_STATUS = 1
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAllD" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	<!-- 列表(去重后的HOSP_NAME, HOSP_ID) -->
+	<select id="listDistinctHospId" parameterType="Map" resultType="pd">
+		select DISTINCT hosp_id ,hosp_name 
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PinteinfoMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_INTE_INFO
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+	    ID  , 
+        USER_ID , 
+        API_TYPE ,  
+        DATA_TYPE , 
+        DATA_STAT , 
+        REQ_NO ,  
+        TIME_STAMP ,  
+        HOS_CODE ,  
+        PAY_TYPE , 
+        BUSI_TYPE ,  
+        VISIT_NO ,  
+        DIS_CODE ,  
+        REG_NO ,  
+        DIS_NAME ,  
+        DIS_DESC ,  
+        BILL_NUM , 
+        DEAL_STAT , 
+        ERROR ,  
+        CARD_RES ,  
+        BANK_RES ,  
+        IC_DATA ,  
+        OVER_FLAG , 
+        SPEC_FLAG , 
+        FINAL_DATE  ,
+        FINAL_NO ,  
+        ABO_DEAL_NO ,  
+        OPERATOR ,  
+        IS_REPET , 
+        RETURN_NO ,  
+        RETURN_DATE   ,
+        REG_DEAL_NO ,  
+        FINAL_NUM , 
+        IN_DEAL_NO ,  
+        IN_REG_NO ,  
+        DETAIL_LIST ,  
+        FAIL_DETAIL_LIST ,  
+        SEARCH_TYPE_NO ,  
+        SEARCH_DEAL_NO ,  
+        IS_OK , 
+        DEAL_DATE,
+        DEAL_FINAL_NO,  
+        DEAL_STEP,  
+        DEAL_TYPE,
+        MED_DEAL_NO ,  
+        DEAL_NO ,  
+        HOS_RES ,  
+        ADD_INFO ,  
+        BANK_NO ,  
+        APPR_NO ,  
+        GROUP_ID ,
+        HAVE_STAT
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	   #{ID  ,jdbcType=VARCHAR},
+       #{USER_ID ,jdbcType=VARCHAR},
+       #{API_TYPE ,jdbcType=VARCHAR},
+       #{DATA_TYPE ,jdbcType=NUMERIC},
+       #{DATA_STAT ,jdbcType=NUMERIC},
+       #{REQ_NO ,jdbcType=VARCHAR},
+       #{TIME_STAMP ,jdbcType=VARCHAR},
+       #{HOS_CODE ,jdbcType=VARCHAR},
+       #{PAY_TYPE ,jdbcType=NUMERIC},
+       #{BUSI_TYPE ,jdbcType=VARCHAR},
+       #{VISIT_NO ,jdbcType=VARCHAR},
+       #{DIS_CODE ,jdbcType=VARCHAR},
+       #{REG_NO ,jdbcType=VARCHAR},
+       #{DIS_NAME ,jdbcType=VARCHAR},
+       #{DIS_DESC ,jdbcType=VARCHAR},
+       #{BILL_NUM ,jdbcType=NUMERIC},
+       #{DEAL_STAT ,jdbcType=NUMERIC},
+       #{ERROR ,jdbcType=VARCHAR},
+       #{CARD_RES ,jdbcType=VARCHAR},
+       #{BANK_RES ,jdbcType=VARCHAR},
+       #{IC_DATA ,jdbcType=VARCHAR},
+       #{OVER_FLAG ,jdbcType=NUMERIC},
+       #{SPEC_FLAG ,jdbcType=NUMERIC},
+       #{FINAL_DATE  ,jdbcType=DATE},
+       #{FINAL_NO ,jdbcType=VARCHAR},
+       #{ABO_DEAL_NO ,jdbcType=VARCHAR},
+       #{OPERATOR ,jdbcType=VARCHAR},
+       #{IS_REPET ,jdbcType=NUMERIC},
+       #{RETURN_NO ,jdbcType=VARCHAR},
+       #{RETURN_DATE   ,jdbcType=DATE},
+       #{REG_DEAL_NO ,jdbcType=VARCHAR},
+       #{FINAL_NUM ,jdbcType=NUMERIC},
+       #{IN_DEAL_NO ,jdbcType=VARCHAR},
+       #{IN_REG_NO ,jdbcType=VARCHAR},
+       #{DETAIL_LIST ,jdbcType=VARCHAR},
+       #{FAIL_DETAIL_LIST ,jdbcType=VARCHAR},
+       #{SEARCH_TYPE_NO ,jdbcType=VARCHAR},
+       #{SEARCH_DEAL_NO ,jdbcType=VARCHAR},
+       #{IS_OK ,jdbcType=NUMERIC},
+       #{DEAL_DATE  ,jdbcType=DATE},
+       #{DEAL_FINAL_NO ,jdbcType=VARCHAR},
+       #{DEAL_STEP ,jdbcType=VARCHAR},
+       #{DEAL_TYPE ,jdbcType=VARCHAR},
+       #{MED_DEAL_NO ,jdbcType=VARCHAR},
+       #{DEAL_NO ,jdbcType=VARCHAR},
+       #{HOS_RES ,jdbcType=VARCHAR},
+       #{ADD_INFO ,jdbcType=VARCHAR},
+       #{BANK_NO ,jdbcType=VARCHAR},
+       #{APPR_NO ,jdbcType=VARCHAR},
+       #{GROUP_ID ,jdbcType=VARCHAR},
+       #{HAVE_STAT ,jdbcType=NUMERIC}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pif">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+			(<include refid="FieldValue"></include>)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+			   USER_ID = #{USER_ID},
+	       	   API_TYPE = #{API_TYPE},
+	       	   DATA_TYPE = #{DATA_TYPE},
+		       DATA_STAT = #{DATA_STAT},
+		       REQ_NO = #{REQ_NO},
+		       TIME_STAMP = #{TIME_STAMP},
+		       HOS_CODE = #{HOS_CODE},
+		       BUSI_TYPE = #{BUSI_TYPE},
+		       VISIT_NO = #{VISIT_NO},
+		       DIS_CODE = #{DIS_CODE},
+		       PAY_TYPE = #{PAY_TYPE},
+		       REG_NO = #{REG_NO},
+		       DIS_NAME = #{DIS_NAME},
+		       DIS_DESC = #{DIS_DESC},
+		       BILL_NUM = #{BILL_NUM},
+		       DEAL_STAT = #{DEAL_STAT},
+		       ERROR = #{ERROR},
+		       CARD_RES = #{CARD_RES},
+		       BANK_RES = #{BANK_RES},
+		       IC_DATA = #{IC_DATA},
+		       OVER_FLAG = #{OVER_FLAG},
+		       SPEC_FLAG = #{SPEC_FLAG},
+		       FINAL_DATE = #{FINAL_DATE},
+		       FINAL_NO = #{FINAL_NO},
+		       ABO_DEAL_NO = #{ABO_DEAL_NO},
+		       OPERATOR = #{OPERATOR},
+		       IS_REPET = #{IS_REPET},
+		       RETURN_NO = #{RETURN_NO},
+		       RETURN_DATE = #{RETURN_DATE},
+		       REG_DEAL_NO = #{REG_DEAL_NO},
+		       FINAL_NUM = #{FINAL_NUM},
+		       IN_DEAL_NO = #{IN_DEAL_NO},
+		       IN_REG_NO = #{IN_REG_NO},
+		       DETAIL_LIST = #{DETAIL_LIST},
+		       FAIL_DETAIL_LIST = #{FAIL_DETAIL_LIST},
+		       SEARCH_TYPE_NO = #{SEARCH_TYPE_NO},
+		       SEARCH_DEAL_NO = #{SEARCH_DEAL_NO},
+		       IS_OK = #{IS_OK},
+		       DEAL_DATE = #{DEAL_DATE},
+		       DEAL_FINAL_NO = #{DEAL_FINAL_NO},
+		       DEAL_STEP = #{DEAL_STEP},
+		       DEAL_TYPE = #{DEAL_TYPE},
+		       MED_DEAL_NO = #{MED_DEAL_NO},
+		       DEAL_NO = #{DEAL_NO},
+		       APPR_NO = #{APPR_NO},
+		       HOS_RES = #{HOS_RES},
+		       ADD_INFO = #{ADD_INFO},
+		       GROUP_ID = #{GROUP_ID},
+		       HAVE_STAT = #{HAVE_STAT}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过序列获取表唯一ID -->
+	<select id="findInteID" resultType="java.lang.Integer">
+		select seq_p_inte_info.nextval as id from dual
+	</select>
+	
+	<select id="interPageAll" parameterType="pd" resultType="pd">
+		SELECT DISTINCT a.ID, a.USER_ID, a.API_TYPE, a.DATA_TYPE, dict1.D_VALUE as data_type_name, a.DATA_STAT, a.REQ_NO, 
+			   a.TIME_STAMP, a.HOS_CODE, b.hosp_name, a.PAY_TYPE, dict2.D_VALUE as pay_type_name, dict3.D_VALUE as BUSI_TYPE_NAME, 
+			   a.BUSI_TYPE, a.VISIT_NO, a.DIS_CODE, a.REG_NO, a.DIS_NAME, a.DIS_DESC, a.BILL_NUM, a.DEAL_STAT, a.ERROR, a.CARD_RES,
+			   a.BANK_RES, a.IC_DATA, a.OVER_FLAG, a.SPEC_FLAG, a.FINAL_DATE, a.FINAL_NO, a.ABO_DEAL_NO, a.OPERATOR, a.IS_REPET,
+			   a.RETURN_NO, a.RETURN_DATE, a.REG_DEAL_NO, a.FINAL_NUM, a.IN_DEAL_NO, a.IN_REG_NO, a.DETAIL_LIST, a.FAIL_DETAIL_LIST,
+			   a.SEARCH_TYPE_NO, a.SEARCH_DEAL_NO, a.IS_OK, a.DEAL_DATE, a.DEAL_FINAL_NO, a.DEAL_STEP, a.DEAL_TYPE, a.MED_DEAL_NO,
+			   a.DEAL_NO, a.HOS_RES, a.ADD_INFO, a.BANK_NO, a.APPR_NO, a.GROUP_ID, a.HAVE_STAT, dict4.D_VALUE as have_stat_name, a.CREATEDATE 
+		<!-- 医院编码 -->
+		FROM P_INTE_INFO a LEFT JOIN p_dll_server b ON a.hos_code = b.hosp_id 
+		     <!-- 数据类型 -->
+		     LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id 
+					    where e.name = 'data_type' and d.is_disable = '0') dict1 on dict1.D_KEY = a.DATA_TYPE 
+			  <!-- 现金支付方式 -->
+			 LEFT JOIN (SELECT f.D_KEY, f.D_VALUE, f.ORDERS, f.IS_DISABLE from p_dict f left join p_dict_type g on f.d_id = g.id 
+					    where g.name = 'cash_pay_mode' and f.is_disable = '0') dict2 on dict2.D_KEY = a.PAY_TYPE 	
+			 <!-- 业务类型 -->
+			 LEFT JOIN (SELECT f1.D_KEY, f1.D_VALUE, f1.ORDERS, f1.IS_DISABLE from p_dict f1 left join p_dict_type g1 on f1.d_id = g1.id 
+					    where g1.name = 'business_type' and f1.is_disable = '0') dict3 on dict3.D_KEY = a.busi_type
+			 <!-- 享受状态 -->
+			 LEFT JOIN (SELECT f2.D_KEY, f2.D_VALUE, f2.ORDERS, f2.IS_DISABLE from p_dict f2 left join p_dict_type g2 on f2.d_id = g2.id 
+					    where g2.name = 'enjoy_type' and f2.is_disable = '0') dict4 on dict4.D_KEY = a.have_stat		    
+		where 1 = 1 
+		<if test="KEYWORDS != null and KEYWORDS != ''">
+			and b.hosp_name LIKE #{KEYWORDS}
+		</if>
+		<if test="FINAL_DATE_START != null and FINAL_DATE_START != ''">
+			<![CDATA[ AND a.CREATEDATE >= #{FINAL_DATE_START} ]]>
+		</if>
+		<if test="FINAL_DATE_END != null and FINAL_DATE_END != ''">
+			<![CDATA[ AND a.CREATEDATE <= #{FINAL_DATE_END} ]]>
+		</if>
+		<if test="businessCode != null and businessCode != ''">
+			and a.API_TYPE = #{businessCode}
+		</if>
+		<if test="groupID != null and groupID != ''">
+			and a.GROUP_ID = #{groupID}
+		</if>
+		ORDER BY a.FINAL_DATE DESC
+	</select>
+	
+	<select id="interlistPage" parameterType="page" resultType="pd">
+		SELECT DISTINCT a.ID, a.USER_ID, a.API_TYPE, a.DATA_TYPE, dict1.D_VALUE as data_type_name, a.DATA_STAT, a.REQ_NO, 
+			   a.TIME_STAMP, a.HOS_CODE, b.hosp_name, a.PAY_TYPE, dict2.D_VALUE as pay_type_name,  
+			   a.BUSI_TYPE, a.VISIT_NO, a.DIS_CODE, a.REG_NO, a.DIS_NAME, a.DIS_DESC, a.BILL_NUM, a.DEAL_STAT, a.ERROR, a.CARD_RES,
+			   a.BANK_RES, a.IC_DATA, a.OVER_FLAG, a.SPEC_FLAG, a.FINAL_DATE, a.FINAL_NO, a.ABO_DEAL_NO, a.OPERATOR, a.IS_REPET,
+			   a.RETURN_NO, a.RETURN_DATE, a.REG_DEAL_NO, a.FINAL_NUM, a.IN_DEAL_NO, a.IN_REG_NO, a.DETAIL_LIST, a.FAIL_DETAIL_LIST,
+			   a.SEARCH_TYPE_NO, a.SEARCH_DEAL_NO, a.IS_OK, a.DEAL_DATE, a.DEAL_FINAL_NO, a.DEAL_STEP, a.DEAL_TYPE, a.MED_DEAL_NO,
+			   a.DEAL_NO, a.HOS_RES, a.ADD_INFO, a.BANK_NO, a.APPR_NO, a.GROUP_ID, <!--c.NAME AS group_name,--> a.HAVE_STAT, a.CREATEDATE 
+		FROM P_INTE_INFO a LEFT JOIN p_dll_server b ON a.hos_code = b.hosp_id 
+		    <!-- LEFT JOIN ts_plat.sys_app_user c ON c.USERNAME = a.group_id -->
+		     LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id 
+					    where e.name = 'data_type' and d.is_disable = '0') dict1 on dict1.D_KEY = a.DATA_TYPE 
+			 LEFT JOIN (SELECT f.D_KEY, f.D_VALUE, f.ORDERS, f.IS_DISABLE from p_dict f left join p_dict_type g on f.d_id = g.id 
+					    where g.name = 'cash_pay_mode' and f.is_disable = '0') dict2 on dict2.D_KEY = a.PAY_TYPE 		    
+		where  1 = 1 
+		<if test="pd.KEYWORDS != null and pd.KEYWORDS != ''">
+			and b.hosp_name LIKE #{pd.KEYWORDS}
+		</if>
+		<if test="pd.FINAL_DATE_START != null and pd.FINAL_DATE_START != ''">
+			<![CDATA[ AND a.CREATEDATE >= #{pd.FINAL_DATE_START} ]]>
+		</if>
+		<if test="pd.FINAL_DATE_END != null and pd.FINAL_DATE_END != ''">
+			<![CDATA[ AND a.CREATEDATE <= #{pd.FINAL_DATE_END} ]]>
+		</if>
+		<if test="pd.businessCode != null and pd.businessCode != ''">
+			and a.API_TYPE = #{pd.businessCode}
+		</if>
+		<if test="pd.groupID != null and pd.groupID != ''">
+			and a.GROUP_ID = #{pd.groupID}
+		</if>
+		ORDER BY a.FINAL_DATE DESC
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		SELECT DISTINCT a.ID, a.USER_ID, a.API_TYPE, a.DATA_TYPE, dict1.D_VALUE as data_type_name, a.DATA_STAT, a.REQ_NO, 
+			   a.TIME_STAMP, a.HOS_CODE, b.hosp_name, a.PAY_TYPE, dict2.D_VALUE as pay_type_name, dict3.D_VALUE as BUSI_TYPE_NAME,   
+			   a.BUSI_TYPE, a.VISIT_NO, a.DIS_CODE, a.REG_NO, a.DIS_NAME, a.DIS_DESC, a.BILL_NUM, a.DEAL_STAT, a.ERROR, a.CARD_RES,
+			   a.BANK_RES, a.IC_DATA, a.OVER_FLAG, a.SPEC_FLAG, a.FINAL_DATE, a.FINAL_NO, a.ABO_DEAL_NO, a.OPERATOR, a.IS_REPET,
+			   a.RETURN_NO, a.RETURN_DATE, a.REG_DEAL_NO, a.FINAL_NUM, a.IN_DEAL_NO, a.IN_REG_NO, a.DETAIL_LIST, a.FAIL_DETAIL_LIST,
+			   a.SEARCH_TYPE_NO, a.SEARCH_DEAL_NO, a.IS_OK, a.DEAL_DATE, a.DEAL_FINAL_NO, a.DEAL_STEP, a.DEAL_TYPE, a.MED_DEAL_NO,
+			   a.DEAL_NO, a.HOS_RES, a.ADD_INFO, a.BANK_NO, a.APPR_NO, a.GROUP_ID,  <!--c.NAME AS group_name,--> a.HAVE_STAT, 
+			   dict4.D_VALUE as have_stat_name, a.createdate 
+		<!-- 医院编码 -->
+		FROM P_INTE_INFO a LEFT JOIN p_dll_server b ON a.hos_code = b.hosp_id 
+		     <!-- 机构ID -->
+		      <!--LEFT JOIN ts_plat.sys_app_user c ON c.USERNAME = a.group_id-->
+		     <!-- 数据类型 -->
+		     LEFT JOIN (SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id 
+					    where e.name = 'data_type' and d.is_disable = '0') dict1 on dict1.D_KEY = a.DATA_TYPE 
+			 <!-- 现金支付方式 -->
+			 LEFT JOIN (SELECT f.D_KEY, f.D_VALUE, f.ORDERS, f.IS_DISABLE from p_dict f left join p_dict_type g on f.d_id = g.id 
+					    where g.name = 'cash_pay_mode' and f.is_disable = '0') dict2 on dict2.D_KEY = a.PAY_TYPE
+			 <!-- 业务类型 -->
+			 LEFT JOIN (SELECT f1.D_KEY, f1.D_VALUE, f1.ORDERS, f1.IS_DISABLE from p_dict f1 left join p_dict_type g1 on f1.d_id = g1.id 
+					    where g1.name = 'business_type' and f1.is_disable = '0') dict3 on dict3.D_KEY = a.busi_type
+			 <!-- 享受状态 -->
+			 LEFT JOIN (SELECT f2.D_KEY, f2.D_VALUE, f2.ORDERS, f2.IS_DISABLE from p_dict f2 left join p_dict_type g2 on f2.d_id = g2.id 
+					    where g2.name = 'enjoy_type' and f2.is_disable = '0') dict4 on dict4.D_KEY = a.have_stat
+		where a.ID = #{ID}
+	</select>
+	
+	<!-- 通过接口类型，机构code，医院交易号医院编码 获取数据 -->
+	<select id="findByDealId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			API_TYPE LIKE #{API_TYPE}
+		and
+			VISIT_NO = #{VISIT_NO}
+		and 
+			HOS_CODE = #{HOS_CODE}
+		and 
+			GROUP_ID = #{GROUP_ID}
+	</select>
+	
+	<!-- 通过数据类型，机构code，医院交易号医院编码 获取数据 -->
+	<select id="findByDataId" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			DATA_TYPE LIKE #{DATA_TYPE}
+		and
+			VISIT_NO = #{VISIT_NO}
+		and 
+			HOS_CODE = #{HOS_CODE}
+		and 
+			GROUP_ID = #{GROUP_ID}
+	</select>
+	
+	<select id="findByVisit_no" parameterType="pif" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			HOS_CODE = #{HOS_CODE}
+			and 
+			USER_ID = #{USER_ID}
+			and 
+			FINAL_NO = #{FINAL_NO}
+			and 
+			GROUP_ID = #{GROUP_ID}
+			and 
+			data_type = 2
+		order by 
+			FINAL_DATE 
+	</select>
+	
+</mapper>

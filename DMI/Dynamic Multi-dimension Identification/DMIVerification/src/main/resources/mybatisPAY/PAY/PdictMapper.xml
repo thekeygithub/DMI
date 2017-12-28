@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PdictMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		P_DICT
+	</sql>
+
+	<!--字段-->
+	<sql id="Field">
+		ID, 
+		D_ID, 
+		D_KEY, 
+		D_VALUE, 
+		ORDERS, 
+		IS_DISABLE, 
+		UPD_TIME, 
+		UPD_USER, 
+		MEMO
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID, jdbcType=VARCHAR}, 
+		#{D_ID, jdbcType=VARCHAR}, 
+		#{D_KEY, jdbcType=VARCHAR}, 
+		#{D_VALUE, jdbcType=VARCHAR}, 
+		#{ORDERS, jdbcType=NUMERIC}, 
+		#{IS_DISABLE, jdbcType=NUMERIC}, 
+		#{UPD_TIME, jdbcType=DATE}, 
+		#{UPD_USER, jdbcType=VARCHAR}, 
+		#{MEMO, jdbcType=VARCHAR}
+	</sql>
+
+	<!--新增-->
+	<insert id="save" parameterType="pd">
+		insert into
+			<include refid="tableName"></include>
+			(<include refid="Field"></include>) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				D_ID = #{D_ID}, 
+				D_KEY = #{D_KEY}, 
+				D_VALUE = #{D_VALUE}, 
+				ORDERS = #{ORDERS}, 
+				IS_DISABLE = #{IS_DISABLE}, 
+				UPD_TIME = #{UPD_TIME}, 
+				UPD_USER = #{UPD_USER}, 
+				MEMO = #{MEMO}
+			where 
+				ID = #{ID}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<select id="dictListAll" parameterType="pd" resultType="pd">
+		SELECT a.ID, a.D_ID, a.D_KEY, a.D_VALUE, a.ORDERS, a.IS_DISABLE, a.UPD_TIME, a.UPD_USER, a.MEMO, b.name, b.descr 
+		from p_dict a left join p_dict_type b on a.d_id = b.id 
+		where 1 = 1 
+		<if test="business_type != null and business_type != ''">
+			and b.name = #{business_type}
+		</if>
+		<if test="is_disable != null and is_disable != ''">
+			and a.is_disable = #{is_disable}
+		</if>
+		order by a.orders
+	</select>
+
+</mapper>

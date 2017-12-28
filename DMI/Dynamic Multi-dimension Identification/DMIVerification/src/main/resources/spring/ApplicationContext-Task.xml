@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/task
+						http://www.springframework.org/schema/task/spring-task-4.1.xsd
+	">
+
+	<!-- ref参数指定的即任务类，method指定的即需要运行的方法，cron及cronExpression表达式 -->
+	<!-- 启动定时注解 --> 
+     <task:scheduled-tasks >   
+            <task:scheduled ref="appTimeTask" method="mapTask" cron="0 0/59 * * * ?"/>  
+            <task:scheduled ref="appTimeTask" method="tokenTask" cron="0 0 03 * * ?"/>  
+            <task:scheduled ref="appTimeTask" method="recycleTask" cron="0 0/1 * * * ?"/>  
+            <task:scheduled ref="appTimeTask" method="timingScanTask" cron="0 0/1 * * * ?"/>  
+<!--             <task:scheduled ref="payTimeTask" method="payTask" cron="0/30 * * * * ?" /> -->
+            <task:scheduled ref="payTimeTask" method="payTask"  initial-delay="10000" fixed-delay="30000" />  
+<!--             <task:scheduled ref="payTimeTask" method="payTaskUP" cron="0/30 * * * * ?"/>   -->
+            <!--药店支付的相关业务  -->
+            <task:scheduled ref="payTimeTask" method="payTask_Drugstore"  initial-delay="10000" fixed-delay="30000" />
+            
+            <task:scheduled ref="settlementTimeTask" method="settle" cron="0 0 1 * * ?"/>
+			<task:scheduled ref="faceTimeTask" method="faceTask" cron="0 0/1 * * * ?"/>
+    </task:scheduled-tasks>
+      
+    <context:component-scan base-package="com.ts.controller.app" />  
+
+</beans>

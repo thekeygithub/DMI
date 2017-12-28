@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PbillitemMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		P_BILL_ITEM
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		B_ID,	
+		TYPE,	
+		CODE,	
+		NAME,	
+		UNIT,	
+		SPEC,	
+		FORM,	
+		RECIPE_NO,	
+		PRICE,	
+		P_NUM,	
+		NUM,	
+		FEE,	
+		USE_DAY,	
+		OVER_FLAG,	
+		CEN_CODE,	
+		COM,	
+		PACK
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID, jdbcType=VARCHAR},	
+		#{B_ID ,jdbcType=VARCHAR},	
+		#{TYPE ,jdbcType=VARCHAR},	
+		#{CODE ,jdbcType=VARCHAR},	
+		#{NAME ,jdbcType=VARCHAR},	
+		#{UNIT ,jdbcType=VARCHAR},	
+		#{SPEC ,jdbcType=VARCHAR},	
+		#{FORM ,jdbcType=VARCHAR},	
+		#{RECIPE_NO ,jdbcType=VARCHAR},	
+		#{PRICE ,jdbcType=NUMERIC},	
+		#{P_NUM ,jdbcType=NUMERIC},	
+		#{NUM ,jdbcType=NUMERIC},	
+		#{FEE ,jdbcType=NUMERIC},	
+		#{USE_DAY ,jdbcType=NUMERIC},	
+		#{OVER_FLAG ,jdbcType=NUMERIC},	
+		#{CEN_CODE ,jdbcType=VARCHAR},	
+		#{COM ,jdbcType=VARCHAR},	
+		#{PACK ,jdbcType=VARCHAR}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pbi">
+		insert into
+			<include refid="tableName"></include>
+		(
+			<include refid="Field"></include>
+		) 
+		values 
+		(
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+			set 
+				 ID  = #{ID},	
+				 B_ID  = #{B_ID},	
+				 TYPE  = #{TYPE},	
+				 CODE  = #{CODE},	
+				 NAME  = #{NAME},	
+				 UNIT  = #{UNIT},	
+				 SPEC  = #{SPEC},	
+				 FORM  = #{FORM},	
+				 RECIPE_NO  = #{RECIPE_NO},	
+				 PRICE  = #{PRICE},	
+				 P_NUM  = #{P_NUM},	
+				 NUM  = #{NUM},	
+				 FEE  = #{FEE},	
+				 OVER_FLAG  = #{OVER_FLAG},	
+				 CEN_CODE  = #{CEN_CODE},	
+				 COM  = #{COM},	
+				 PACK  = #{PACK}
+			where 
+				ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		<!--
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		-->
+		
+		SELECT DISTINCT a.ID, a.B_ID, a.TYPE, dict1.D_VALUE as type_name, a.CODE, a.NAME, a.UNIT, a.SPEC, a.FORM, a.RECIPE_NO,	
+			   a.PRICE, a.P_NUM, a.NUM, a.FEE, a.USE_DAY, a.OVER_FLAG, a.CEN_CODE, a.COM, a.PACK
+		from P_BILL_ITEM a LEFT JOIN 
+			(SELECT d.D_KEY, d.D_VALUE, d.ORDERS, d.IS_DISABLE from p_dict d left join p_dict_type e on d.d_id = e.id 
+					    where e.name = 'drug_classification' and d.is_disable = '0') dict1 on dict1.D_KEY = a.TYPE 
+		where a.B_ID = #{pd.B_ID}
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>
