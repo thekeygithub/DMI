@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDataMapper">
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DATA
+	</sql>
+	<sql id="dataTypeTableName">
+		MTS_DATA_TYPE
+	</sql>
+	
+	<sql id="dataRelationTableName">
+		MTS_CLASS_RELATION
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_ID,
+		DATA_TYPE_ID,
+		ORIG_DATA_ID,
+		ORIG_DATA_NAME,
+		ORIG_DATA_STR,
+		ORIG_DATA_MD5,
+		ZL_FLAG,
+		AREA_ID,
+		BATCH_NO,
+		DEL_FLAG,
+		IMP_DATE,
+		LOAD_FLAG
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_ID},
+		#{DATA_TYPE_ID},
+		#{ORIG_DATA_ID},
+		#{ORIG_DATA_NAME},
+		#{ORIG_DATA_STR},
+		#{ORIG_DATA_MD5},
+		#{ZL_FLAG},
+		#{AREA_ID},
+		#{BATCH_NO},
+		#{DEL_FLAG},
+		#{IMP_DATE},
+		#{LOAD_FLAG}
+	</sql>
+	
+	<sql id="Field2">
+		DATA_TYPE_ID,
+		ORIG_DATA_ID,
+		ORIG_DATA_NAME,
+		ORIG_DATA_STR,
+		ORIG_DATA_MD5,
+		ZL_FLAG,
+		AREA_ID,
+		BATCH_NO,
+		DEL_FLAG,
+		IMP_DATE,
+		LOAD_FLAG
+	</sql>
+	
+	<sql id="FieldValue2">
+		#{DATA_TYPE_ID},
+		#{ORIG_DATA_ID},
+		#{ORIG_DATA_NAME},
+		#{ORIG_DATA_STR},
+		#{ORIG_DATA_MD5},
+		#{ZL_FLAG},
+		#{AREA_ID},
+		#{BATCH_NO},
+		#{DEL_FLAG},
+		#{IMP_DATE},
+		#{LOAD_FLAG}
+	</sql>
+	
+	
+	<!-- 新增本体数据 -->
+	<insert id="saveMtsData" parameterType="MtsData" useGeneratedKeys="true" keyProperty="DATA_ID">
+		INSERT INTO
+		<include refid="tableName"></include>
+		(
+		<include refid="Field2"></include>
+		) VALUES (
+		<include refid="FieldValue2"></include>
+		)
+	</insert>
+
+
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDatalistPage" parameterType="page" resultType="pd">
+		SELECT
+		dy.DATA_TYPE_NAME,
+		lr.DATA_ID,
+		lr.ORIG_DATA_ID,
+		lr.ORIG_DATA_NAME,
+		lr.ORIG_DATA_STR,
+		lr.ORIG_DATA_MD5,
+		lr.ZL_FLAG,
+		lr.DEL_FLAG,
+		lr.BATCH_NO,
+		lr.IMP_DATE,
+		ma.AREA_NAME
+		FROM
+		<include refid="tableName"></include>
+		lr
+		LEFT JOIN MTS_AREA ma ON ma.AREA_CODE= lr.AREA_ID
+		LEFT JOIN MTS_DATA_TYPE
+		dy ON lr.DATA_TYPE_ID = dy.DATA_TYPE_ID
+		WHERE 1=1
+		<if test="pd.AREA_ID != null and pd.AREA_ID != ''">
+			AND lr.AREA_ID = #{pd.AREA_ID}
+		</if>
+		<if test="pd.BATCH_NO != null and pd.BATCH_NO != ''">
+			AND lr.BATCH_NO = #{pd.BATCH_NO}
+		</if>
+		<if test="pd.LOAD_FLAG != null and pd.LOAD_FLAG != ''">
+			AND lr.LOAD_FLAG = #{pd.LOAD_FLAG}
+		</if>
+		<if test="pd.DEL_FLAG != null and pd.DEL_FLAG != ''">
+			AND lr.DEL_FLAG = #{pd.DEL_FLAG}
+		</if>
+		ORDER BY IMP_DATE DESC
+	</select>
+	
+
+
+
+	<!-- 查询DATA_ID最大值 -->
+	<select id="maxData" resultType="String">
+		SELECT IFNULL(MAX(CONVERT(DATA_ID,SIGNED)),0) FROM
+		<include refid="tableName"></include>
+	</select>
+
+
+	<!-- 按批次删除数据 -->
+	<update id="delBatchData" parameterType="String">
+		UPDATE
+		<include refid="tableName"></include>
+		SET DEL_FLAG = 1 WHERE BATCH_NO = #{BATCH_NO}
+	</update>
+
+	<!-- 查询BATCH_NO最大值 -->
+	<select id="maxNowBatchNo" resultType="String">
+		select max(BATCH_NO) FROM
+		<include refid="tableName"></include>
+		where 1=1 and substring(BATCH_NO,1,8)= date_format(now(),'%Y%m%d')
+	</select>
+
+	<!-- 查询BATCH_NO最大值 -->
+	<select id="maxBatchNo" resultType="String">
+		select max(BATCH_NO) FROM
+		<include refid="tableName"></include>
+		where 1=1
+	</select>
+
+	<select id="selectOneByName" parameterType="java.lang.String"
+		resultType="MtsData">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		t
+		WHERE
+		t.ORIG_DATA_NAME = #{ORIG_DATA_NAME}
+	</select>
+	
+		<!-- 获取所有未被删除的批次号 -->
+	<select id="listAllBatch" resultType="pd" parameterType="pd">
+		select distinct BATCH_NO ,AREA_ID FROM
+		<include refid="tableName"></include> t WHERE 1=1 
+		<if test="AREA_ID != null and AREA_ID != ''">
+			AND t.AREA_ID = #{AREA_ID}
+		</if>
+		ORDER BY BATCH_NO DESC
+	</select>
+
+	<!-- 获取所有未被删除的批次号 -->
+	<select id="listBatchWithNoDel" resultType="pd" parameterType="pd">
+		select distinct BATCH_NO ,AREA_ID FROM
+		<include refid="tableName"></include> t,<include refid="dataRelationTableName"></include> r
+		WHERE t.DATA_TYPE_ID = r.DATA_TYPE_ID AND DEL_FLAG = 0
+		<if test="AREA_ID != null and AREA_ID != ''">
+			and t.AREA_ID = #{AREA_ID}
+		</if>
+		<if test="DATA_CLASS_ID != null and DATA_CLASS_ID != ''">
+			and r.DATA_CLASS_ID = #{DATA_CLASS_ID}
+		</if>
+		<if test="DATA_TYPE_ID != null and DATA_TYPE_ID != ''">
+			and t.DATA_TYPE_ID = #{DATA_TYPE_ID}
+		</if>
+		ORDER BY BATCH_NO DESC
+	</select>
+
+
+	<!-- 获取所有未被删除且未加载的批次号 -->
+	<select id="listBatchWithNoLoad" resultType="pd" parameterType="pd">
+		select distinct BATCH_NO ,AREA_ID FROM
+		<include refid="tableName"></include> t,<include refid="dataRelationTableName"></include> r
+		WHERE t.DATA_TYPE_ID = r.DATA_TYPE_ID AND DEL_FLAG = 0 AND LOAD_FLAG = 0 
+		<if test="AREA_ID != null and AREA_ID != ''">
+			AND t.AREA_ID = #{AREA_ID}
+		</if>
+		<if test="DATA_CLASS_ID != null and DATA_CLASS_ID != ''">
+			AND r.DATA_CLASS_ID = #{DATA_CLASS_ID}
+		</if>
+		<if test="DATA_TYPE_ID != null and DATA_TYPE_ID != ''">
+			AND t.DATA_TYPE_ID = #{DATA_TYPE_ID}
+		</if>
+		ORDER BY BATCH_NO DESC
+	</select>
+
+	<!-- 通过id查找 -->
+	<select id="findMtsDataById" parameterType="String" resultType="MtsData">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where DATA_ID = #{DATA_ID}
+	</select>
+	<!-- 保存修改 -->
+	<update id="editMtsData" parameterType="MtsData">
+		update
+		<include refid="tableName"></include>
+		set
+		ORIG_DATA_NAME = #{ORIG_DATA_NAME}
+		where DATA_ID = #{DATA_ID}
+	</update>
+	
+	<select id="listTempMtsData" resultType="pd">
+		SELECT <include refid="Field2"></include> FROM MTS_DATA4 
+	</select>
+</mapper>

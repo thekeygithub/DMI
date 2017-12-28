@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsCorpusEntityMapper">
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_CORPUS_ENTITY
+	</sql>
+	<sql id="dataTypeTableName">
+		MTS_CORPUS_TYPE
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		ENTITY_NAME,
+		ENTITY_TYPE_ID,
+		IS_CONFRIM,
+		ENTITY_TYPE_NAME,
+		CORPUS_DETAIL_ID,
+		START_TEXT_OFF,
+		END_TEXT_OFF,
+		START_HTML_OFF,
+		END_HTML_OFF,
+		SPAN_NUM,
+		EDIT_DATE,
+		COLOR
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{ENTITY_NAME},
+		#{ENTITY_TYPE_ID},
+		#{IS_CONFRIM},
+		#{ENTITY_TYPE_NAME},
+		#{CORPUS_DETAIL_ID},
+		#{START_TEXT_OFF},
+		#{END_TEXT_OFF},
+		#{START_HTML_OFF},
+		#{END_HTML_OFF},
+		#{SPAN_NUM},
+		#{EDIT_DATE},
+		#{COLOR}
+	</sql>
+	 <!-- 添加语料实体 -->
+	<insert id="saveMtsCorpusEntity" parameterType="MtsCorpusEntity" useGeneratedKeys="true" keyProperty="ID">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	
+	<select id="listMtsCorpusEntity" parameterType="Integer" resultType="MtsCorpusEntity">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include> ce 
+		WHERE ce.CORPUS_DETAIL_ID = #{CORPUS_DETAIL_ID}
+	</select>
+	
+	<select id="listMtsCorpusEntityByMtsCorpus" parameterType="String" resultType="pd">
+			SELECT mce.ID,
+			mce.ENTITY_NAME ,
+			mce.ENTITY_TYPE_ID,
+			mce.IS_CONFRIM,
+			mce.ENTITY_TYPE_NAME,
+			mce.CORPUS_DETAIL_ID,
+			mce.START_TEXT_OFF,
+			mce.END_TEXT_OFF,
+			mce.SPAN_NUM,
+			mce.COLOR,
+			mcd.ORIG_CORPUS
+			FROM MTS_CORPUS mc ,MTS_CORPUS_DETAIL mcd ,MTS_CORPUS_ENTITY  mce
+			WHERE mc.ID = mcd.CORPUS_ID AND mce.CORPUS_DETAIL_ID = mcd.ID AND mc.ID = #{CORPUS_ID}
+	</select>
+	<select id="listMtsCorpusEntityByMtsCorpusDetail" parameterType="String" resultType="pd">
+	SELECT mce.ID,
+			mce.ENTITY_NAME ,
+			mce.ENTITY_TYPE_ID,
+			mce.IS_CONFRIM,
+			mce.ENTITY_TYPE_NAME,
+			mce.CORPUS_DETAIL_ID,
+			mce.START_TEXT_OFF,
+			mce.END_TEXT_OFF,
+			mce.SPAN_NUM,
+			mce.COLOR,
+			mcd.ORIG_CORPUS
+			FROM MTS_CORPUS_DETAIL mcd ,MTS_CORPUS_ENTITY  mce
+			WHERE mce.CORPUS_DETAIL_ID = mcd.ID AND mcd.ID = #{CORPUS_DETAIL_ID}
+	</select>
+
+	<delete id="delMtsCorpusEntity" parameterType="Integer">
+		DELETE FROM  
+		<include refid="tableName"></include>
+		WHERE CORPUS_DETAIL_ID=#{CORPUS_DETAIL_ID}
+	</delete>
+	
+	 <!-- 添加语料原始文本 -->
+	<!-- <insert id="saveCorpus" parameterType="MtsCorpus">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert> -->
+
+	
+</mapper>

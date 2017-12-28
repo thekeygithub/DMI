@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NlpDataMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_NLP_DATA
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		NLPID,	
+		NLPNAME,	
+		NLPTYPE,
+		AREAID,
+		CLASSCODE,
+		INTDATE
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{NLPID},	
+		#{NLPNAME},
+		#{NLPTYPE},
+		#{AREAID},
+		#{CLASSCODE},
+		#{INTDATE}
+		
+	</sql>
+	
+
+
+
+	
+	
+	<!-- 根据条件获取数据分页显示 -->
+	<select id="findNlplistPage"  parameterType="page" resultType="pd">
+		select 	
+		a.NLPID,
+		a.NLPNAME,
+		a.NLPTYPE,
+		c.AREA_NAME,
+		b.DATA_CLASS_NAME	
+		from 
+		<include refid="tableName"></include> a,
+		MTS_DATA_CLASS b,
+		MTS_AREA c
+		where 1=1
+		<if test="pd.CLASSCODE!= null and pd.CLASSCODE != ''"><!-- 条件查询 -->
+			and a.CLASSCODE= #{pd.CLASSCODE}
+		</if>
+		<if test="pd.AREAID!= null and pd.AREAID != ''"><!-- 条件查询 -->
+			and  a.AREAID= #{pd.AREAID}
+		</if>
+		<if test="pd.NLPTYPE!= null and pd.NLPTYPE != ''"><!-- 条件查询 -->
+			and  a.NLPTYPE= #{pd.NLPTYPE}
+		</if>
+		and a.CLASSCODE=b.DATA_CLASS_CODE
+		and a.AREAID=c.AREA_CODE
+	    ORDER BY NLPID ASC
+	</select>
+	
+
+	<!-- 根据条件获取数据 -->
+	<select id="findByType"  resultType="pd">
+		select a.NLPNAME,	b.TERM_EN_NAME		
+		from  MTS_NLP_DATA a,MTS_TERM_TYPE b
+		where a.NLPTYPE=b.TERM_CN_NAME	
+	</select>
+	
+	<!-- 根据术语名称查询 -->
+	<select id="findByName" parameterType="String" resultType="Integer">
+		select 	COUNT(NLPID)
+		from  MTS_NLP_DATA
+		where NLPNAME=#{NLPNAME}		
+	</select>
+	
+	
+	<!-- 添加 -->
+	<insert id="addNLPData" parameterType="NlpData">
+		insert into 
+		<include refid="tableName"></include>
+		( NLPNAME,NLPTYPE,AREAID,CLASSCODE,INTDATE
+		 ) values (
+		#{NLPNAME},	#{NLPTYPE},	#{AREAID},	#{CLASSCODE},	#{INTDATE}
+		)
+	</insert>
+	
+	
+	<!-- 保存修改 -->
+	<update id="updNLPData" parameterType="NlpData">
+		update 
+		<include refid="tableName"></include>
+		set NLPNAME = #{NLPNAME},
+		NLPTYPE = #{NLPTYPE},
+		AREAID = #{AREAID},
+		CLASSCODE = #{CLASSCODE},
+		INTDATE= #{INTDATE}
+		where NLPID = #{NLPID}
+	</update>
+	
+	<!-- 单条删除  -->
+	<delete id="deleteNLPData" parameterType="NlpData">
+		delete from 
+		<include refid="tableName"></include>
+		where NLPNAME = #{NLPNAME}
+		and NLPTYPE = #{NLPTYPE}
+	</delete>
+		
+	<!-- 批量删除用户 -->
+	<delete id="deleteAllU" parameterType="Integer">
+		delete from
+		<include refid="tableName"></include>
+		where
+		NLPID in
+		<foreach item="NLP_IDS" index="index" collection="array" open="("
+			separator="," close=")">
+			#{NLP_IDS}
+		</foreach>
+		
+	</delete>
+	
+</mapper>

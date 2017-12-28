@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsLoadRuleDetailMapper">
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_LOAD_RULE_DETAIL
+	</sql>
+
+	<sql id="dataTypeTableName">
+		MTS_DATA_TYPE
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		LOAD_RULE_ID,
+		LOAD_RULE_NAME,
+		DATA_TYPE_ID,
+		KEY_GEN_RULE,
+		VALUE_GEN_RULE,
+		AREA_ID,
+		OP_DATE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{LOAD_RULE_ID},
+		#{LOAD_RULE_NAME},
+		#{DATA_TYPE_ID},
+		#{KEY_GEN_RULE},
+		#{VALUE_GEN_RULE},
+		#{AREA_ID},
+		#{OP_DATE}
+	</sql>
+
+	<!-- 获取数据加载规则列表 -->
+	<select id="loadrulelistPage" parameterType="page" resultType="pd">
+		SELECT 
+		a.LOAD_RULE_ID,
+		a.DATA_TYPE_ID,
+		b.DATA_TYPE_NAME,
+		a.LOAD_RULE_NAME,
+		a.KEY_GEN_RULE,
+		a.VALUE_GEN_RULE,
+		a.AREA_ID,
+		c.AREA_NAME ,
+		d.DATA_CLASS_NAME
+		FROM
+		<include refid="tableName"></include> a,
+		<include refid="dataTypeTableName"></include> b,
+		MTS_AREA c,
+        MTS_DATA_CLASS d
+        WHERE a.DATA_TYPE_ID = b.DATA_TYPE_ID
+        <if test="pd.DATA_CLASS_CODE != null and pd.DATA_CLASS_CODE != ''">
+			and d.DATA_CLASS_CODE = #{pd.DATA_CLASS_CODE}
+		</if>
+		<if test="pd.AREA_ID != null and pd.AREA_ID != ''">
+			and a.AREA_ID = #{pd.AREA_ID}
+		</if>
+		and a.AREA_ID=c.AREA_CODE 
+		and substring(KEY_GEN_RULE, 2 ,2)=d.DATA_CLASS_CODE
+		ORDER BY a.OP_DATE DESC 
+	</select>
+	
+	
+	 <!-- 添加 -->
+	<insert id="saveRule" parameterType="LoadRule">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 查询LOAD_RULE_ID最大值 -->
+	<select id="maxRule" resultType="String">
+		SELECT IFNULL(MAX(CONVERT(LOAD_RULE_ID,SIGNED)),0) FROM <include refid="tableName"></include>
+	</select>
+	
+	<!-- 通过id查找 -->
+	<select id="findRuleById" parameterType="String" resultType="LoadRule">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where LOAD_RULE_ID = #{LOAD_RULE_ID}
+	</select>
+	<!-- 保存修改 -->
+	<update id="editRule" parameterType="LoadRule">
+		update 
+		<include refid="tableName"></include>
+		set 
+		DATA_TYPE_ID = #{DATA_TYPE_ID},
+		KEY_GEN_RULE = #{KEY_GEN_RULE},
+		LOAD_RULE_NAME = #{LOAD_RULE_NAME},
+		VALUE_GEN_RULE = #{VALUE_GEN_RULE},
+		AREA_ID = #{AREA_ID},
+		OP_DATE = #{OP_DATE}
+		where LOAD_RULE_ID = #{LOAD_RULE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteRule" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where LOAD_RULE_ID=#{LOAD_RULE_ID}
+	</delete>
+</mapper>

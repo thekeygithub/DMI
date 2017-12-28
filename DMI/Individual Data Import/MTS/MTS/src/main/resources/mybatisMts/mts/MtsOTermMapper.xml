@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsOTermMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_O_TERM
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		TERM_ID,	
+		TERM_NAME,	
+		FLAG
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{TERM_ID},	
+		#{TERM_NAME},
+		#{FLAG}
+	</sql>
+	
+
+	<!-- 通过FLAG获取数据加载缓存 -->
+	<select id="findByFlag" parameterType="String" resultType="OTerm">
+		select 	
+		<include refid="Field"></include> 	
+		from 
+		<include refid="tableName"></include>
+		where 
+		FLAG = #{FLAG}
+		order by LENGTH(TERM_NAME) desc 
+	</select>
+	
+	<!-- 获取全表数据 -->
+	<select id="findAll"  resultType="OTerm">
+		select 	
+		<include refid="Field"></include> 	
+		from 
+		<include refid="tableName"></include>
+		
+	</select>
+	
+	
+	<!-- 获取全表数据分页显示 -->
+	<select id="findOtermlistPage"  parameterType="page" resultType="pd">
+		select 	
+		TERM_ID,
+		TERM_NAME,
+		FLAG	
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.FLAG!= null and pd.FLAG != ''"><!-- 条件查询 -->
+			and  FLAG= #{pd.FLAG}
+		</if>
+	    ORDER BY TERM_ID ASC
+	</select>
+	
+	
+	
+    <!-- 添加 -->
+	<insert id="addOTerm" parameterType="OTerm">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 通过SP类型获取限定词 -->
+	<select id="findBySPType" parameterType="String" resultType="String">
+		select 	SPNAME	
+		from  MTS_SPECIAL
+		where 
+		SPFLAG = '0'  AND SPTYPE=#{SPTYPE}
+		order by LENGTH(SPNAME) desc
+	</select>
+</mapper>

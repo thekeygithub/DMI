@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDataClassMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DATA_CLASS
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_CLASS_ID,	
+		DATA_CLASS_NAME,	
+		DATA_CLASS_CODE
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_CLASS_ID},	
+		#{DATA_CLASS_NAME},	
+		#{DATA_CLASS_CODE}
+	</sql>
+	
+
+	
+	<!-- 获取所有聚类列表 -->
+	<select id="listAllDataClass" resultType="MtsDataClass">
+		SELECT 	
+		<include refid="Field"></include> 
+		FROM 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 获取所有聚类列表带分页 -->
+	<select id="dataClasslistPage" parameterType="page" resultType="pd">
+		SELECT 	
+		DATA_CLASS_ID,	
+		DATA_CLASS_NAME,	
+		DATA_CLASS_CODE
+		FROM 
+		MTS_DATA_CLASS
+		ORDER BY DATA_CLASS_ID ASC
+	</select>
+	
+	
+	<!-- 根据id获取聚类 -->
+	<select id="dataClassById" parameterType="String" resultType="MtsDataClass">
+		SELECT 	
+		<include refid="Field"></include> 
+		FROM 
+		<include refid="tableName"></include>
+		WHERE DATA_CLASS_ID = #{DATA_CLASS_ID}
+	</select>
+
+
+    <!-- 添加 -->
+	<insert id="addDataClass" parameterType="MtsDataClass">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	
+	<!-- 查询DATA_CLASS_ID最大值 -->
+	<select id="maxDataClass" resultType="String">
+		SELECT ifnull(MAX(CONVERT(DATA_CLASS_ID,SIGNED)),0) FROM MTS_DATA_CLASS
+	</select>
+	
+
+	<!-- 保存修改 -->
+	<update id="editDataClass" parameterType="MtsDataClass">
+		update 
+		<include refid="tableName"></include>
+		set DATA_CLASS_NAME = #{DATA_CLASS_NAME},		
+		DATA_CLASS_CODE = #{DATA_CLASS_CODE}
+		where DATA_CLASS_ID = #{DATA_CLASS_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteDataClass" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where DATA_CLASS_ID=#{DATA_CLASS_ID}
+	</delete>
+	
+	<!-- 查询DATA_CLASS_CODE最大值 -->
+	<select id="maxDataCode" resultType="String">
+		SELECT ifnull(MAX(CONVERT(DATA_CLASS_CODE,SIGNED)),0) FROM MTS_DATA_CLASS
+	</select>
+	
+	<!-- 判断聚类代码是否存在 -->
+	<select id="codeByCode" parameterType="String" resultType="MtsDataClass">
+		select 	
+		<include refid="Field"></include>
+ 		from 
+		<include refid="tableName"></include>
+		where 
+			DATA_CLASS_CODE = #{DATA_CLASS_CODE}
+	</select>
+	
+	<!-- 判断聚类名称是否存在 -->
+	<select id="nameByName" parameterType="String" resultType="MtsDataClass">
+		select 	
+		<include refid="Field"></include>
+ 		from  
+		<include refid="tableName"></include>
+		where 
+			DATA_CLASS_NAME = #{DATA_CLASS_NAME}
+	</select>
+	
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsPrksTs">
+	
+	
+	
+	
+	<!-- 获取全表数据加载缓存 -->
+	<select id="findJP"  resultType="String">
+		select 	JP_SYN	
+		from 	MTS_JP
+		order by LENGTH(JP_SYN) desc 
+	</select>
+	
+	<select id="findOP"  resultType="String">
+		select 	OP_STU_NAME	
+		from 	MTS_OP_STATUS
+		order by LENGTH(OP_STU_NAME) desc 
+	</select>
+	
+	<select id="findZLZY"  resultType="String">
+		select 	ZL_SYN	
+		from 	MTS_ZLZY
+		order by LENGTH(ZL_SYN) desc 
+	</select>
+	
+	
+	
+
+</mapper>

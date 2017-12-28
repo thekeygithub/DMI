@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TermTypeMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_TERM_TYPE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		TERM_ID,
+		TERM_CN_NAME,
+		TERM_EN_NAME,
+		TERM_CLASSCODE,
+		TERM_DATATYPE,
+		COLOR,
+		FLAG
+
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{TERM_ID},	
+		#{TERM_CN_NAME},
+		#{TERM_EN_NAME},
+		#{TERM_CLASSCODE},
+		#{TERM_DATATYPE},
+		#{COLOR},
+		#{FLAG}
+		
+	</sql>
+	
+
+
+
+	<!-- 获取术语类型 -->
+	<select id="findAllTerm"  resultType="String">
+		select 	TERM_CN_NAME
+		from  MTS_TERM_TYPE
+		where FLAG='0'		
+	</select>
+	
+	<!-- 获取所有有效数据加载缓存 -->
+	<select id="findAllLoadTerm"  resultType="NlpTerm">
+		select 	
+		<include refid="Field"></include>
+    	from 
+		<include refid="tableName"></include>
+		where FLAG='0'		
+	</select>
+	
+	<!-- 通过name查找 -->
+	<select id="findNlpTermByName" parameterType="String" resultType="NlpTerm">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where TERM_CN_NAME = #{TERM_CN_NAME}
+	</select>
+	<!-- 通过code查找 -->
+	<select id="findNlpTermByEnName" parameterType="String" resultType="NlpTerm">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where TERM_EN_NAME = #{TERM_EN_NAME}
+	</select>
+	
+</mapper>

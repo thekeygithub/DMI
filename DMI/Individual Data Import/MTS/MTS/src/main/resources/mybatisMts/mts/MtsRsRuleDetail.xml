@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsRsRuleDetail">
+	
+	<!-- 结果集 -->
+	<resultMap type="RsRuleDetailT" id="RsRuleDetailTResultMap">
+		<id column="RRD_ID" property="RRD_ID" />
+		
+		<result column="AREA_ID" property="AREA_ID" />
+		<result column="DATA_CLASS_CODE" property="DATA_CLASS_CODE" />
+		<result column="APPLY_METHOD" property="APPLY_METHOD" />
+		
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_RS_RULE_DETAIL
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		RRD_ID,	
+		DATA_CLASS_CODE,
+		APPLY_METHOD,
+		AREA_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{RRD_ID},	
+		#{DATA_CLASS_CODE},
+		#{APPLY_METHOD},
+		#{AREA_ID}
+	</sql>
+	
+    <!-- 添加 -->
+	<insert id="addRuleDetail" parameterType="RsRuleDetailT">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editRuleDetail" parameterType="RsRuleDetailT">
+		update 
+		<include refid="tableName"></include>
+		set 
+		DATA_CLASS_CODE = #{DATA_CLASS_CODE},
+		AREA_ID = #{AREA_ID},
+		APPLY_METHOD= #{APPLY_METHOD} 
+		
+		where RRD_ID = #{RRD_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteRuleDetail" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where RRD_ID=#{RRD_ID}
+	</delete>
+	
+	<!-- 通过条件获取配置 -->
+	<select id="findRsRuleList" parameterType="RsRuleDetailT" resultType="RsRuleDetailT">
+		select <include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where is_active=1  
+		<if test="RRD_ID != null and RRD_ID != ''">
+			and RRD_ID = #{RRD_ID}
+		</if>
+		<if test="DATA_CLASS_CODE != null and DATA_CLASS_CODE != ''">
+			and DATA_CLASS_CODE = #{DATA_CLASS_CODE}
+		</if>
+		<if test="AREA_ID != null and AREA_ID != ''">
+			and AREA_ID = #{AREA_ID}
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsMatchRuleMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_MATCH_RULE
+	</sql>
+	
+	<sql id="typetableName">
+		MTS_DATA_TYPE
+	</sql>
+	
+	
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		MATCH_RULE_ID,			
+		DATA_TYPE_ID,
+		SRC_CODE,
+		KEY_GEN_RULE,
+		IFNLP,
+		STANDARDE,
+		VALUE_STR,
+		AREA_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{MATCH_RULE_ID},	
+		#{DATA_TYPE_ID},
+		#{SRC_CODE},	
+		#{KEY_GEN_RULE},
+		#{IFNLP},
+		#{STANDARDE},		
+		#{VALUE_STR},
+		#{AREA_ID}
+	</sql>
+	
+	
+	<!-- 通过标化类型获取数据 -->
+	<select id="findByType" parameterType="String" resultType="MatchRule">
+		select 	
+		<include refid="Field"></include>
+    	from 
+		<include refid="tableName"></include>
+		where 
+			DATA_TYPE_ID = #{DATA_TYPE_ID}
+	</select>
+	
+	<!-- 查询所有规则-->
+	<select id="matchRulelistPage" parameterType="page" resultType="pd">
+		select 
+		a.MATCH_RULE_ID,
+		a.DATA_TYPE_ID,
+		b.DATA_TYPE_NAME,
+		a.SRC_CODE,
+		a.KEY_GEN_RULE,
+		a.IFNLP,
+		a.STANDARDE,
+		a.VALUE_STR,
+		a.AREA_ID,
+		c.AREA_NAME ,
+		d.DATA_CLASS_NAME
+        from 
+        <include refid="tableName"></include> a,
+        <include refid="typetableName"></include> b,
+        MTS_AREA c,
+        MTS_DATA_CLASS d
+        where a.DATA_TYPE_ID=b.DATA_TYPE_ID
+        
+        <if test="pd.DATA_CLASS_CODE != null and pd.DATA_CLASS_CODE != ''">
+			and d.DATA_CLASS_CODE = #{pd.DATA_CLASS_CODE}
+		</if>
+		<if test="pd.AREA_ID != null and pd.AREA_ID != ''">
+			and a.AREA_ID = #{pd.AREA_ID}
+		</if>
+		and a.AREA_ID=c.AREA_CODE
+		and right(substring_index(KEY_GEN_RULE, '#', 2),2)=d.DATA_CLASS_CODE
+		ORDER BY a.MATCH_RULE_ID ASC
+	</select>
+	
+	
+	<!-- 查询所有规则加载缓存-->
+	<select id="matchRulelp" parameterType="page" resultType="pd">
+		select 
+		a.MATCH_RULE_ID,
+		a.DATA_TYPE_ID,
+		b.DATA_TYPE_NAME,
+		a.SRC_CODE,
+		a.KEY_GEN_RULE,
+		a.IFNLP,
+		a.STANDARDE,
+		a.VALUE_STR,
+		a.AREA_ID,
+		c.AREA_NAME ,
+		d.DATA_CLASS_NAME
+        from 
+        <include refid="tableName"></include> a,
+        <include refid="typetableName"></include> b,
+        MTS_AREA c,
+        MTS_DATA_CLASS d
+        where a.DATA_TYPE_ID=b.DATA_TYPE_ID
+        
+        <if test="pd.DATA_CLASS_CODE != null and pd.DATA_CLASS_CODE != ''">
+			and d.DATA_CLASS_CODE = #{pd.DATA_CLASS_CODE}
+		</if>
+		<if test="pd.AREA_ID != null and pd.AREA_ID != ''">
+			and a.AREA_ID = #{pd.AREA_ID}
+		</if>
+		and a.AREA_ID=c.AREA_CODE
+		and right(substring_index(KEY_GEN_RULE, '#', 2),2)=d.DATA_CLASS_CODE
+		ORDER BY a.MATCH_RULE_ID ASC
+	</select>
+	
+	<!-- 通过id查找 -->
+	<select id="findRuleById" parameterType="String" resultType="MatchRule">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where MATCH_RULE_ID = #{MATCH_RULE_ID}
+	</select>
+
+    <!-- 添加 -->
+	<insert id="addRule" parameterType="MatchRule">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	 <!-- 查询matchruleid最大值 -->
+	<select id="maxRule" resultType="String">
+		SELECT ifnull(MAX(CONVERT(MATCH_RULE_ID,SIGNED)),0) FROM MTS_MATCH_RULE
+	</select>
+	
+
+	<!-- 保存修改 -->
+	<update id="editRule" parameterType="MatchRule">
+		update 
+		<include refid="tableName"></include>
+		set STANDARDE = #{STANDARDE},
+		DATA_TYPE_ID = #{DATA_TYPE_ID},
+		KEY_GEN_RULE = #{KEY_GEN_RULE},
+		VALUE_STR = #{VALUE_STR},
+		IFNLP = #{IFNLP},
+		AREA_ID = #{AREA_ID}
+		where MATCH_RULE_ID = #{MATCH_RULE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteRule" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where MATCH_RULE_ID=#{MATCH_RULE_ID}
+	</delete>
+	
+	<!-- 通过区域和标化类型查询 -->
+	<select id="findByAreaType" parameterType="page" resultType="MatchRule">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where AREA_ID = #{pd.AREA_ID}
+		and DATA_TYPE_ID=#{pd.DATA_TYPE_ID}
+	</select>
+</mapper>

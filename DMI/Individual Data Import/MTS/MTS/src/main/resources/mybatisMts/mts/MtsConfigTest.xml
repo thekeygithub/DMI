@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsConfigTestMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_CONFIG_DETAIL
+	</sql>
+	
+
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		T_ID,
+		PT_ID,
+		SOURCEDATA,
+		NLP,
+		NLPVALUE,
+		RESULT,
+		SPEC,
+		DOUB,		
+		TYPE,
+		SOURCETEXT,
+		OPDATE
+
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{T_ID},	
+		#{PT_ID},		
+		#{SOURCEDATA},
+		#{NLP},
+		#{NLPVALUE},		
+		#{RESULT},
+		#{SPEC},		
+		#{DOUB},
+		#{TYPE},
+		#{SOURCETEXT},
+		#{OPDATE}
+	</sql>
+	
+	
+	<!-- 通过批次获取数据 -->
+	<select id="findByPT" parameterType="String" resultType="MtsConfigTest">
+		select 	
+		<include refid="Field"></include>
+    	from 
+		<include refid="tableName"></include>
+		where 
+		 PT_ID = #{PT_ID} and TYPE is  null
+	</select>
+	
+	<!-- 查询所有批次-->
+	<select id="findPT"  resultType="pd">
+		select 
+		a.PT_ID,
+		a.PT_NAME		
+        from 
+        MTS_CONFIG a        
+       
+	</select>	
+
+    <!-- 添加 -->
+	<insert id="addConfigTest" parameterType="MtsConfigTest">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>		
+
+	<!-- 保存修改 -->
+	<update id="editConfigTest" parameterType="MtsConfigTest">
+		update 
+		<include refid="tableName"></include>
+		set 
+		NLP = #{NLP},
+		NLPVALUE = #{NLPVALUE},
+		RESULT = #{RESULT},
+		SPEC = #{SPEC},
+		DOUB = #{DOUB},		
+		TYPE = #{TYPE},
+		OPDATE= #{OPDATE}
+		where T_ID = #{T_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteConfigTest" parameterType="Integer">
+		delete from 
+		<include refid="tableName"></include>		
+		where
+		T_ID in
+		<foreach item="PT_IDS" index="index" collection="array" open="("
+			separator="," close=")">
+			#{PT_IDS}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

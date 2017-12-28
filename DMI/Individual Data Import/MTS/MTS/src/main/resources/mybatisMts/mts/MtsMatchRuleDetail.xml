@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsMatchRuleDetail">
+	
+	<!-- 结果集 -->
+	<resultMap type="MatchRuleDetailT" id="MatchRuleDetailTResultMap">
+		<id column="MEM_ID" property="MEM_ID" />
+		
+		<result column="MEM_DATA_CODE" property="MEM_DATA_CODE" />
+		<result column="DATA_CLASS_CODE" property="DATA_CLASS_CODE" />
+		<result column="FLAG" property="FLAG" />
+		<result column="ORDERBY" property="ORDERBY" />
+		<result column="IFNEXT" property="IFNEXT" />
+		<result column="QUESTION" property="QUESTION" />
+		<result column="MARK" property="MARK" />
+		<result column="SUCCESS_REDIRECT_TO" property="SUCCESS_REDIRECT_TO" />
+		<result column="FAILURE_REDIRECT_TO" property="FAILURE_REDIRECT_TO" />
+		<result column="NOC" property="NOC" />
+		<result column="APPLY_METHOD" property="APPLY_METHOD" />
+		
+		<result column="BeforeAPPLY_METHOD" property="BeforeAPPLY_METHOD" />
+		<result column="AfterAPPLY_METHOD" property="AfterAPPLY_METHOD" />
+		<result column="BeforeExceSubFlow" property="BeforeExceSubFlow" />
+		<result column="AfterExceSubFlow" property="AfterExceSubFlow" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_MATCH_RULE_DETAIL
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		MEM_ID,	
+		MEM_DATA_CODE,	
+		DATA_CLASS_CODE,
+		FLAG,
+		ORDERBY,
+		IFNEXT,
+		QUESTION,
+		MARK,
+		SUCCESS_REDIRECT_TO,
+		NOC,
+		FAILURE_REDIRECT_TO,
+		APPLY_METHOD,
+		PINKEY,
+		AREA_ID,
+		BeforeAPPLY_METHOD,
+		AfterAPPLY_METHOD,
+		BeforeExceSubFlow,
+		AfterExceSubFlow
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{MEM_ID},	
+		#{MEM_DATA_CODE},	
+		#{DATA_CLASS_CODE},
+		#{FLAG},
+		#{ORDERBY},
+		#{IFNEXT},
+		#{QUESTION},
+		#{MARK},
+		#{SUCCESS_REDIRECT_TO},
+		#{NOC},
+		#{FAILURE_REDIRECT_TO},
+		#{APPLY_METHOD},
+		#{PINKEY},
+		#{AREA_ID},
+		#{BeforeAPPLY_METHOD},
+		#{AfterAPPLY_METHOD},
+		#{BeforeExceSubFlow},
+		#{AfterExceSubFlow}
+		
+	</sql>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findByClass" parameterType="Map" resultType="String">
+		select 	MEM_DATA_CODE from 
+		<include refid="tableName"></include>
+		where 
+			DATA_CLASS_CODE = #{DATA_CLASS_CODE} and FLAG=#{FLAG}
+			and IFNEXT=#{IFNEXT}
+	</select>
+	
+	<!-- 查询所有规则详细 -->
+	<select id="DetailRulelistPage" parameterType="page" resultType="pd">
+	 SELECT h1.MEM_ID,		
+     		h1.DATA_CLASS_NAME,		
+     		h1.DATA_TYPE_NAME,
+		 	h1.ORDERBY,		
+     		h2.DATA_TYPE_NAME as IFNEXT,		 
+     		h1.QUESTION,		 
+     		h1.MARK,
+		 	h1.FLAG,     
+     		h1.SOFT_CN_NAME,		 
+     		h1.SUCESSTO,		 
+     		h1.FALLTO,
+     		h1.NOC ,
+     		h1.PINKEY,
+     		h1.AREA_NAME
+    	from (
+    	select t2.MEM_ID,		t3.DATA_CLASS_NAME,		t4.DATA_TYPE_NAME,
+		t2.ORDERBY,		t2.IFNEXT,		t2.QUESTION,		t2.MARK,
+		t2.FLAG,    t7.SOFT_CN_NAME,		t1.SUCESSTO,		t1.FALLTO,
+   		t2.NOC,t2.PINKEY,t6.AREA_NAME
+		from (
+		SELECT s3.MEM_ID,s3.SUCESSTO, concat(s3.fid,'-',s4.DATA_TYPE_NAME) as FALLTO FROM (
+		SELECT s1.MEM_ID,s1.SUCESSTO,s2.MEM_ID as fid,s2.MEM_DATA_CODE as fcode from(
+		SELECT c.MEM_ID,concat(c.sid,'-',d.DATA_TYPE_NAME) as SUCESSTO,c.FAILURE_REDIRECT_TO from (
+		SELECT a.MEM_ID ,b.MEM_ID as sid ,b.MEM_DATA_CODE as scode,a.FAILURE_REDIRECT_TO
+		FROM MTS_MATCH_RULE_DETAIL a LEFT JOIN MTS_MATCH_RULE_DETAIL b
+		on a.SUCCESS_REDIRECT_TO=b.MEM_ID) c LEFT JOIN MTS_DATA_TYPE d
+		on c.scode=d.MEM_DATA_CODE)s1 LEFT JOIN MTS_MATCH_RULE_DETAIL s2
+		on s1.FAILURE_REDIRECT_TO=s2.MEM_ID) s3 LEFT JOIN MTS_DATA_TYPE s4
+		on s3.fcode=s4.MEM_DATA_CODE) t1,MTS_MATCH_RULE_DETAIL t2,
+		MTS_DATA_CLASS t3,MTS_DATA_TYPE t4,MTS_AREA t6,
+		MTS_SOFT t7
+		WHERE t1.MEM_ID=t2.MEM_ID and t2.DATA_CLASS_CODE=t3.DATA_CLASS_CODE
+		<if test="pd.DATA_CLASS_CODE != null and pd.DATA_CLASS_CODE != ''">
+			and t2.DATA_CLASS_CODE = #{pd.DATA_CLASS_CODE}
+		</if>
+		<if test="pd.AREA_ID != null and pd.AREA_ID != ''">
+			and t2.AREA_ID = #{pd.AREA_ID}
+		</if>
+		and t2.AREA_ID=t6.AREA_CODE and t2.APPLY_METHOD=t7.SOFT_EN_NAME
+		and t2.MEM_DATA_CODE=t4.MEM_DATA_CODE ) h1
+        LEFT JOIN MTS_DATA_TYPE h2 on h1.IFNEXT=h2.MEM_DATA_CODE		
+			
+		ORDER BY h1.AREA_NAME,h1.MEM_ID
+	</select>
+	
+	<!-- 判断流程入口是否存在-->
+	<select id="findRuleDetail" parameterType="page" resultType="MatchRuleDetailT">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where AREA_ID = #{pd.AREA_ID}
+		and DATA_CLASS_CODE = #{pd.DATA_CLASS_CODE}
+		and ORDERBY='1'
+		
+	</select>
+	
+	<!-- 通过id查找 -->
+	<select id="findRuleDetailById" parameterType="String" resultType="MatchRuleDetailT">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where MEM_ID = #{MEM_ID}
+	</select>
+
+    <!-- 添加 -->
+	<insert id="addRuleDetail" parameterType="MatchRuleDetailT">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editRuleDetail" parameterType="MatchRuleDetailT">
+		update 
+		<include refid="tableName"></include>
+		set MEM_DATA_CODE = #{MEM_DATA_CODE},
+		DATA_CLASS_CODE = #{DATA_CLASS_CODE},
+		FLAG = #{FLAG},		
+		ORDERBY = #{ORDERBY},
+		IFNEXT = #{IFNEXT},
+		QUESTION = #{QUESTION},
+		MARK = #{MARK},
+		SUCCESS_REDIRECT_TO = #{SUCCESS_REDIRECT_TO},
+		NOC = #{NOC},
+		PINKEY=#{PINKEY},
+		FAILURE_REDIRECT_TO = #{FAILURE_REDIRECT_TO},
+		AREA_ID = #{AREA_ID},
+		APPLY_METHOD= #{APPLY_METHOD},
+		BeforeAPPLY_METHOD=#{BeforeAPPLY_METHOD},
+		AfterAPPLY_METHOD=#{AfterAPPLY_METHOD},
+		BeforeExceSubFlow=#{BeforeExceSubFlow},
+		AfterExceSubFlow=#{AfterExceSubFlow}
+		where MEM_ID = #{MEM_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteRuleDetail" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where MEM_ID=#{MEM_ID}
+	</delete>
+	
+	<!-- 通过聚类获取匹配流程 -->
+	<select id="findMatchRuleListByClassCode" parameterType="MatchRuleDetailT" resultType="MatchRuleDetailT">
+		select <include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="MEM_ID != null and MEM_ID != ''">
+			and MEM_ID = #{MEM_ID}
+		</if>
+		<if test="DATA_CLASS_CODE != null and DATA_CLASS_CODE != ''">
+			and DATA_CLASS_CODE = #{DATA_CLASS_CODE}
+		</if>
+		<if test="FLAG != null and FLAG != ''">
+			and FLAG = #{FLAG}
+		</if>
+		<if test="ORDERBY != null and ORDERBY != ''">
+			and ORDERBY = #{ORDERBY}
+		</if>
+			order by ORDERBY
+	</select>
+	
+	
+	<!-- 查询detailruleid最大值 -->
+	<select id="maxRule" resultType="String">
+		SELECT ifnull(MAX(CONVERT(MEM_ID,SIGNED)),0) FROM MTS_MATCH_RULE_DETAIL
+	</select>
+	
+	<!-- 查询成功失败跳转列表 -->
+	<select id="DetailRuleSF" parameterType="page" resultType="pd">
+		SELECT a.MEM_ID,concat(a.MEM_ID,'-',b.DATA_TYPE_NAME) as MEM_NAME 
+		FROM MTS_MATCH_RULE_DETAIL a,MTS_DATA_TYPE b
+		WHERE a.MEM_DATA_CODE=b.MEM_DATA_CODE		
+		and a.AREA_ID = #{pd.AREA_ID}
+		<if test="pd.MEM_ID != null and pd.MEM_ID != ''">
+		and a.MEM_ID!=#{pd.MEM_ID}
+		</if>
+		<if test="pd.FLAG != null and pd.FLAG != ''">
+		and a.FLAG=#{pd.FLAG}
+		</if>
+		<if test="pd.DATA_CLASS_CODE != null and pd.DATA_CLASS_CODE != ''">
+		and a.DATA_CLASS_CODE=#{pd.DATA_CLASS_CODE}
+		</if>
+		
+	</select>
+	
+	<!-- 查询程序列表 -->
+	<select id="findSoft" resultType="pd">
+		SELECT SOFT_CN_NAME,SOFT_EN_NAME
+		FROM MTS_SOFT
+		WHERE FLAG='0';
+	</select>
+	
+	<!-- 查询数据特殊处理内容列表 -->
+	<select id="findSpecSoft" parameterType="page" resultType="String">
+		SELECT SPECBLOD FROM MTS_SPECSOFT_RULE 
+		WHERE AREA_ID=#{pd.AREA_ID} and CLASSCODE=#{pd.CLASSCODE} 
+		order by SPECORDER;
+	</select>
+	
+	<!-- 查询数据特殊处理区域+聚类列表 -->
+	<select id="findSpecCnt"  resultType="pd">
+		SELECT AREA_ID,CLASSCODE 
+		FROM MTS_SPECSOFT_RULE GROUP BY AREA_ID,CLASSCODE;
+	</select>
+</mapper>

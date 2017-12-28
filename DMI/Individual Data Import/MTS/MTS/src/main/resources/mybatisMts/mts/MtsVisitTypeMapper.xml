@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsVisitTypeMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsVisitType" id="MtsVisitTypeResultMap">
+		<id column="VISIT_TYPE_ID" property="VISIT_TYPE_ID" />
+		<result column="FLAG" property="FLAG" />
+		<result column="DESCRIPTION" property="DESCRIPTION" />
+		<result column="REMARK" property="REMARK" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_VISIT_TYPE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		VISIT_TYPE_ID,	
+		FLAG,	
+		DESCRIPTION,
+		REMARK,
+		OPERATE_TIME
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{VISIT_TYPE_ID},
+		#{FLAG},
+		#{DESCRIPTION},
+		#{REMARK},
+		#{OPERATE_TIME}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsVisitType" parameterType="MtsVisitType">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsVisitType" parameterType="MtsVisitType">
+		update 
+		<include refid="tableName"></include>
+		set FLAG = #{FLAG},
+		DESCRIPTION = #{DESCRIPTION},
+		REMARK = #{REMARK},
+		OPERATE_TIME = #{OPERATE_TIME}
+		where VISIT_TYPE_ID = #{VISIT_TYPE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsVisitType" parameterType="MtsVisitType">
+		delete from 
+		<include refid="tableName"></include>
+		where VISIT_TYPE_ID=#{VISIT_TYPE_ID}
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsVisitType" parameterType="MtsVisitType" resultType="MtsVisitType">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="VISIT_TYPE_ID != null and VISIT_TYPE_ID != ''">
+			and VISIT_TYPE_ID = #{VISIT_TYPE_ID}
+		</if>
+		<if test="FLAG != null and FLAG != ''">
+			and FLAG = #{FLAG}
+		</if>
+		<if test="DESCRIPTION != null and DESCRIPTION != ''">
+			and DESCRIPTION = #{DESCRIPTION}
+		</if>
+		<if test="REMARK != null and REMARK != ''">
+			and REMARK = #{REMARK}
+		</if>
+		order by OPERATE_TIME desc
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="MtsVisitTypelistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1 = 1 
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 FLAG LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or 
+			 DESCRIPTION LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			 or
+			 REMARK LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			) 
+		</if>
+		order by OPERATE_TIME desc
+	</select>
+</mapper>

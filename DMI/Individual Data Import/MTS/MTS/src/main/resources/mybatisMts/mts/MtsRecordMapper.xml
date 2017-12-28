@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsRecordMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsRecord" id="MtsRecordResultMap">
+		<id column="RECORD_ID" property="RECORD_ID" />
+		<result column="STATUS" property="STATUS" />
+		<result column="RESULT" property="RESULT" />
+		<result column="NLP_RESULT" property="NLP_RESULT" />
+		<result column="VISIT_ID" property="VISIT_ID" />
+		<result column="VISIT_TYPE" property="VISIT_TYPE" />
+		<result column="DATA_SOURCE" property="DATA_SOURCE" />
+		<result column="BATCH_NUM" property="BATCH_NUM" />
+		<result column="DATA_TYPE" property="DATA_TYPE" />
+		<result column="DATA_CLASS" property="DATA_CLASS" />
+		<result column="NLP_ORDER" property="NLP_ORDER" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+		<result column="PARAMETERS" property="PARAMETERS" />
+		<result column="DOUBT_DIAG" property="DOUBT_DIAG" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_RECORD
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		RECORD_ID,	
+		STATUS,	
+		RESULT,
+		NLP_RESULT,
+		VISIT_ID,
+		VISIT_TYPE,
+		DATA_SOURCE,
+		BATCH_NUM,
+		DATA_TYPE,
+		DATA_CLASS,
+		NLP_ORDER,
+		OPERATE_TIME,
+		PARAMETERS,
+		DOUBT_DIAG
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{RECORD_ID},
+		#{STATUS},
+		#{RESULT},
+		#{NLP_RESULT},
+		#{VISIT_ID},
+		#{VISIT_TYPE},
+		#{DATA_SOURCE},
+		#{BATCH_NUM},
+		#{DATA_TYPE},
+		#{DATA_CLASS},
+		#{NLP_ORDER},
+		#{OPERATE_TIME},
+		#{PARAMETERS},
+		#{DOUBT_DIAG}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsRecord" parameterType="MtsRecord">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsRecord" parameterType="MtsRecord">
+		update 
+		<include refid="tableName"></include>
+		set STATUS = #{STATUS},
+		RESULT = #{RESULT},
+		NLP_RESULT = #{NLP_RESULT},
+		VISIT_ID = #{VISIT_ID},
+		VISIT_TYPE = #{VISIT_TYPE},
+		DATA_SOURCE = #{DATA_SOURCE},
+		BATCH_NUM = #{BATCH_NUM},
+		DATA_TYPE = #{DATA_TYPE},
+		DATA_CLASS = #{DATA_CLASS},
+		NLP_ORDER = #{NLP_ORDER},
+		OPERATE_TIME = #{OPERATE_TIME},
+		PARAMETERS = #{PARAMETERS},
+		DOUBT_DIAG = #{DOUBT_DIAG}
+		where RECORD_ID = #{RECORD_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsRecord" parameterType="MtsRecord">
+		delete from 
+		<include refid="tableName"></include>
+		where RECORD_ID=#{RECORD_ID}
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsRecord" parameterType="MtsRecord" resultType="MtsRecord">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="QUESTION_ID != null and QUESTION_ID != ''">
+			and RECORD_ID = #{RECORD_ID}
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			and STATUS = #{STATUS}
+		</if>
+		<if test="RESULT != null and RESULT != ''">
+			and RESULT = #{RESULT}
+		</if>
+		<if test="NLP_RESULT != null and NLP_RESULT != ''">
+			and NLP_RESULT = #{NLP_RESULT}
+		</if>
+		<if test="VISIT_ID != null and VISIT_ID != ''">
+			and VISIT_ID = #{VISIT_ID}
+		</if>
+		<if test="VISIT_TYPE != null and VISIT_TYPE != ''">
+			and VISIT_TYPE = #{VISIT_TYPE}
+		</if>
+		<if test="DATA_SOURCE != null and DATA_SOURCE != ''">
+			and DATA_SOURCE = #{DATA_SOURCE}
+		</if>
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			and BATCH_NUM = #{BATCH_NUM}
+		</if>
+		<if test="DATA_TYPE != null and DATA_TYPE != ''">
+			and DATA_TYPE = #{DATA_TYPE}
+		</if>
+		<if test="DATA_CLASS != null and DATA_CLASS != ''">
+			and DATA_CLASS = #{DATA_CLASS}
+		</if>
+		<if test="NLP_ORDER != null and NLP_ORDER != ''">
+			and NLP_ORDER = #{NLP_ORDER}
+		</if>
+		<if test="OPERATE_TIME != null and OPERATE_TIME != ''">
+			and OPERATE_TIME = #{OPERATE_TIME}
+		</if>
+		<if test="PARAMETERS != null and PARAMETERS != ''">
+			and PARAMETERS = #{PARAMETERS}
+		</if>
+			order by OPERATE_TIME
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsRecordlistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1=1
+		<if test="pd.batchNum != null and pd.batchNum != ''">
+			and BATCH_NUM = #{pd.batchNum}
+		</if>
+		order by OPERATE_TIME
+	</select>
+</mapper>

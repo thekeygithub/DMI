@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsAreaBatchMapper"> 
+	<!--表名 --> 
+	<sql id="tableName"> 
+		MTS_AREA_BATCH
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		AREA_ID,	
+		ID,	
+		BATCH_NO,
+		DEL_FLAG
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{AREA_ID},
+		#{ID},
+		#{BATCH_NO},
+		#{DEL_FLAG}
+	</sql>
+	<!-- 查询ID最大值 -->
+	<select id="maxAreaBatch" resultType="String">
+		SELECT IFNULL(MAX(CONVERT(ID,SIGNED)),0) FROM <include refid="tableName"></include>
+	</select>
+	<!-- 添加 -->
+	<insert id="saveAreaBatch" parameterType="pd">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+		<!-- 获取可添加的标准化类型列表 -->
+	<select id="listBatchNoByArea" resultType="pd" parameterType="String">
+		select BATCH_NO  FROM MTS_AREA_BATCH  WHERE AREA_ID = #{AREA_ID} AND DEL_FLAG = 0 ORDER BY  ID DESC
+	</select>
+	<!-- 按批次删除数据 -->
+	<update id="delBatchData"  parameterType="String">
+	UPDATE 
+		<include refid="tableName"></include>
+		SET DEL_FLAG = 1 WHERE BATCH_NO = #{BATCH_NO} 
+	</update>
+</mapper>

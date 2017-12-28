@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDBDataDetailMapper">
+	
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDBDataDetail" id="MtsDBDataDetailResultMap">
+		<id column="DB_DATA_DETAIL_ID" property="DB_DATA_DETAIL_ID" />
+		<result column="BATCH_NUM" property="BATCH_NUM" />
+		<result column="DIAG_NAME" property="DIAG_NAME" />
+		<result column="STATUS" property="STATUS" />
+		<result column="RESULT" property="RESULT" />
+		<result column="IMPORT_TIME" property="IMPORT_TIME" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+		<result column="MARK" property="MARK" />
+		<result column="NLP_RESULT" property="NLP_RESULT" />
+		<result column="DATA_CLASS_ID" property="DATA_CLASS_ID" />
+		<result column="DB_DATA_ID" property="DB_DATA_ID" />
+		<result column="DOUBT_DIAG" property="DOUBT_DIAG" />
+		<result column="USELESS_DATA" property="USELESS_DATA" />
+		<result column="DEAL_STATUS" property="DEAL_STATUS" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DB_DATA_DETAIL
+	</sql>
+	
+	<sql id="dbDataTableName">
+		MTS_DB_DATA
+	</sql>
+	
+	<sql id="dbDataResultTableName">
+		MTS_DB_DATA_RESULT
+	</sql>
+	
+	<sql id="dataSourceTableName">
+		MTS_DATA_SOURCE
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		DB_DATA_DETAIL_ID,	
+		BATCH_NUM,	
+		DIAG_NAME,
+		STATUS,
+		RESULT,
+		IMPORT_TIME,
+		OPERATE_TIME,
+		MARK,
+		NLP_RESULT,
+		DATA_CLASS_ID,
+		DB_DATA_ID,
+		DOUBT_DIAG,
+		USELESS_DATA,
+		DEAL_STATUS
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DB_DATA_DETAIL_ID},
+		#{BATCH_NUM},
+		#{DIAG_NAME},
+		#{STATUS},
+		#{RESULT},
+		#{IMPORT_TIME},
+		#{OPERATE_TIME},
+		#{MARK},
+		#{NLP_RESULT},
+		#{DATA_CLASS_ID},
+		#{DB_DATA_ID},
+		#{DOUBT_DIAG},
+		#{USELESS_DATA},
+		#{DEAL_STATUS}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDBDataDetail" parameterType="MtsDBDataDetail">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDBDataDetail" parameterType="MtsDBDataDetail">
+		update 
+		<include refid="tableName"></include>
+		set 
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			BATCH_NUM = #{BATCH_NUM},
+		</if>
+		<if test="DIAG_NAME != null and DIAG_NAME != ''">
+			DIAG_NAME = #{DIAG_NAME},
+		</if>
+		<if test="RESULT != null and RESULT != ''">
+			RESULT = #{RESULT},
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			STATUS = #{STATUS},
+		</if>
+		<if test="MARK != null and MARK != ''">
+			MARK = #{MARK},
+		</if>
+		<if test="NLP_RESULT != null and NLP_RESULT != ''">
+			NLP_RESULT = #{NLP_RESULT},
+		</if>
+		<if test="DATA_CLASS_ID != null and DATA_CLASS_ID != ''">
+			DATA_CLASS_ID = #{DATA_CLASS_ID},
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			DB_DATA_ID = #{DB_DATA_ID},
+		</if>
+		<if test="DOUBT_DIAG != null and DOUBT_DIAG != ''">
+			DOUBT_DIAG = #{DOUBT_DIAG},
+		</if>
+		<if test="USELESS_DATA != null and USELESS_DATA != ''">
+			USELESS_DATA = #{USELESS_DATA},
+		</if>
+		<if test="DEAL_STATUS != null and DEAL_STATUS != ''">
+			DEAL_STATUS = #{DEAL_STATUS},
+		</if>
+		OPERATE_TIME = #{OPERATE_TIME}
+		where 1=1
+		<if test="DB_DATA_DETAIL_ID != null and DB_DATA_DETAIL_ID != ''">
+			and DB_DATA_DETAIL_ID = #{DB_DATA_DETAIL_ID}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDBDataDetail" parameterType="MtsDBDataDetail">
+		delete from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DB_DATA_DETAIL_ID != null and DB_DATA_DETAIL_ID != ''">
+			and DB_DATA_DETAIL_ID = #{DB_DATA_DETAIL_ID}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsDBDataDetail" parameterType="MtsDBDataDetail" resultType="MtsDBDataDetail">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			and BATCH_NUM = #{BATCH_NUM}
+		</if>
+		<if test="DIAG_NAME != null and DIAG_NAME != ''">
+			and DIAG_NAME = #{DIAG_NAME}
+		</if>
+		<if test="RESULT != null and RESULT != ''">
+			and RESULT = #{RESULT}
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			and STATUS = #{STATUS}
+		</if>
+		<if test="DB_DATA_DETAIL_ID != null and DB_DATA_DETAIL_ID != ''">
+			and DB_DATA_DETAIL_ID = #{DB_DATA_DETAIL_ID}
+		</if>
+		<if test="MARK != null and MARK != ''">
+			and MARK = #{MARK}
+		</if>
+		<if test="NLP_RESULT != null and NLP_RESULT != ''">
+			and NLP_RESULT = #{NLP_RESULT}
+		</if>
+		<if test="DATA_CLASS_ID != null and DATA_CLASS_ID != ''">
+			and DATA_CLASS_ID = #{DATA_CLASS_ID}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="DOUBT_DIAG != null and DOUBT_DIAG != ''">
+			and DOUBT_DIAG = #{DOUBT_DIAG}
+		</if>
+		<if test="USELESS_DATA != null and USELESS_DATA != ''">
+			and USELESS_DATA = #{USELESS_DATA}
+		</if>
+		<if test="DEAL_STATUS != null and DEAL_STATUS != ''">
+			and DEAL_STATUS = #{DEAL_STATUS}
+		</if>
+		<if test="IMPORT_TIME != null and IMPORT_TIME != ''">
+			and IMPORT_TIME = #{IMPORT_TIME}
+		</if>
+			order by OPERATE_TIME
+	</select>
+	
+	<select id="findMtsDBDataDetailCount" parameterType="MtsDBDataDetail" resultType="Integer">
+		select count(1) 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="DEAL_STATUS != null and DEAL_STATUS != ''">
+			and DEAL_STATUS = #{DEAL_STATUS}
+		</if>
+	</select>
+	
+	<select id="mtsDBDataDetaillistPage" parameterType="page" resultType="pd">
+		select 
+		a.DB_DATA_DETAIL_ID,
+		a.DIAG_NAME,
+		a.USELESS_DATA,
+		c.NLP_RESULT,
+		c.RESULT_1,
+		c.RESULT_2,
+		c.RESULT_3,
+		c.RESULT_4,
+		c.RESULT_5,
+		c.RESULT_6,
+		c.RESULT_7,
+		c.JSONARR,
+		c.STANDARD_RESULT,
+		d.DESCRIPTION,
+		a.OPERATE_TIME,
+		c.NLP_ORDER,
+		b.STATUS
+		from 
+		<include refid="tableName"></include> a 
+		left join <include refid="dbDataTableName"></include> b on a.DB_DATA_ID = b.DB_DATA_ID 
+		left join <include refid="dbDataResultTableName"></include> c on c.DB_DATA_DETAIL_ID = a.DB_DATA_DETAIL_ID 
+		left join <include refid="dataSourceTableName"></include> d on b.DATA_SOURCE_CODE = d.FLAG 
+		WHERE 1 = 1 
+		<if test="pd.DB_DATA_ID != null and pd.DB_DATA_ID != ''">
+			and a.DB_DATA_ID = #{pd.DB_DATA_ID}
+		</if>
+		<if test="pd.BATCH_NUM != null and pd.BATCH_NUM != ''">
+			and a.BATCH_NUM = #{pd.BATCH_NUM}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 a.DIAG_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			) 
+		</if>
+		ORDER BY a.DB_DATA_DETAIL_ID,c.NLP_ORDER
+	</select>
+</mapper>

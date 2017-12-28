@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsCorpusDetailMapper">
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_CORPUS_DETAIL
+	</sql>
+	<sql id="entitytableName">
+		MTS_CORPUS_ENTITY
+	</sql>
+	<sql id="dataTypeTableName">
+		MTS_CORPUS_TYPE
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		TYPE,
+		ORIG_CORPUS,
+		CORPUS_ID,
+		EDIT_DATE,
+		P_ID,
+		P_HTML
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{TYPE},
+		#{ORIG_CORPUS},
+		#{CORPUS_ID},
+		#{EDIT_DATE},
+		#{P_ID},
+		#{P_HTML}
+	</sql>
+	<!-- 添加语料实体 -->
+	<insert id="saveMtsCorpusDetail" parameterType="MtsCorpusDetail"
+		useGeneratedKeys="true" keyProperty="ID">
+		insert into
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 修改语料实体 -->
+	<update id="updateMtsCorpusDetail" parameterType="MtsCorpusDetail">
+		update
+		<include refid="tableName"></include>
+		set
+		EDIT_DATE = #{EDIT_DATE},
+		P_HTML = #{P_HTML}
+		where ID = #{ID}
+	</update>
+
+	<select id="listMtsCorpusDetailByCorpus" parameterType="Integer"
+		resultType="MtsCorpusDetail">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		ce
+		WHERE ce.CORPUS_ID = #{CORPUS_ID}
+	</select>
+
+
+	<select id="listMtsCorpusDetail" resultType="MtsCorpusDetail">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		ce
+	</select>
+
+	<delete id="delMtsCorpusDetail" parameterType="String">
+		DELETE FROM
+		<include refid="tableName"></include>
+		WHERE CORPUS_ID=#{CORPUS_ID}
+	</delete>
+
+	<!-- 查询ID最大值 -->
+	<select id="maxId" resultType="Integer">
+		SELECT IFNULL(MAX(CONVERT(ID,SIGNED)),0) FROM
+		<include refid="tableName"></include>
+	</select>
+
+	<select id="findMtsCorpusDetailById" resultType="MtsCorpusDetail"
+		parameterType="Integer">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		ce
+		WHERE ce.ID = #{ID}
+	</select>
+	
+	<!-- 根据时间或语料 查询可视化列表 -->
+	<select id="mtsCorpusViewlistPage" parameterType="page" resultType="pd">
+				<![CDATA[ 
+				SELECT d.ID,d.ORIG_CORPUS AS P_HTML,d.EDIT_DATE,d.TYPE,
+				GROUP_CONCAT(CONCAT(ENTITY_NAME,'【',ENTITY_TYPE_NAME,'】') SEPARATOR ';' ) as ENTITY_NAME 
+				,GROUP_CONCAT(ENTITY_NAME SEPARATOR '&' ) as ENTITY_NAME2 
+				,GROUP_CONCAT(CONCAT(START_TEXT_OFF,'_',END_TEXT_OFF) SEPARATOR ';' ) as TEXT_OFF
+				,GROUP_CONCAT(CONCAT(ENTITY_TYPE_NAME) SEPARATOR ';' ) as ENTITY_TYPE_NAME
+				FROM MTS_CORPUS_DETAIL d,MTS_CORPUS_ENTITY e
+				WHERE d.ID = e.CORPUS_DETAIL_ID
+				]]>
+				<if test="pd.START_DATE != null and pd.START_DATE != ''">
+						<![CDATA[ 
+							AND d.EDIT_DATE > str_to_date(#{pd.START_DATE}, '%Y-%m-%d %H')
+						]]>
+				</if>
+				<if test="pd.END_DATE != null and pd.END_DATE != ''">
+						<![CDATA[ 
+							AND d.EDIT_DATE <  str_to_date(CONCAT(#{pd.END_DATE},' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+						]]>
+				</if>
+				<if test="pd.TYPE != null and pd.TYPE!= ''">
+						<![CDATA[ 
+							AND d.TYPE  = #{pd.TYPE}
+						]]>
+				</if>
+				GROUP BY d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE
+				ORDER BY d.EDIT_DATE DESC
+	</select>
+
+	<!-- 根据语料模糊查询可视化列表 -->
+	<select id="mtsCorpusDetailViewlistPage" parameterType="page"
+		resultType="pd">
+		<choose>
+			<when test="pd.ORIG_CORPUS != null and pd.ORIG_CORPUS != ''">
+					<![CDATA[ 
+						SELECT T.ID,T.ORIG_CORPUS,T.P_HTML,T.EDIT_DATE,T.TYPE,T.ENTITY_NAME FROM (
+							SELECT d.ID,d.ORIG_CORPUS,
+							CONCAT(left(d.ORIG_CORPUS,(LOCATE(#{pd.ORIG_CORPUS}, d.ORIG_CORPUS)-1)),"<span style='color:red'>",#{pd.ORIG_CORPUS},"</span>",right(d.ORIG_CORPUS,CHAR_LENGTH(d.ORIG_CORPUS) - LOCATE(#{pd.ORIG_CORPUS}, d.ORIG_CORPUS)-CHAR_LENGTH(#{pd.ORIG_CORPUS})+1)) AS P_HTML,
+							d.EDIT_DATE,d.TYPE,
+							GROUP_CONCAT(CONCAT(if(ENTITY_NAME =#{pd.ORIG_CORPUS},"<span style='color:red'>",''),ENTITY_NAME,if(ENTITY_NAME =#{pd.ORIG_CORPUS},"</span>",'')),'【',ENTITY_TYPE_NAME,'】' SEPARATOR ';' ) as ENTITY_NAME 
+							,GROUP_CONCAT(CONCAT(START_TEXT_OFF,'_',END_TEXT_OFF) SEPARATOR ';' ) as TEXT_OFF
+							,GROUP_CONCAT(CONCAT(ENTITY_TYPE_NAME) SEPARATOR ';' ) as ENTITY_TYPE_NAME
+							FROM MTS_CORPUS_DETAIL d,MTS_CORPUS_ENTITY e 
+							WHERE d.ID = e.CORPUS_DETAIL_ID AND d.ORIG_CORPUS LIKE  CONCAT(CONCAT('%', #{pd.ORIG_CORPUS}),'%')
+							GROUP BY d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE
+						) T	
+						WHERE 1=1 
+					]]>
+				<if test="pd.START_DATE != null and pd.START_DATE != ''">
+						<![CDATA[ 
+							AND T.EDIT_DATE > str_to_date(#{pd.START_DATE}, '%Y-%m-%d %H')
+						]]>
+				</if>
+				<if test="pd.END_DATE != null and pd.END_DATE != ''">
+						<![CDATA[ 
+							AND T.EDIT_DATE <  str_to_date(CONCAT(#{pd.END_DATE},' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+						]]>
+				</if>
+				<if test="pd.TYPE != null and pd.TYPE!= ''">
+						<![CDATA[ 
+							AND T.TYPE  = #{pd.TYPE}
+						]]>
+				</if>
+				ORDER BY T.EDIT_DATE DESC
+			</when>
+			<otherwise>SELECT 1 FROM DUAL WHERE 1=2</otherwise>
+		</choose>
+	</select>
+
+
+	<!-- 根据实体精确查询语料可视化列表 -->
+	<select id="mtsCorpusEntityViewlistPage" parameterType="page"
+		resultType="pd">
+		<choose>
+			<when test="pd.ENTITY_NAME != null and pd.ENTITY_NAME != ''">
+			<![CDATA[ 
+				SELECT T.ID,T.ORIG_CORPUS,CONCAT(left(T.ORIG_CORPUS,T.START_TEXT_OFF),"<span style='color:red'>",#{pd.ENTITY_NAME},"</span>",
+						right(T.ORIG_CORPUS,length(T.ORIG_CORPUS)/3-T.END_TEXT_OFF)) AS P_HTML,T.ENTITY_NAME,T.TYPE,T.EDIT_DATE FROM (
+						SELECT d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE,
+						GROUP_CONCAT(CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},"<span style='color:red'>",''),ENTITY_NAME,if(ENTITY_NAME =#{pd.ENTITY_NAME},"</span>",'')),'【',ENTITY_TYPE_NAME,'】' SEPARATOR ';' ) as ENTITY_NAME
+						,GROUP_CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},START_TEXT_OFF,'') SEPARATOR '') AS START_TEXT_OFF
+						,GROUP_CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},END_TEXT_OFF,'') SEPARATOR '') AS END_TEXT_OFF
+						 FROM MTS_CORPUS_DETAIL d,MTS_CORPUS_ENTITY e 
+						WHERE d.ID = e.CORPUS_DETAIL_ID 
+						GROUP BY d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE
+					) T
+					WHERE T.ENTITY_NAME LIKE CONCAT(CONCAT("%<span style='color:red'>",#{pd.ENTITY_NAME}),"</span>%") 
+					]]>
+				<if test="pd.START_DATE != null and pd.START_DATE != ''">
+						<![CDATA[ 
+							AND T.EDIT_DATE > str_to_date(#{pd.START_DATE}, '%Y-%m-%d %H')
+						]]>
+				</if>
+				<if test="pd.END_DATE != null and pd.END_DATE != ''">
+							<![CDATA[ 
+								AND T.EDIT_DATE <  str_to_date(CONCAT(#{pd.END_DATE},' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+							]]>
+				</if>
+				<if test="pd.TYPE != null and pd.TYPE!= ''">
+						<![CDATA[ 
+							AND T.TYPE  = #{pd.TYPE}
+						]]>
+				</if>
+				ORDER BY T.EDIT_DATE DESC
+			</when>
+			<otherwise>SELECT 1 FROM DUAL WHERE 1=2</otherwise>
+		</choose>
+
+	</select>
+	
+	<!--********************导出Excel****************************-->
+	
+	<!-- 根据语料模糊查询可视化列表 -->
+	<select id="mtsCorpusDetailViewlistPageForExcel" parameterType="page"
+		resultType="pd">
+		<choose>
+			<when test="pd.ORIG_CORPUS != null and pd.ORIG_CORPUS != ''">
+					<![CDATA[ 
+						SELECT T.ID,T.ORIG_CORPUS AS P_HTML,T.EDIT_DATE,T.TYPE,T.ENTITY_NAME FROM (
+							SELECT d.ID,d.ORIG_CORPUS,					
+							d.EDIT_DATE,d.TYPE,
+							GROUP_CONCAT(CONCAT(if(ENTITY_NAME =#{pd.ORIG_CORPUS},"<span style='color:red'>",''),ENTITY_NAME,if(ENTITY_NAME =#{pd.ORIG_CORPUS},"</span>",'')),'【',ENTITY_TYPE_NAME,'】' SEPARATOR ';' ) as ENTITY_NAME2,
+							GROUP_CONCAT(CONCAT(if(ENTITY_NAME =#{pd.ORIG_CORPUS},"",''),ENTITY_NAME,if(ENTITY_NAME =#{pd.ORIG_CORPUS},"",'')),'【',ENTITY_TYPE_NAME,'】' SEPARATOR ';' ) as ENTITY_NAME
+							FROM MTS_CORPUS_DETAIL d,MTS_CORPUS_ENTITY e 
+							WHERE d.ID = e.CORPUS_DETAIL_ID AND d.ORIG_CORPUS LIKE  CONCAT(CONCAT('%', #{pd.ORIG_CORPUS}),'%')
+							GROUP BY d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE
+						) T	
+						WHERE 1=1 
+					]]>
+				<if test="pd.START_DATE != null and pd.START_DATE != ''">
+						<![CDATA[ 
+							AND T.EDIT_DATE > str_to_date(#{pd.START_DATE}, '%Y-%m-%d %H')
+						]]>
+				</if>
+				<if test="pd.END_DATE != null and pd.END_DATE != ''">
+						<![CDATA[ 
+							AND T.EDIT_DATE <  str_to_date(CONCAT(#{pd.END_DATE},' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+						]]>
+				</if>
+				<if test="pd.TYPE != null and pd.TYPE!= ''">
+						<![CDATA[ 
+							AND T.TYPE  = #{pd.TYPE}
+						]]>
+				</if>
+				ORDER BY T.EDIT_DATE DESC
+			</when>
+			<otherwise>SELECT 1 FROM DUAL WHERE 1=2</otherwise>
+		</choose>
+	</select>
+
+
+	<!-- 根据实体精确查询语料可视化列表 -->
+	<select id="mtsCorpusEntityViewlistPageForExcel" parameterType="page"
+		resultType="pd">
+		<choose>
+			<when test="pd.ENTITY_NAME != null and pd.ENTITY_NAME != ''">
+			<![CDATA[ 
+				SELECT T.ID,T.ORIG_CORPUS AS P_HTML,T.ENTITY_NAME,T.TYPE,T.EDIT_DATE FROM (
+						SELECT d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE,
+						GROUP_CONCAT(CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},"<span style='color:red'>",''),ENTITY_NAME,if(ENTITY_NAME =#{pd.ENTITY_NAME},"</span>",'')),'【',ENTITY_TYPE_NAME,'】' SEPARATOR ';' ) as ENTITY_NAME2
+						,GROUP_CONCAT(CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},"",''),ENTITY_NAME,if(ENTITY_NAME =#{pd.ENTITY_NAME},"",'')),'【',ENTITY_TYPE_NAME,'】' SEPARATOR ';' ) as ENTITY_NAME
+						,GROUP_CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},START_TEXT_OFF,'') SEPARATOR '') AS START_TEXT_OFF
+						,GROUP_CONCAT(if(ENTITY_NAME =#{pd.ENTITY_NAME},END_TEXT_OFF,'') SEPARATOR '') AS END_TEXT_OFF
+						 FROM MTS_CORPUS_DETAIL d,MTS_CORPUS_ENTITY e 
+						WHERE d.ID = e.CORPUS_DETAIL_ID 
+						GROUP BY d.ID,d.ORIG_CORPUS,d.EDIT_DATE,d.TYPE
+					) T
+					WHERE T.ENTITY_NAME2 LIKE CONCAT(CONCAT("%<span style='color:red'>",#{pd.ENTITY_NAME}),"</span>%") 
+					]]>
+				<if test="pd.START_DATE != null and pd.START_DATE != ''">
+						<![CDATA[ 
+							AND T.EDIT_DATE > str_to_date(#{pd.START_DATE}, '%Y-%m-%d %H')
+						]]>
+				</if>
+				<if test="pd.END_DATE != null and pd.END_DATE != ''">
+							<![CDATA[ 
+								AND T.EDIT_DATE <  str_to_date(CONCAT(#{pd.END_DATE},' 23:59:59'), '%Y-%m-%d %H:%i:%s')
+							]]>
+				</if>
+				<if test="pd.TYPE != null and pd.TYPE!= ''">
+						<![CDATA[ 
+							AND T.TYPE  = #{pd.TYPE}
+						]]>
+				</if>
+				ORDER BY T.EDIT_DATE DESC
+			</when>
+			<otherwise>SELECT 1 FROM DUAL WHERE 1=2</otherwise>
+		</choose>
+
+	</select>
+
+</mapper>

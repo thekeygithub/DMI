@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="SayHelloService">
+	<description>web service</description>
+	<parameter name="ServiceObjectSupplier">
+		org.apache.axis2.extensions.spring.receivers.SpringServletContextObjectSupplier
+	</parameter>
+	<parameter name="SpringBeanName">SayHelloService</parameter>
+	<!-- //SpringBeanName名字是固定的不能改 //SayHelloService是spring中注册的实现类的id（这个大家肯定很清楚了） -->
+	<operation name="sayHello">
+		<messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+	</operation>
+</service>  

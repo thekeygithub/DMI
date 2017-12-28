@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDataRelationMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_CLASS_RELATION
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		RELATION_ID,	
+		DATA_CLASS_ID,	
+		DATA_TYPE_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{RELATION_ID},	
+		#{DATA_CLASS_ID},	
+		#{DATA_TYPE_ID}
+	</sql>
+	
+
+	<!-- 按聚类id查询关系数据 -->
+	<select id="relationCount" parameterType="String" resultType="Integer">
+		SELECT 	count(*) 		 
+		FROM 
+		<include refid="tableName"></include>
+		WHERE DATA_CLASS_ID = #{DATA_CLASS_ID}
+	</select>
+	
+
+
+    <!-- 添加 -->
+	<insert id="addDataRelation" parameterType="page">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		 #{pd.RELATION_ID},#{pd.DATA_CLASS_ID},#{pd.DATA_TYPE_ID}	
+		)
+	</insert>
+	
+	
+	<!-- 查询RELATION_ID最大值 -->
+	<select id="maxDataRelation" resultType="String">
+		SELECT ifnull(MAX(CONVERT(RELATION_ID,SIGNED)),0) FROM MTS_CLASS_RELATION
+	</select>
+	
+
+
+	<!-- 根据标化id删除  -->
+	<delete id="deleteDataRelation" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where DATA_TYPE_ID=#{DATA_TYPE_ID}
+	</delete>
+	
+	<!-- 按标化id查询聚类id -->
+	<select id="relationbytype" parameterType="String" resultType="String">
+		SELECT DATA_CLASS_ID		 
+		FROM 
+		<include refid="tableName"></include>
+		WHERE DATA_TYPE_ID = #{DATA_TYPE_ID}
+	</select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsToolMapper">
+		
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_TOOL
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		TOOL_ID,	
+		TOOL_NAME,	
+		TOOL_PATH
+		COMMENTS
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{TOOLKIT_ID},
+		#{TOOLKIT_NAME},
+		#{TOOL_PATH},
+		#{COMMENTS}
+	</sql>
+	
+</mapper>

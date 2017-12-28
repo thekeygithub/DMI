@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDBDataResultMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDBDataResult" id="MtsDBDataResultResultMap">
+		<id column="DB_DATA_RESULT_ID" property="DB_DATA_RESULT_ID" />
+		<result column="DB_DATA_DETAIL_ID" property="DB_DATA_DETAIL_ID" />
+		<result column="DB_DATA_ID" property="DB_DATA_ID" />
+		<result column="NLP_RESULT" property="NLP_RESULT" />
+		<result column="STANDARD_RESULT" property="STANDARD_RESULT" />
+		<result column="NLP_ORDER" property="NLP_ORDER" />
+		<result column="RESULT_1" property="RESULT_1" />
+		<result column="RESULT_2" property="RESULT_2" />
+		<result column="RESULT_3" property="RESULT_3" />
+		<result column="RESULT_4" property="RESULT_4" />
+		<result column="RESULT_5" property="RESULT_5" />
+		<result column="RESULT_6" property="RESULT_6" />
+		<result column="RESULT_7" property="RESULT_7" />
+		<result column="JSONARR" property="JSONARR" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DB_DATA_RESULT
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		DB_DATA_RESULT_ID,	
+		DB_DATA_DETAIL_ID,	
+		NLP_RESULT,
+		STANDARD_RESULT,
+		RESULT_1,
+		RESULT_2,
+		RESULT_3,
+		RESULT_4,
+		RESULT_5,
+		RESULT_6,
+		RESULT_7,
+		DB_DATA_ID,
+		NLP_ORDER,
+		JSONARR
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DB_DATA_RESULT_ID},
+		#{DB_DATA_DETAIL_ID},
+		#{NLP_RESULT},
+		#{STANDARD_RESULT},
+		#{RESULT_1},
+		#{RESULT_2},
+		#{RESULT_3},
+		#{RESULT_4},
+		#{RESULT_5},
+		#{RESULT_6},
+		#{RESULT_7},
+		#{DB_DATA_ID},
+		#{NLP_ORDER},
+		#{JSONARR}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDBDataResult" parameterType="MtsDBDataResult">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDBDataResult" parameterType="MtsDBDataResult">
+		update 
+		<include refid="tableName"></include>
+		set DB_DATA_DETAIL_ID = #{DB_DATA_DETAIL_ID},
+		NLP_RESULT = #{NLP_RESULT},
+		STANDARD_RESULT = #{STANDARD_RESULT},
+		RESULT_1 = #{RESULT_1},
+		RESULT_2 = #{RESULT_2},
+		RESULT_3 = #{RESULT_3},
+		RESULT_4 = #{RESULT_4},
+		RESULT_5 = #{RESULT_5},
+		RESULT_6 = #{RESULT_6},
+		DB_DATA_ID = #{DB_DATA_ID},
+		NLP_ORDER = #{NLP_ORDER},
+		JSONARR = #{JSONARR}
+		where DB_DATA_RESULT_ID = #{DB_DATA_RESULT_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDBDataResult" parameterType="MtsDBDataResult">
+		delete from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DB_DATA_DETAIL_ID != null and DB_DATA_DETAIL_ID != ''">
+			and DB_DATA_DETAIL_ID = #{DB_DATA_DETAIL_ID}
+		</if>
+		<if test="DB_DATA_RESULT_ID != null and DB_DATA_RESULT_ID != ''">
+			and DB_DATA_RESULT_ID = #{DB_DATA_RESULT_ID}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsDBDataResult" parameterType="MtsDBDataResult" resultType="MtsDBDataResult">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DB_DATA_DETAIL_ID != null and DB_DATA_DETAIL_ID != ''">
+			and DB_DATA_DETAIL_ID = #{DB_DATA_DETAIL_ID}
+		</if>
+		<if test="NLP_RESULT != null and NLP_RESULT != ''">
+			and NLP_RESULT = #{NLP_RESULT}
+		</if>
+		<if test="STANDARD_RESULT != null and STANDARD_RESULT != ''">
+			and STANDARD_RESULT = #{STANDARD_RESULT}
+		</if>
+		<if test="DB_DATA_RESULT_ID != null and DB_DATA_RESULT_ID != ''">
+			and DB_DATA_RESULT_ID = #{DB_DATA_RESULT_ID}
+		</if>
+		<if test="RESULT_1 != null and RESULT_1 != ''">
+			and RESULT_1 = #{RESULT_1}
+		</if>
+		<if test="RESULT_2 != null and RESULT_2 != ''">
+			and RESULT_2 = #{RESULT_2}
+		</if>
+		<if test="RESULT_3 != null and RESULT_3 != ''">
+			and RESULT_3 = #{RESULT_3}
+		</if>
+		<if test="RESULT_4 != null and RESULT_4 != ''">
+			and RESULT_4 = #{RESULT_4}
+		</if>
+		<if test="RESULT_5 != null and RESULT_5 != ''">
+			and RESULT_5 = #{RESULT_5}
+		</if>
+		<if test="RESULT_6 != null and RESULT_6 != ''">
+			and RESULT_6 = #{RESULT_6}
+		</if>
+		<if test="NLP_ORDER != null and NLP_ORDER != ''">
+			and NLP_ORDER = #{NLP_ORDER}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="JSONARR != null and JSONARR != ''">
+			and JSONARR = #{JSONARR}
+		</if>
+			order by NLP_ORDER
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsMtsDBDataResultlistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		order by NLP_ORDER
+	</select>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsRecordParametersMapper">
+	<!-- 结果集 -->
+	<resultMap type="MtsRecordParameters" id="MtsRecordParametersResultMap">
+		<id column="RECORD_PARAMETERS_ID" property="RECORD_PARAMETERS_ID" />
+		<result column="RECORD_INFO_ID" property="RECORD_INFO_ID" />
+		<result column="PARAMETERS_CONTENT" property="PARAMETERS_CONTENT" />
+		<result column="PARAMETERS_TYPE" property="PARAMETERS_TYPE" />
+		<result column="PARAMETERS_ORDER" property="PARAMETERS_ORDER" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_RECORD_PARAMETERS
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		RECORD_PARAMETERS_ID,	
+		RECORD_INFO_ID,	
+		PARAMETERS_CONTENT,
+		PARAMETERS_TYPE,
+		PARAMETERS_ORDER
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{RECORD_PARAMETERS_ID},
+		#{RECORD_INFO_ID},
+		#{PARAMETERS_CONTENT},
+		#{PARAMETERS_TYPE},
+		#{PARAMETERS_ORDER}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsRecordParameters" parameterType="MtsRecordParameters">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsRecordParameters" parameterType="MtsRecordParameters">
+		update 
+		<include refid="tableName"></include>
+		set RECORD_INFO_ID = #{RECORD_INFO_ID},
+		PARAMETERS_CONTENT = #{PARAMETERS_CONTENT},
+		PARAMETERS_TYPE = #{PARAMETERS_TYPE},
+		PARAMETERS_ORDER = #{PARAMETERS_ORDER}
+		where RECORD_PARAMETERS_ID = #{RECORD_PARAMETERS_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsRecordParameters" parameterType="MtsRecordParameters">
+		delete from 
+		<include refid="tableName"></include>
+		where RECORD_PARAMETERS_ID=#{RECORD_PARAMETERS_ID}
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsRecordParameters" parameterType="MtsRecordParameters" resultType="MtsRecordParameters">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="RECORD_PARAMETERS_ID != null and RECORD_PARAMETERS_ID != ''">
+			and RECORD_PARAMETERS_ID = #{RECORD_PARAMETERS_ID}
+		</if>
+		<if test="RECORD_INFO_ID != null and RECORD_INFO_ID != ''">
+			and RECORD_INFO_ID = #{RECORD_INFO_ID}
+		</if>
+		<if test="PARAMETERS_CONTENT != null and PARAMETERS_CONTENT != ''">
+			and PARAMETERS_CONTENT = #{PARAMETERS_CONTENT}
+		</if>
+		<if test="PARAMETERS_TYPE != null and PARAMETERS_TYPE != ''">
+			and PARAMETERS_TYPE = #{PARAMETERS_TYPE}
+		</if>
+		<if test="PARAMETERS_ORDER != null and PARAMETERS_ORDER != ''">
+			and PARAMETERS_ORDER = #{PARAMETERS_ORDER}
+		</if>
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsRecordParameterslistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1=1
+		<if test="pd.recordInfoId != null and pd.recordInfoId != ''">
+			and RECORD_INFO_ID = #{pd.recordInfoId}
+		</if>
+	</select>
+</mapper>

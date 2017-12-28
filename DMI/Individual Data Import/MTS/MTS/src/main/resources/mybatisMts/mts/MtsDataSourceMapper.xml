@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDataSourceMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDataSource" id="MtsDataSourceResultMap">
+		<id column="DATA_SOURCE_ID" property="DATA_SOURCE_ID" />
+		<result column="FLAG" property="FLAG" />
+		<result column="DESCRIPTION" property="DESCRIPTION" />
+		<result column="REMARK" property="REMARK" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DATA_SOURCE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_SOURCE_ID,	
+		FLAG,	
+		DESCRIPTION,
+		REMARK,
+		OPERATE_TIME
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_SOURCE_ID},
+		#{FLAG},
+		#{DESCRIPTION},
+		#{REMARK},
+		#{OPERATE_TIME}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDataSource" parameterType="MtsDataSource">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDataSource" parameterType="MtsDataSource">
+		update 
+		<include refid="tableName"></include>
+		set FLAG = #{FLAG},
+		DESCRIPTION = #{DESCRIPTION},
+		REMARK = #{REMARK},
+		OPERATE_TIME = #{OPERATE_TIME}
+		where DATA_SOURCE_ID = #{DATA_SOURCE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDataSource" parameterType="MtsDataSource">
+		delete from 
+		<include refid="tableName"></include>
+		where DATA_SOURCE_ID=#{DATA_SOURCE_ID}
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsDataSource" parameterType="MtsDataSource" resultType="MtsDataSource">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DATA_SOURCE_ID != null and DATA_SOURCE_ID != ''">
+			and DATA_SOURCE_ID = #{DATA_SOURCE_ID}
+		</if>
+		<if test="FLAG != null and FLAG != ''">
+			and FLAG = #{FLAG}
+		</if>
+		<if test="DESCRIPTION != null and DESCRIPTION != ''">
+			and DESCRIPTION = #{DESCRIPTION}
+		</if>
+		<if test="REMARK != null and REMARK != ''">
+			and REMARK = #{REMARK}
+		</if>
+		order by OPERATE_TIME desc
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDataSourcelistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1 = 1 
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 FLAG LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or 
+			 DESCRIPTION LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			 or
+			 REMARK LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			) 
+		</if>
+		order by OPERATE_TIME desc
+	</select>
+</mapper>

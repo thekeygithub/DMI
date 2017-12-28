@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsRecordInfoMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsRecordInfo" id="MtsRecordInfoResultMap">
+		<id column="RECORD_INFO_ID" property="RECORD_INFO_ID" />
+		<result column="INFO_TYPE" property="INFO_TYPE" />
+		<result column="INFO_STATUS" property="INFO_STATUS" />
+		<result column="DATA_CLASS" property="DATA_CLASS" />
+		<result column="BATCH_NUM" property="BATCH_NUM" />
+		<result column="DATA_SOURCE" property="DATA_SOURCE" />
+		<result column="BUSINESS_NUM" property="BUSINESS_NUM" />
+		<result column="BUSINESS_TYPE" property="BUSINESS_TYPE" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+		<result column="STANDARD_TYPE" property="STANDARD_TYPE" />
+		<result column="DB_DATA_ID" property="DB_DATA_ID" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_RECORD_INFO
+	</sql>
+	
+	<sql id="dbDataTableName">
+		MTS_DB_DATA
+	</sql>
+	
+	<sql id="dataSourceTableName">
+		MTS_DATA_SOURCE
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		RECORD_INFO_ID,
+		INFO_TYPE,
+		INFO_STATUS,
+		DATA_CLASS,
+		BATCH_NUM,
+		DATA_SOURCE,
+		BUSINESS_NUM,
+		BUSINESS_TYPE,
+		OPERATE_TIME,
+		STANDARD_TYPE,
+		DB_DATA_ID,
+		IMPORT_NAME
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{RECORD_INFO_ID},
+		#{INFO_TYPE},
+		#{INFO_STATUS},
+		#{DATA_CLASS},
+		#{BATCH_NUM},
+		#{DATA_SOURCE},
+		#{BUSINESS_NUM},
+		#{BUSINESS_TYPE},
+		#{OPERATE_TIME},
+		#{STANDARD_TYPE},
+		#{DB_DATA_ID},
+		#{IMPORT_NAME}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsRecordInfo" parameterType="MtsRecordInfo">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsRecordInfo" parameterType="MtsRecordInfo">
+		update 
+		<include refid="tableName"></include>
+		set 
+		<if test="INFO_TYPE != null and INFO_TYPE != ''">
+			INFO_TYPE = #{INFO_TYPE},
+		</if>
+		<if test="INFO_STATUS != null and INFO_STATUS != ''">
+			INFO_STATUS = #{INFO_STATUS},
+		</if>
+		<if test="DATA_CLASS != null and DATA_CLASS != ''">
+			DATA_CLASS = #{DATA_CLASS},
+		</if>
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			BATCH_NUM = #{BATCH_NUM},
+		</if>
+		<if test="DATA_SOURCE != null and DATA_SOURCE != ''">
+			DATA_SOURCE = #{DATA_SOURCE},
+		</if>
+		<if test="BUSINESS_NUM != null and BUSINESS_NUM != ''">
+			BUSINESS_NUM = #{BUSINESS_NUM},
+		</if>
+		<if test="BUSINESS_TYPE != null and BUSINESS_TYPE != ''">
+			BUSINESS_TYPE = #{BUSINESS_TYPE},
+		</if>
+		<if test="STANDARD_TYPE != null and STANDARD_TYPE != ''">
+			STANDARD_TYPE = #{STANDARD_TYPE},
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			DB_DATA_ID = #{DB_DATA_ID},
+		</if>
+		<if test="IMPORT_NAME != null and IMPORT_NAME != ''">
+			IMPORT_NAME = #{IMPORT_NAME},
+		</if>
+		OPERATE_TIME = #{OPERATE_TIME} 
+		where RECORD_INFO_ID = #{RECORD_INFO_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsRecordInfo" parameterType="MtsRecordInfo">
+		delete from 
+		<include refid="tableName"></include>
+		where RECORD_INFO_ID=#{RECORD_INFO_ID}
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsRecordInfo" parameterType="MtsRecordInfo" resultType="MtsRecordInfo">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="RECORD_INFO_ID != null and RECORD_INFO_ID != ''">
+			and RECORD_INFO_ID = #{RECORD_INFO_ID}
+		</if>
+		<if test="INFO_TYPE != null and INFO_TYPE != ''">
+			and INFO_TYPE = #{INFO_TYPE}
+		</if>
+		<if test="INFO_STATUS != null and INFO_STATUS != ''">
+			and INFO_STATUS = #{INFO_STATUS}
+		</if>
+		<if test="DATA_CLASS != null and DATA_CLASS != ''">
+			and DATA_CLASS = #{DATA_CLASS}
+		</if>
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			and BATCH_NUM = #{BATCH_NUM}
+		</if>
+		<if test="DATA_SOURCE != null and DATA_SOURCE != ''">
+			and DATA_SOURCE = #{DATA_SOURCE}
+		</if>
+		<if test="BUSINESS_NUM != null and BUSINESS_NUM != ''">
+			and BUSINESS_NUM = #{BUSINESS_NUM}
+		</if>
+		<if test="BUSINESS_TYPE != null and BUSINESS_TYPE != ''">
+			and BUSINESS_TYPE = #{BUSINESS_TYPE}
+		</if>
+		<if test="OPERATE_TIME != null and OPERATE_TIME != ''">
+			and OPERATE_TIME = #{OPERATE_TIME}
+		</if>
+		<if test="STANDARD_TYPE != null and STANDARD_TYPE != ''">
+			and STANDARD_TYPE = #{STANDARD_TYPE}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="IMPORT_NAME != null and IMPORT_NAME != ''">
+			and IMPORT_NAME = #{IMPORT_NAME}
+		</if>
+			order by OPERATE_TIME
+	</select>
+	
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsRecordInfoByMark" parameterType="RecordInfoVO" resultType="MtsRecordInfo">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		and DB_DATA_ID = #{DB_DATA_ID}
+		order by OPERATE_TIME limit #{beginNum},#{endNum}
+	</select>
+	
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsRecordInfolistPage" parameterType="page" resultType="pd">
+		SELECT 
+			a.`RECORD_INFO_ID`,
+			a.`INFO_TYPE`,
+			a.`INFO_STATUS`,
+			a.`DATA_CLASS`,
+			a.`BATCH_NUM`,
+			a.`DATA_SOURCE`,
+			a.`BUSINESS_NUM`,
+			a.`BUSINESS_TYPE`,
+			a.`OPERATE_TIME`,
+			a.`STANDARD_TYPE`,
+			a.`IMPORT_NAME`
+		FROM <include refid="tableName"></include> a 
+		LEFT JOIN <include refid="dbDataTableName"></include> b ON a.`DB_DATA_ID` = b.`DB_DATA_ID` 
+		WHERE a.DB_DATA_ID = #{pd.DB_DATA_ID} AND b.`DB_DATA_TYPE` = #{pd.DB_DATA_TYPE} AND a.`BATCH_NUM` = #{pd.BATCH_NUM} 
+		<!-- AND a.INFO_STATUS = '1' -->
+		ORDER BY a.`RECORD_INFO_ID` DESC
+	</select>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsRecordInfoCount" parameterType="MtsRecordInfo" resultType="Integer">
+		select count(1) 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="RECORD_INFO_ID != null and RECORD_INFO_ID != ''">
+			and RECORD_INFO_ID = #{RECORD_INFO_ID}
+		</if>
+		<if test="INFO_TYPE != null and INFO_TYPE != ''">
+			and INFO_TYPE = #{INFO_TYPE}
+		</if>
+		<if test="INFO_STATUS != null and INFO_STATUS != ''">
+			and INFO_STATUS = #{INFO_STATUS}
+		</if>
+		<if test="DATA_CLASS != null and DATA_CLASS != ''">
+			and DATA_CLASS = #{DATA_CLASS}
+		</if>
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			and BATCH_NUM = #{BATCH_NUM}
+		</if>
+		<if test="DATA_SOURCE != null and DATA_SOURCE != ''">
+			and DATA_SOURCE = #{DATA_SOURCE}
+		</if>
+		<if test="BUSINESS_NUM != null and BUSINESS_NUM != ''">
+			and BUSINESS_NUM = #{BUSINESS_NUM}
+		</if>
+		<if test="BUSINESS_TYPE != null and BUSINESS_TYPE != ''">
+			and BUSINESS_TYPE = #{BUSINESS_TYPE}
+		</if>
+		<if test="OPERATE_TIME != null and OPERATE_TIME != ''">
+			and OPERATE_TIME = #{OPERATE_TIME}
+		</if>
+		<if test="STANDARD_TYPE != null and STANDARD_TYPE != ''">
+			and STANDARD_TYPE = #{STANDARD_TYPE}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="IMPORT_NAME != null and IMPORT_NAME != ''">
+			and IMPORT_NAME = #{IMPORT_NAME}
+		</if>
+			order by OPERATE_TIME
+	</select>
+
+</mapper>

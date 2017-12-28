@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDBDataUnstructuredDetailMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDBDataUnstructuredDetail" id="MtsDBDataUnstructuredDetailResultMap">
+		<id column="DATA_UNSTRUCTURED_DETAIL_ID" property="DATA_UNSTRUCTURED_DETAIL_ID" />
+		<result column="DATA_UNSTRUCTURED_ID" property="DATA_UNSTRUCTURED_ID" />
+		<result column="PROPERTY_NAME" property="PROPERTY_NAME" />
+		<result column="PROPERTY_ID" property="PROPERTY_ID" />
+		<result column="PROPERTY_CONTENT" property="PROPERTY_CONTENT" />
+		<result column="ORDER_NUM" property="ORDER_NUM" />
+		<result column="DATA_UNSTRUCTURED_RELEVANCE_ID" property="DATA_UNSTRUCTURED_RELEVANCE_ID" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DB_DATA_UNSTRUCTURED_DETAIL
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_UNSTRUCTURED_DETAIL_ID,	
+		DATA_UNSTRUCTURED_ID,	
+		PROPERTY_NAME,
+		PROPERTY_ID,
+		PROPERTY_CONTENT,
+		ORDER_NUM,
+		DATA_UNSTRUCTURED_RELEVANCE_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_UNSTRUCTURED_DETAIL_ID},
+		#{DATA_UNSTRUCTURED_ID},
+		#{PROPERTY_NAME},
+		#{PROPERTY_ID},
+		#{PROPERTY_CONTENT},
+		#{ORDER_NUM},
+		#{DATA_UNSTRUCTURED_RELEVANCE_ID}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDBDataUnstructuredDetail" parameterType="MtsDBDataUnstructuredDetail">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDBDataUnstructuredDetail" parameterType="MtsDBDataUnstructuredDetail">
+		update 
+		<include refid="tableName"></include>
+		set DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID},
+		PROPERTY_NAME = #{PROPERTY_NAME},
+		PROPERTY_ID = #{PROPERTY_ID},
+		PROPERTY_CONTENT = #{PROPERTY_CONTENT},
+		ORDER_NUM = #{ORDER_NUM},
+		DATA_UNSTRUCTURED_RELEVANCE_ID = #{DATA_UNSTRUCTURED_RELEVANCE_ID}
+		where DATA_UNSTRUCTURED_DETAIL_ID = #{DATA_UNSTRUCTURED_DETAIL_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDBDataUnstructuredDetail" parameterType="MtsDBDataUnstructuredDetail">
+		delete from 
+		<include refid="tableName"></include> 
+		where 1=1 
+		<if test="DATA_UNSTRUCTURED_ID != null and DATA_UNSTRUCTURED_ID != ''">
+			and DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_DETAIL_ID != null and DATA_UNSTRUCTURED_DETAIL_ID != ''">
+			and DATA_UNSTRUCTURED_DETAIL_ID = #{DATA_UNSTRUCTURED_DETAIL_ID}
+		</if>
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsDBDataUnstructuredDetail" parameterType="MtsDBDataUnstructuredDetail" resultType="MtsDBDataUnstructuredDetail">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DATA_UNSTRUCTURED_DETAIL_ID != null and DATA_UNSTRUCTURED_DETAIL_ID != ''">
+			and DATA_UNSTRUCTURED_DETAIL_ID = #{DATA_UNSTRUCTURED_DETAIL_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_ID != null and DATA_UNSTRUCTURED_ID != ''">
+			and DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID}
+		</if>
+		<if test="PROPERTY_NAME != null and PROPERTY_NAME != ''">
+			and PROPERTY_NAME = #{PROPERTY_NAME}
+		</if>
+		<if test="PROPERTY_ID != null and PROPERTY_ID != ''">
+			and PROPERTY_ID = #{PROPERTY_ID}
+		</if>
+		<if test="PROPERTY_CONTENT != null and PROPERTY_CONTENT != ''">
+			and PROPERTY_CONTENT = #{PROPERTY_CONTENT}
+		</if>
+		<if test="ORDER_NUM != null and ORDER_NUM != ''">
+			and ORDER_NUM = #{ORDER_NUM}
+		</if>
+		<if test="DATA_UNSTRUCTURED_RELEVANCE_ID != null and DATA_UNSTRUCTURED_RELEVANCE_ID != ''">
+			and DATA_UNSTRUCTURED_RELEVANCE_ID = #{DATA_UNSTRUCTURED_RELEVANCE_ID}
+		</if>
+		order by ORDER_NUM 
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDBDataUnstructuredDetaillistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1 = 1 
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 PROPERTY_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or 
+			 PROPERTY_CONTENT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			) 
+		</if>
+		order by ORDER_NUM desc
+	</select>
+</mapper>

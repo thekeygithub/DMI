@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsConfigRecordMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_CONFIG_RECORD
+	</sql>
+	
+	
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		RECORD_ID,
+		T_ID,
+		NLP_SNAME,
+		NLP_SVAL,
+		NLP_STYPE,
+		NLP_ORDER,
+		RES_ORDER,
+		NLP_VNAME,
+		NLP_VCODE1,
+		NLP_VCODE2,
+		NLP_VTYPE,
+		SPEC_TYPE,
+		NLP_STATUS
+
+
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		
+		#{RECORD_ID},
+		#{T_ID},
+		#{NLP_SNAME},
+		#{NLP_SVAL},
+		#{NLP_STYPE},
+		#{NLP_ORDER},
+		#{RES_ORDER},		
+		#{NLP_VNAME},
+		#{NLP_VCODE1},
+		#{NLP_VCODE2},
+		#{NLP_VTYPE},
+		#{SPEC_TYPE},
+		#{NLP_STATUS}
+	</sql>
+	
+	
+	<!-- 添加标化结果详细 -->
+	<insert id="addConfigRecord" parameterType="MtsConfigRecord">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>	
+	
+	
+	<!-- 查询mts_config表 -->
+	<select id="findMtsConfig" parameterType="page" resultType="pd">
+	
+		SELECT a.PT_ID,a.PT_NAME,a.STAU,a.CRE_DATE,b.AREA_NAME,b.AREA_CODE,d.DATA_CLASS_CODE,d.DATA_CLASS_NAME,c.DESCRIPTION 
+		FROM MTS_CONFIG a,MTS_AREA b,MTS_DATA_SOURCE c,MTS_DATA_CLASS d
+		WHERE a.AREA_CODE=b.AREA_CODE and a.SOURCE_FLAG=c.FLAG	
+		AND a.CLASS_CODE=d.DATA_CLASS_CODE		
+		<if test="pd.FLAG != null and pd.FLAG != ''">
+			and c.FLAG = #{pd.FLAG}
+		</if>
+	</select>
+	
+	<!-- 查询字段表-->
+	<select id="findConfigTitle" parameterType="page" resultType="pd">
+	
+		SELECT TITEL_EN,TITEL_NAME FROM MTS_CONFIG_TITLE 
+		WHERE 1=1 
+		<if test="pd.AREA_CODE != null and pd.AREA_CODE != ''">
+			and AREA_CODE = #{pd.AREA_CODE}
+		</if>
+		<if test="pd.CLASS_CODE != null and pd.CLASS_CODE != ''">
+			and CLASS_CODE = #{pd.CLASS_CODE}
+		</if>
+		<if test="pd.RECORD_TYPE != null and pd.RECORD_TYPE != ''">
+			and RECORD_TYPE = #{pd.RECORD_TYPE}
+		</if>		
+		order by TITLE_ORDER;	
+
+	</select>
+	
+	<!-- 查询nlp结果表-->
+	<select id="findConfigRecord" parameterType="INTEGER" resultType="pd">
+		SELECT distinct a.NLP_SNAME,a.NLP_ORDER
+        FROM MTS_CONFIG_RECORD  a  		 
+		WHERE  a.T_ID = #{T_ID}		
+		order by a.NLP_ORDER		
+	</select>
+	
+	
+	<!-- 查询单条匹配原始词-->
+	<select id="findConfigDetail" parameterType="INTEGER" resultType="String">
+		SELECT  b.SOURCEDATA
+		FROM MTS_CONFIG_DETAIL b 
+		WHERE b.T_ID = #{T_ID}		
+	</select>
+	
+	<!-- 查询术语类型-->
+	<select id="findTermType"  resultType="pd">
+		SELECT TERM_CN_NAME FROM MTS_TERM_TYPE 
+	</select>
+	
+	<!-- 查询数据源-->
+	<select id="findDataSource"  resultType="pd">
+		SELECT FLAG,DESCRIPTION FROM MTS_DATA_SOURCE  
+	</select>
+	
+	
+	<!-- 查询自动标化管理页数据-->
+	<select id="findZDRecordlistPage" parameterType="page" resultType="pd">
+		
+		SELECT d.SOURCETEXT,d.SOURCEDATA,d.NLP_SNAME,d.WSXY_NAME,d.WSXY_CODE12,d.XY_NAME,d.XY_CODE12	
+		,d.WSZY_NAME,d.WSZY_CODE1
+		,d.ZY_NAME,d.ZY_CODE1	
+		,d.WSSS_NAME,d.WSSS_CODE1
+		,d.SS_NAME,d.SS_CODE1
+		,d.WFBH_NAME,d.SPEC_TYPE as SPEC,d.DOUB,d.T_ID,d.NLP_STATUS,d.NLP_ORDER
+    	FROM(
+    	SELECT a.SOURCETEXT,a.SOURCEDATA,a.T_ID,a.NLP_SNAME,a.NLP_ORDER,a.NLP_STATUS,
+		GROUP_CONCAT(a.XY_NAME) XY_NAME,GROUP_CONCAT(a.XY_CODE12)	XY_CODE12
+		,GROUP_CONCAT(a.WSXY_NAME) WSXY_NAME,GROUP_CONCAT(a.WSXY_CODE12) WSXY_CODE12,a.WFBH_NAME
+		,GROUP_CONCAT(a.ZY_NAME) ZY_NAME,GROUP_CONCAT(a.ZY_CODE1)	ZY_CODE1	
+		,GROUP_CONCAT(a.WSZY_NAME) WSZY_NAME,GROUP_CONCAT(a.WSZY_CODE1) WSZY_CODE1
+		,GROUP_CONCAT(a.SS_NAME) SS_NAME,GROUP_CONCAT(a.SS_CODE1)	SS_CODE1	
+		,GROUP_CONCAT(a.WSSS_NAME) WSSS_NAME,GROUP_CONCAT(a.WSSS_CODE1) WSSS_CODE1
+	    ,CASE a.SPEC_TYPE
+	    WHEN '1' THEN '是'
+	    ELSE '' END SPEC_TYPE
+	    ,a.DOUB   
+		from ( 
+		SELECT tt.SOURCETEXT,tt.SOURCEDATA,tt.T_ID,tt.NLP_SNAME,tt.NLP_ORDER,tt.NLP_STATUS,tt.SPEC_TYPE,tt.RES_ORDER,
+		tt.DOUB,tt.WSXY_NAME,
+		CASE 
+    	WHEN tt.WSXY_CODE1=''  THEN tt.WSXY_CODE2
+		WHEN tt.WSXY_CODE1 is null  THEN tt.WSXY_CODE2
+	    ELSE 
+	    CASE 
+	    WHEN tt.WSXY_CODE2='' THEN tt.WSXY_CODE1
+	    WHEN tt.WSXY_CODE2 is null THEN tt.WSXY_CODE1
+	    ELSE CONCAT(tt.WSXY_CODE1,';',tt.WSXY_CODE2) END
+	    END WSXY_CODE12,
+		tt.XY_NAME,
+		CASE 
+   		WHEN tt.XY_CODE1=''  THEN tt.XY_CODE2
+		WHEN tt.XY_CODE1 is null  THEN tt.XY_CODE2
+	    ELSE 
+	    CASE 
+	    WHEN tt.XY_CODE2='' THEN tt.XY_CODE1
+	    WHEN tt.XY_CODE2 is null THEN tt.XY_CODE1
+	    ELSE CONCAT(tt.XY_CODE1,';',tt.XY_CODE2) END
+	    END XY_CODE12,
+		tt.SS_NAME,tt.SS_CODE1,
+		tt.WSSS_NAME,tt.WSSS_CODE1,
+		tt.ZY_NAME,tt.ZY_CODE1,
+		tt.WSZY_NAME,tt.WSZY_CODE1,tt.WFBH_NAME
+		FROM(
+		SELECT t2.SOURCETEXT,t2.SOURCEDATA,t1.T_ID,t1.NLP_SNAME,t1.NLP_ORDER,	
+		t1.SPEC_TYPE,
+    	t1.RES_ORDER,
+		CASE t2.DOUB
+		WHEN '1' THEN '是'
+		ELSE '' END as DOUB,
+		CASE t1.NLP_VTYPE
+		WHEN '诊断' 
+		THEN  t1.NLP_VNAME  END as XY_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '诊断' 
+		THEN t1.NLP_VCODE1 END as XY_CODE1,
+		CASE t1.NLP_VTYPE
+		WHEN '诊断' 
+		THEN t1.NLP_VCODE2 END as XY_CODE2,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部西医' 
+		THEN  t1.NLP_VNAME  END as WSXY_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部西医' 
+		THEN t1.NLP_VCODE1 END as WSXY_CODE1,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部西医' 
+		THEN t1.NLP_VCODE2 END as WSXY_CODE2,
+		CASE t1.NLP_VTYPE
+		WHEN '中医' 
+		THEN t1.NLP_VNAME END as ZY_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '中医' 
+		THEN t1.NLP_VCODE1 END as ZY_CODE1,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部中医' 
+		THEN t1.NLP_VNAME END as WSZY_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部中医' 
+		THEN t1.NLP_VCODE1 END as WSZY_CODE1,
+		CASE t1.NLP_VTYPE
+		WHEN '手术' 
+		THEN t1.NLP_VNAME END as SS_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '手术' 
+		THEN t1.NLP_VCODE1 END as SS_CODE1,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部手术' 
+		THEN t1.NLP_VNAME END as WSSS_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '卫生部手术' 
+		THEN t1.NLP_VCODE1 END as WSSS_CODE1,	
+		CASE t1.NLP_VTYPE
+		WHEN '无法标化' 
+		THEN t1.NLP_VNAME  END as WFBH_NAME,
+		CASE t1.NLP_VTYPE
+		WHEN '无法标化'  THEN '2'
+		ELSE t1.NLP_STATUS  END as NLP_STATUS        
+		
+		FROM MTS_CONFIG_RECORD t1,  MTS_CONFIG_DETAIL  t2
+		WHERE 	t1.T_ID=t2.T_ID and t1.NLP_VTYPE !='无法拆分'
+		<if test="pd.PT_ID != null and pd.PT_ID != ''">
+			and t2.PT_ID=#{pd.PT_ID}
+		</if>
+		<if test="pd.TYPE != null and pd.TYPE != ''">
+			and t2.TYPE=#{pd.TYPE}
+		</if>  
+		<if test="pd.NLP_STATUS != null and pd.NLP_STATUS != ''">
+			and t1.NLP_STATUS = #{pd.NLP_STATUS}
+		</if>
+		<if test="pd.WFBH != null and pd.WFBH != ''">
+			and t1.NLP_VNAME = #{pd.WFBH}
+		</if>
+		<if test="pd.SNAME != null and pd.SNAME != ''">
+			and t2.SOURCEDATA LIKE CONCAT(CONCAT('%', #{pd.SNAME}),'%')
+		</if>
+		)tt        
+		) a   
+		GROUP BY a.SOURCETEXT,a.SOURCEDATA,a.T_ID,a.NLP_SNAME,a.NLP_ORDER,a.RES_ORDER,a.NLP_STATUS,a.SPEC_TYPE,a.DOUB) d		
+		<if test="pd.TITEL_EN != null and pd.TITEL_EN != '' and pd.TITEL_EN != 'SOURCETEXT' and pd.TITEL_EN != 'SOURCEDATA'">			 
+			ORDER BY case when ifnull(${pd.TITEL_EN},'')='' then 0 else 1 end desc, ${pd.TITEL_EN} asc
+		</if>
+		<if test="pd.TITEL_EN == null or pd.TITEL_EN == '' or pd.TITEL_EN == 'SOURCETEXT'">		
+			ORDER BY d.SOURCETEXT+0,d.NLP_ORDER
+		</if>
+		
+		<if test=" pd.TITEL_EN == 'SOURCEDATA'">		
+			ORDER BY d.SOURCEDATA,d.NLP_ORDER
+		</if>
+ 	 	
+	</select>
+	
+	
+ 	 
+ 	<!-- 查询无法标化表-->
+	<select id="findWFBH"  resultType="pd">
+		SELECT TYPE_NAME FROM MTS_NOINTER_TYPE 
+	</select>
+	
+	
+	<!-- 修改Detail中的NLP内容 -->
+	<update id="editDetail" parameterType="page">
+		UPDATE MTS_CONFIG_DETAIL SET NLP=#{pd.NLP} WHERE T_ID=#{pd.T_ID}
+	</update>
+	
+	<!-- 按t_id删除  -->
+	<delete id="deleteRecord" parameterType="INTEGER">
+		DELETE FROM MTS_CONFIG_RECORD WHERE T_ID = #{T_ID}	
+	</delete>
+	
+	<!-- 按批次删除 MTS_CONFIG_RECORD -->
+	<delete id="deleteRecordByPt" parameterType="String">
+		DELETE FROM MTS_CONFIG_RECORD WHERE T_ID in 
+		(SELECT T_ID FROM MTS_CONFIG_DETAIL WHERE PT_ID=#{PT_ID})
+	</delete>
+	
+	<!-- 按批次删除MTS_CONFIG_DETAIL  -->
+	<delete id="deleteDetailByPt" parameterType="String">
+		DELETE  FROM MTS_CONFIG_DETAIL WHERE PT_ID=#{PT_ID}
+	</delete>
+	
+	<!-- 按批次删除MTS_CONFIG  -->
+	<delete id="deleteConfigByPt" parameterType="String">
+		DELETE  FROM MTS_CONFIG WHERE PT_ID=#{PT_ID}
+	</delete>
+	
+	<!-- 添加标化数据批次 -->
+	<insert id="addConfig" parameterType="MtsConfig">
+		INSERT INTO MTS_CONFIG 
+		(SOURCE_FLAG,PT_NAME,PT_ID,AREA_CODE,CLASS_CODE,STAU,CRE_DATE,CON_DATE)
+		VALUES
+		(#{SOURCE_FLAG},#{PT_NAME},#{PT_ID},#{AREA_CODE},#{CLASS_CODE},#{STAU},#{CRE_DATE},#{CON_DATE})
+	</insert>	
+	
+	 <!-- 添加标化数据 -->
+	<insert id="addConfigDetail" parameterType="MtsConfigDetail">
+		INSERT INTO MTS_CONFIG_DETAIL
+		(PT_ID,SOURCEDATA,NLP,SOURCETEXT,OPDATE)
+		VALUES
+		(#{PT_ID},#{SOURCEDATA},#{NLP},#{SOURCETEXT},#{OPDATE})
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editConfigDetail" parameterType="MtsConfigDetail">
+		update 
+		MTS_CONFIG_DETAIL
+		set 
+		NLP = #{NLP},
+		NLPVALUE = #{NLPVALUE},
+		RESULT = #{RESULT},
+		SPEC = #{SPEC},
+		DOUB = #{DOUB},		
+		TYPE = #{TYPE},
+		OPDATE= #{OPDATE}
+		where T_ID = #{T_ID}
+	</update>
+	
+	<!-- 通过批次获取数据 -->
+	<select id="findDetailByPT" parameterType="String" resultType="MtsConfigDetail">
+		select 	
+		T_ID,PT_ID,SOURCEDATA,NLP,NLPVALUE,
+		RESULT,SPEC,DOUB,TYPE,SOURCETEXT,OPDATE
+    	from 
+		MTS_CONFIG_DETAIL
+		where 
+		 PT_ID = #{PT_ID} and TYPE is  null
+	</select>
+</mapper>

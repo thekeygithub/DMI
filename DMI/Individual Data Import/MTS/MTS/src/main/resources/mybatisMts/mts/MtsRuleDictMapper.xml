@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsRuleDictMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_RULE_DICT
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		RULE_ID,
+		DICT_ID
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{RULE_ID},
+		#{DICT_ID}
+	</sql>
+
+
+	<!-- 获取数据加载规则列表 -->
+	<select id="findMtsKeyDictByRuleID" parameterType="String" resultType="pd">
+		SELECT d.DID,d.DNAME,d.LOADCODE   FROM MTS_DICT d,MTS_RULE_DICT rd WHERE 
+		d.DID = rd.DICT_ID AND d.TYPE='KEYRULE' AND rd.RULE_ID =#{RULE_ID}
+		ORDER BY rd.ID 
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="findMtsValueDictByRuleID" parameterType="String" resultType="pd">
+		SELECT d.DID,d.DNAME ,d.LOADCODE   FROM MTS_DICT d,MTS_RULE_DICT rd WHERE 
+		d.DID = rd.DICT_ID AND d.TYPE='VALUERULE' AND rd.RULE_ID =#{RULE_ID}
+		ORDER BY rd.ID 
+	</select>
+
+
+	<!-- 添加 -->
+	<insert id="saveRuleDict" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>
+		)
+	</insert>
+
+	<!-- 保存修改 -->
+	<update id="editRuleDict" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		DNAME=#{DNAME},
+		LOADCODE=#{LOADCODE},
+		MATCHCODE=#{MATCHCODE},
+		DATACLASS=#{DATACLASS},
+		DATATYPE=#{DATATYPE},
+		TYPE=#{TYPE}
+		where DID = #{DID}
+	</update>
+
+	<!-- 查询LOAD_RULE_ID最大值 -->
+	<select id="maxRuleDict" resultType="String">
+		SELECT IFNULL(MAX(CONVERT(ID,SIGNED)),0) FROM <include refid="tableName"></include>
+	</select>
+	
+	<!-- 删除  -->
+	<delete id="delMtsRuleDict" parameterType="String">
+		DELETE FROM 
+		<include refid="tableName"></include>
+		WHERE RULE_ID=#{RULE_ID}
+	</delete>
+</mapper>

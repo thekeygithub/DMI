@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDataTypeMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DATA_TYPE
+	</sql>
+	<sql id="loadruletableName">
+		MTS_LOAD_RULE_DETAIL
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_TYPE_ID,	
+		DATA_TYPE_NAME,	
+		MEM_DATA_CODE,
+		DATA_VER
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_TYPE_ID},	
+		#{DATA_TYPE_NAME},	
+		#{MEM_DATA_CODE},
+		#{DATA_VER}
+	</sql>
+	
+	<resultMap type="MtsDataType" id="mtsDataTypeMap">
+		<id column="DATA_TYPE_ID" property="DATA_TYPE_ID"/>
+		<result column="DATA_TYPE_NAME" property="DATA_TYPE_NAME"/>
+		<result column="MEM_DATA_CODE" property="MEM_DATA_CODE"/>
+		<result column="DATA_VER" property="DATA_VER"/>
+	</resultMap>
+	
+
+	<!-- 通过CODE获取数据 -->
+	<select id="findByCode" parameterType="String" resultType="String">
+		select 	DATA_TYPE_ID 	from 
+		<include refid="tableName"></include>
+		where 
+			MEM_DATA_CODE = #{MEM_DATA_CODE}
+	</select>
+	
+	<!-- 获取可添加的标准化类型列表 -->
+	<select id="listAllMtsDataType" resultMap="mtsDataTypeMap">
+		SELECT 	<include refid="Field"></include> FROM 
+		<include refid="tableName"></include> WHERE DATA_TYPE_ID NOT IN ( SELECT DATA_TYPE_ID FROM <include refid="loadruletableName"></include>)
+		ORDER BY "MEM_DATA_CODE"
+	</select>
+	
+	<!-- 获取所有标准化类型列表 -->
+	<select id="listAllDataType" resultType="MtsDataType">
+		SELECT 	
+		<include refid="Field"></include> 
+		FROM 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 获取相应聚类下的所有标准化类型列表 -->
+	<select id="listClassDataType" parameterType="String" resultType="MtsDataType">
+		SELECT c.DATA_TYPE_ID,
+		c.DATA_TYPE_NAME,
+		c.DATA_VER,
+		c.MEM_DATA_CODE 
+		FROM MTS_DATA_CLASS a ,MTS_CLASS_RELATION b,MTS_DATA_TYPE c
+		WHERE   a.DATA_CLASS_ID=b.DATA_CLASS_ID
+		and b.DATA_TYPE_ID=c.DATA_TYPE_ID and 
+		a.DATA_CLASS_CODE=#{DATA_CLASS_CODE}
+
+	</select>
+	
+	<!-- 获取相应聚类下的所有标准化类型列表 -->
+	<select id="listClassDataTypeById" parameterType="String" resultType="MtsDataType">
+		SELECT c.DATA_TYPE_ID,
+		c.DATA_TYPE_NAME,
+		c.DATA_VER,
+		c.MEM_DATA_CODE 
+		FROM MTS_DATA_CLASS a ,MTS_CLASS_RELATION b,MTS_DATA_TYPE c
+		WHERE   a.DATA_CLASS_ID=b.DATA_CLASS_ID
+		and b.DATA_TYPE_ID=c.DATA_TYPE_ID and 
+		a.DATA_CLASS_ID=#{DATA_CLASS_ID}
+
+	</select>
+	
+	<!-- 获取相应聚类下的所有标准化类型带分页 -->
+	<select id="DataTypelistPage" parameterType="page" resultType="MtsDataType">
+		SELECT c.DATA_TYPE_ID,
+		c.DATA_TYPE_NAME,
+		c.DATA_VER,
+		c.MEM_DATA_CODE 
+		FROM MTS_CLASS_RELATION b,MTS_DATA_TYPE c
+		WHERE   b.DATA_TYPE_ID=c.DATA_TYPE_ID and 
+		b.DATA_CLASS_ID=#{pd.DATA_CLASS_ID}
+		ORDER BY c.DATA_TYPE_ID
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="String" resultType="MtsDataType">
+		select 	
+		<include refid="Field"></include>
+		 from 
+		<include refid="tableName"></include>
+		where 
+			DATA_TYPE_ID = #{DATA_TYPE_ID}
+	</select>
+	
+	 <!-- 添加 -->
+	<insert id="addDataType" parameterType="MtsDataType">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	
+	<!-- 查询DATA_TYPE_ID最大值 -->
+	<select id="maxDataType" resultType="String">
+		SELECT ifnull(MAX(CONVERT(DATA_TYPE_ID,SIGNED)),0) FROM MTS_DATA_TYPE
+	</select>
+	
+	
+
+	<!-- 保存修改 -->
+	<update id="editDataType" parameterType="MtsDataType">
+		update 
+		<include refid="tableName"></include>
+		set DATA_TYPE_NAME = #{DATA_TYPE_NAME},	
+		MEM_DATA_CODE = #{MEM_DATA_CODE},		
+		DATA_VER = #{DATA_VER}
+		where DATA_TYPE_ID = #{DATA_TYPE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteDataType" parameterType="String">
+		delete from 
+		<include refid="tableName"></include>
+		where DATA_TYPE_ID=#{DATA_TYPE_ID}
+	</delete>
+	
+	
+	<!-- 查询MEM_DATA_CODE最大值 -->
+	<select id="maxDataCode" resultType="String">
+		SELECT ifnull(MAX(CONVERT(MEM_DATA_CODE,SIGNED)),0) FROM MTS_DATA_TYPE
+	</select>
+	
+	<!-- 判断标化代码是否存在 -->
+	<select id="codeByCode" parameterType="String" resultType="MtsDataType">
+		select 	
+		<include refid="Field"></include>
+ 		from 
+		<include refid="tableName"></include>
+		where 
+			MEM_DATA_CODE = #{MEM_DATA_CODE}
+	</select>
+	
+	<!-- 判断标化名是否存在 -->
+	<select id="nameByName" parameterType="String" resultType="MtsDataType">
+		select 	
+		<include refid="Field"></include>
+ 		from  
+		<include refid="tableName"></include>
+		where 
+			DATA_TYPE_NAME = #{DATA_TYPE_NAME}
+	</select>
+	
+</mapper>

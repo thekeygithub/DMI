@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDBDataUnstructuredRelevanceMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDBDataUnstructuredRelevance" id="MtsDBDataUnstructuredRelevanceResultMap">
+		<id column="DATA_UNSTRUCTURED_RELEVANCE_ID" property="DATA_UNSTRUCTURED_RELEVANCE_ID" />
+		<result column="DATA_UNSTRUCTURED_ID" property="DATA_UNSTRUCTURED_ID" />
+		<result column="ORDER_NUM" property="ORDER_NUM" />
+		<result column="ORIG_DATA" property="ORIG_DATA" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DB_DATA_UNSTRUCTURED_RELEVANCE
+	</sql>
+	
+	<sql id="DBDataUnstructuredTableName">
+		MTS_DB_DATA_UNSTRUCTURED
+	</sql>
+	
+	<sql id="dataSourceTableName">
+		MTS_DATA_SOURCE
+	</sql>
+	
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_UNSTRUCTURED_RELEVANCE_ID,	
+		DATA_UNSTRUCTURED_ID,
+		ORDER_NUM,
+		ORIG_DATA
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_UNSTRUCTURED_RELEVANCE_ID},
+		#{DATA_UNSTRUCTURED_ID},
+		#{ORDER_NUM},
+		#{ORIG_DATA}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDBDataUnstructuredRelevance" parameterType="MtsDBDataUnstructuredRelevance">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDBDataUnstructuredRelevance" parameterType="MtsDBDataUnstructuredRelevance">
+		update 
+		<include refid="tableName"></include>
+		set DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID},
+		ORDER_NUM = #{ORDER_NUM},
+		ORIG_DATA = #{ORIG_DATA}   
+		where DATA_UNSTRUCTURED_RELEVANCE_ID = #{DATA_UNSTRUCTURED_RELEVANCE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDBDataUnstructuredRelevance" parameterType="MtsDBDataUnstructuredRelevance">
+		delete from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DATA_UNSTRUCTURED_RELEVANCE_ID != null and DATA_UNSTRUCTURED_RELEVANCE_ID != ''">
+			and DATA_UNSTRUCTURED_RELEVANCE_ID = #{DATA_UNSTRUCTURED_RELEVANCE_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_ID != null and DATA_UNSTRUCTURED_ID != ''">
+			and DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID}
+		</if>
+		<if test="ORIG_DATA != null and ORIG_DATA != ''">
+			and ORIG_DATA = #{ORIG_DATA}
+		</if>
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsDBDataUnstructuredRelevance" parameterType="MtsDBDataUnstructuredRelevance" resultType="MtsDBDataUnstructuredRelevance">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="ORDER_NUM != null and ORDER_NUM != ''">
+			and ORDER_NUM = #{ORDER_NUM}
+		</if>
+		<if test="DATA_UNSTRUCTURED_RELEVANCE_ID != null and DATA_UNSTRUCTURED_RELEVANCE_ID != ''">
+			and DATA_UNSTRUCTURED_RELEVANCE_ID = #{DATA_UNSTRUCTURED_RELEVANCE_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_ID != null and DATA_UNSTRUCTURED_ID != ''">
+			and DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID}
+		</if>
+		<if test="ORIG_DATA != null and ORIG_DATA != ''">
+			and ORIG_DATA = #{ORIG_DATA}
+		</if>
+		order by ORDER_NUM desc
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDBDataUnstructuredRelevancelistPage" parameterType="page" resultType="pd">
+		select 
+		a.DATA_UNSTRUCTURED_RELEVANCE_ID,	
+		a.DATA_UNSTRUCTURED_ID,
+		a.ORDER_NUM,
+		b.OPERATE_TIME,
+		c.DESCRIPTION 
+		from 
+		<include refid="tableName"></include> a 
+		left join <include refid="DBDataUnstructuredTableName"></include> b on a.DATA_UNSTRUCTURED_ID = b.DATA_UNSTRUCTURED_ID 
+		left join <include refid="dataSourceTableName"></include> c on b.DATA_SOURCE_CODE = c.FLAG 
+		where 1 = 1 
+		<if test="pd.DATA_UNSTRUCTURED_ID != null and pd.DATA_UNSTRUCTURED_ID != ''">
+			and a.DATA_UNSTRUCTURED_ID = #{pd.DATA_UNSTRUCTURED_ID}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 a.ORIG_DATA LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			) 
+		</if>
+		order by a.ORDER_NUM
+	</select>
+</mapper>

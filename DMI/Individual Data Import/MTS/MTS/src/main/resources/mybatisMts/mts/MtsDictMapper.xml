@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDictMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DICT
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		DID,
+		DNAME,
+		LOADCODE,
+		MATCHCODE,
+		DATACLASS,
+		DATATYPE,
+		TYPE,
+		OPDATE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DID},
+		#{DNAME},
+		#{LOADCODE},
+		#{MATCHCODE},
+		#{DATACLASS},
+		#{DATATYPE},
+		#{TYPE},
+		#{OPDATE}
+	</sql>
+
+	<!-- 根据聚类、标化类型、规则类型 获取字典列表 -->
+	<select id="listAllByClass" parameterType="page" resultType="MtsDict">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.DATACLASS != null and pd.DATACLASS != ''">
+			and DATACLASS = #{pd.DATACLASS}
+		</if>
+		<if test="pd.DATATYPE != null and pd.DATATYPE != ''">
+			and DATATYPE = #{pd.DATATYPE}
+		</if>
+		<if test="pd.TYPE != null and pd.TYPE != ''">
+			and TYPE = #{pd.TYPE}
+		</if>
+		
+	</select>
+	
+	<!-- 根据聚类获取key规则字典列表 -->
+	<select id="listKeyRuleByClass" parameterType="String"
+		resultType="MtsDict">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		where DATACLASS = #{DATACLASS} AND TYPE='KEYRULE'
+	</select>
+	
+	<!-- 根据聚类获取value规则字典列表 -->
+	<select id="listValueRuleByClass" parameterType="String"
+		resultType="MtsDict">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include>
+		where DATACLASS = #{DATACLASS} AND TYPE='VALUERULE'
+	</select>
+	
+	<!-- 增删改查 -->
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDictlistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>, cl.DATA_CLASS_NAME ,ty.DATA_TYPE_NAME 
+		FROM 
+		<include refid="tableName"></include> dt,MTS_DATA_CLASS cl ,MTS_DATA_TYPE ty
+		where dt.DATACLASS = cl.DATA_CLASS_CODE AND ty.MEM_DATA_CODE = dt.DATATYPE 
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and dt.DNAME  like  CONCAT(CONCAT('%', #{pd.keywords}),'%')
+		</if>
+		<if test="pd.DATA_CLASS_CODE != null and pd.DATA_CLASS_CODE != ''">
+			and dt.DATACLASS = #{pd.DATA_CLASS_CODE}
+		</if>
+		ORDER BY OPDATE DESC
+	</select>
+	
+	
+	 <!-- 添加 -->
+	<insert id="saveDict" parameterType="pd">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editDict" parameterType="pd">
+		update 
+		<include refid="tableName"></include>
+		set 
+		DNAME=#{DNAME},
+		LOADCODE=#{LOADCODE},
+		MATCHCODE=#{MATCHCODE},
+		DATACLASS=#{DATACLASS},
+		DATATYPE=#{DATATYPE},
+		TYPE=#{TYPE}
+		where DID = #{DID}
+	</update>
+	
+	<!-- 查询DID最大值 -->
+	<select id="maxRule" resultType="String">
+		SELECT IFNULL(MAX(CONVERT(DID,SIGNED)),0) FROM <include refid="tableName"></include>
+	</select>
+	
+	<!-- 通过id查找 -->
+	
+	<select id="selByName" parameterType="String" resultType="pd">
+		SELECT  
+		<include refid="Field"></include>
+		FROM  
+		<include refid="tableName"></include>
+		where DNAME = #{DNAME}
+	</select>
+	
+	<select id="findDictById" parameterType="pd" resultType="pd">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where DID = #{DID}
+	</select>
+	<!-- 保存修改 -->
+	<update id="editRule" parameterType="LoadRule">
+		update 
+		<include refid="tableName"></include>
+		set 
+		DATA_TYPE_ID = #{DATA_TYPE_ID},
+		KEY_GEN_RULE = #{KEY_GEN_RULE},
+		VALUE_GEN_RULE = #{VALUE_GEN_RULE}
+		where LOAD_RULE_ID = #{LOAD_RULE_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="delMtsDict" parameterType="String">
+		DELETE FROM 
+		<include refid="tableName"></include>
+		WHERE DID=#{DID}
+	</delete>
+	
+	<!-- 通过区域 、聚类、标化类型、以及LOADCODE 找出唯一值 -->
+	<select id="findMtsDictByPd" parameterType="pd" resultType="pd">
+		SELECT  
+		<include refid="Field"></include>
+		FROM  
+		<include refid="tableName"></include>
+		WHERE 1=1 
+		<if test="TYPE != null and TYPE != ''">
+			and TYPE = #{TYPE}
+		</if>
+		<if test="CLASS_CODE != null and CLASS_CODE != ''">
+			and DATACLASS = #{CLASS_CODE}
+		</if>
+		<if test="TYPE_CODE != null and TYPE_CODE != ''">
+			and DATATYPE = #{TYPE_CODE}
+		</if>
+		
+		<if test="keywords != null and keywords != ''">
+			 and LOADCODE in 
+			 <foreach item="item" index="index" collection="keywords" open="(" separator="," close=")">  
+			  #{item}  
+			 </foreach> 
+		</if>
+	</select>
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsAreaMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsArea" id="MtsAreaResultMap">
+		<id column="AREA_ID" property="AREA_ID" />
+		<result column="AREA_NAME" property="AREA_NAME" />
+		<result column="AREA_CODE" property="AREA_CODE" />
+		<result column="REMARK" property="REMARK" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_AREA
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		AREA_ID,	
+		AREA_NAME,	
+		AREA_CODE,
+		REMARK,
+		OPERATE_TIME
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{AREA_ID},
+		#{AREA_NAME},
+		#{AREA_CODE},
+		#{REMARK},
+		#{OPERATE_TIME}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsArea" parameterType="MtsArea">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsArea" parameterType="MtsArea">
+		update 
+		<include refid="tableName"></include>
+		set AREA_NAME = #{AREA_NAME},
+		AREA_CODE = #{AREA_CODE},
+		REMARK = #{REMARK},
+		OPERATE_TIME = #{OPERATE_TIME}
+		where AREA_ID = #{AREA_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsArea" parameterType="MtsArea">
+		delete from 
+		<include refid="tableName"></include>
+		where AREA_ID=#{AREA_ID}
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsArea" parameterType="MtsArea" resultType="MtsArea">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="AREA_ID != null and AREA_ID != ''">
+			and AREA_ID = #{AREA_ID}
+		</if>
+		<if test="AREA_NAME != null and AREA_NAME != ''">
+			and AREA_NAME = #{AREA_NAME}
+		</if>
+		<if test="AREA_CODE != null and AREA_CODE != ''">
+			and AREA_CODE = #{AREA_CODE}
+		</if>
+		<if test="REMARK != null and REMARK != ''">
+			and REMARK = #{REMARK}
+		</if>
+			order by OPERATE_TIME DESC
+	</select>
+	
+	<select id="mtsArealistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1=1
+		<if test="pd.AREA_NAME != null and pd.AREA_NAME != ''">
+			and AREA_NAME = #{pd.AREA_NAME}
+		</if>
+		<if test="pd.AREA_CODE != null and pd.AREA_CODE != ''">
+			and AREA_CODE = #{pd.AREA_CODE}
+		</if>
+		<if test="pd.REMARK != null and pd.REMARK != ''">
+			and REMARK = #{pd.REMARK}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 AREA_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or 
+			 AREA_CODE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			 or
+			 REMARK LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			) 
+		</if>
+		order by OPERATE_TIME DESC
+	</select>
+</mapper>

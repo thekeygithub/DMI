@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsToolkitMapper">
+		
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_TOOLKIT
+	</sql>
+	<sql id="tableName_rel">
+		MTS_TOOL_REL
+	</sql>
+	<sql id="tableName_tool">
+		MTS_TOOL
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		TOOLKIT_ID,	
+		TOOLKIT_NAME,	
+		COMMENTS
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{TOOLKIT_ID},
+		#{TOOLKIT_NAME},
+		#{COMMENTS}
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field_rel">
+		TOOL_REL_ID,
+		TOOLKIT_ID,	
+		TOOL_ID,
+		TOOL_ORDER
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue_rel">
+		#{TOOL_REL_ID},
+		#{TOOLKIT_ID},
+		#{TOOL_ID},
+		#{TOOL_ORDER}
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field_tool">
+		TOOL_ID,	
+		TOOL_NAME,
+		TOOL_PATH,	
+		COMMENTS
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue_tool">
+		#{TOOL_ID},
+		#{TOOL_NAME},
+		#{TOOL_PATH},
+		#{COMMENTS}
+	</sql>
+	
+    <!-- 添加 -->
+	<insert id="addToolkit" parameterType="MtsToolkitT">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editToolkit" parameterType="MtsToolkitT">
+		update 
+		<include refid="tableName"></include>
+		set TOOLKIT_NAME = #{TOOLKIT_NAME},
+		COMMENTS = #{COMMENTS}
+		where TOOLKIT_ID = #{TOOLKIT_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteToolkit" parameterType="MtsToolkitT">
+		delete from 
+		<include refid="tableName"></include>
+		where TOOLKIT_ID=#{TOOLKIT_ID}
+	</delete>
+	
+	<select id="findToolkit" parameterType="MtsToolkitT" resultType="MtsToolkitT">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="TOOLKIT_ID != null and TOOLKIT_ID != ''">
+			and TOOLKIT_ID = #{TOOLKIT_ID} 
+		</if>
+		<if test="TOOLKIT_NAME != null and TOOLKIT_NAME != ''">
+			and TOOLKIT_NAME = #{TOOLKIT_NAME} 
+		</if>
+		<if test="COMMENTS != null and COMMENTS != ''">
+			and COMMENTS = #{COMMENTS}
+		</if>
+	</select>
+	<select id="findTools" parameterType="pd" resultType="MtsToolT">
+		SELECT t.`TOOL_ID`,t.`TOOL_NAME`,t.`TOOL_PATH` ,t.`COMMENTS`,r.`TOOL_ORDER`,r.`TOOL_REL_ID` FROM MTS_TOOL t,MTS_TOOLKIT k, MTS_TOOL_REL r
+		WHERE t.`TOOL_ID`=r.`TOOL_ID` AND k.`TOOLKIT_ID`=r.`TOOLKIT_ID` 
+		<if test="MTS_TOOL_REL != null and MTS_TOOL_REL != ''">
+			and r.MTS_TOOL_REL = #{MTS_TOOL_REL} 
+		</if>
+		<if test="TOOL_ID != null and TOOL_ID != ''">
+			and r.TOOL_ID = #{TOOL_ID} 
+		</if>
+		<if test="TOOL_ORDER != null and TOOL_ORDER != ''">
+			and r.TOOL_ORDER = #{TOOL_ORDER} 
+		</if>
+		<if test="TOOLKIT_ID != null and TOOLKIT_ID != ''">
+			and k.TOOLKIT_ID = #{TOOLKIT_ID} 
+		</if>
+		<if test="TOOLKIT_NAME != null and TOOLKIT_NAME != ''">
+			and k.TOOLKIT_NAME = #{TOOLKIT_NAME} 
+		</if>
+		<if test="COMMENTS != null and COMMENTS != ''">
+			and k.COMMENTS = #{COMMENTS}
+		</if>
+		 ORDER BY r.`TOOL_ORDER` 
+	</select>
+	
+	<!-- 通过条件获取程序的工具列表用 ,配置 -->
+	<select id="findToolList" parameterType="MtsToolkitT" resultType="MtsToolkitT">
+		SELECT SOFT_NAME,TOOLKIT_ID,TOOLKIT_NAME , GROUP_CONCAT(TOOL_PATH ORDER BY TOOL_ORDER ASC) TOOLPATHS FROM (
+			SELECT s.`SOFT_EN_NAME` SOFT_NAME ,s.`TOOLKIT_ID`,k.`TOOLKIT_NAME`,t.`TOOL_ID`,t.`TOOL_NAME`,t.`TOOL_PATH`,r.`TOOL_ORDER` FROM MTS_SOFT s INNER JOIN MTS_TOOLKIT k ON s.`TOOLKIT_ID`=k.`TOOLKIT_ID` 
+		        LEFT JOIN MTS_TOOL_REL r ON k.`TOOLKIT_ID`=r.`TOOLKIT_ID`
+		        LEFT JOIN MTS_TOOL t ON r.`TOOL_ID`=t.`TOOL_ID` ORDER BY r.`TOOL_ORDER` ASC
+		) aa GROUP BY SOFT_NAME,TOOLKIT_ID,TOOLKIT_NAME 
+	</select>
+	
+	<select id="toolkitlistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1=1
+		<if test="pd.TOOLKIT_NAME != null and pd.TOOLKIT_NAME != ''">
+			and TOOLKIT_NAME = #{pd.TOOLKIT_NAME}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 TOOLKIT_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or 
+			 COMMENTS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			) 
+		</if>
+	</select>
+	 <!-- 添加 -->
+	<insert id="addToolrel" parameterType="MtsToolT">
+		insert into 
+		<include refid="tableName_rel"></include>
+		(
+		<include refid="Field_rel"></include>
+		) values (
+		<include refid="FieldValue_rel"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editToolrel" parameterType="MtsToolT">
+		update 
+		<include refid="tableName_rel"></include>
+		
+		set TOOL_ORDER = #{TOOL_ORDER} ,TOOL_ID=#{TOOL_ID}
+		where TOOL_REL_ID = #{TOOL_REL_ID} and TOOLKIT_ID=#{TOOLKIT_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteToolrel" parameterType="MtsToolT">
+		delete from 
+		<include refid="tableName_rel"></include>
+		where TOOL_REL_ID=#{TOOL_REL_ID}
+	</delete>
+	
+	<select id="findToolrel" parameterType="MtsToolT" resultType="MtsToolT">
+		SELECT r.`TOOL_REL_ID` ,r.`TOOL_ORDER` ,r.`TOOL_ID`,t.`TOOL_NAME`,t.`TOOL_PATH` ,r.`TOOLKIT_ID`,k.`TOOLKIT_NAME` 
+		FROM   MTS_TOOL_REL r ,MTS_TOOL t,MTS_TOOLKIT k 
+		WHERE t.`TOOL_ID`=r.`TOOL_ID` AND k.`TOOLKIT_ID`=r.`TOOLKIT_ID` 
+		<if test="TOOL_REL_ID != null and TOOL_REL_ID != ''">
+			and TOOL_REL_ID = #{TOOL_REL_ID} 
+		</if>
+		<if test="TOOLKIT_ID != null and TOOLKIT_ID != ''">
+			and TOOLKIT_ID = #{TOOLKIT_ID} 
+		</if>
+	</select>
+	<select id="toollistPage" parameterType="page" resultType="pd">
+		select 
+			TOOL_ID,TOOL_NAME,TOOL_PATH,COMMENTS
+		from 
+			MTS_TOOL 
+		where 1=1
+		<if test="pd.TOOL_NAME != null and pd.TOOL_NAME != ''">
+			and TOOL_NAME = #{pd.TOOL_NAME}
+		</if>
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 TOOL_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			 or 
+			 TOOL_PATH LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			 or
+			 COMMENTS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')  
+			) 
+		</if>
+	</select>
+	<select id="findToolsByPd" parameterType="pd" resultType="MtsToolT">
+		SELECT t.`TOOL_ID`,t.`TOOL_NAME`,t.`TOOL_PATH` ,t.`COMMENTS`
+		FROM MTS_TOOL t 
+		WHERE 1=1 
+		<if test="keywords != null and keywords != ''">
+			and
+			(
+			 t.TOOL_NAME LIKE CONCAT(CONCAT('%', #{keywords}),'%') 
+			 or 
+			 t.TOOL_PATH LIKE CONCAT(CONCAT('%', #{keywords}),'%') 
+			 or
+			 t.COMMENTS LIKE CONCAT(CONCAT('%', #{keywords}),'%')  
+			) 
+		</if>
+		<if test="TOOL_ID != null and TOOL_ID != ''">
+			and t.TOOL_ID = #{TOOL_ID} 
+		</if>
+		<if test="TOOL_NAME != null and TOOL_NAME != ''">
+			and t.TOOL_NAME = #{TOOL_NAME} 
+		</if>
+		<if test="TOOL_PATH != null and TOOL_PATH != ''">
+			and t.TOOL_PATH = #{TOOL_PATH} 
+		</if>
+	</select>
+	
+    <!-- 添加 工具-->
+	<insert id="addTool" parameterType="MtsToolT">
+		insert into 
+		<include refid="tableName_tool"></include>
+		(
+		<include refid="Field_tool"></include>
+		) values (
+		<include refid="FieldValue_tool"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改工具 -->
+	<update id="editTool" parameterType="MtsToolT">
+		update 
+		<include refid="tableName_tool"></include>
+		set TOOL_NAME = #{TOOL_NAME},
+		TOOL_PATH = #{TOOL_PATH},
+		COMMENTS = #{COMMENTS}
+		where TOOL_ID = #{TOOL_ID}
+	</update>
+	
+	<!-- 删除 工具 -->
+	<delete id="deleteTool" parameterType="MtsToolT">
+		delete from 
+		<include refid="tableName_tool"></include>
+		where TOOL_ID=#{TOOL_ID}
+	</delete>
+	
+	
+</mapper>

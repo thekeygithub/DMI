@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsCorpusMapper">
+	<!--表名 -->
+	<sql id="dataTypeTableName">
+		MTS_CORPUS_TYPE
+	</sql>
+	<!-- =========================原始语料==================== -->
+	<sql id="tableName">
+		MTS_CORPUS
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		ORIG_CONTENT,
+		NEW_CONTENT,
+		FILE_NAME,
+		FILE_FULL_NAME,
+		EDIT_DATE
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{ORIG_CONTENT},
+		#{NEW_CONTENT},
+		#{FILE_NAME},
+		#{FILE_FULL_NAME},
+		#{EDIT_DATE}
+	</sql>
+	
+	 <!-- 添加原始语料 -->
+	<insert id="saveMtsCorpus" parameterType="MtsCorpus"  useGeneratedKeys="true" keyProperty="ID">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<update id="updateMtsCorpus" parameterType="MtsCorpus">
+		UPDATE  
+		<include refid="tableName"></include>
+		SET 
+		NEW_CONTENT = #{NEW_CONTENT},
+		EDIT_DATE = #{EDIT_DATE}
+		WHERE ID = #{ID}
+	</update>
+	
+	<select id="listMtsCorpusPage" parameterType="page" resultType="pd">
+	select
+		ID,
+		FILE_NAME,
+		FILE_FULL_NAME,
+		EDIT_DATE
+		from
+		<include refid="tableName"></include> mc
+		ORDER BY mc.EDIT_DATE desc,mc.FILE_NAME 
+	</select>
+	
+	  
+	
+	<!-- <select id="listCorpusEntity" parameterType="String" resultType="MtsCorpusEntity">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		<include refid="tableName"></include> ce 
+		WHERE ce.CORPUS_ID = #{CORPUS_ID}
+	</select> -->
+	
+	<!-- 通过id查找 -->
+	<select id="findCorpusById" parameterType="Integer" resultType="MtsCorpus">
+		select  
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where ID = #{ID}
+	</select>
+	
+	
+	
+	
+	<!-- <delete id="delMtsCorpusEntity" parameterType="String">
+		DELETE FROM  
+		<include refid="tableName"></include>
+		WHERE CORPUS_ID=#{CORPUS_ID}
+	</delete> -->
+	
+	 <!-- 添加语料原始文本 -->
+	<!-- <insert id="saveCorpus" parameterType="MtsCorpus">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert> -->
+
+	
+</mapper>

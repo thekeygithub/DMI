@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDBDataMapper">
+	
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDBData" id="MtsDBDataResultMap">
+		<id column="DB_DATA_ID" property="DB_DATA_ID" />
+		<result column="AREA_CODE" property="AREA_CODE" />
+		<result column="IMPORT_NAME" property="IMPORT_NAME" />
+		<result column="OPERATE_TIME" property="OPERATE_TIME" />
+		<result column="STATUS" property="STATUS" />
+		<result column="BATCH_NUM" property="BATCH_NUM" />
+		<result column="DATA_CLASS_ID" property="DATA_CLASS_ID" />
+		<result column="DATA_TYPE_ID" property="DATA_TYPE_ID" />
+		<result column="DATA_SOURCE_CODE" property="DATA_SOURCE_CODE" />
+		<result column="DB_DATA_TYPE" property="DB_DATA_TYPE" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DB_DATA
+	</sql>
+	
+	<sql id="dataSourceTableName">
+		MTS_DATA_SOURCE
+	</sql>
+	
+	<sql id="areaTableName">
+		MTS_AREA
+	</sql>
+	
+	<sql id="dataClassTableName">
+		MTS_DATA_CLASS
+	</sql>
+	
+	<sql id="dataTypeTableName">
+		MTS_DATA_TYPE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		DB_DATA_ID,	
+		AREA_CODE,	
+		IMPORT_NAME,
+		OPERATE_TIME,
+		STATUS,
+		BATCH_NUM,
+		DATA_CLASS_ID,
+		DATA_TYPE_ID,
+		DATA_SOURCE_CODE,
+		DB_DATA_TYPE
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DB_DATA_ID},
+		#{AREA_CODE},
+		#{IMPORT_NAME},
+		#{OPERATE_TIME},
+		#{STATUS},
+		#{BATCH_NUM},
+		#{DATA_CLASS_ID},
+		#{DATA_TYPE_ID},
+		#{DATA_SOURCE_CODE},
+		#{DB_DATA_TYPE}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDBData" parameterType="MtsDBData">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDBData" parameterType="MtsDBData">
+		update 
+		<include refid="tableName"></include>
+		set 
+		<if test="AREA_CODE != null and AREA_CODE != ''">
+			AREA_CODE = #{AREA_CODE},
+		</if>
+		<if test="IMPORT_NAME != null and IMPORT_NAME != ''">
+			IMPORT_NAME = #{IMPORT_NAME},
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			STATUS = #{STATUS},
+		</if>
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			BATCH_NUM = #{BATCH_NUM},
+		</if>
+		<if test="DATA_CLASS_ID != null and DATA_CLASS_ID != ''">
+			DATA_CLASS_ID = #{DATA_CLASS_ID},
+		</if>
+		<if test="DATA_TYPE_ID != null and DATA_TYPE_ID != ''">
+			DATA_TYPE_ID = #{DATA_TYPE_ID},
+		</if>
+		<if test="DATA_SOURCE_CODE != null and DATA_SOURCE_CODE != ''">
+			DATA_SOURCE_CODE = #{DATA_SOURCE_CODE},
+		</if>
+		<if test="DB_DATA_TYPE != null and DB_DATA_TYPE != ''">
+			DB_DATA_TYPE = #{DB_DATA_TYPE},   
+		</if>
+		OPERATE_TIME = #{OPERATE_TIME}
+		where DB_DATA_ID = #{DB_DATA_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDBData" parameterType="MtsDBData">
+		delete from 
+		<include refid="tableName"></include>
+		where DB_DATA_ID=#{DB_DATA_ID}
+	</delete>
+	
+	<select id="findMtsDBData" parameterType="MtsDBData" resultType="MtsDBData">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="AREA_CODE != null and AREA_CODE != ''">
+			and AREA_CODE = #{AREA_CODE}
+		</if>
+		<if test="IMPORT_NAME != null and IMPORT_NAME != ''">
+			and IMPORT_NAME = #{IMPORT_NAME}
+		</if>
+		<if test="OPERATE_TIME != null and OPERATE_TIME != ''">
+			and OPERATE_TIME = #{OPERATE_TIME}
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			and STATUS = #{STATUS}
+		</if>
+		<if test="BATCH_NUM != null and BATCH_NUM != ''">
+			and BATCH_NUM = #{BATCH_NUM}
+		</if>
+		<if test="DATA_CLASS_ID != null and DATA_CLASS_ID != ''">
+			and DATA_CLASS_ID = #{DATA_CLASS_ID}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="DATA_TYPE_ID != null and DATA_TYPE_ID != ''">
+			and DATA_TYPE_ID = #{DATA_TYPE_ID}
+		</if>
+		<if test="DATA_SOURCE_CODE != null and DATA_SOURCE_CODE != ''">
+			and DATA_SOURCE_CODE = #{DATA_SOURCE_CODE}
+		</if>
+		<if test="DB_DATA_TYPE != null and DB_DATA_TYPE != ''">
+			and DB_DATA_TYPE = #{DB_DATA_TYPE}
+		</if>
+			order by OPERATE_TIME
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDBDatalistPage" parameterType="page" resultType="pd">
+		select 
+		a.DB_DATA_ID,
+		a.IMPORT_NAME,
+		a.OPERATE_TIME,
+		a.STATUS,
+		a.BATCH_NUM,
+		b.DESCRIPTION,
+		c.AREA_NAME,
+		d.DATA_CLASS_NAME,
+		e.DATA_TYPE_NAME
+		from 
+		<include refid="tableName"></include> a 
+		left join <include refid="dataSourceTableName"></include> b on a.DATA_SOURCE_CODE = b.FLAG 
+		left join <include refid="areaTableName"></include> c on a.AREA_CODE = c.AREA_CODE 
+		left join <include refid="dataClassTableName"></include> d on a.DATA_CLASS_ID = d.DATA_CLASS_CODE 
+		left join <include refid="dataTypeTableName"></include> e on a.DATA_TYPE_ID = e.MEM_DATA_CODE 
+		where 1=1 
+		<if test="pd.FLAG != null and pd.FLAG != ''">
+			and a.DATA_SOURCE_CODE = #{pd.FLAG} 
+		</if>
+		<if test="pd.startDate !=null and pd.startDate !='' and pd.endDate !=null and pd.endDate !=''">
+			and a.OPERATE_TIME &gt;= #{pd.startDate} and a.OPERATE_TIME &lt;= #{pd.endDate} 
+		</if>
+		<if test="pd.DB_DATA_TYPE != null and pd.DB_DATA_TYPE != ''">
+			and a.DB_DATA_TYPE = #{pd.DB_DATA_TYPE} 
+		</if>
+		order by a.OPERATE_TIME DESC
+	</select>
+</mapper>

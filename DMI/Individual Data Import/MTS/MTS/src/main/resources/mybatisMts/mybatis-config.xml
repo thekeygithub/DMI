@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD SQL Map Config 3.0//EN"  
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings> 
+        <setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->   
+        <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" /> 
+    </settings>
+
+	<typeAliases>
+		<typeAlias type="com.ts.entity.system.User" alias="User"/>
+		<typeAlias type="com.ts.entity.system.Role" alias="Role"/>
+		<typeAlias type="com.ts.entity.mts.MtsDataType" alias="MtsDataType"/>
+		<typeAlias type="com.ts.entity.system.Menu" alias="Menu"/>
+		<typeAlias type="com.ts.entity.system.Dictionaries" alias="Dictionaries"/>
+		<typeAlias type="com.ts.entity.system.Department" alias="Department"/>
+		<typeAlias type="com.ts.util.PageData" alias="pd"/>
+		<!-- 分页 -->
+		<typeAlias type="com.ts.entity.Page" alias="Page"/>
+		<!-- MTS -->
+		<typeAlias type="com.ts.entity.mts.LoadRule" alias="LoadRule"/>
+		<typeAlias type="com.ts.entity.mts.MatchRule" alias="MatchRule"/>
+		<typeAlias type="com.ts.entity.mts.OTerm" alias="OTerm"/>
+		<typeAlias type="com.ts.entity.mts.MatchRuleDetailT" alias="MatchRuleDetailT"/>
+		<typeAlias type="com.ts.entity.mts.MtsDataClass" alias="MtsDataClass"/>
+		<typeAlias type="com.ts.entity.mts.MtsDict" alias="MtsDict"/>
+		<typeAlias type="com.ts.entity.mts.MtsData" alias="MtsData"/>
+		<typeAlias type="com.ts.entity.mts.MtsDataType" alias="MtsDataType"/>
+		<typeAlias type="com.ts.entity.mts.MtsQuestion" alias="MtsQuestion"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBData" alias="MtsDBData"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBDataDetail" alias="MtsDBDataDetail"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBDataResult" alias="MtsDBDataResult"/>
+		<typeAlias type="com.ts.entity.mts.MtsVisitType" alias="MtsVisitType"/>
+		<typeAlias type="com.ts.entity.mts.MtsDataSource" alias="MtsDataSource"/>
+		<typeAlias type="com.ts.entity.mts.MtsCorpus" alias="MtsCorpus"/>
+		<typeAlias type="com.ts.entity.mts.MtsCorpusDetail" alias="MtsCorpusDetail"/>
+		<typeAlias type="com.ts.entity.mts.MtsCorpusEntity" alias="MtsCorpusEntity"/>
+		<typeAlias type="com.ts.entity.nlp.NlpData" alias="NlpData"/>
+		<typeAlias type="com.ts.entity.mts.OInterver" alias="OInterver"/>
+		<typeAlias type="com.ts.entity.mts.MtsArea" alias="MtsArea"/>
+		<typeAlias type="com.ts.entity.mts.NlpTerm" alias="NlpTerm"/>
+		<typeAlias type="com.ts.entity.mts.MtsAreaBatch" alias="MtsAreaBatch"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBDataUnstructured" alias="MtsDBDataUnstructured"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBDataUnstructuredDetail" alias="MtsDBDataUnstructuredDetail"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBDataUnstructuredResult" alias="MtsDBDataUnstructuredResult"/>
+		<typeAlias type="com.ts.entity.mts.MtsDBDataUnstructuredRelevance" alias="MtsDBDataUnstructuredRelevance"/>
+		
+		<typeAlias type="com.ts.entity.mts.MtsConfigTest" alias="MtsConfigTest"/>
+		<typeAlias type="com.ts.entity.mts.MtsRecord" alias="MtsRecord"/>
+		<typeAlias type="com.ts.entity.mts.MtsRecordInfo" alias="MtsRecordInfo"/>
+		<typeAlias type="com.ts.entity.mts.MtsRecordDetail" alias="MtsRecordDetail"/>
+		<typeAlias type="com.ts.entity.mts.MtsRecordParameters" alias="MtsRecordParameters"/>
+		<typeAlias type="com.ts.vo.mts.RecordInfoVO" alias="RecordInfoVO"/>
+        
+		<typeAlias type="com.ts.entity.mts.MtsConfigRecord" alias="MtsConfigRecord"/>
+		<typeAlias type="com.ts.entity.mts.MtsConfigDetail" alias="MtsConfigDetail"/>
+		<typeAlias type="com.ts.entity.mts.MtsConfig" alias="MtsConfig"/>
+		
+		<typeAlias type="com.ts.entity.mts.RsRuleDetailT" alias="RsRuleDetailT"/>
+		<typeAlias type="com.ts.entity.mts.MtsToolkitT" alias="MtsToolkitT"/>
+		<typeAlias type="com.ts.entity.mts.MtsToolT" alias="MtsToolT"/>
+	</typeAliases>
+	
+	<plugins>
+		<plugin interceptor="com.ts.plugin.PagePlugin">
+			<property name="dialect" value="mysql"/>
+			<property name="pageSqlId" value=".*listPage.*"/>
+		</plugin>
+	</plugins>
+</configuration>

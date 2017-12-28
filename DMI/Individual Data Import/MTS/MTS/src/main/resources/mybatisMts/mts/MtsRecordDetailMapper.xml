@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsRecordDetailMapper">
+
+	<!-- 结果集 -->
+	<resultMap type="MtsRecordDetail" id="MtsRecordDetailResultMap">
+		<id column="RECORD_DETAIL_ID" property="RECORD_DETAIL_ID" />
+		<result column="RECORD_INFO_ID" property="RECORD_INFO_ID" />
+		<result column="NLP_RESULT" property="NLP_RESULT" />
+		<result column="NLP_ORDER" property="NLP_ORDER" />
+		<result column="SOURCE" property="SOURCE" />
+		<result column="TERMINOLOGY_TYPE" property="TERMINOLOGY_TYPE" />
+		<result column="DOUBT_DIAG" property="DOUBT_DIAG" />
+		<result column="SPECIAL_CHARACTERS" property="SPECIAL_CHARACTERS" />
+		<result column="XY_STANDARD_WORD" property="XY_STANDARD_WORD" />
+		<result column="XY_STANDARD_MAIN_CODE" property="XY_STANDARD_MAIN_CODE" />
+		<result column="XY_STANDARD_ATTACH_CODE" property="XY_STANDARD_ATTACH_CODE" />
+		<result column="ZY_STANDARD_WORD" property="ZY_STANDARD_WORD" />
+		<result column="ZY_STANDARD_MAIN_CODE" property="ZY_STANDARD_MAIN_CODE" />
+		<result column="SS_STANDARD_WORD" property="SS_STANDARD_WORD" />
+		<result column="SS_STANDARD_MAIN_CODE" property="SS_STANDARD_MAIN_CODE" />
+		<result column="CAN_NOT_STANDARD_TYPE" property="CAN_NOT_STANDARD_TYPE" />
+		<result column="STATUS" property="STATUS" />
+		<result column="DB_DATA_ID" property="DB_DATA_ID" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_RECORD_DETAIL
+	</sql>
+	<sql id="recordInfoTableName">
+		MTS_RECORD_INFO
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		RECORD_DETAIL_ID,	
+		RECORD_INFO_ID,	
+		NLP_RESULT,
+		NLP_ORDER,
+		SOURCE,
+		TERMINOLOGY_TYPE,
+		DOUBT_DIAG,
+		SPECIAL_CHARACTERS,
+		XY_STANDARD_WORD,
+		XY_STANDARD_MAIN_CODE,
+		XY_STANDARD_ATTACH_CODE,
+		ZY_STANDARD_WORD,
+		ZY_STANDARD_MAIN_CODE,
+		SS_STANDARD_WORD,
+		SS_STANDARD_MAIN_CODE,
+		CAN_NOT_STANDARD_TYPE,
+		STATUS,
+		DB_DATA_ID
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{RECORD_DETAIL_ID},
+		#{RECORD_INFO_ID},
+		#{NLP_RESULT},
+		#{NLP_ORDER},
+		#{SOURCE},
+		#{TERMINOLOGY_TYPE},
+		#{DOUBT_DIAG},
+		#{SPECIAL_CHARACTERS},
+		#{XY_STANDARD_WORD},
+		#{XY_STANDARD_MAIN_CODE},
+		#{XY_STANDARD_ATTACH_CODE},
+		#{ZY_STANDARD_WORD},
+		#{ZY_STANDARD_MAIN_CODE},
+		#{SS_STANDARD_WORD},
+		#{SS_STANDARD_MAIN_CODE},
+		#{CAN_NOT_STANDARD_TYPE},
+		#{STATUS},
+		#{DB_DATA_ID}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsRecordDetail" parameterType="MtsRecordDetail">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsRecordDetail" parameterType="MtsRecordDetail">
+		update 
+		<include refid="tableName"></include>
+		set 
+		<!-- NLP_RESULT = #{NLP_RESULT}, -->
+		<if test="TERMINOLOGY_TYPE != null and TERMINOLOGY_TYPE != ''">
+			 TERMINOLOGY_TYPE = #{TERMINOLOGY_TYPE},
+		</if>
+		<if test="XY_STANDARD_WORD != null and XY_STANDARD_WORD != ''">
+			 XY_STANDARD_WORD = #{XY_STANDARD_WORD},
+		</if>
+		<if test="XY_STANDARD_MAIN_CODE != null and XY_STANDARD_MAIN_CODE != ''">
+			 XY_STANDARD_MAIN_CODE = #{XY_STANDARD_MAIN_CODE},
+		</if>
+		<if test="XY_STANDARD_ATTACH_CODE != null and XY_STANDARD_ATTACH_CODE != ''">
+			 XY_STANDARD_ATTACH_CODE = #{XY_STANDARD_ATTACH_CODE},
+		</if>
+		<if test="ZY_STANDARD_WORD != null and ZY_STANDARD_WORD != ''">
+			 ZY_STANDARD_WORD = #{ZY_STANDARD_WORD},
+		</if>
+		<if test="ZY_STANDARD_MAIN_CODE != null and ZY_STANDARD_MAIN_CODE != ''">
+			 ZY_STANDARD_MAIN_CODE = #{ZY_STANDARD_MAIN_CODE},
+		</if>
+		<if test="SS_STANDARD_WORD != null and SS_STANDARD_WORD != ''">
+			 SS_STANDARD_WORD = #{SS_STANDARD_WORD},
+		</if>
+		<if test="SS_STANDARD_MAIN_CODE != null and SS_STANDARD_MAIN_CODE != ''">
+			 SS_STANDARD_MAIN_CODE = #{SS_STANDARD_MAIN_CODE},
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			 DB_DATA_ID = #{DB_DATA_ID},
+		</if>
+		STATUS = #{STATUS}
+		where NLP_RESULT = #{NLP_RESULT}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsRecordDetail" parameterType="MtsRecordDetail">
+		delete from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			 AND DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		<if test="RECORD_DETAIL_ID != null and RECORD_DETAIL_ID != ''">
+			 AND RECORD_DETAIL_ID=#{RECORD_DETAIL_ID}
+		</if>
+		<if test="RECORD_INFO_ID != null and RECORD_INFO_ID != ''">
+			 AND RECORD_INFO_ID=#{RECORD_INFO_ID}
+		</if>
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsRecordDetail" parameterType="MtsRecordDetail" resultType="MtsRecordDetail">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="RECORD_DETAIL_ID != null and RECORD_DETAIL_ID != ''">
+			and RECORD_DETAIL_ID = #{RECORD_DETAIL_ID}
+		</if>
+		<if test="RECORD_INFO_ID != null and RECORD_INFO_ID != ''">
+			and RECORD_INFO_ID = #{RECORD_INFO_ID}
+		</if>
+		<if test="NLP_RESULT != null and NLP_RESULT != ''">
+			and NLP_RESULT = #{NLP_RESULT}
+		</if>
+		<if test="NLP_ORDER != null and NLP_ORDER != ''">
+			and NLP_ORDER = #{NLP_ORDER}
+		</if>
+		<if test="SOURCE != null and SOURCE != ''">
+			and SOURCE = #{SOURCE}
+		</if>
+		<if test="TERMINOLOGY_TYPE != null and TERMINOLOGY_TYPE != ''">
+			and TERMINOLOGY_TYPE = #{TERMINOLOGY_TYPE}
+		</if>
+		<if test="DOUBT_DIAG != null and DOUBT_DIAG != ''">
+			and DOUBT_DIAG = #{DOUBT_DIAG}
+		</if>
+		<if test="SPECIAL_CHARACTERS != null and SPECIAL_CHARACTERS != ''">
+			and SPECIAL_CHARACTERS = #{SPECIAL_CHARACTERS}
+		</if>
+		<if test="XY_STANDARD_WORD != null and XY_STANDARD_WORD != ''">
+			and XY_STANDARD_WORD = #{XY_STANDARD_WORD}
+		</if>
+		<if test="XY_STANDARD_MAIN_CODE != null and XY_STANDARD_MAIN_CODE != ''">
+			and XY_STANDARD_MAIN_CODE = #{XY_STANDARD_MAIN_CODE}
+		</if>
+		<if test="XY_STANDARD_ATTACH_CODE != null and XY_STANDARD_ATTACH_CODE != ''">
+			and XY_STANDARD_ATTACH_CODE = #{XY_STANDARD_ATTACH_CODE}
+		</if>
+		<if test="ZY_STANDARD_WORD != null and ZY_STANDARD_WORD != ''">
+			and ZY_STANDARD_WORD = #{ZY_STANDARD_WORD}
+		</if>
+		<if test="ZY_STANDARD_MAIN_CODE != null and ZY_STANDARD_MAIN_CODE != ''">
+			and ZY_STANDARD_MAIN_CODE = #{ZY_STANDARD_MAIN_CODE}
+		</if>
+		<if test="SS_STANDARD_WORD != null and SS_STANDARD_WORD != ''">
+			and SS_STANDARD_WORD = #{SS_STANDARD_WORD}
+		</if>
+		<if test="SS_STANDARD_MAIN_CODE != null and SS_STANDARD_MAIN_CODE != ''">
+			and SS_STANDARD_MAIN_CODE = #{SS_STANDARD_MAIN_CODE}
+		</if>
+		<if test="CAN_NOT_STANDARD_TYPE != null and CAN_NOT_STANDARD_TYPE != ''">
+			and CAN_NOT_STANDARD_TYPE = #{CAN_NOT_STANDARD_TYPE}
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			and STATUS = #{STATUS}
+		</if>
+		<if test="DB_DATA_ID != null and DB_DATA_ID != ''">
+			and DB_DATA_ID = #{DB_DATA_ID}
+		</if>
+		order BY NLP_ORDER
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsRecordDetaillistPage" parameterType="page" resultType="pd">
+	SELECT 
+	D.NLP_RESULT,
+	D.XY_STANDARD_WORD,
+	D.XY_STANDARD_MAIN_CODE,
+	D.XY_STANDARD_ATTACH_CODE,
+	D.ZY_STANDARD_WORD,
+	D.ZY_STANDARD_MAIN_CODE,
+	D.SS_STANDARD_WORD,
+	D.SS_STANDARD_MAIN_CODE,
+	D.TERMINOLOGY_TYPE,
+	D.DOUBT_DIAG,
+	D.SPECIAL_CHARACTERS,
+	D.STATUS,
+	D.RECORD_INFO_ID,
+	I.BATCH_NUM,
+	D.RECORD_DETAIL_ID
+	FROM 
+	<include refid="tableName"></include> D LEFT JOIN <include refid="recordInfoTableName"></include> I ON  D.RECORD_INFO_ID = I.RECORD_INFO_ID  
+	WHERE 1 = 1
+	<if test="pd.STATUS != null and pd.STATUS != ''">
+		and <![CDATA[ D.STATUS <> 1  ]]>     
+	</if>
+	<if test="pd.BATCH_NUM != null and pd.BATCH_NUM != ''">
+		and I.BATCH_NUM = #{pd.BATCH_NUM}
+	</if>
+	<if test="pd.DB_DATA_ID != null and pd.DB_DATA_ID != ''">
+		and D.DB_DATA_ID = #{pd.DB_DATA_ID}
+	</if>
+	<if test="pd.keywords != null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				 D.NLP_RESULT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or 
+				 D.XY_STANDARD_WORD LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or
+				 D.XY_STANDARD_MAIN_CODE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or
+				 D.XY_STANDARD_ATTACH_CODE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or
+				 D.ZY_STANDARD_WORD LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or
+				 D.ZY_STANDARD_MAIN_CODE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or
+				 D.SS_STANDARD_WORD LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				 or
+				 D.SS_STANDARD_MAIN_CODE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+	ORDER BY I.RECORD_INFO_ID DESC,D.NLP_ORDER
+	</select>
+</mapper>

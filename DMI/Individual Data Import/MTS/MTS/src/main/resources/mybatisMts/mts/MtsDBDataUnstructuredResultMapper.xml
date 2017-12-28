@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MtsDBDataUnstructuredResultMapper">
+	
+	<!-- 结果集 -->
+	<resultMap type="MtsDBDataUnstructuredResult" id="MtsDBDataUnstructuredResultResultMap">
+		<id column="DATA_UNSTRUCTURED_RESULT_ID" property="DATA_UNSTRUCTURED_RESULT_ID" />
+		<result column="DATA_UNSTRUCTURED_DETAIL_ID" property="DATA_UNSTRUCTURED_DETAIL_ID" />
+		<result column="DATA_UNSTRUCTURED_ID" property="DATA_UNSTRUCTURED_ID" />
+		<result column="PROPERTY_ID" property="PROPERTY_ID" />
+		<result column="NLP_RESULT" property="NLP_RESULT" />
+		<result column="RESULT_1" property="RESULT_1" />
+		<result column="RESULT_2" property="RESULT_2" />
+		<result column="RESULT_3" property="RESULT_3" />
+		<result column="RESULT_4" property="RESULT_4" />
+		<result column="RESULT_5" property="RESULT_5" />
+		<result column="STANDARD_RESULT" property="STANDARD_RESULT" />
+		<result column="ORDER_NUM" property="ORDER_NUM" />
+	</resultMap>
+	
+	<!--表名 -->
+	<sql id="tableName">
+		MTS_DB_DATA_UNSTRUCTURED_RESULT
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		DATA_UNSTRUCTURED_RESULT_ID,	
+		DATA_UNSTRUCTURED_DETAIL_ID,	
+		DATA_UNSTRUCTURED_ID,
+		PROPERTY_ID,
+		NLP_RESULT,
+		RESULT_1,
+		RESULT_2,
+		RESULT_3,
+		RESULT_4,
+		RESULT_5,
+		STANDARD_RESULT,
+		ORDER_NUM
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{DATA_UNSTRUCTURED_RESULT_ID},
+		#{DATA_UNSTRUCTURED_DETAIL_ID},
+		#{DATA_UNSTRUCTURED_ID},
+		#{PROPERTY_ID},
+		#{NLP_RESULT},
+		#{RESULT_1},
+		#{RESULT_2},
+		#{RESULT_3},
+		#{RESULT_4},
+		#{RESULT_5},
+		#{STANDARD_RESULT},
+		#{ORDER_NUM}
+	</sql>
+
+    <!-- 添加 -->
+	<insert id="addMtsDBDataUnstructuredResult" parameterType="MtsDBDataUnstructuredResult">
+		insert into 
+		<include refid="tableName"></include>
+		(
+		<include refid="Field"></include>
+		) values (
+		<include refid="FieldValue"></include>	
+		)
+	</insert>
+	
+	<!-- 保存修改 -->
+	<update id="editMtsDBDataUnstructuredResult" parameterType="MtsDBDataUnstructuredResult">
+		update 
+		<include refid="tableName"></include>
+		set DATA_UNSTRUCTURED_DETAIL_ID = #{DATA_UNSTRUCTURED_DETAIL_ID},
+		DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID},
+		PROPERTY_ID = #{PROPERTY_ID},
+		NLP_RESULT = #{NLP_RESULT},
+		RESULT_1 = #{RESULT_1},
+		RESULT_2 = #{RESULT_2},
+		RESULT_3 = #{RESULT_3},
+		RESULT_4 = #{RESULT_4},
+		RESULT_5 = #{RESULT_5},
+		STANDARD_RESULT = #{STANDARD_RESULT},
+		ORDER_NUM = #{ORDER_NUM}
+		where DATA_UNSTRUCTURED_RESULT_ID = #{DATA_UNSTRUCTURED_RESULT_ID}
+	</update>
+	
+	<!-- 删除  -->
+	<delete id="deleteMtsDBDataUnstructuredResult" parameterType="MtsDBDataUnstructuredResult">
+		delete from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DATA_UNSTRUCTURED_RESULT_ID != null and DATA_UNSTRUCTURED_RESULT_ID != ''">
+			and DATA_UNSTRUCTURED_RESULT_ID = #{DATA_UNSTRUCTURED_RESULT_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_ID != null and DATA_UNSTRUCTURED_ID != ''">
+			and DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID}
+		</if>
+	</delete>
+	
+	<!-- 通过聚类获取标化类型 -->
+	<select id="findMtsDBDataUnstructuredResult" parameterType="MtsDBDataUnstructuredResult" resultType="MtsDBDataUnstructuredResult">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		<if test="DATA_UNSTRUCTURED_RESULT_ID != null and DATA_UNSTRUCTURED_RESULT_ID != ''">
+			and DATA_UNSTRUCTURED_RESULT_ID = #{DATA_UNSTRUCTURED_RESULT_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_ID != null and DATA_UNSTRUCTURED_ID != ''">
+			and DATA_UNSTRUCTURED_ID = #{DATA_UNSTRUCTURED_ID}
+		</if>
+		<if test="DATA_UNSTRUCTURED_DETAIL_ID != null and DATA_UNSTRUCTURED_DETAIL_ID != ''">
+			and DATA_UNSTRUCTURED_DETAIL_ID = #{DATA_UNSTRUCTURED_DETAIL_ID}
+		</if>
+		<if test="PROPERTY_ID != null and PROPERTY_ID != ''">
+			and PROPERTY_ID = #{PROPERTY_ID}
+		</if>
+		<if test="NLP_RESULT != null and NLP_RESULT != ''">
+			and NLP_RESULT = #{NLP_RESULT}
+		</if>
+		<if test="RESULT_1 != null and RESULT_1 != ''">
+			and RESULT_1 = #{RESULT_1}
+		</if>
+		<if test="RESULT_2 != null and RESULT_2 != ''">
+			and RESULT_2 = #{RESULT_2}
+		</if>
+		<if test="RESULT_3 != null and RESULT_3 != ''">
+			and RESULT_3 = #{RESULT_3}
+		</if>
+		<if test="RESULT_4 != null and RESULT_4 != ''">
+			and RESULT_4 = #{RESULT_4}
+		</if>
+		<if test="RESULT_5 != null and RESULT_5 != ''">
+			and RESULT_5 = #{RESULT_5}
+		</if>
+		<if test="STANDARD_RESULT != null and STANDARD_RESULT != ''">
+			and STANDARD_RESULT = #{STANDARD_RESULT}
+		</if>
+		<if test="ORDER_NUM != null and ORDER_NUM != ''">
+			and ORDER_NUM = #{ORDER_NUM}
+		</if>
+		order by ORDER_NUM desc
+	</select>
+	
+	<!-- 获取数据加载规则列表 -->
+	<select id="mtsDBDataUnstructuredResultlistPage" parameterType="page" resultType="pd">
+		select 
+		<include refid="Field"></include> 
+		from 
+		<include refid="tableName"></include> 
+		where 1 = 1 
+		<if test="pd.keywords != null and pd.keywords != ''">
+			and
+			(
+			 NLP_RESULT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or 
+			 RESULT_1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			 or
+			 RESULT_2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or
+			 RESULT_3 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or
+			 RESULT_4 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			 or
+			 RESULT_5 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			) 
+		</if>
+		order by ORDER_NUM desc
+	</select>
+</mapper>
