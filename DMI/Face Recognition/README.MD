@@ -1,14 +1,14 @@
-1.Biometrics Identification Module Introduction
+# 1.Biometrics Identification Module Introduction
 
   The biometric identification module uses human faces, fingerprints, iris and behavioral features (such as handwriting, sound, gait, etc.) to  do the identify verification. This module firstly explores the development and application of face recognition technology.
 
-2.Face Recognition 
+# 2.Face Recognition 
 
 *Function Introduction
 
   It identifies the face in the image and outlines the face area, and returns the rectangle frame coordinates of the detected face after the face is detected. The key points of the five facial features in the image are extracted, and the parameter of the key points is output. On the basis of face recognition, some attributes such as sex, age, expression and glasses are identified, and the deep learning features can be returned.
 
-3.Face Matching & Living Recognition
+# 3.Face Matching & Living Recognition
 
 *Function Introduction
 
