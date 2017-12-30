@@ -4,12 +4,12 @@
 
 # 2.Government Data Access
 
-*Function Introduction
+## Function Introduction
 	
   The government data include data from human resources and social security, public security, civil affairs and many other government agencies. The integration of data interfaces from different government agencies provides a unified data interface service to the outside world.
 
 # 3.Government Data Identity verification
 
-*Function Introduction
+## Function Introduction
 	
    By searching and authenticating the identity data in the government database of the person who¡¯s undergoing IDV, then combine the biological recognition technology for analysis and confirmation, to achieve identity verification.
