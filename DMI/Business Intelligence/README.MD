@@ -4,6 +4,6 @@
 
 # 2.Business Intelligence Engine Module
 
-*Function Introduction
+## Function Introduction
   
   The BI engine module can connect the data sources and provide data access, analysis, and data sharing. The standardization of the BI platform is also very important, which is related to the compatibility of multisource heterogeneous data, so it is organically integrated with the MTS function.
