@@ -1,4 +1,5 @@
 1.Claim Processing Automation Module Introduction
+  
   CPA involves a wide range of aspects, not only to ensure the safety of the patients, but also to meet the monitoring requirements of the regulatory authorities. The system can provide real-time monitoring and irregularities alert for physicians based on the contents, policies and the actual situation of the service providers. Therefore, it can effectively reduce the risk of medical violation and improve the standardized management level of the service providers.
 
 2.Processing Rules Creation
